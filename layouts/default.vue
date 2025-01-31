@@ -1,19 +1,18 @@
 <template>
   <div>
-    <header>
-      <h1>Header layout</h1>
-    </header>
+    <Header />
 
     <div class="main">
       <slot />
     </div>
 
-    <footer>
-      <h1>Footer layout</h1>
-    </footer>
+    <Footer />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import Footer from "~/components/Footer.vue";
+import Header from "~/components/Header.vue";
+</script>
 
 <style lang="scss" scoped></style>
