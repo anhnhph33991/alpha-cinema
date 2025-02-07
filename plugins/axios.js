@@ -2,15 +2,15 @@ import axios from "axios";
 
 export default defineNuxtPlugin((NuxtApp) => {
   const config = useRuntimeConfig();
+  const token = useCookie("token");
 
   const instance = axios.create({
-    baseURL: "https://cinema-dd.me/api/v1",
+    baseURL: config.public.apiUrl,
   });
 
   instance.interceptors.request.use((config) => {
     if (process.client) {
-      const token = localStorage.getItem("authToken");
-      if (token) {
+      if (token.value) {
         config.headers.Authorization = `Bearer ${token}`;
       }
     }
