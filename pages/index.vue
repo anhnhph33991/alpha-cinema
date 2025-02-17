@@ -1,5 +1,9 @@
 <template>
   <div>
+    <!-- ==========Banner-Section========== -->
+    <AppBanner />
+    <!-- ==========Banner-Section========== -->
+
     <!-- ==========Ticket-Search========== -->
     <UiTicketSearch />
     <!-- ==========Ticket-Search========== -->
