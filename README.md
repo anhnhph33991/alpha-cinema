@@ -1,75 +1,36 @@
-# Nuxt Minimal Starter
+# Hướng dẫn cài đặt dự án:
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+### Mở terminal chạy các câu lệnh sau:
+### 1. `git clone https://github.com/anhnhph33991/alpha-cinema.git`
+### 2. `npm i`
+### 3. `copy .env.example .env`
 
-## Setup
+#
+# Cấu trúc thư mục
 
-Make sure to install dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+📦 ALPHA-CINEMA/
+├── 📂 .nuxt/                # Thư mục build của Nuxt (tự động tạo)
+├── 📂 .output/              # Thư mục output sau khi build
+├── 📂 assets/               # Chứa file tĩnh như CSS, SCSS, ảnh, fonts
+├── 📂 components/           # Chứa các component tái sử dụng
+├── 📂 composables/          # Chứa các composables (tương tự Vue Composables)
+├── 📂 constants/            # Chứa các hằng số được sử dụng trong dự án
+├── 📂 layouts/              # Chứa các layout chính của ứng dụng
+├── 📂 middleware/           # Chứa middleware
+├── 📂 pages/                # Chứa các trang chính (file-based routing)
+├── 📂 plugins/              # Chứa các plugin Vue/Nuxt
+├── 📂 public/               # Chứa các file tĩnh (ảnh, favicon, robots.txt, v.v.)
+├── 📂 schema/               # Chứa các file schema hoặc model
+├── 📂 server/               # Chứa API server-side (Nitro API)
+├── 📂 services/             # Chứa các file service xử lý call api
+├── 📂 stores/               # Chứa Pinia stores (state management)
+├── 📂 utils/                # Chứa các hàm helper
+├── 📄 .env                  # File cấu hình biến môi trường
+├── 📄 .env.example          # File cấu hình biến môi trường
+├── 📄 .gitignore            # File ignore Git
+├── 📄 app.vue               # File root của ứng dụng
+├── 📄 nuxt.config.ts        # File cấu hình Nuxt
+├── 📄 package.json          # File khai báo dependencies
+├── 📄 package-lock.json     # File lock phiên bản package
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
