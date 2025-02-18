@@ -2,8 +2,10 @@
 
 ### Mở terminal chạy các câu lệnh sau:
 ### 1. `git clone https://github.com/anhnhph33991/alpha-cinema.git`
-### 2. `npm i`
-### 3. `copy .env.example .env`
+### 2. `cd alpha-cinema`
+### 3. `npm i`
+### 4. `copy .env.example .env`
+### 5. `npm run dev`
 
 #
 # Cấu trúc thư mục
