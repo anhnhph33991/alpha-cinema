@@ -8,49 +8,43 @@
             <span class="cate">hello !</span>
             <h2 class="title">welcome back</h2>
           </div>
-          <form class="account-form">
+          <form class="account-form" @submit.prevent="submited">
             <div class="form-group">
-              <label for="email">Email<span>*</span></label>
-              <input type="text" placeholder="Email" id="email" required />
+              <label for="email">
+                Email
+                <span>*</span>
+              </label>
+              <input type="text" placeholder="Email" id="email" />
             </div>
             <div class="form-group">
-              <label for="password">Password<span>*</span></label>
-              <input
-                type="password"
-                placeholder="Password"
-                id="password"
-                required
-              />
+              <label for="password">
+                Password
+                <span>*</span>
+              </label>
+              <input type="password" placeholder="Password" id="password" />
             </div>
             <div class="form-group checkgroup">
               <input type="checkbox" id="bal2" required checked />
               <label for="bal2">remember me</label>
-              <a href="forgot-password.html" class="forget-pass"
-                >Forgot Password?</a
-              >
+              <a href="forgot-password.html" class="forget-pass">
+                Forgot Password?
+              </a>
             </div>
             <div class="form-group text-center">
               <input type="submit" value="log in" />
             </div>
           </form>
           <div class="option">
-            Don't have an account? <a href="register.html">register now</a>.
+            Don't have an account?
+            <a href="#">register now</a>.
           </div>
-          <div class="or"><span>Or</span></div>
+          <div class="or">
+            <span>Or</span>
+          </div>
           <ul class="social-icons">
             <li>
-              <a href="login.html#">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-            </li>
-            <li>
-              <a href="login.html#">
+              <a href="#">
                 <i class="fab fa-google"></i>
-              </a>
-            </li>
-            <li>
-              <a href="login.html#">
-                <i class="fab fa-twitter"></i>
               </a>
             </li>
           </ul>
@@ -61,4 +55,14 @@
   <!-- ==========Login-Section========== -->
 </template>
 
-<script setup></script>
+<script setup>
+import { useAuthStore } from "~/stores/auth";
+
+const authStore = useAuthStore();
+
+const submited = () => {
+  console.log("hehe");
+
+  authStore.login({ name: "luxchill" });
+};
+</script>

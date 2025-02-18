@@ -77,9 +77,7 @@ useHead({
   ],
 });
 
-onMounted(() => {
-  watchEffect(() => {
-    updateScrollState();
-  });
+watchEffect(() => {
+  updateScrollState();
 });
 </script>

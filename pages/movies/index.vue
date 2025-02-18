@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1>Movies List</h1>
+    <MovieList :movies="10" />
   </div>
 </template>
-
-<script setup></script>

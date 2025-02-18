@@ -1,6 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: [],
+  modules: [
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+    '@vee-validate/nuxt',
+    'nuxt-svgo',
+    'vue-sonner/nuxt',
+    'nuxt-lodash',
+  ],
   runtimeConfig: {
     public: {
       apiUrl: process.env.NUXT_API_URL
