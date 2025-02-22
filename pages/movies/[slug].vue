@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>Movie: {{ slug }}</h1>
+    <!-- <h1>Movie: {{ slug }}</h1> -->
+    <MovieDetail :slug="slug" />
   </div>
 </template>
 

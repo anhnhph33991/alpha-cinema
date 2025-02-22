@@ -15,7 +15,7 @@
           </li>
 
           <li class="header-button pr-0">
-            <NuxtLink :to="{ name: 'login' }">join us</NuxtLink>
+            <NuxtLink :to="{ name: 'login' }">Đăng Nhập</NuxtLink>
           </li>
         </ul>
         <div class="header-bar d-lg-none">
@@ -30,7 +30,6 @@
 
 <script setup>
 import { navMenu } from "~/constants/menus";
-import { toast } from "vue-sonner";
 
 defineProps({
   isActive: {
