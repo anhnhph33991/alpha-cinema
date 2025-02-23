@@ -9,7 +9,7 @@
     <!-- ==========Ticket-Search========== -->
 
     <!-- ==========Movie-Section========== -->
-    <MovieList :movies="9">
+    <MovieList :movies="movieStore.movies?.data || []">
       <template #header>
         <div class="section-header-1">
           <h2 class="title">movies</h2>
@@ -21,33 +21,15 @@
       </template>
     </MovieList>
     <!-- ==========Movie-Section========== -->
-
-    <!-- ==========Movie-Section========== -->
-    <MovieList :movies="9">
-      <template #header>
-        <div class="section-header-1">
-          <h2 class="title">movies</h2>
-          <a class="view-more" href="#">
-            View More
-            <i class="fal fa-long-arrow-alt-right"></i>
-          </a>
-        </div>
-      </template>
-    </MovieList>
-    <!-- ==========Movie-Section========== -->
-
-    <!-- ==========Movie-Section========== -->
-    <MovieList :movies="9">
-      <template #header>
-        <div class="section-header-1">
-          <h2 class="title">movies</h2>
-          <a class="view-more" href="#">
-            View More
-            <i class="fal fa-long-arrow-alt-right"></i>
-          </a>
-        </div>
-      </template>
-    </MovieList>
-    <!-- ==========Movie-Section========== -->
   </div>
 </template>
+
+<script setup>
+import { useMovieStore } from "~/stores/movie";
+
+const movieStore = useMovieStore();
+
+onMounted(() => {
+  movieStore.fetchMovies();
+});
+</script>

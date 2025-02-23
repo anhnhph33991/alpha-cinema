@@ -16,26 +16,25 @@
                     <NuxtLink
                       :to="{
                         name: 'movies-slug',
-                        params: { slug: 'luxchill-6789' },
+                        params: { slug: item.slug },
                       }"
                     >
-                      <img src="/theme/img/movie/movie-1.jpg" alt="movie" />
+                      <img
+                        src="https://files.betacorp.vn/media%2fimages%2f2025%2f02%2f06%2fngt%2Dpayoff%2Dposter%2D400x633%2D154653%2D060225%2D20.jpg"
+                        alt="movie"
+                      />
                     </NuxtLink>
-                    <!-- <a href="#">
-                      <img src="/theme/img/movie/movie-1.jpg" alt="movie" />
-                    </a> -->
                   </div>
                   <div class="movie-content">
                     <h5 class="title m-0">
                       <NuxtLink
                         :to="{
                           name: 'movies-slug',
-                          params: { slug: 'luxchill-6789' },
+                          params: { slug: item.slug },
                         }"
                       >
-                        Avatar Special Edition
+                        {{ item.name }}
                       </NuxtLink>
-                      <!-- <a href="#">Avatar Special Edition</a> -->
                     </h5>
 
                     <ul class="movie-rating-percent">
@@ -62,7 +61,7 @@
 <script setup>
 defineProps({
   movies: {
-    type: Number,
+    type: Array,
     required: true,
   },
 });

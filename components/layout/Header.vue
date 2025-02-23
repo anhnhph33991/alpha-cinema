@@ -14,7 +14,10 @@
             </NuxtLink>
           </li>
 
-          <li class="header-button pr-0">
+          <li class="header-button pr-0" v-if="authStore.isLogin">
+            <a @click.prevent="logout">{{ authStore.user.name }}</a>
+          </li>
+          <li class="header-button pr-0" v-else>
             <NuxtLink :to="{ name: 'login' }">Đăng Nhập</NuxtLink>
           </li>
         </ul>
@@ -30,6 +33,14 @@
 
 <script setup>
 import { navMenu } from "~/constants/menus";
+import { useAuthStore } from "~/stores/auth";
+const auth = useCookie("auth");
+
+const authStore = useAuthStore();
+
+const logout = async () => {
+  await authStore.logout();
+};
 
 defineProps({
   isActive: {

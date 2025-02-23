@@ -96,7 +96,11 @@
                 </li>
               </ul>
             </li>
-            <li class="header-button pr-0">
+            <li class="header-button pr-0" v-if="authStore.isLogin">
+              {{ authStore.user.name }}
+            </li>
+
+            <li class="header-button pr-0" v-else>
               <NuxtLink :to="{ name: 'login' }">join us</NuxtLink>
             </li>
           </ul>
@@ -111,4 +115,8 @@
   </ClientOnly>
 </template>
 
+<script setup>
+import { useAuthStore } from "~/stores/auth";
+const authStore = useAuthStore();
+</script>
 <!-- router-link-active router-link-exact-active -->

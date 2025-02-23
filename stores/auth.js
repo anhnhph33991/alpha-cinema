@@ -1,4 +1,5 @@
 import { toast } from "vue-sonner";
+import { loginService, logoutService, registerService } from "~/services/auth";
 
 export const useAuthStore = defineStore(
   "auth",
@@ -19,19 +20,67 @@ export const useAuthStore = defineStore(
     });
     const token = ref("");
     const isLogin = ref(false);
+    const router = useRouter();
 
     /**
      * Xử lý login
      */
-    const login = (data) => {
+    const login = async (data) => {
       try {
+        const response = await loginService(data);
+
+        if (response.status) {
+          token.value = response.data.token;
+          user.value = response.data.user;
+          isLogin.value = true;
+        }
+
+        console.log(response);
+
         toast.success("Đăng nhập thành công");
+        router.push({ name: "index" });
       } catch (error) {
+        console.log(error);
+
         toast.error("Đăng nhập thất bại");
       }
     };
 
-    return { user, token, isLogin, login };
+    const register = async (data) => {
+      try {
+        const response = await registerService(data);
+
+        console.log(response);
+
+        // if (response.status === true) {
+        //   token.value = response.data.token;
+        //   isLogin.value = true;
+
+        //   toast.success(`${response.message}`);
+        //   router.push({ name: "index" });
+        // }
+      } catch (error) {
+        toast.error("lỗi");
+      }
+    };
+
+    const logout = async () => {
+      try {
+        await logoutService();
+
+        token.value = "";
+        user.value = {};
+        isLogin.value = false;
+
+        toast.success("Đăng xuất thành công");
+        router.push({ name: "index" });
+      } catch (error) {
+        toast.error("lỗi");
+        console.log(error);
+      }
+    };
+
+    return { user, token, isLogin, login, register, logout };
   },
   {
     persist: {

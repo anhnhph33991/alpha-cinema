@@ -2,15 +2,16 @@ import axios from "axios";
 
 export default defineNuxtPlugin((NuxtApp) => {
   const config = useRuntimeConfig();
-  const token = useCookie("token");
+  const auth = useCookie("auth");
 
   const instance = axios.create({
     baseURL: config.public.apiUrl,
   });
 
   instance.interceptors.request.use((config) => {
+    const token = auth.value?.token ?? null;
     if (process.client) {
-      if (token.value) {
+      if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
     }

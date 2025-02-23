@@ -17,7 +17,9 @@
             </a>
           </div>
           <div class="details-banner-content offset-lg-4">
-            <h3 class="title">Irregular</h3>
+            <h3 class="title">
+              {{ movie.name }}
+            </h3>
             <div class="tags">
               <a href="movie-details-2.html#">English</a>
               <a href="movie-details-2.html#">France</a>
@@ -133,47 +135,27 @@
         <div class="row justify-content-center">
           <div class="col-lg-12 mb-5 mb-lg-0">
             <ul class="seat-plan-wrapper">
-              <li>
+              <li v-for="(item, date) in showtime" :key="date">
                 <div class="movie-name">
                   <div class="icons">
                     <i class="far fa-heart"></i>
                     <i class="fas fa-heart"></i>
                   </div>
-                  <a href="movie-ticket-plan.html#" class="name">22/02 T7</a>
+                  <a href="#" class="name">
+                    {{ date }}
+                  </a>
                 </div>
                 <div class="movie-schedule">
-                  <div class="item">
+                  <div class="item" v-for="(show, index) in item" :key="index">
                     <NuxtLink
                       :to="{
                         name: 'showtimes-slug',
-                        params: { slug: 'hoai-duc-no-1' },
+                        params: { slug: show.slug },
                       }"
                     >
-                      07:40
+                      {{ formatTime(show.start_time) }}
                     </NuxtLink>
                   </div>
-                  <div class="item">09:40</div>
-                  <div class="item active">11:40</div>
-                  <div class="item">13:40</div>
-                  <div class="item">15:50</div>
-                  <div class="item">19:50</div>
-                </div>
-              </li>
-              <li>
-                <div class="movie-name">
-                  <div class="icons">
-                    <i class="far fa-heart"></i>
-                    <i class="fas fa-heart"></i>
-                  </div>
-                  <a href="movie-ticket-plan.html#" class="name">28/02 T7</a>
-                </div>
-                <div class="movie-schedule">
-                  <div class="item">07:40</div>
-                  <div class="item">09:40</div>
-                  <div class="item active">11:40</div>
-                  <div class="item">13:40</div>
-                  <div class="item">15:50</div>
-                  <div class="item">19:50</div>
                 </div>
               </li>
             </ul>
@@ -712,10 +694,22 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  movie: {
+    required: true,
+  },
+  showtime: {
+    required: true,
+  },
 });
+
+const formatTime = (time) => {
+  return time.slice(0, 5);
+};
 
 onMounted(() => {
   console.log(props.slug);
+  console.log(props.movie);
+  console.log(props.showtime);
 });
 </script>
 

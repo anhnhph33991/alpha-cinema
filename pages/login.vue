@@ -14,14 +14,24 @@
                 Email
                 <span>*</span>
               </label>
-              <input type="text" placeholder="Email" id="email" />
+              <input
+                type="text"
+                placeholder="Email"
+                id="email"
+                v-model="form.email"
+              />
             </div>
             <div class="form-group">
               <label for="password">
                 Password
                 <span>*</span>
               </label>
-              <input type="password" placeholder="Password" id="password" />
+              <input
+                type="password"
+                placeholder="Password"
+                id="password"
+                v-model="form.password"
+              />
             </div>
             <div class="form-group checkgroup">
               <input type="checkbox" id="bal2" required checked />
@@ -59,10 +69,16 @@
 import { useAuthStore } from "~/stores/auth";
 
 const authStore = useAuthStore();
+const form = ref({
+  email: "",
+  password: "",
+});
 
 const submited = () => {
   console.log("hehe");
 
-  authStore.login({ name: "luxchill" });
+  console.log(form.value);
+
+  authStore.login(form.value);
 };
 </script>
