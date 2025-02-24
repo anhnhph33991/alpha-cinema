@@ -1,7 +1,7 @@
 export const loginService = async (data) => {
   const { $axios } = useNuxtApp();
   try {
-    const response = await $axios.post("/v1/login", data);
+    const response = await $axios.post("/v1/signin", data);
 
     if (!response) {
       throw new Error("Invalid response");
@@ -16,7 +16,7 @@ export const loginService = async (data) => {
 export const registerService = async (data) => {
   const { $axios } = useNuxtApp();
   try {
-    const response = await $axios.post(`/v1/register`, data);
+    const response = await $axios.post(`/v1/signup`, data);
 
     if (!response) {
       throw new Error("Invalid response");
