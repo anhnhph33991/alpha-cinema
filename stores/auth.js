@@ -51,14 +51,6 @@ export const useAuthStore = defineStore(
         const response = await registerService(data);
 
         console.log(response);
-
-        // if (response.status === true) {
-        //   token.value = response.data.token;
-        //   isLogin.value = true;
-
-        //   toast.success(`${response.message}`);
-        //   router.push({ name: "index" });
-        // }
       } catch (error) {
         toast.error("lỗi");
       }

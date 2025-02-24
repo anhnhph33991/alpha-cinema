@@ -4657,7 +4657,7 @@ input[type="submit"] {
 
 .screen-thumb {
   width: 100%;
-  max-width: 730px;
+  /* max-width: 730px; */
   margin: 0 auto 30px;
   display: flex;
   align-items: center;
