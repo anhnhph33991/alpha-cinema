@@ -1,6 +1,5 @@
 <template>
   <div v-if="movieStore.movie?.data">
-    <!-- <h1>Movie: {{ slug }}</h1> -->
     <MovieDetail
       :slug="slug"
       :movie="movieStore.movie?.data.movie"
