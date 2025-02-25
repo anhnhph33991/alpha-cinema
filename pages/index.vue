@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- ==========Banner-Section========== -->
-    <AppBanner />
+    <!-- <AppBanner /> -->
     <!-- ==========Banner-Section========== -->
 
     <!-- ==========Ticket-Search========== -->
