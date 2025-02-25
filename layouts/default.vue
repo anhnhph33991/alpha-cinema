@@ -27,6 +27,7 @@
 <script setup>
 import { useWindowScroll } from "@vueuse/core";
 import "~/assets/main.css";
+import "~/assets/style.css";
 
 const { y } = useWindowScroll();
 

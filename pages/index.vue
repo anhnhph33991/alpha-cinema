@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- ==========Banner-Section========== -->
-    <!-- <AppBanner /> -->
+    <LayoutBanner />
     <!-- ==========Banner-Section========== -->
 
     <!-- ==========Ticket-Search========== -->
@@ -25,6 +25,7 @@
 </template>
 
 <script setup>
+import { LayoutBanner } from "#components";
 import { useMovieStore } from "~/stores/movie";
 
 const movieStore = useMovieStore();

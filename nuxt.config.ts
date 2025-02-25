@@ -8,7 +8,8 @@ export default defineNuxtConfig({
     'vue-sonner/nuxt',
     'nuxt-lodash',
     '@ant-design-vue/nuxt',
-    'nuxt-laravel-echo'
+    'nuxt-laravel-echo',
+    'vue3-carousel-nuxt',
   ],
   runtimeConfig: {
     public: {
@@ -26,16 +27,6 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/theme/img/favicon.png' },
-        // { rel: 'stylesheet', href: '/theme/css/bootstrap.min.css' },
-        // { rel: 'stylesheet', href: '/theme/css/fontawesome.min.css' },
-        // { rel: 'stylesheet', href: '/theme/css/animate.css' },
-        // { rel: 'stylesheet', href: '/theme/css/magnific-popup.css' },
-        // { rel: 'stylesheet', href: '/theme/css/odometer.css' },
-        // { rel: 'stylesheet', href: '/theme/css/owl.carousel.min.css' },
-        // { rel: 'stylesheet', href: '/theme/css/owl.theme.default.min.css' },
-        // { rel: 'stylesheet', href: '/theme/css/nice-select.css' },
-        // { rel: 'stylesheet', href: '/theme/css/jquery.animatedheadline.css' },
-        // { rel: 'stylesheet', href: '/theme/css/style.css' }
       ]
     }
   },
