@@ -1,5 +1,5 @@
 <template>
-  <section class="movie-section padding-top bg-two">
+  <section class="movie-section padding-top bg-two" v-if="movies">
     <div class="container">
       <div class="row flex-wrap-reverse justify-content-center">
         <div class="col-lg-12">
@@ -80,15 +80,17 @@
                   :key="date"
                   :tab="formatDate(date)"
                 >
-                  <div class="d-flex gap-1">
-                    <a-button
-                      type="primary"
-                      v-for="(showtime, index) in items"
-                      :key="index"
-                      @click="navigateShowTime(showtime)"
-                    >
-                      {{ showtime.start_time }}
-                    </a-button>
+                  <div class="tab-content">
+                    <div class="d-flex gap-1 al-tab-list">
+                      <a-button
+                        type="primary"
+                        v-for="(showtime, index) in items"
+                        :key="index"
+                        @click="navigateShowTime(showtime)"
+                      >
+                        {{ formatTime(showtime.start_time) }}
+                      </a-button>
+                    </div>
                   </div>
                 </a-tab-pane>
               </template>
@@ -101,6 +103,10 @@
       </a-modal>
     </template>
   </section>
+
+  <div v-else>
+    <a-spin />
+  </div>
 </template>
 
 <!-- <script setup>
@@ -175,6 +181,11 @@ const mode = ref("top");
 const activeKey = ref(null); // Để null để cập nhật sau
 const showtimes = computed(() => movieStore.movie?.data?.showtimes || {});
 
+/**
+ * Data active tab
+ */
+const tabActive = ref(1);
+
 defineProps({
   movies: {
     type: Array,
@@ -242,4 +253,14 @@ const formatDate = (dateStr) => {
 
   return `${dayMonth} - ${shortWeekday}`;
 };
+
+const formatTime = (time) => {
+  return time.slice(0, 5);
+};
 </script>
+
+<style>
+.tab-content {
+  padding: 15px 0px;
+}
+</style>
