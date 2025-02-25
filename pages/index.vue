@@ -13,7 +13,8 @@
       <div class="container" v-if="movieStore.movies.data">
         <a-tabs v-model="tabActive">
           <a-tab-pane key="1" tab="Phim Sắp Chiếu">
-            <h1>No Data</h1>
+            <!-- <h1>No Data</h1> -->
+            <MovieList :movies="[]" />
           </a-tab-pane>
           <a-tab-pane key="2" tab="Phim Đang Chiếu">
             <MovieList :movies="movieStore.movies?.data || []" />

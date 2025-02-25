@@ -1,5 +1,5 @@
 <template>
-  <section class="movie-section padding-top bg-two" v-if="movies">
+  <section class="movie-section padding-top bg-two" v-if="movies.length > 0">
     <div class="container">
       <div class="row flex-wrap-reverse justify-content-center">
         <div class="col-lg-12">
@@ -104,8 +104,8 @@
     </template>
   </section>
 
-  <div v-else>
-    <a-spin />
+  <div class="mt-5" v-else>
+    <a-empty />
   </div>
 </template>
 
