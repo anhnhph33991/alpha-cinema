@@ -23,6 +23,8 @@ export const useMovieStore = defineStore("movie", () => {
   const fetchMovie = async (slug) => {
     try {
       movie.value = await fetchMovieService(slug);
+
+      console.log(movie.value);
     } catch (error) {
       toast.error("call api lỗi");
     }

@@ -1,13 +1,13 @@
 <template>
   <div>
     <!-- ==========Preloader========== -->
-    <CommonPreLoader />
+    <!-- <CommonPreLoader /> -->
     <!-- ==========Preloader========== -->
 
     <!-- ==========Overlay========== -->
-    <div class="overlay"></div>
+    <!-- <div class="overlay"></div> -->
 
-    <CommonScrollToTop :isActive="isScrollToTopVisible" />
+    <a-back-top />
     <!-- ==========Overlay========== -->
 
     <!-- ==========Header-Section========== -->

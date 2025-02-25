@@ -5,7 +5,7 @@
     <!-- ==========Banner-Section========== -->
 
     <!-- ==========Ticket-Search========== -->
-    <UiTicketSearch />
+    <!-- <UiTicketSearch /> -->
     <!-- ==========Ticket-Search========== -->
 
     <!-- ==========Movie-Section========== -->
