@@ -10,7 +10,7 @@
 
     <!-- ==========Movie-Section========== -->
     <div class="mt-5">
-      <div class="container">
+      <div class="container" v-if="movieStore.movies.data">
         <a-tabs v-model="tabActive">
           <a-tab-pane key="1" tab="Phim Sắp Chiếu">
             <h1>No Data</h1>
@@ -22,6 +22,14 @@
             <h1>Data Tab 3</h1>
           </a-tab-pane>
         </a-tabs>
+      </div>
+
+      <div class="container" v-else>
+        <div
+          class="d-flex justify-content-center align-content-center align-items-center"
+        >
+          <a-spin />
+        </div>
       </div>
     </div>
     <!-- ==========Movie-Section========== -->
