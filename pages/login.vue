@@ -1,6 +1,6 @@
 <template>
   <!-- ==========Login-Section========== -->
-  <section class="account-section">
+  <!-- <section class="account-section">
     <div class="container">
       <div class="padding-top padding-bottom">
         <div class="account-area">
@@ -61,11 +61,16 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
   <!-- ==========Login-Section========== -->
+
+  <div class="page page-center al-bg-light">
+    <LoginForm />
+  </div>
 </template>
 
 <script setup>
+import { LoginForm } from "#components";
 import { useAuthStore } from "~/stores/auth";
 
 const authStore = useAuthStore();

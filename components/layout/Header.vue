@@ -20,7 +20,7 @@
     </div>
 
     <nav
-      class="navbar navbar-expand-lg bg-body-tertiary al-header-section"
+      class="navbar navbar-expand-lg al-header-section bg-white"
       :class="[{ 'al-header-active': isActive }]"
     >
       <div class="container">

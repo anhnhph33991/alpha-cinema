@@ -28,6 +28,7 @@
 import { useWindowScroll } from "@vueuse/core";
 import "~/assets/main.css";
 import "~/assets/style.css";
+import "~/assets/form.css";
 
 const { y } = useWindowScroll();
 
