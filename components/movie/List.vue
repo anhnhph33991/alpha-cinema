@@ -1,5 +1,5 @@
 <template>
-  <section class="movie-section padding-top bg-two" v-if="movies.length > 0">
+  <!-- <section class="movie-section padding-top bg-two" v-if="movies.length > 0">
     <div class="container">
       <div class="row flex-wrap-reverse justify-content-center">
         <div class="col-lg-12">
@@ -102,73 +102,133 @@
         </div>
       </a-modal>
     </template>
-  </section>
+  </section> -->
 
-  <div class="mt-5" v-else>
+  <div v-if="movies.length > 0">
+    <div class="row">
+      <div
+        class="col-lg-3 col-md-3 col-sm-8 padding-right-30 padding-left-30 padding-bottom-30"
+        v-for="movie in movies"
+        :key="movie.id"
+      >
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-8 col-xs-8">
+            <div class="product-item no-padding">
+              <div class="pi-img-wrapper">
+                <img
+                  class="img-responsive border-radius-20"
+                  alt=""
+                  src="https://files.betacorp.vn/media%2fimages%2f2025%2f02%2f18%2fscreenshot%2D2025%2D02%2D18%2D152722%2D152809%2D180225%2D53.png"
+                />
+                <span style="position: absolute; top: 10px; left: 10px">
+                  <img
+                    src="https://www.betacinemas.vn/Assets/Common/icons/films/c-18.png"
+                    class="img-responsive"
+                  />
+                </span>
+                <div class="border-radius-20">
+                  <a href="#" class="fancybox-fast-view">
+                    <i class="fa fa-play-circle"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="sticker sticker-new"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 col-md-12 col-sm-8 col-xs-8">
+            <div class="film-info film-xs-info">
+              <h3
+                class="text-sm-left text-xs-left bold margin-top-5 font-sm-18 font-xs-14"
+                style="max-height: 30px; min-height: 30px"
+              >
+                <NuxtLink
+                  :to="{ name: 'movies-slug', params: { slug: movie.slug } }"
+                >
+                  {{ limitText(movie.name, 20) }}
+                </NuxtLink>
+              </h3>
+              <ul
+                class="list-unstyled font-lg font-family-san font-sm-15 font-xs-14"
+              >
+                <li style="max-height: 50px">
+                  <span class="bold"> Thể loại:</span> {{ movie.category }}
+                </li>
+                <li>
+                  <span class="bold"> Thời lượng:</span>
+                  {{ movie.duration }} phút
+                </li>
+              </ul>
+            </div>
+
+            <div class="text-center padding-bottom-30" style="min-height: 85px">
+              <a
+                style="display: block"
+                class="btn btn-2 btn-mua-ve2 fancybox-fast-view"
+                @click.prevent="showModal(movie)"
+              >
+                MUA VÉ
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <template v-if="movieStore.movie.data">
+      <a-modal
+        :open="open"
+        width="1000px"
+        centered
+        :title="movieStore.movie.data.movie.name"
+        @cancel="handleCancel"
+        :footer="null"
+      >
+        <div>
+          <div>
+            <a-tabs
+              v-model="activeKey"
+              :tab-position="mode"
+              :style="{ height: 'auto' }"
+              @tabScroll="callback"
+            >
+              <template v-if="Object.keys(showtimes).length">
+                <a-tab-pane
+                  v-for="(items, date) in showtimes"
+                  :key="date"
+                  :tab="formatDate(date)"
+                >
+                  <div class="tab-content">
+                    <div class="d-flex gap-1 al-tab-list">
+                      <a-button
+                        type="primary"
+                        v-for="(showtime, index) in items"
+                        :key="index"
+                        @click="navigateShowTime(showtime)"
+                      >
+                        {{ formatTime(showtime.start_time) }}
+                      </a-button>
+                    </div>
+                  </div>
+                </a-tab-pane>
+              </template>
+              <template v-else>
+                <p>Loading showtimes...</p>
+              </template>
+            </a-tabs>
+          </div>
+        </div>
+      </a-modal>
+    </template>
+  </div>
+
+  <div
+    class="mt-5 h-screen d-flex justify-content-center align-items-center"
+    v-else
+  >
     <a-empty />
   </div>
 </template>
-
-<!-- <script setup>
-import { useMovieStore } from "~/stores/movie";
-
-const movieStore = useMovieStore();
-
-const movieSelected = ref(null);
-
-defineProps({
-  movies: {
-    type: Array,
-    required: true,
-  },
-});
-
-const open = ref(false);
-
-const mode = ref("top");
-const activeKey = ref(1);
-
-const showModal = (item) => {
-  open.value = true;
-
-  // console.log(item);
-
-  movieSelected.value = item;
-};
-const handleOk = (e) => {
-  console.log(e);
-  open.value = false;
-};
-
-const handleCancel = (e) => {
-  console.log(e);
-  open.value = false;
-};
-
-const callback = (val) => {
-  console.log(val);
-};
-
-const showtimes = computed(() => movieStore.movie.data.showtimes || {});
-
-/**
- * Lắng nghe movieSelect thay đổi
- */
-
-watchEffect(async () => {
-  if (movieSelected.value) {
-    console.log("hehe");
-    await movieStore.fetchMovie(movieSelected.value.slug);
-  }
-});
-
-watchEffect(() => {
-  const dates = Object.keys(showtimes.value);
-  if (dates.length > 0) {
-    activeKey.value = dates[0]; // Lấy ngày đầu tiên làm tab mặc định
-  }
-});
-</script> -->
 
 <script setup>
 import { ref, computed, watchEffect } from "vue";
@@ -194,9 +254,9 @@ defineProps({
 });
 
 // Hàm mở modal và chọn phim
-const showModal = (item) => {
+const showModal = (movie) => {
   open.value = true;
-  movieSelected.value = item;
+  movieSelected.value = movie;
 };
 
 // Đóng modal
@@ -257,10 +317,22 @@ const formatDate = (dateStr) => {
 const formatTime = (time) => {
   return time.slice(0, 5);
 };
+
+const limitText = (text, limit) => {
+  if (text.length > limit) {
+    return text.slice(0, limit) + "...";
+  }
+
+  return text;
+};
 </script>
 
 <style>
 .tab-content {
   padding: 15px 0px;
+}
+
+.h-screen {
+  min-height: 100vh;
 }
 </style>

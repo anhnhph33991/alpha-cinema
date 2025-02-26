@@ -2,13 +2,7 @@
   <div>
     <!-- ==========Banner-Section========== -->
     <LayoutBanner />
-    <!-- ==========Banner-Section========== -->
 
-    <!-- ==========Ticket-Search========== -->
-    <!-- <UiTicketSearch /> -->
-    <!-- ==========Ticket-Search========== -->
-
-    <!-- ==========Movie-Section========== -->
     <div class="mt-5">
       <div class="container" v-if="movieStore.movies.data">
         <a-tabs v-model="tabActive" :default-active-key="'2'">
@@ -19,7 +13,7 @@
             <MovieList :movies="movieStore.movies?.data || []" />
           </a-tab-pane>
           <a-tab-pane key="3" tab="Suất Chiếu Đặc Biệt">
-            <h1>Data Tab 3</h1>
+            <MovieList :movies="[]" />
           </a-tab-pane>
         </a-tabs>
       </div>

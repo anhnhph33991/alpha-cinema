@@ -1,0 +1,89 @@
+.product-item {
+    padding: 0px 30px;
+    position: relative;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.pi-img-wrapper {
+    position: relative;
+}
+
+.border-radius-20 {
+    border-radius: 20px !important;
+}
+
+.img-responsive,
+.thumbnail>img,
+.thumbnail a>img,
+.carousel-inner>.item>img,
+.carousel-inner>.item>a>img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.sticker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 63px !important;
+    height: 63px !important;
+}
+
+.sticker-new {
+    background: url('https://www.betacinemas.vn/assets/frontend/layout/img/hot.png') no-repeat;
+    left: auto;
+    right: 0;
+}
+
+/*
+footer
+*/
+.film-info {
+    height: 120px;
+    min-height: 120px;
+}
+
+.film-info a {
+    color: #337ab7;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.bold {
+    font-weight: 700 !important;
+}
+
+
+
+.padding-bottom-30 {
+    padding-bottom: 30px !important;
+}
+
+.padding-right-30 {
+    padding-right: 30px !important;
+}
+
+.padding-left-30 {
+    padding-left: 30px !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.btn-mua-ve2 {
+    /* padding: 10px 70px; */
+    position: relative;
+    font-size: large;
+    border-radius: 4px !important;
+}
+
+.btn-2,
+.btn-2:hover {
+    background-image: linear-gradient(to right, #0a64a7 0%, #258dcf 51%, #3db1f3 100%) !important;
+    color: #fff;
+}
