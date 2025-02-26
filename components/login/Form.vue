@@ -2,7 +2,7 @@
   <div class="container container-tight py-4 mt-5 card-md">
     <div class="card">
       <div class="card-body">
-        <h2 class="h2 text-center mb-4 mt-3">Đăng ký tài khoản</h2>
+        <h2 class="h2 text-center mb-4 mt-3">Đăng Nhập</h2>
         <form @submit.prevent="handleSubmit">
           <div class="mb-3">
             <label class="form-label">Email</label>

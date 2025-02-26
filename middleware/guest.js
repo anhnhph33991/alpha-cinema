@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   const parsedAuth = auth.value ?? null;
 
-  if (parsedAuth || parsedAuth.isLogin) {
+  if (parsedAuth && parsedAuth.isLogin) {
     toast.warning("Ngáo à cdmm");
     return navigateTo({
       name: "index",
