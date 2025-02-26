@@ -152,10 +152,11 @@
                 class="list-unstyled font-lg font-family-san font-sm-15 font-xs-14"
               >
                 <li style="max-height: 50px">
-                  <span class="bold"> Thể loại:</span> {{ movie.category }}
+                  <span class="bold opacity-08"> Thể loại:</span>
+                  {{ movie.category }}
                 </li>
                 <li>
-                  <span class="bold"> Thời lượng:</span>
+                  <span class="bold opacity-08"> Thời lượng:</span>
                   {{ movie.duration }} phút
                 </li>
               </ul>
@@ -342,5 +343,9 @@ const limitText = (text, limit) => {
   color: black;
   background-color: #cccccc;
   --bs-btn-border-color: none;
+}
+
+.opacity-08 {
+  opacity: 0.8;
 }
 </style>
