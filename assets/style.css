@@ -60,3 +60,7 @@
   width: 100%;
   z-index: 99999;
 }
+
+.al-cursor-pointer {
+  cursor: pointer;
+}

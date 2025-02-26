@@ -65,25 +65,21 @@
   <!-- ==========Login-Section========== -->
 
   <div class="page page-center al-bg-light">
-    <LoginForm />
+    <LoginForm @submit-form="submited" />
   </div>
 </template>
 
 <script setup>
+definePageMeta({
+  middleware: "guest",
+});
+
 import { LoginForm } from "#components";
 import { useAuthStore } from "~/stores/auth";
 
 const authStore = useAuthStore();
-const form = ref({
-  email: "",
-  password: "",
-});
 
-const submited = () => {
-  console.log("hehe");
-
-  console.log(form.value);
-
-  authStore.login(form.value);
+const submited = (data) => {
+  authStore.login(data);
 };
 </script>

@@ -67,7 +67,7 @@
           </div>
         </form>
       </div>
-      <div class="hr-text">or</div>
+      <div class="hr-text">hoặc</div>
       <div class="card-body">
         <div class="row">
           <div class="col">
@@ -99,8 +99,8 @@
       </div>
     </div>
     <div class="text-center text-secondary mt-3">
-      Don't have account yet?
-      <a href="./sign-up.html" tabindex="-1"> Sign In </a>
+      Bạn đã có tài khoản?
+      <NuxtLink :to="{ name: 'login' }"> Đăng Nhập </NuxtLink>
     </div>
   </div>
 </template>

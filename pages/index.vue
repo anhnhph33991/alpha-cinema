@@ -37,6 +37,10 @@
 </template>
 
 <script setup>
+// definePageMeta({
+//   middleware: "admin",
+// });
+
 import { LayoutBanner, MovieList } from "#components";
 import { useMovieStore } from "~/stores/movie";
 

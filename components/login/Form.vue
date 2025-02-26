@@ -3,14 +3,14 @@
     <div class="card">
       <div class="card-body">
         <h2 class="h2 text-center mb-4 mt-3">Đăng ký tài khoản</h2>
-        <form>
+        <form @submit.prevent="handleSubmit">
           <div class="mb-3">
             <label class="form-label">Email</label>
             <input
               type="email"
               class="form-control"
               placeholder="luxchill@gmail.com"
-              autocomplete="off"
+              v-model="form.email"
             />
           </div>
           <div class="mb-2">
@@ -20,7 +20,7 @@
                 type="password"
                 class="form-control"
                 placeholder="Mật khẩu"
-                autocomplete="off"
+                v-model="form.password"
               />
               <span class="input-group-text">
                 <a
@@ -53,11 +53,13 @@
             </div>
           </div>
           <div class="form-footer">
-            <button type="submit" class="btn btn-primary w-100">Sign In</button>
+            <button type="submit" class="btn btn-primary w-100">
+              Đăng Nhập
+            </button>
           </div>
         </form>
       </div>
-      <div class="hr-text">or</div>
+      <div class="hr-text">Hoặc</div>
       <div class="card-body">
         <div class="row">
           <div class="col">
@@ -87,8 +89,22 @@
       </div>
     </div>
     <div class="text-center text-secondary mt-3">
-      Don't have account yet?
-      <a href="./sign-up.html" tabindex="-1"> Sign Up </a>
+      Bạn chưa có tài khoản?
+      <NuxtLink :to="{ name: 'register' }"> Đăng Ký </NuxtLink>
     </div>
   </div>
 </template>
+
+<script setup>
+const emit = defineEmits(["submit-form"]);
+
+const form = ref({
+  email: "",
+  password: "",
+});
+
+const handleSubmit = () => {
+  console.log(form.value);
+  emit("submit-form", { ...form.value });
+};
+</script>

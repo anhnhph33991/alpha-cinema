@@ -87,6 +87,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+  middleware: "auth",
+});
+
 import { useMovieStore } from "~/stores/movie";
 import { useAuthStore } from "~/stores/auth";
 
