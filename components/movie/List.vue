@@ -200,14 +200,14 @@
                 >
                   <div class="tab-content">
                     <div class="d-flex gap-1 al-tab-list">
-                      <a-button
-                        type="primary"
+                      <button
                         v-for="(showtime, index) in items"
                         :key="index"
                         @click="navigateShowTime(showtime)"
+                        class="btn btn-primary"
                       >
                         {{ formatTime(showtime.start_time) }}
-                      </a-button>
+                      </button>
                     </div>
                   </div>
                 </a-tab-pane>
@@ -334,5 +334,13 @@ const limitText = (text, limit) => {
 
 .h-screen {
   min-height: 100vh;
+}
+
+.tab-content .btn {
+  padding: 5px 25px;
+  --bs-btn-border-radius: 0px;
+  color: black;
+  background-color: #cccccc;
+  --bs-btn-border-color: none;
 }
 </style>
