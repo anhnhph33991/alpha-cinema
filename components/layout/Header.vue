@@ -7,8 +7,7 @@
             <ul class="al-pull-right al-list-inline">
               <template v-if="authStore.isLogin">
                 <li>
-                  <NuxtLink :to="{ name: 'index' }">
-                    <!-- <span> Xin chào: {{ authStore.user.name }} </span> -->
+                  <NuxtLink :to="{ name: 'account' }">
                     Xin chào: {{ authStore.user.name }}
                   </NuxtLink>
                 </li>

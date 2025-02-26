@@ -34,3 +34,11 @@ body {
 .al-bg-light {
     background-color: #f8f8f8;
 }
+
+.al-bg-white {
+    background-color: #fff;
+}
+
+.h-screen {
+    min-height: 100vh;
+}
