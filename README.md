@@ -1,14 +1,31 @@
-# Hướng dẫn cài đặt dự án:
+# ❗Hướng dẫn cài đặt dự án:
 
 ### Mở terminal chạy các câu lệnh sau:
+
 ### 1. `git clone https://github.com/anhnhph33991/alpha-cinema.git`
+
 ### 2. `cd alpha-cinema`
+
 ### 3. `npm i`
+
 ### 4. `copy .env.example .env`
+
 ### 5. `npm run dev`
 
+# ❗Cấu hình .env
+
+### Chú Thích:
+
+    <APP_URL>: đường dẫn backend
+
+### Giá trị thay đổi:
+
+    NUXT_API_URL=<APP_URL>/api
+    NUXT_URL_ADMIN=<APP_URL>/admin
+
 #
-# Cấu trúc thư mục
+
+# ❗Cấu trúc thư mục
 
 ```
 📦 ALPHA-CINEMA/
