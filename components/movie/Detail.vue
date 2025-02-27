@@ -784,6 +784,7 @@
       width="1000px"
       :title="movie.name"
       :footer="null"
+      centered
       @cancel="openTrailer = false"
     >
       <iframe
@@ -798,7 +799,7 @@
 
     <div class="w-100">
       <div class="container">
-        <a-tabs
+        <!-- <a-tabs
           v-model="activeKey"
           :default-active-key="'1'"
           :style="{ height: '200px' }"
@@ -806,6 +807,32 @@
         >
           <a-tab-pane v-for="i in 20" :key="i" :tab="`Tab-${i}`">
             <div class="h-screen">Content of tab {{ i }}</div>
+          </a-tab-pane>
+        </a-tabs> -->
+
+        <a-tabs
+          v-model="activeKey"
+          :default-active-key="'1'"
+          :style="{ height: '200px' }"
+          @tabScroll="callback"
+        >
+          <a-tab-pane
+            v-for="(items, date) in showtime"
+            :key="date"
+            :tab="formattedReleaseDate"
+          >
+            <div class="h-screen">
+              <div class="d-flex gap-1">
+                <button
+                  v-for="(showtime, index) in items"
+                  :key="index"
+                  class="btn btn-primary"
+                  @click="navigateShowTime(showtime)"
+                >
+                  {{ formatTime(showtime.start_time) }}
+                </button>
+              </div>
+            </div>
           </a-tab-pane>
         </a-tabs>
       </div>
@@ -870,6 +897,10 @@ const formattedImage = computed(() => {
 
   return `https://alphacinema.me/storage/${props.movie.img_thumbnail}`;
 });
+
+const navigateShowTime = (showtime) => {
+  navigateTo({ name: "showtimes-slug", params: { slug: showtime.slug } });
+};
 
 onMounted(() => {
   console.log(props.slug);
