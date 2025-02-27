@@ -691,7 +691,7 @@
           data-nimg="fill"
           class="object-cover"
           sizes="100vw"
-          src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017784_0.jpg&w=1920&q=75"
+          :src="formattedImage"
           style="
             position: absolute;
             height: 100%;
@@ -721,7 +721,7 @@
               data-nimg="fill"
               class="object-cover rounded-xl"
               sizes="238px"
-              src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017784_0.jpg&w=1920&q=75"
+              :src="formattedImage"
               style="
                 position: absolute;
                 height: 100%;
@@ -743,9 +743,11 @@
             </div>
 
             <div class="d-flex align-items-center mt-2 gap-3 small">
-              <p class="text-white">{{ movie.category }}</p>
+              <p class="text-white">Danh mục: {{ movie.category }}</p>
+              <p class="text-white">-</p>
               <!-- <p class="text-white">Mỹ</p> -->
-              <p class="text-white">{{ movie.duration }} phút</p>
+              <p class="text-white">Thời lượng: {{ movie.duration }} phút</p>
+              <p class="text-white">-</p>
               <p class="text-white">Đạo diễn: {{ movie.director }}</p>
             </div>
 
@@ -803,7 +805,7 @@
           @tabScroll="callback"
         >
           <a-tab-pane v-for="i in 20" :key="i" :tab="`Tab-${i}`">
-            Content of tab {{ i }}
+            <div class="h-screen">Content of tab {{ i }}</div>
           </a-tab-pane>
         </a-tabs>
       </div>
@@ -861,6 +863,12 @@ const formattedReleaseDate = computed(() => {
   if (!props.movie.release_date) return "";
   const [year, month, day] = props.movie.release_date.split("-");
   return `${day}/${month}/${year}`;
+});
+
+const formattedImage = computed(() => {
+  if (!props.movie.img_thumbnail) return "";
+
+  return `https://alphacinema.me/storage/${props.movie.img_thumbnail}`;
 });
 
 onMounted(() => {

@@ -17,13 +17,28 @@
 import { useMovieStore } from "~/stores/movie";
 
 const movieStore = useMovieStore();
-
 const route = useRoute();
-const slug = route.params.slug;
+const slug = ref(route.params.slug);
+
+const loadMovie = () => {
+  if (
+    !movieStore.movie?.data ||
+    slug.value !== movieStore.movie.data.movie?.slug
+  ) {
+    movieStore.movie = null;
+    movieStore.fetchMovie(slug.value);
+  }
+};
 
 onMounted(() => {
-  movieStore.fetchMovie(slug);
+  loadMovie();
 });
-</script>
 
-<style lang="scss" scoped></style>
+watch(
+  () => route.params.slug,
+  (newSlug) => {
+    slug.value = newSlug;
+    loadMovie();
+  }
+);
+</script>

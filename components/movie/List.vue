@@ -120,8 +120,8 @@
                 >
                   <img
                     class="img-responsive border-radius-20"
-                    alt=""
-                    src="https://files.betacorp.vn/media%2fimages%2f2025%2f02%2f18%2fscreenshot%2D2025%2D02%2D18%2D152722%2D152809%2D180225%2D53.png"
+                    :alt="movie.name"
+                    :src="formattedImage(movie.img_thumbnail)"
                   />
                 </NuxtLink>
                 <span style="position: absolute; top: 10px; left: 10px">
@@ -329,6 +329,10 @@ const limitText = (text, limit) => {
   }
 
   return text;
+};
+
+const formattedImage = (image) => {
+  return image ? `https://alphacinema.me/storage/${image}` : "";
 };
 </script>
 
