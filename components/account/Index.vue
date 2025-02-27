@@ -105,6 +105,59 @@
         </div>
       </form>
     </div>
+
+    <a-modal
+      :open="modal2Visible"
+      title="Đổi mật khẩu"
+      centered
+      @ok="handleOk"
+      @cancel="modal2Visible = false"
+    >
+      <div class="row mt-4">
+        <div class="col-lg-12 col-md-12">
+          <div class="mb-3">
+            <label for="" class="form-label">
+              <span class="text-danger">*</span>
+              Mật khẩu hiện tại
+            </label>
+            <input
+              type="password"
+              class="form-control"
+              v-model="formDataPassword.currentPassword"
+            />
+            <small id="helpId" class="form-text text-muted">Help text</small>
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12">
+          <div class="mb-3">
+            <label for="" class="form-label">
+              <span class="text-danger">*</span>
+              Mật khẩu mới
+            </label>
+            <input
+              type="password"
+              class="form-control"
+              v-model="formDataPassword.newPassword"
+            />
+            <small id="helpId" class="form-text text-muted">Help text</small>
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12">
+          <div class="mb-3">
+            <label for="" class="form-label">
+              <span class="text-danger">*</span>
+              Xác nhận mật khẩu mới
+            </label>
+            <input
+              type="password"
+              class="form-control"
+              v-model="formDataPassword.confirmPassword"
+            />
+            <small id="helpId" class="form-text text-muted">Help text</small>
+          </div>
+        </div>
+      </div>
+    </a-modal>
   </div>
 </template>
 
@@ -117,6 +170,7 @@ const props = defineProps({
   },
 });
 
+const modal2Visible = ref(false);
 const dataForm = ref({
   name: "",
   email: "",
@@ -127,7 +181,22 @@ const dataForm = ref({
   birthday: "",
 });
 
+/**
+ * Data form password
+ */
+const formDataPassword = ref({
+  currentPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+});
+
 const handleChangePassword = () => {
+  modal2Visible.value = true;
+};
+
+const handleOk = () => {
+  console.log(formDataPassword.value);
+
   toast.success("Đổi mật khẩu");
 };
 
