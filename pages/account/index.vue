@@ -19,6 +19,10 @@
 <script setup>
 import { useAuthStore } from "#imports";
 
+definePageMeta({
+  middleware: ["auth"],
+});
+
 const authStore = useAuthStore();
 
 const activeKey = ref("1");
