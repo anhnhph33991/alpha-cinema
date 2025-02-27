@@ -8,7 +8,7 @@
       class="carousel-full-width"
     >
       <Slide v-for="(slide, index) in slides" :key="index">
-        <img :src="slide.image" alt="Slide" class="img-fluid w-100" />
+        <img :src="slide" alt="Slide" class="img-fluid w-100" />
       </Slide>
 
       <template #addons>
