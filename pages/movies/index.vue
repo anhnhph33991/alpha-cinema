@@ -17,7 +17,7 @@
 
       <div class="container" v-else>
         <div
-          class="d-flex justify-content-center align-content-center align-items-center"
+          class="h-screen d-flex justify-content-center align-content-center align-items-center"
         >
           <a-spin />
         </div>

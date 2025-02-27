@@ -18,7 +18,8 @@ import { useMovieStore } from "~/stores/movie";
 
 const movieStore = useMovieStore();
 const route = useRoute();
-const slug = ref(route.params.slug);
+// const slug = ref(route.params.slug);
+const slug = computed(() => route.params.slug);
 
 const loadMovie = () => {
   if (
@@ -30,15 +31,17 @@ const loadMovie = () => {
   }
 };
 
-onMounted(() => {
-  loadMovie();
-});
+// onMounted(() => {
+//   loadMovie();
+// });
 
-watch(
-  () => route.params.slug,
-  (newSlug) => {
-    slug.value = newSlug;
-    loadMovie();
-  }
-);
+// watch(
+//   () => route.params.slug,
+//   (newSlug) => {
+//     slug.value = newSlug;
+//     loadMovie();
+//   }
+// );
+
+watch(slug, loadMovie, { immediate: true });
 </script>
