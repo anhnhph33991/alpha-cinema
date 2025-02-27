@@ -1,13 +1,9 @@
 <template>
-  <div>
+  <NuxtLayout>
     <NuxtLoadingIndicator :throttle="0" />
-
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-
+    <NuxtPage />
     <Toaster :duration="2000" position="top-right" close-button richColors />
-  </div>
+  </NuxtLayout>
 </template>
 
 <script setup>

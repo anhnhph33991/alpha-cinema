@@ -1,8 +1,8 @@
 export const navMenu = [
-  {
-    title: "Lịch Chiếu Theo Rạp",
-    link: "/showtimes",
-  },
+  // {
+  //   title: "Lịch Chiếu Theo Rạp",
+  //   link: "/showtimes",
+  // },
   {
     title: "Phim",
     link: "/movies",

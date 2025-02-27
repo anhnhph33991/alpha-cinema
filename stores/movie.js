@@ -33,9 +33,6 @@ export const useMovieStore = defineStore("movie", () => {
   const fetchShowTimeBySlug = async (slug) => {
     try {
       showtime.value = await fetchShowTimeBySlugService(slug);
-
-      // console.log(showtime.value);
-      // console.log(showtime.value.data.seatMap);
     } catch (error) {
       toast.error("call api lỗi");
     }
