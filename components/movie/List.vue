@@ -115,11 +115,15 @@
           <div class="col-lg-12 col-md-12 col-sm-8 col-xs-8">
             <div class="product-item no-padding">
               <div class="pi-img-wrapper">
-                <img
-                  class="img-responsive border-radius-20"
-                  alt=""
-                  src="https://files.betacorp.vn/media%2fimages%2f2025%2f02%2f18%2fscreenshot%2D2025%2D02%2D18%2D152722%2D152809%2D180225%2D53.png"
-                />
+                <NuxtLink
+                  :to="{ name: 'movies-slug', params: { slug: movie.slug } }"
+                >
+                  <img
+                    class="img-responsive border-radius-20"
+                    alt=""
+                    src="https://files.betacorp.vn/media%2fimages%2f2025%2f02%2f18%2fscreenshot%2D2025%2D02%2D18%2D152722%2D152809%2D180225%2D53.png"
+                  />
+                </NuxtLink>
                 <span style="position: absolute; top: 10px; left: 10px">
                   <img
                     src="https://www.betacinemas.vn/Assets/Common/icons/films/c-18.png"
@@ -214,7 +218,7 @@
                 </a-tab-pane>
               </template>
               <template v-else>
-                <p>Loading showtimes...</p>
+                <p>Không có data...</p>
               </template>
             </a-tabs>
           </div>
