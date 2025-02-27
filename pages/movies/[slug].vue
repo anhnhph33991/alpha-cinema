@@ -6,7 +6,11 @@
       :showtime="movieStore.movie?.data.showtimes"
     />
   </div>
-  <div v-else>Loading...</div>
+  <div v-else class="d-flex justify-content-center align-items-center h-screen">
+    <div>
+      <a-spin />
+    </div>
+  </div>
 </template>
 
 <script setup>

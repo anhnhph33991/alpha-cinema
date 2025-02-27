@@ -1,6 +1,6 @@
 <template>
-  <div class="movie-section padding-top bg-two">
-    <section
+  <div class="movie-detail-section">
+    <!-- <section
       class="details-banner"
       style="background: url('/theme/img/banner/banner-movie-details.jpg')"
     >
@@ -68,9 +68,7 @@
         </div>
       </div>
     </section>
-    <!-- ==========Banner-Section========== -->
 
-    <!-- ==========Book-Section========== -->
     <section class="book-section">
       <div class="container">
         <div class="book-wrapper offset-lg-4">
@@ -128,7 +126,6 @@
         </div>
       </div>
     </section>
-    <!-- ==========Book-Section========== -->
 
     <div class="ticket-plan-section padding-top">
       <div class="container">
@@ -164,7 +161,6 @@
       </div>
     </div>
 
-    <!-- ==========Movie-Section========== -->
     <section class="movie-details-section padding-top padding-bottom">
       <div class="container">
         <div class="row justify-content-center flex-wrap-reverse mb--50">
@@ -684,7 +680,116 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
+
+    <div class="w-100 custom-wrapper position-relative wrapper">
+      <div class="w-100 h-100 inset-0 position-absolute">
+        <img
+          alt="CAPTAIN AMERICA: THẾ GIỚI MỚI-T13- 2D"
+          loading="lazy"
+          decoding="async"
+          data-nimg="fill"
+          class="object-cover"
+          sizes="100vw"
+          src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017784_0.jpg&w=1920&q=75"
+          style="
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            inset: 0px;
+            color: transparent;
+          "
+        />
+      </div>
+      <div
+        class="w-100 h-100 position-absolute z-10 inset-0 bg-primary/60"
+      ></div>
+      <div
+        class="d-none d-xl-block position-absolute w-100 top-0 bottom-0 start-0 end-0 m-auto z-20"
+      >
+        <div
+          class="w-100 mx-auto d-flex justify-content-center align-items-center custom-container"
+        >
+          <div
+            class="position-relative shadow-lg"
+            style="height: 333px; min-width: 238px"
+          >
+            <img
+              alt="CAPTAIN AMERICA: THẾ GIỚI MỚI-T13- 2D"
+              loading="lazy"
+              decoding="async"
+              data-nimg="fill"
+              class="object-cover rounded-xl"
+              sizes="238px"
+              src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2F0017784_0.jpg&w=1920&q=75"
+              style="
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                inset: 0px;
+                color: transparent;
+              "
+            />
+          </div>
+
+          <div class="d-flex flex-column" style="font-size: 0.875rem">
+            <div class="d-flex align-items-center mt-2 gap-2">
+              <h3 class="fw-bold fs-4 text-white">
+                {{ movie.name }}
+              </h3>
+              <div class="rounded-3 p-2 border border-white fw-bold text-white">
+                2D
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center mt-2 gap-3 small">
+              <p class="text-white">{{ movie.category }}</p>
+              <!-- <p class="text-white">Mỹ</p> -->
+              <p class="text-white">{{ movie.duration }} phút</p>
+              <p class="text-white">Đạo diễn: {{ movie.director }}</p>
+            </div>
+
+            <!-- <p class="text-white">Khởi chiếu: 14/02/2025</p> -->
+            <p class="text-white">Khởi chiếu: {{ formattedReleaseDate }}</p>
+
+            <div class="text-truncate-multi text-white">
+              {{ movie.description }}
+            </div>
+
+            <div class="text-danger mt-3">
+              Kiểm duyệt: T13 - Phim được phổ biến đến người xem từ đủ 13 tuổi
+              trở lên (13+)
+            </div>
+
+            <div class="mt-2 d-flex align-items-center gap-4 flex-grow-1">
+              <a class="fs-6 text-decoration-underline"> Chi tiết nội dung </a>
+
+              <button
+                class="border border-warning rounded-pill py-2 px-4 text-warning bg-transparent btn-hover-scale"
+                type="button"
+              >
+                Xem trailer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-100">
+      <div class="container">
+        <a-tabs
+          v-model="activeKey"
+          :default-active-key="'1'"
+          :style="{ height: '200px' }"
+          @tabScroll="callback"
+        >
+          <a-tab-pane v-for="i in 20" :key="i" :tab="`Tab-${i}`">
+            Content of tab {{ i }}
+          </a-tab-pane>
+        </a-tabs>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -702,9 +807,21 @@ const props = defineProps({
   },
 });
 
+const activeKey = ref("1");
+
+const callback = (val) => {
+  console.log(val);
+};
+
 const formatTime = (time) => {
   return time.slice(0, 5);
 };
+
+const formattedReleaseDate = computed(() => {
+  if (!props.movie.release_date) return "";
+  const [year, month, day] = props.movie.release_date.split("-");
+  return `${day}/${month}/${year}`;
+});
 
 onMounted(() => {
   console.log(props.slug);
@@ -714,7 +831,111 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.custom-wrapper {
+  height: 250px;
+}
+
+@media (min-width: 768px) {
+  .custom-wrapper {
+    height: 300px;
+  }
+}
+@media (min-width: 1280px) {
+  .custom-wrapper {
+    height: 473px;
+  }
+}
+
+.wrapper:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background: linear-gradient(0deg, #10141b, rgba(16, 20, 27, 0));
+}
+
+.custom-container {
+  max-width: 56rem;
+  height: 473px;
+  /* padding-top: 96px;
+  padding-bottom: 28px; */
+  gap: 40px;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
 a {
   color: white;
+}
+
+.h-250 {
+  height: 250px;
+}
+
+.inset-0 {
+  inset: 0;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.z-20 {
+  z-index: 20;
+}
+
+.bg-primary\/60 {
+  background-color: rgba(16, 20, 27, 0.6);
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+audio,
+canvas,
+embed,
+iframe,
+img,
+object,
+svg,
+video {
+  display: block;
+}
+
+.text-truncate-multi {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4; /* Giới hạn số dòng */
+  line-clamp: 4; /* Thuộc tính tiêu chuẩn */
+  overflow: hidden;
+}
+
+.btn-hover-scale {
+  transition: transform 0.2s ease-in-out;
+}
+
+.btn-hover-scale:hover {
+  transform: scale(1.05);
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.movie-detail-section .ant-tabs-tab-btn {
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 </style>

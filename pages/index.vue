@@ -3,7 +3,7 @@
     <!-- ==========Banner-Section========== -->
     <LayoutBanner />
 
-    <div class="mt-5">
+    <div class="mt-5 home-section">
       <div class="container" v-if="movieStore.movies.data">
         <a-tabs v-model="tabActive" :default-active-key="'2'">
           <a-tab-pane key="1" tab="Phim Sắp Chiếu">
@@ -49,12 +49,12 @@ onMounted(async () => {
 </script>
 
 <style>
-.ant-tabs-nav-wrap {
+.home-section .ant-tabs-nav-wrap {
   display: flex;
   justify-content: center;
 }
 
-.ant-tabs-tab-btn {
+.home-section .ant-tabs-tab-btn {
   font-size: 1.4rem;
   font-weight: 600;
 }
