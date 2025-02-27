@@ -100,7 +100,7 @@
       class="navbar navbar-expand-lg al-header-section bg-white"
       :class="[{ 'al-header-active': isActive }]"
     >
-      <div class="container">
+      <div class="container al-padding-header">
         <NuxtLink :to="{ name: 'index' }" class="navbar-brand">
           AlphaCinema
         </NuxtLink>
@@ -123,7 +123,7 @@
               <NuxtLink
                 :to="item.link"
                 exact-active-class="active"
-                class="nav-link"
+                class="nav-link al-nav-link"
               >
                 {{ item.title }}
               </NuxtLink>

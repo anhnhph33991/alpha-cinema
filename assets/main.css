@@ -39,6 +39,19 @@ body {
     background-color: #fff;
 }
 
+.al-bg-header {
+    background-color: #100f15;
+}
+
 .h-screen {
     min-height: 100vh;
+}
+
+.al-padding-header {
+    padding: 8px 0px !important;
+}
+
+.al-nav-link {
+    font-size: 17px !important;
+    font-weight: 600 !important;
 }

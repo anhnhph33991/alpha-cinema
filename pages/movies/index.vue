@@ -1,6 +1,6 @@
 <template>
   <div class="movie-section">
-    <div class="mt-2">
+    <div>
       <div class="container" v-if="movieStore.movies.data">
         <a-tabs v-model="tabActive" :default-active-key="'2'">
           <a-tab-pane key="1" tab="Phim Sắp Chiếu">
