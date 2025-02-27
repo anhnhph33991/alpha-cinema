@@ -767,6 +767,7 @@
               <button
                 class="border border-warning rounded-pill py-2 px-4 text-warning bg-transparent btn-hover-scale"
                 type="button"
+                @click="handleShowTrailer"
               >
                 Xem trailer
               </button>
@@ -775,6 +776,23 @@
         </div>
       </div>
     </div>
+
+    <a-modal
+      :open="openTrailer"
+      width="1000px"
+      :title="movie.name"
+      :footer="null"
+      @cancel="openTrailer = false"
+    >
+      <iframe
+        v-if="embedUrl"
+        :src="embedUrl"
+        width="100%"
+        height="450"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+    </a-modal>
 
     <div class="w-100">
       <div class="container">
@@ -808,6 +826,28 @@ const props = defineProps({
 });
 
 const activeKey = ref("1");
+
+/**
+ * Modal Show Trailer
+ */
+
+const openTrailer = ref(false);
+
+const handleShowTrailer = () => {
+  openTrailer.value = true;
+};
+
+const embedUrl = computed(() => {
+  if (!props.movie.trailer_url) return "";
+  const videoId =
+    props.movie.trailer_url.split("v=")[1] ||
+    props.movie.trailer_url.split("youtu.be/")[1];
+  return videoId
+    ? `https://www.youtube.com/embed/${videoId.split("&")[0]}`
+    : "";
+});
+
+/** 111 */
 
 const callback = (val) => {
   console.log(val);
