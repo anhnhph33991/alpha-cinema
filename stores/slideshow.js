@@ -8,10 +8,6 @@ export const useSlideShowStore = defineStore("slideshow", () => {
       const response = await fetchSlideShowsService();
 
       slideshows.value = response.data;
-
-      console.log(slideshows.value);
-
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
