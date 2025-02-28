@@ -10,6 +10,7 @@ export const useMovieStore = defineStore("movie", () => {
   const movies = ref([]);
   const movie = ref({});
   const showtime = ref([]);
+  const matrixColume = ref(0);
 
   const fetchMovies = async () => {
     try {
@@ -33,6 +34,11 @@ export const useMovieStore = defineStore("movie", () => {
   const fetchShowTimeBySlug = async (slug) => {
     try {
       showtime.value = await fetchShowTimeBySlugService(slug);
+      matrixColume.value = showtime.value.data.showTime.room.matrix_colume;
+
+      console.log(showtime.value);
+      console.log("hehe");
+      console.log(matrixColume.value);
     } catch (error) {
       toast.error("call api lỗi");
     }
@@ -52,6 +58,7 @@ export const useMovieStore = defineStore("movie", () => {
   return {
     movies,
     movie,
+    matrixColume,
     fetchMovies,
     fetchMovie,
     fetchShowTimeBySlug,

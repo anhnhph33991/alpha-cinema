@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="movie-section padding-top bg-two"
-    v-if="movieStore.showtime?.data"
-  >
+  <div class="movie-section padding-top bg-two" v-if="movieStore.showtime.data">
     <!-- ==========Banner-Section========== -->
     <section
       class="details-banner hero-area seat-plan-banner"
@@ -53,11 +50,13 @@
                     {
                       selected: isSeatSelected(seat),
                       hold: isSeatHeldByOthers(seat),
+                      'double-seat': seat.type_seat_id == 3,
                     },
                   ]"
                   @click="handleChooseSeat(seat)"
                 >
-                  <SeatRegular />
+                  <Sofa v-if="seat.type_seat_id == 3" />
+                  <Armchair v-else />
                 </div>
               </div>
             </div>
@@ -74,15 +73,21 @@
               <h3 class="title">$200</h3>
             </div>
             <div class="book-item">
-              <a href="movie-checkout.html" class="custom-button"
-                >checkout now</a
-              >
+              <a href="movie-checkout.html" class="custom-button">
+                checkout now
+              </a>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- ==========Movie-Section========== -->
+  </div>
+
+  <div v-else class="h-screen d-flex justify-content-center align-items-center">
+    <div>
+      <a-spin></a-spin>
+    </div>
   </div>
 </template>
 
@@ -93,6 +98,7 @@ definePageMeta({
 
 import { useMovieStore } from "~/stores/movie";
 import { useAuthStore } from "~/stores/auth";
+import { Armchair, Sofa } from "lucide-vue-next";
 
 const movieStore = useMovieStore();
 const route = useRoute();
@@ -111,6 +117,10 @@ import SeatRegular from "~/assets/seat-regular.svg";
 import { toast } from "vue-sonner";
 const echo = useEcho();
 
+/**
+ * Ngăn chặn spam click ghế
+ */
+const processingSeats = new Set();
 /**
  * Map class ghế
  */
@@ -136,6 +146,11 @@ const handleChooseSeat = async (seat) => {
   // console.log(seat);
   // console.log(currentUserId);
 
+  if (processingSeats.has(seat.id)) {
+    toast.warning("Có dấu hiệu spam, vui lòng thử lại 🤬");
+    return;
+  }
+
   if (seat.status === "sold") {
     toast.warning("Ghế này đã được bán!");
     return;
@@ -153,28 +168,34 @@ const handleChooseSeat = async (seat) => {
 
   console.log(movieStore.showtime.data.showTime.id);
 
+  processingSeats.add(seat.id);
+
   await movieStore.chooseSeat(
     movieStore.showtime.data.showTime.id,
     seat.id,
     currentUserId,
     newStatus
   );
+
+  processingSeats.delete(seat.id);
 };
 
 const callEcho = () => {
-  console.log("🔥 Đang lắng nghe kênh showtime...");
+  // console.log("🔥 Đang lắng nghe kênh showtime...");
   const channel = echo.channel("showtime");
-  console.log("🟢 Đã vào channel:", channel);
+  // console.log("🟢 Đã vào channel:", channel);
 
   channel.listen("RealTimeSeatEvent", (data) => {
-    console.log("🔥 Nhận dữ liệu từ Pusher:", data);
-    console.log(data);
+    // console.log("🔥 Nhận dữ liệu từ Pusher:", data);
+    // console.log(data);
 
     updateSeatStatus(data.seat_id, data.status, data.user_id);
   });
 };
 
 const updateSeatStatus = (seatId, newStatus, userId) => {
+  console.time("updateSeatStatus (cũ)");
+
   if (!movieStore.showtime.data.seatMap) {
     console.warn("⚠️ seatMap chưa được load!");
     return;
@@ -186,7 +207,7 @@ const updateSeatStatus = (seatId, newStatus, userId) => {
         movieStore.showtime.data.seatMap[row][col].status = newStatus;
         movieStore.showtime.data.seatMap[row][col].user_id = userId;
 
-        console.log(movieStore.showtime.data.seatMap[row][col]);
+        // console.log(movieStore.showtime.data.seatMap[row][col]);
 
         getSeatClass(movieStore.showtime.data.seatMap[row][col]);
         isSeatSelected(movieStore.showtime.data.seatMap[row][col]);
@@ -194,8 +215,7 @@ const updateSeatStatus = (seatId, newStatus, userId) => {
       }
     });
   });
-
-  console.log(`✅ Cập nhật ghế ${seatId} thành ${newStatus}`);
+  console.timeEnd("updateSeatStatus (cũ)");
 };
 
 onMounted(() => {
@@ -222,12 +242,12 @@ onUnmounted(() => {
 .seat {
   width: 40px;
   height: 40px;
-  border: 1px solid #ddd;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 2px;
-  cursor: pointer;
+  /* cursor: pointer;
+  border: 1px solid #ddd; */
 }
 
 .selected {
@@ -254,5 +274,15 @@ onUnmounted(() => {
   align-content: center;
   align-items: center;
   display: flex;
+}
+
+.seat:not(.empty-seat) {
+  border: 1px solid #ddd;
+  cursor: pointer; /* Chỉ có cursor khi ghế có dữ liệu */
+}
+
+.double-seat {
+  width: 84px !important;
+  height: 40px !important;
 }
 </style>

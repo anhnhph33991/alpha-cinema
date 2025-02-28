@@ -1046,4 +1046,12 @@ h3 {
   font-size: 1.4rem;
   font-weight: 600;
 }
+
+.movie-detail-section .btn {
+    padding: 5px 25px;
+    --bs-btn-border-radius: 0px;
+    color: black;
+    background-color: #cccccc;
+    --bs-btn-border-color: none;
+}
 </style>
