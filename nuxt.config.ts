@@ -10,7 +10,11 @@ export default defineNuxtConfig({
     '@ant-design-vue/nuxt',
     'nuxt-laravel-echo',
     'vue3-carousel-nuxt',
+    'nuxt-lucide-icons'
   ],
+  lucide: {
+    namePrefix: 'Lux'
+  },
   runtimeConfig: {
     public: {
       apiUrl: process.env.NUXT_API_URL

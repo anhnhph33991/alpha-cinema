@@ -43,8 +43,6 @@ const tabActive = ref("2");
 
 onMounted(async () => {
   movieStore.fetchMovies();
-  await nextTick();
-  tabActive.value = "2";
 });
 </script>
 

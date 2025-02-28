@@ -1,0 +1,6 @@
+/*
+    Modal Content
+*/
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-modal .ant-modal-content {
+    border-radius: 0px;
+}

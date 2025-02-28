@@ -819,7 +819,7 @@
           <a-tab-pane
             v-for="(items, date) in showtime"
             :key="date"
-            :tab="formattedReleaseDate"
+            :tab="formatDate(date)"
           >
             <div class="h-screen">
               <div class="d-flex gap-1">
@@ -891,6 +891,35 @@ const formattedReleaseDate = computed(() => {
   const [year, month, day] = props.movie.release_date.split("-");
   return `${day}/${month}/${year}`;
 });
+
+const formatDate = (dateStr) => {
+  const date = new Date(dateStr);
+  const options = { weekday: "short", day: "2-digit", month: "2-digit" };
+
+  // Format dạng: "Chủ Nhật, 16/02"
+  const formatted = new Intl.DateTimeFormat("vi-VN", options).format(date);
+
+  // Tách thứ và ngày
+  const [weekday, dayMonth] = formatted.split(", ");
+
+  // Chuyển thứ thành CN, T2, T3...
+  const shortWeekday = weekday
+    .replace("Thứ Hai", "T2")
+    .replace("Thứ Ba", "T3")
+    .replace("Thứ Tư", "T4")
+    .replace("Thứ Năm", "T5")
+    .replace("Thứ Sáu", "T6")
+    .replace("Thứ Bảy", "T7")
+    .replace("Chủ Nhật", "CN");
+
+  return `${dayMonth} - ${shortWeekday}`;
+};
+
+const formattedStartTime = (time) => {
+  if (!time) return "";
+  const [year, month, day] = time.split("-");
+  return `${day}/${month}/${year}`;
+};
 
 const formattedImage = computed(() => {
   if (!props.movie.img_thumbnail) return "";

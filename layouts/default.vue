@@ -32,6 +32,7 @@ import "~/assets/main.css";
 import "~/assets/style.css";
 import "~/assets/form.css";
 import "~/assets/movie.css";
+import "~/assets/antdv.css";
 
 const { y } = useWindowScroll();
 
