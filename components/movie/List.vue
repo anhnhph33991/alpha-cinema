@@ -332,7 +332,7 @@ const limitText = (text, limit) => {
 };
 
 const formattedImage = (image) => {
-  return image ? `https://alphacinema.me/storage/${image}` : "";
+    return image ? `http://alphacinema.test/storage/${image}` : "";
 };
 </script>
 
