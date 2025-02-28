@@ -4,11 +4,17 @@
 
 ### 1. `git clone https://github.com/anhnhph33991/alpha-cinema.git`
 
+`    - Mặc định git clone là clone nhánh master
+`
+
 ### 2. `cd alpha-cinema`
 
 ### 3. `npm i`
 
 ### 4. `copy .env.example .env`
+
+`    - Checkout qua nhánh của mình, pull code từ develop về
+`
 
 ### 5. `npm run dev`
 
