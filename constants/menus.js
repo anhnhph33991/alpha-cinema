@@ -1,15 +1,15 @@
 export const navMenu = [
-  // {
-  //   title: "Lịch Chiếu Theo Rạp",
-  //   link: "/showtimes",
-  // },
+  {
+    title: "Lịch Chiếu Theo Rạp",
+    link: "/showtimes",
+  },
   {
     title: "Phim",
     link: "/movies",
   },
   {
-    title: "Chính Sách",
-    link: "/policy",
+    title: "Rạp",
+    link: "/cinemas",
   },
   {
     title: "Giá Vé",
@@ -18,6 +18,10 @@ export const navMenu = [
   {
     title: "Tin Tức",
     link: "/posts",
+  },
+  {
+    title: "Chính Sách",
+    link: "/policy",
   },
   {
     title: "Liên hệ",

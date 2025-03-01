@@ -46,7 +46,7 @@
     >
       <div class="container al-padding-header">
         <NuxtLink :to="{ name: 'index' }" class="navbar-brand">
-          AlphaCinema
+          <img src="/assets/logo.png" alt="" />
         </NuxtLink>
 
         <button
@@ -60,7 +60,16 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-
+        <div>
+          <template>
+            <a-cascader
+              v-model:value="value"
+              :options="options"
+              expand-trigger="hover"
+              placeholder="Vui lòng chọn"
+            />
+          </template>
+        </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 al-pull-right">
             <li v-for="(item, index) in navMenu" :key="index" class="nav-item">
@@ -82,15 +91,19 @@
 <script setup>
 import { navMenu } from "~/constants/menus";
 import { useAuthStore } from "~/stores/auth";
+import { useBranchStore } from "~/stores/branch";
 import { LogOut } from "lucide-vue-next";
+import { ref } from "vue";
 
 const auth = useCookie("auth");
 const authStore = useAuthStore();
-
+const branchStore = useBranchStore();
+const options = ref([]);
+const value = ref([]);
 const logout = async () => {
   await authStore.logout();
 };
-
+gi
 const props = defineProps({
   isActive: {
     type: Boolean,
@@ -98,4 +111,47 @@ const props = defineProps({
     default: false,
   },
 });
+const formatDataToOptions = (data) => {
+  console.log("Dữ liệu trước khi format:", data); // Log kiểm tra dữ liệu từ API
+  return data.map((item) => ({
+    value: item.id,  // ID của branch
+    label: item.name, // Tên của branch
+    children: item.cinemas ? item.cinemas.map((cinema) => ({
+      value: cinema.id, // ID của cinema
+      label: cinema.name, // Tên của cinema
+    })) : [],
+  }));
+};
+onMounted(async () => {
+  await branchStore.listBranch();
+  // formatDataToOptions(branchStore.branchs);
+});
+watchEffect(() => {
+ 
+    options.value = formatDataToOptions(branchStore.branchs);
+   
+  })
+// const options = [
+//   {
+//     value: "Minh Hải",
+//     label: "Minh Hải",
+//     children: [
+//       {
+//         value: "hangzhou",
+//         label: "Hangzhou",
+//       },
+//     ],
+//   },
+//   {
+//     value: "jiangsu",
+//     label: "Jiangsu",
+//     children: [
+//       {
+//         value: "nanjing",
+//         label: "Nanjing",
+//       },
+//     ],
+//   },
+// ];
+// const value = ref([]);
 </script>
