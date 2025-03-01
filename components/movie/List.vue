@@ -292,7 +292,7 @@ const callback = (val) => {
 };
 
 const navigateShowTime = (showtime) => {
-  console.log(showtime);
+  // console.log(showtime);
   navigateTo({ name: "showtimes-slug", params: { slug: showtime.slug } });
 };
 

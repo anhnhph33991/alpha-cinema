@@ -69,6 +69,14 @@ footer
     padding-left: 30px !important;
 }
 
+.padding-bottom-10 {
+    padding-bottom: 10px !important;
+}
+
+.padding-top-10 {
+    padding-top: 10px !important;
+}
+
 .text-center {
     text-align: center;
 }
@@ -84,4 +92,16 @@ footer
 .btn-2:hover {
     background-image: linear-gradient(to right, #0a64a7 0%, #258dcf 51%, #3db1f3 100%) !important;
     color: #fff;
+}
+
+.border-dashed {
+    border-style: dashed !important;
+}
+
+.border-top-2 {
+    border-top-width: 2px !important;
+}
+
+.font-md {
+    font-size: 14px;
 }
