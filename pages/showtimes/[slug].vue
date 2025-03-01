@@ -123,8 +123,65 @@
               </div>
             </div>
 
-            <div class="choose-seat-row" v-else>
-              <h1>Order</h1>
+            <div class="choose-seat-row payment-form" v-else>
+              <div>
+                <div>
+                  <div class="row">
+                    <div
+                      class="col-lg-12 payment-page-title"
+                      style="height: 35px; line-height: 35px"
+                    >
+                      <img
+                        style="height: 100%; float: left"
+                        src="https://betacinemas.vn/Assets/global/img/booking/ic-inforpayment.png"
+                      />
+                      <div class="page-title" id="scroll-top">
+                        THÔNG TIN THANH TOÁN
+                      </div>
+                    </div>
+
+                    <div
+                      class="col-lg-4 col-md-4 payment-user-info"
+                      style="margin-top: 25px; margin-bottom: 0px"
+                    >
+                      <div class="col-md-5 user-info-item font-16">
+                        <span class="bold user-info-item-label">Họ Tên: </span
+                        ><br />
+                        <span class="user-info-item-value">David William </span>
+                      </div>
+                    </div>
+
+                    <div
+                      class="col-lg-4 col-md-4 payment-user-info"
+                      style="margin-top: 25px; margin-bottom: 0px"
+                    >
+                      <div class="col-md-5 user-info-item font-16">
+                        <span class="bold user-info-item-label"
+                          >Số điện thoại: </span
+                        ><br />
+                        <span class="user-info-item-value">0367253666</span>
+                      </div>
+                    </div>
+
+                    <div
+                      class="col-lg-4 col-md-4 payment-user-info"
+                      style="margin-top: 25px; margin-bottom: 0px"
+                    >
+                      <div class="col-md-5 user-info-item font-16">
+                        <span class="bold user-info-item-label">Email:</span
+                        ><br />
+                        <span class="user-info-item-value"
+                          >admin@gmail.com</span
+                        >
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <h1>Hello</h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -593,5 +650,27 @@ h3,
 .h3 {
   margin-top: 20px;
   margin-bottom: 10px;
+}
+
+/** page title */
+.payment-page-title .page-title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 35px;
+  height: 35px;
+  float: left;
+  margin-left: 12px;
+  color: #494c62;
+}
+
+.user-info-item-label {
+  font-family: SourceSansPro;
+  font-size: 16px;
+  font-weight: 600;
+  color: #494c62;
+}
+
+.font-16 {
+  font-size: 16px;
 }
 </style>
