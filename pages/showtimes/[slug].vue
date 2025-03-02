@@ -121,9 +121,21 @@
                   </div>
                 </div>
               </div>
+              <hr />
+              <div>
+                <h1>Các ghế đã chọn:</h1>
+                <ul v-if="seatNames.length">
+                  <li v-for="(seat, index) in seatNames" :key="index">
+                    {{ seat }}
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            <div class="choose-seat-row payment-form" v-else>
+            <div
+              class="choose-seat-row payment-form mt-3"
+              v-if="!isChoosingScreen"
+            >
               <div>
                 <div>
                   <div class="row">
@@ -175,9 +187,62 @@
                         >
                       </div>
                     </div>
+                    <br />
+                    <br />
+                    <div class="col-lg-12 ticket-selected mt-5">
+                      <!-- <div>
+                        <div class="row">
+                          <div class="col-md-6 item-seat-type">Ghế Vip</div>
+                          <div class="col-md-3 item-seat-quantity">
+                            3 x 55.000
+                          </div>
+                          <div class="col-md-3 item-seat-money">= 165.000đ</div>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <hr style="margin-top: 15px" />
+                      <div>
+                        <div class="row">
+                          <div class="col-md-6 item-seat-type">Ghế Thường</div>
+                          <div class="col-md-3 item-seat-quantity">
+                            3 x 55.000
+                          </div>
+                          <div class="col-md-3 item-seat-money">= 165.000đ</div>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div> -->
+
+                      <div
+                        v-for="(data, index) in filteredSeatGroups"
+                        :key="index"
+                      >
+                        <div>
+                          <div class="row">
+                            <div class="col-md-6 item-seat-type">
+                              {{ data.name }}
+                            </div>
+                            <div class="col-md-3 item-seat-quantity">
+                              {{ data.seats.length }} x
+                              {{ data.seats[0]?.price.toLocaleString() }}
+                            </div>
+                            <div class="col-md-3 item-seat-money">
+                              = {{ data.totalPrice.toLocaleString() }}đ
+                            </div>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        <hr
+                          v-if="index < filteredSeatGroups.length - 1"
+                          style="margin-top: 15px"
+                        />
+                      </div>
+                    </div>
 
                     <div class="col-lg-12">
-                      <h1>Hello</h1>
+                      <a-tabs v-model="activeKey">
+                        <a-tab-pane key="1" tab="Combo"> Combo </a-tab-pane>
+                        <a-tab-pane key="2" tab="Đồ lẻ"> Đồ lẻ </a-tab-pane>
+                      </a-tabs>
                     </div>
                   </div>
                 </div>
@@ -330,7 +395,7 @@
 
                   <button
                     class="btn btn-primary"
-                    @click="isChoosingScreen = false"
+                    @click="handleNextOrderOne"
                     v-if="isChoosingScreen"
                   >
                     Tiếp theo
@@ -390,6 +455,12 @@ const formattedImage = (image) => {
 };
 
 const showtime = computed(() => movieStore.showtime.data?.showTime || null);
+
+/**
+ * data tav movie
+ */
+
+const activeKey = ref("1");
 
 /**
  *
@@ -455,6 +526,7 @@ const handleChooseSeat = async (seat) => {
     seat.status === "hold" && seat.user_id == currentUserId
       ? "available"
       : "hold";
+  const newUserId = seat.user_id == currentUserId ? null : currentUserId;
 
   console.log(movieStore.showtime.data.showTime.id);
 
@@ -463,7 +535,7 @@ const handleChooseSeat = async (seat) => {
   await movieStore.chooseSeat(
     movieStore.showtime.data.showTime.id,
     seat.id,
-    currentUserId,
+    newUserId,
     newStatus
   );
 
@@ -491,6 +563,9 @@ const updateSeatStatus = (seatId, newStatus, userId) => {
     return;
   }
 
+  console.log(movieStore.showtime.data.seatMap);
+  console.log("seatmap");
+
   Object.keys(movieStore.showtime.data.seatMap).forEach((row) => {
     Object.keys(movieStore.showtime.data.seatMap[row]).forEach((col) => {
       if (movieStore.showtime.data.seatMap[row][col].id === seatId) {
@@ -505,11 +580,13 @@ const updateSeatStatus = (seatId, newStatus, userId) => {
       }
     });
   });
+  console.log(movieStore.showtime.data.seatMap);
   console.timeEnd("updateSeatStatus (cũ)");
 };
 
 const handleNextOrder = () => {
   toast.success("Thanh toán đê");
+  console.log(filteredSeatGroups);
 };
 
 const extraHeight = 47;
@@ -529,6 +606,60 @@ const formattedStartTime = (time) => {
   const [year, month, day] = time.split("-");
   return `${day}/${month}/${year}`;
 };
+
+/** new  */
+const seatNames = computed(() =>
+  movieStore.seatSelected?.length
+    ? movieStore.seatSelected.map(
+        (seat) => `${seat.coordinates_y}${seat.coordinates_x}`
+      )
+    : []
+);
+
+const handleNextOrderOne = () => {
+  if (movieStore.seatSelected?.length > 0) {
+    isChoosingScreen.value = false;
+  } else {
+    toast.warning("Vui lòng chọn ghế");
+  }
+};
+
+//
+
+// const groupedSeats = computed(() => {
+//   const categories = {
+//     1: { name: "Ghế Thường", seats: [], totalPrice: 0 },
+//     2: { name: "Ghế Vip", seats: [], totalPrice: 0 },
+//     3: { name: "Ghế Đôi", seats: [], totalPrice: 0 },
+//   };
+
+//   movieStore.seatSelected.forEach((seat) => {
+//     if (categories[seat.type_seat_id]) {
+//       categories[seat.type_seat_id].seats.push(seat);
+//       categories[seat.type_seat_id].totalPrice += seat.price;
+//     }
+//   });
+
+//   return categories;
+// });
+
+const filteredSeatGroups = computed(() => {
+  const categories = {
+    1: { name: "Ghế Thường", seats: [], totalPrice: 0 },
+    2: { name: "Ghế Vip", seats: [], totalPrice: 0 },
+    3: { name: "Ghế Đôi", seats: [], totalPrice: 0 },
+  };
+
+  movieStore.seatSelected.forEach((seat) => {
+    if (categories[seat.type_seat_id]) {
+      categories[seat.type_seat_id].seats.push(seat);
+      categories[seat.type_seat_id].totalPrice += seat.price;
+    }
+  });
+
+  // Chỉ lấy những nhóm có ghế được chọn
+  return Object.values(categories).filter((group) => group.seats.length > 0);
+});
 
 onMounted(() => {
   movieStore.fetchShowTimeBySlug(slug);
@@ -673,4 +804,60 @@ h3,
 .font-16 {
   font-size: 16px;
 }
+
+.payment-form .item-seat-type {
+  font-size: 18px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #1e1f28;
+  text-transform: uppercase;
+}
+
+.payment-form .item-seat-quantity {
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #494c62;
+}
+
+.payment-form .item-seat-money {
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #494c62;
+}
 </style>
+
+<!-- <div>
+  <div class="row">
+    <div class="col-md-6 item-seat-type">Ghế Vip</div>
+    <div class="col-md-3 item-seat-quantity">
+      3 x 55.000
+    </div>
+    <div class="col-md-3 item-seat-money">= 165.000đ</div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<hr style="margin-top: 15px" />
+<div>
+  <div class="row">
+    <div class="col-md-6 item-seat-type">Ghế Thường</div>
+    <div class="col-md-3 item-seat-quantity">
+      3 x 55.000
+    </div>
+    <div class="col-md-3 item-seat-money">= 165.000đ</div>
+  </div>
+  <div class="clearfix"></div>
+</div> -->

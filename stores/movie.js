@@ -6,11 +6,16 @@ import {
   fetchShowTimeBySlugService,
 } from "~/services/movie";
 
+import { useAuthStore } from "#imports";
+
 export const useMovieStore = defineStore("movie", () => {
   const movies = ref([]);
   const movie = ref({});
   const showtime = ref([]);
   const matrixColume = ref(0);
+  //
+  const currentUserId = useAuthStore().user.id || null;
+  const seatSelected = ref([]);
 
   const fetchMovies = async () => {
     try {
@@ -36,9 +41,11 @@ export const useMovieStore = defineStore("movie", () => {
       showtime.value = await fetchShowTimeBySlugService(slug);
       matrixColume.value = showtime.value.data.showTime.room.matrix_colume;
 
-      console.log(showtime.value);
-      console.log("hehe");
-      console.log(matrixColume.value);
+      // console.log(showtime.value);
+      // console.log("hehe");
+      // console.log(matrixColume.value);
+
+      filterSeatsByUserId(showtime.value.data.seatMapRegular, currentUserId);
     } catch (error) {
       toast.error("call api lỗi");
     }
@@ -49,16 +56,28 @@ export const useMovieStore = defineStore("movie", () => {
       const response = await chooseSeatService(id, seatId, userId, status);
 
       console.log(response);
+      console.log(`user_id: ${currentUserId}`);
+
+      filterSeatsByUserId(response.data, currentUserId);
     } catch (error) {
-      toast.error(error);
+      toast.error(error.error);
       console.log(error);
     }
+  };
+
+  const filterSeatsByUserId = (seats, userId) => {
+    seatSelected.value = seats.filter(
+      (seat) => seat.user_id == userId && seat.status == "hold"
+    );
+
+    console.log(seatSelected.value);
   };
 
   return {
     movies,
     movie,
     matrixColume,
+    seatSelected,
     fetchMovies,
     fetchMovie,
     fetchShowTimeBySlug,
