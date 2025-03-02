@@ -123,12 +123,34 @@
               </div>
               <hr />
               <div>
-                <h1>Các ghế đã chọn:</h1>
-                <ul v-if="seatNames.length">
+                <div
+                  class="d-flex align-items-center align-content-center gap-2"
+                >
+                  <div v-if="seatNames.length > 0">
+                    <p>Các ghế đã chọn:</p>
+                  </div>
+
+                  <div class="d-flex gap-2">
+                    <p
+                      v-for="(seat, index) in seatNames"
+                      :key="index"
+                      class="fw-bold"
+                    >
+                      {{ seat }},
+                    </p>
+                  </div>
+
+                  <!-- <span class="d-flex gap-2">
+                    <small v-for="(seat, index) in seatNames" :key="index">
+                      {{ seat }}
+                    </small>
+                  </span> -->
+                </div>
+                <!-- <ul v-if="seatNames.length">
                   <li v-for="(seat, index) in seatNames" :key="index">
                     {{ seat }}
                   </li>
-                </ul>
+                </ul> -->
               </div>
             </div>
 
@@ -159,7 +181,9 @@
                       <div class="col-md-5 user-info-item font-16">
                         <span class="bold user-info-item-label">Họ Tên: </span
                         ><br />
-                        <span class="user-info-item-value">David William </span>
+                        <span class="user-info-item-value">
+                          {{ authStore.user.name }}
+                        </span>
                       </div>
                     </div>
 
@@ -168,10 +192,13 @@
                       style="margin-top: 25px; margin-bottom: 0px"
                     >
                       <div class="col-md-5 user-info-item font-16">
-                        <span class="bold user-info-item-label"
-                          >Số điện thoại: </span
-                        ><br />
-                        <span class="user-info-item-value">0367253666</span>
+                        <span class="bold user-info-item-label">
+                          Số điện thoại:
+                        </span>
+                        <br />
+                        <span class="user-info-item-value">
+                          {{ authStore.user.phone }}
+                        </span>
                       </div>
                     </div>
 
@@ -180,11 +207,13 @@
                       style="margin-top: 25px; margin-bottom: 0px"
                     >
                       <div class="col-md-5 user-info-item font-16">
-                        <span class="bold user-info-item-label">Email:</span
-                        ><br />
-                        <span class="user-info-item-value"
-                          >admin@gmail.com</span
-                        >
+                        <span class="bold user-info-item-label">
+                          Email:
+                          </span>
+                          <br />
+                        <span class="user-info-item-value">
+                          {{ authStore.user.email }}
+                        </span>
                       </div>
                     </div>
                     <br />
@@ -237,12 +266,98 @@
                         />
                       </div>
                     </div>
-
+                    <hr data-v-aa786bab="" style="margin-top: 15px" />
                     <div class="col-lg-12">
                       <a-tabs v-model="activeKey">
-                        <a-tab-pane key="1" tab="Combo"> Combo </a-tab-pane>
-                        <a-tab-pane key="2" tab="Đồ lẻ"> Đồ lẻ </a-tab-pane>
+                        <a-tab-pane key="1" tab="Combo">
+                          <div class="table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col"></th>
+                                  <th scope="col">Tên combo</th>
+                                  <th scope="col">Mô tả</th>
+                                  <th scope="col">Số lượng</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr
+                                  v-for="combo in foodStore.foodCombo"
+                                  :key="combo.id"
+                                >
+                                  <td scope="row">
+                                    <img
+                                      src="https://files.betacorp.vn/media/combopackage/2024/06/05/combo-online-26-101802-050624-36.png"
+                                      alt=""
+                                      class="combo-image"
+                                      width="130"
+                                      height="130"
+                                    />
+                                  </td>
+                                  <td class="combo-name">
+                                    {{ combo.name }}
+                                  </td>
+                                  <td class="combo-description">
+                                    {{ combo.description }}
+                                  </td>
+                                  <td>
+                                    <span> {{ getQuantity(combo.id) }} </span>
+                                    <span>
+                                      <button @click="increaseQuantity(combo)">
+                                        +
+                                      </button>
+                                    </span>
+                                    <span>
+                                      <button @click="decreaseQuantity(combo)">
+                                        -
+                                      </button>
+                                    </span>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </a-tab-pane>
+                        <a-tab-pane key="2" tab="Đồ lẻ">
+                          <a-empty />
+                        </a-tab-pane>
                       </a-tabs>
+                    </div>
+                    <hr />
+                    <div class="col-lg-12">
+                      <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-3 item-seat-quantity">
+                          Tổng tiền:
+                        </div>
+                        <div
+                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
+                        >
+                          {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-3 item-seat-quantity">
+                          Tiền được giảm:
+                        </div>
+                        <div
+                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
+                        >
+                          0đ
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-3 item-seat-quantity">
+                          Tiền cần thanh toán:
+                        </div>
+                        <div
+                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
+                        >
+                          {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -389,7 +504,162 @@
                     </button>
 
                     <button class="btn btn-primary" @click="handleNextOrder">
-                      Tiếp theo
+                      Mua hàng
+                    </button>
+                  </template>
+
+                  <button
+                    class="btn btn-primary"
+                    @click="handleNextOrderOne"
+                    v-if="isChoosingScreen"
+                  >
+                    Tiếp theo
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 sidebar-md" :style="{ top: sidebarTop + 'px' }">
+            <div class="bg-white">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="pi-img-wrapper">
+                    <img
+                      class=""
+                      style="width: 100%"
+                      alt=""
+                      v-if="
+                        movieStore.showtime.data &&
+                        movieStore.showtime.data.showTime.movie.img_thumbnail
+                      "
+                      :src="
+                        formattedImage(
+                          movieStore.showtime.data.showTime.movie.img_thumbnail
+                        )
+                      "
+                    />
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <h3 class="bold color1">
+                    {{ showtime.movie.name }}
+                  </h3>
+                  <h4>2D Phụ đề</h4>
+                </div>
+
+                <div class="col-lg-12">
+                  <ul
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
+                  >
+                    <li class="padding-bottom-10 padding-top-10">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <Tag :size="18" />
+                          Thể loại
+                        </div>
+                        <div class="col-lg-6">
+                          <span class="bold fz-md">
+                            {{ showtime.movie.category }}
+                          </span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="padding-bottom-10 padding-top-10">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <Clock :size="18" />
+                          Thời lượng
+                        </div>
+                        <div class="col-lg-6">
+                          <span class="bold fz-md">
+                            {{ showtime.movie.duration }} phút
+                          </span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="col-lg-12">
+                  <hr
+                    class="border-dashed border-top-2"
+                    style="margin-top: 5px; margin-bottom: 5px"
+                  />
+
+                  <ul
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
+                  >
+                    <li class="padding-bottom-10 padding-top-10">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <Hotel :size="18" />
+                          Rạp chiếu
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span class="bold fz-md">
+                            {{ showtime.cinema.name }}
+                          </span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="padding-bottom-10 padding-top-10">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <CalendarDays :size="18" />
+                          Ngày chiếu
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span class="bold fz-md">
+                            {{ formattedStartTime(showtime.date) }}
+                          </span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="padding-bottom-10 padding-top-10">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <Clock :size="18" />
+                          Giờ chiếu
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span class="bold fz-md">
+                            {{ formatTime(showtime.start_time) }}
+                          </span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="padding-bottom-10 padding-top-10">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <TvMinimal :size="18" />
+                          Phòng chiếu
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span class="bold fz-md">
+                            {{ showtime.room.name }}
+                          </span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <div
+                  class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center"
+                >
+                  <template v-if="!isChoosingScreen">
+                    <button
+                      class="btn btn-primary"
+                      @click="isChoosingScreen = true"
+                      v-if="!isChoosingScreen"
+                    >
+                      Quay Lại
+                    </button>
+
+                    <button class="btn btn-primary" @click="handleNextOrder">
+                      Mua hàng
                     </button>
                   </template>
 
@@ -427,6 +697,8 @@ definePageMeta({
 
 import { useMovieStore } from "~/stores/movie";
 import { useAuthStore } from "~/stores/auth";
+import { useFoodStore } from "~/stores/food";
+import { useTicketStore } from "~/stores/ticket";
 import {
   Armchair,
   Sofa,
@@ -441,9 +713,16 @@ import { useWindowScroll } from "@vueuse/core";
 const { y } = useWindowScroll();
 
 const movieStore = useMovieStore();
+const foodStore = useFoodStore();
+const ticketStore = useTicketStore();
 const route = useRoute();
 const slug = route.params.slug;
 const currentUserId = useAuthStore().user.id;
+
+/**
+ *
+ */
+const authStore = useAuthStore();
 
 /**
  * Làm chức năng
@@ -584,9 +863,64 @@ const updateSeatStatus = (seatId, newStatus, userId) => {
   console.timeEnd("updateSeatStatus (cũ)");
 };
 
-const handleNextOrder = () => {
-  toast.success("Thanh toán đê");
-  console.log(filteredSeatGroups);
+const handleNextOrder = async () => {
+  try {
+    // toast.success("Thanh toán đê");
+    // console.log(movieStore.seatSelected);
+
+    const seatId = movieStore.seatSelected.map((seat) => seat.id);
+
+    const newDataSeats = movieStore.seatSelected.map((seat) => ({
+      id: seat.id,
+      user_id: seat.user_id,
+      price: seat.price,
+      coordinates_x: seat.coordinates_x,
+      coordinates_y: seat.coordinates_y,
+      type_seat_id: seat.type_seat_id || null,
+    }));
+
+    // console.log(seatId);
+
+    // console.log(`user_id: ${movieStore.currentUserId}`);
+
+    const dataTicket = {
+      user_id: movieStore.currentUserId,
+      cinema_id: movieStore.showtime.data.showTime.cinema_id,
+      room_id: movieStore.showtime.data.showTime.room_id,
+      movie_id: movieStore.showtime.data.showTime.movie_id,
+      showtime_id: movieStore.showtime.data.showTime.id,
+      voucher_code: null,
+      voucher_discount: 0,
+      point_use: 0,
+      point_discount: 0,
+      payment_name: "",
+      ticket_seats: newDataSeats,
+      ticket_combos: newDataCombo.length > 0 ? newDataCombo : null,
+      total_price: priceAll.value.payableAmount,
+      expiry: `${movieStore.showtime.data.showTime.date}|${movieStore.showtime.data.showTime.end_time}`,
+      status: "pending",
+    };
+
+    const ticketResponse = await ticketStore.createTicket(dataTicket);
+
+    if (!ticketResponse) {
+      throw new Error("Tạo ticket không thành công");
+    }
+
+    // call api reset ghế
+    await movieStore.resetAndBuySeat(
+      movieStore.showtime.data.showTime.id,
+      seatId,
+      movieStore.currentUserId,
+      "sold"
+    );
+
+    toast.success("Thanh toán thành công");
+    navigateTo({ name: "booking-success" });
+  } catch (error) {
+    console.log(error);
+    toast.error("Có lỗi xảy ra");
+  }
 };
 
 const extraHeight = 47;
@@ -620,7 +954,7 @@ const handleNextOrderOne = () => {
   if (movieStore.seatSelected?.length > 0) {
     isChoosingScreen.value = false;
   } else {
-    toast.warning("Vui lòng chọn ghế");
+    toast.warning("Vui lòng chọn ít nhất 1 ghế");
   }
 };
 
@@ -661,8 +995,78 @@ const filteredSeatGroups = computed(() => {
   return Object.values(categories).filter((group) => group.seats.length > 0);
 });
 
+const priceAll = ref({
+  totalAmount: 0,
+  discountAmount: 0,
+  payableAmount: 0,
+});
+
+// const handleTotalPrice = computed(() => {
+//   if (!movieStore.seatSelected || movieStore.seatSelected.length === 0) {
+//     return 0; // Trả về 0 nếu không có ghế nào được chọn
+//   }
+
+//   return movieStore.seatSelected.reduce((sum, seat) => sum + seat.price, 0);
+// });
+
+const handleTotalPrice = computed(() => {
+  const seatTotal =
+    movieStore.seatSelected?.reduce((sum, seat) => sum + seat.price, 0) || 0;
+  const foodTotal = newDataCombo.reduce(
+    (sum, combo) => sum + combo.quantity * combo.price,
+    0
+  );
+
+  return seatTotal + foodTotal;
+});
+
+const newDataCombo = reactive([]);
+
+const increaseQuantity = (combo) => {
+  console.log("mua do an");
+
+  const existingCombo = newDataCombo.find((item) => item.id === combo.id);
+
+  if (existingCombo) {
+    // Nếu combo đã tồn tại, chỉ tăng số lượng
+    existingCombo.quantity += 1;
+  } else {
+    // Nếu combo chưa tồn tại, clone rồi push vào mảng
+    newDataCombo.push({ ...combo, quantity: 1 });
+  }
+
+  console.log("Tăng số lượng:", newDataCombo);
+};
+
+const decreaseQuantity = (combo) => {
+  const index = newDataCombo.findIndex((item) => item.id === combo.id);
+
+  if (index !== -1) {
+    if (newDataCombo[index].quantity > 1) {
+      newDataCombo[index].quantity -= 1;
+    } else {
+      // Nếu số lượng = 1 và bấm giảm => Xóa khỏi mảng
+      newDataCombo.splice(index, 1);
+    }
+  }
+
+  console.log("Giảm số lượng:", newDataCombo);
+};
+
+const getQuantity = (id) => {
+  const combo = newDataCombo.find((item) => item.id === id);
+  return combo ? combo.quantity : 0;
+};
+
+watch(handleTotalPrice, (newTotal) => {
+  priceAll.value.totalAmount = newTotal;
+  priceAll.value.payableAmount = newTotal - priceAll.value.discountAmount;
+});
+
 onMounted(() => {
   movieStore.fetchShowTimeBySlug(slug);
+  foodStore.fetchFoods();
+  foodStore.fetchFoodCombo();
   callEcho();
 });
 
@@ -837,6 +1241,27 @@ h3,
   letter-spacing: normal;
   text-align: right;
   color: #494c62;
+}
+
+.payment-form .total-money-name {
+  color: rgb(253, 40, 2) !important;
+  font-size: 20px !important;
+}
+
+.sidebar-md {
+  display: none;
+}
+
+/** responsive */
+
+@media (max-width: 950px) {
+  .movie-section .showtime-choose-seat .sidebar {
+    display: none;
+  }
+
+  .movie-section .showtime-choose-seat .sidebar-md {
+    display: block;
+  }
 }
 </style>
 

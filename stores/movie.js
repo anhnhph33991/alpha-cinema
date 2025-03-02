@@ -4,6 +4,7 @@ import {
   fetchMovieService,
   fetchMoviesService,
   fetchShowTimeBySlugService,
+  resetAndBuySeatService,
 } from "~/services/movie";
 
 import { useAuthStore } from "#imports";
@@ -41,7 +42,7 @@ export const useMovieStore = defineStore("movie", () => {
       showtime.value = await fetchShowTimeBySlugService(slug);
       matrixColume.value = showtime.value.data.showTime.room.matrix_colume;
 
-      // console.log(showtime.value);
+      console.log(showtime.value);
       // console.log("hehe");
       // console.log(matrixColume.value);
 
@@ -73,15 +74,27 @@ export const useMovieStore = defineStore("movie", () => {
     console.log(seatSelected.value);
   };
 
+  const resetAndBuySeat = async (id, seatId, userId, status) => {
+    try {
+      const response = await resetAndBuySeatService(id, seatId, userId, status);
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     movies,
     movie,
     matrixColume,
     seatSelected,
+    currentUserId,
     fetchMovies,
     fetchMovie,
     fetchShowTimeBySlug,
     showtime,
     chooseSeat,
+    resetAndBuySeat,
   };
 });
