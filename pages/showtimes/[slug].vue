@@ -802,8 +802,6 @@ const handleChooseSeat = async (seat) => {
       : "hold";
   const newUserId = seat.user_id == currentUserId ? null : currentUserId;
 
-  // console.log(movieStore.showtime.data.showTime.id);
-
   processingSeats.add(seat.id);
 
   updateSeatStatus(seat.id, newStatus, newUserId);
@@ -848,37 +846,37 @@ const updateSeatStatus = (seatId, newStatus, userId) => {
     return;
   }
 
-  Object.keys(movieStore.showtime.data.seatMap).forEach((row) => {
-    Object.keys(movieStore.showtime.data.seatMap[row]).forEach((col) => {
-      if (movieStore.showtime.data.seatMap[row][col].id === seatId) {
-        movieStore.showtime.data.seatMap[row][col].status = newStatus;
-        movieStore.showtime.data.seatMap[row][col].user_id = userId;
+  // Object.keys(movieStore.showtime.data.seatMap).forEach((row) => {
+  //   Object.keys(movieStore.showtime.data.seatMap[row]).forEach((col) => {
+  //     if (movieStore.showtime.data.seatMap[row][col].id === seatId) {
+  //       movieStore.showtime.data.seatMap[row][col].status = newStatus;
+  //       movieStore.showtime.data.seatMap[row][col].user_id = userId;
 
-        // console.log(movieStore.showtime.data.seatMap[row][col]);
+  //       // console.log(movieStore.showtime.data.seatMap[row][col]);
 
-        getSeatClass(movieStore.showtime.data.seatMap[row][col]);
-        isSeatSelected(movieStore.showtime.data.seatMap[row][col]);
-        isSeatHeldByOthers(movieStore.showtime.data.seatMap[row][col]);
-      }
-    });
-  });
-
-  // const rows = Object.keys(movieStore.showtime.data.seatMap);
-  // for (const row of rows) {
-  //   const cols = Object.keys(movieStore.showtime.data.seatMap[row]);
-  //   for (const col of cols) {
-  //     const seat = movieStore.showtime.data.seatMap[row][col];
-  //     if (seat.id === seatId) {
-  //       seat.status = newStatus;
-  //       seat.user_id = userId;
-
-  //       getSeatClass(seat);
-  //       isSeatSelected(seat);
-  //       isSeatHeldByOthers(seat);
-  //       return;
+  //       getSeatClass(movieStore.showtime.data.seatMap[row][col]);
+  //       isSeatSelected(movieStore.showtime.data.seatMap[row][col]);
+  //       isSeatHeldByOthers(movieStore.showtime.data.seatMap[row][col]);
   //     }
-  //   }
-  // }
+  //   });
+  // });
+
+  const rows = Object.keys(movieStore.showtime.data.seatMap);
+  for (const row of rows) {
+    const cols = Object.keys(movieStore.showtime.data.seatMap[row]);
+    for (const col of cols) {
+      const seat = movieStore.showtime.data.seatMap[row][col];
+      if (seat.id === seatId) {
+        seat.status = newStatus;
+        seat.user_id = userId;
+
+        getSeatClass(seat);
+        isSeatSelected(seat);
+        isSeatHeldByOthers(seat);
+        return; // Thoát ngay khi tìm thấy
+      }
+    }
+  }
 };
 
 const handleNextOrder = async () => {
