@@ -57,14 +57,27 @@ export default defineNuxtConfig({
   /**
    * Key hoang anh
    */
+  // echo: {
+  //   broadcaster: 'pusher',
+  //   key: '164f84f4be1929fae865', 
+  //   cluster: 'ap1',
+  //   host: '127.0.0.1', 
+  //   port: 6001,
+  //   scheme: 'https',
+  //   transports: ['websocket'],
+  // },
+
   echo: {
-    broadcaster: 'pusher',
-    key: '164f84f4be1929fae865', // ✅ Đảm bảo trùng với backend
-    cluster: 'ap1',
-    host: '127.0.0.1', // ✅ Dùng 127.0.0.1 thay vì 'localhost' để tránh lỗi DNS lookup chậm
-    port: 6001, // ✅ Pusher Laravel WebSockets dùng cổng 6001 mặc định
-    scheme: 'https',
-    transports: ['websocket'], // ✅ Chỉ dùng 'websocket' để tránh fallback sang HTTP polling gây chậm
+    broadcaster: 'reverb',
+    key: 'r6f2xqvoz9942lfwjser',
+    host: 'alphacinema.me',
+    port: 8080,
+    scheme: 'http',
+    transports: ['ws'],
+    properties: {
+      encrypted: true,
+      rejectUnauthorized: false,
+    },
   },
 
   // echo: {

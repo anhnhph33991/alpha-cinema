@@ -781,9 +781,6 @@ const isSeatHeldByOthers = (seat) => {
 };
 
 const handleChooseSeat = async (seat) => {
-  // console.log(seat);
-  // console.log(currentUserId);
-
   if (processingSeats.has(seat.id)) {
     toast.warning("Có dấu hiệu spam, vui lòng thử lại 🤬");
     return;
@@ -805,9 +802,15 @@ const handleChooseSeat = async (seat) => {
       : "hold";
   const newUserId = seat.user_id == currentUserId ? null : currentUserId;
 
-  console.log(movieStore.showtime.data.showTime.id);
+  // console.log(movieStore.showtime.data.showTime.id);
 
   processingSeats.add(seat.id);
+
+  updateSeatStatus(seat.id, newStatus, newUserId);
+  console.log("call function updateSeatStatus");
+
+  console.log("update ghế");
+  console.log(movieStore.showtime.data.seatMap);
 
   await movieStore.chooseSeat(
     movieStore.showtime.data.showTime.id,
@@ -816,9 +819,11 @@ const handleChooseSeat = async (seat) => {
     newStatus
   );
 
+  console.log("call api");
+
   // updateSeatStatus(data.seat_id, data.status, data.user_id);
 
-  processingSeats.delete(seat.id);
+  processingSeats.delete(seat.id, newUserId, newStatus);
 };
 
 const callEcho = () => {
@@ -827,32 +832,21 @@ const callEcho = () => {
   // console.log("🟢 Đã vào channel:", channel);
 
   channel.listen("RealTimeSeatEvent", (data) => {
-    console.time("⏳ Thời gian nhận sự kiện");
-    console.log("🔥 Nhận dữ liệu từ Pusher:", data);
-    console.timeEnd("⏳ Thời gian nhận sự kiện");
-
-    // console.log("🔥 Nhận dữ liệu từ Pusher:", data);
-    // console.log(data);
-
     updateSeatStatus(data.seat_id, data.status, data.user_id);
+    console.log("lắng nghe realtime");
   });
 };
 
 const updateSeatStatus = (seatId, newStatus, userId) => {
-  console.time("updateSeatStatus (cũ)");
+  // const seatPos = movieStore.showtime.data.seatIdMap[seatId];
+
+  // console.log(seatPos);
+  // console.log("seatmap ");
 
   if (!movieStore.showtime.data.seatMap) {
     console.warn("⚠️ seatMap chưa được load!");
     return;
   }
-
-  // console.log("seat_id");
-  // console.log(seatId, newStatus, userId);
-
-  // console.log(movieStore.showtime.data.seatMap);
-
-  // console.log(movieStore.showtime.data.seatMap);
-  // console.log("seatmap");
 
   Object.keys(movieStore.showtime.data.seatMap).forEach((row) => {
     Object.keys(movieStore.showtime.data.seatMap[row]).forEach((col) => {
@@ -868,8 +862,23 @@ const updateSeatStatus = (seatId, newStatus, userId) => {
       }
     });
   });
-  // console.log(movieStore.showtime.data.seatMap);
-  console.timeEnd("updateSeatStatus (cũ)");
+
+  // const rows = Object.keys(movieStore.showtime.data.seatMap);
+  // for (const row of rows) {
+  //   const cols = Object.keys(movieStore.showtime.data.seatMap[row]);
+  //   for (const col of cols) {
+  //     const seat = movieStore.showtime.data.seatMap[row][col];
+  //     if (seat.id === seatId) {
+  //       seat.status = newStatus;
+  //       seat.user_id = userId;
+
+  //       getSeatClass(seat);
+  //       isSeatSelected(seat);
+  //       isSeatHeldByOthers(seat);
+  //       return;
+  //     }
+  //   }
+  // }
 };
 
 const handleNextOrder = async () => {
