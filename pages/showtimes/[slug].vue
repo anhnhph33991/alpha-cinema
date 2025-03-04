@@ -97,10 +97,10 @@
                                 :key="seat.id"
                                 :class="[
                                   'seat',
-                                  getSeatClass(seat),
+                                  movieStore.getSeatClass(seat),
                                   {
-                                    selected: isSeatSelected(seat),
-                                    hold: isSeatHeldByOthers(seat),
+                                    selected: movieStore.isSeatSelected(seat),
+                                    hold: movieStore.isSeatHeldByOthers(seat),
                                     'double-seat': seat.type_seat_id == 3,
                                   },
                                 ]"
@@ -759,26 +759,6 @@ const echo = useEcho();
  * Ngăn chặn spam click ghế
  */
 const processingSeats = new Set();
-/**
- * Map class ghế
- */
-const getSeatClass = (seat) => {
-  return {
-    sold: seat.status === "sold",
-    available: seat.status === "available",
-  };
-};
-
-/**
- *
- */
-const isSeatSelected = (seat) => {
-  return seat.status === "hold" && seat.user_id == currentUserId;
-};
-
-const isSeatHeldByOthers = (seat) => {
-  return seat.status === "hold" && seat.user_id != currentUserId;
-};
 
 const handleChooseSeat = async (seat) => {
   if (processingSeats.has(seat.id)) {
@@ -804,11 +784,7 @@ const handleChooseSeat = async (seat) => {
 
   processingSeats.add(seat.id);
 
-  updateSeatStatus(seat.id, newStatus, newUserId);
-  console.log("call function updateSeatStatus");
-
-  console.log("update ghế");
-  console.log(movieStore.showtime.data.seatMap);
+  movieStore.applyRealTimeSeatChange(seat.id, newStatus, newUserId);
 
   await movieStore.chooseSeat(
     movieStore.showtime.data.showTime.id,
@@ -817,66 +793,15 @@ const handleChooseSeat = async (seat) => {
     newStatus
   );
 
-  console.log("call api");
-
-  // updateSeatStatus(data.seat_id, data.status, data.user_id);
-
   processingSeats.delete(seat.id, newUserId, newStatus);
 };
 
 const callEcho = () => {
-  // console.log("🔥 Đang lắng nghe kênh showtime...");
   const channel = echo.channel("showtime");
-  // console.log("🟢 Đã vào channel:", channel);
 
   channel.listen("RealTimeSeatEvent", (data) => {
-    updateSeatStatus(data.seat_id, data.status, data.user_id);
-    console.log("lắng nghe realtime");
+    movieStore.applyRealTimeSeatChange(data.seat_id, data.status, data.user_id);
   });
-};
-
-const updateSeatStatus = (seatId, newStatus, userId) => {
-  // const seatPos = movieStore.showtime.data.seatIdMap[seatId];
-
-  // console.log(seatPos);
-  // console.log("seatmap ");
-
-  if (!movieStore.showtime.data.seatMap) {
-    console.warn("⚠️ seatMap chưa được load!");
-    return;
-  }
-
-  // Object.keys(movieStore.showtime.data.seatMap).forEach((row) => {
-  //   Object.keys(movieStore.showtime.data.seatMap[row]).forEach((col) => {
-  //     if (movieStore.showtime.data.seatMap[row][col].id === seatId) {
-  //       movieStore.showtime.data.seatMap[row][col].status = newStatus;
-  //       movieStore.showtime.data.seatMap[row][col].user_id = userId;
-
-  //       // console.log(movieStore.showtime.data.seatMap[row][col]);
-
-  //       getSeatClass(movieStore.showtime.data.seatMap[row][col]);
-  //       isSeatSelected(movieStore.showtime.data.seatMap[row][col]);
-  //       isSeatHeldByOthers(movieStore.showtime.data.seatMap[row][col]);
-  //     }
-  //   });
-  // });
-
-  const rows = Object.keys(movieStore.showtime.data.seatMap);
-  for (const row of rows) {
-    const cols = Object.keys(movieStore.showtime.data.seatMap[row]);
-    for (const col of cols) {
-      const seat = movieStore.showtime.data.seatMap[row][col];
-      if (seat.id === seatId) {
-        seat.status = newStatus;
-        seat.user_id = userId;
-
-        getSeatClass(seat);
-        isSeatSelected(seat);
-        isSeatHeldByOthers(seat);
-        return; // Thoát ngay khi tìm thấy
-      }
-    }
-  }
 };
 
 const handleNextOrder = async () => {
@@ -1078,11 +1003,23 @@ watch(handleTotalPrice, (newTotal) => {
   priceAll.value.totalAmount = newTotal;
   priceAll.value.payableAmount = newTotal - priceAll.value.discountAmount;
 });
+/**
+ * Call all api with promose.all
+ */
+const promiseAllApi = async () => {
+  try {
+    await Promise.all([
+      movieStore.fetchShowTimeBySlug(slug),
+      foodStore.fetchFoods(),
+      foodStore.fetchFoodCombo(),
+    ]);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 onMounted(() => {
-  movieStore.fetchShowTimeBySlug(slug);
-  foodStore.fetchFoods();
-  foodStore.fetchFoodCombo();
+  promiseAllApi();
   callEcho();
 });
 
@@ -1280,25 +1217,3 @@ h3,
   }
 }
 </style>
-
-<!-- <div>
-  <div class="row">
-    <div class="col-md-6 item-seat-type">Ghế Vip</div>
-    <div class="col-md-3 item-seat-quantity">
-      3 x 55.000
-    </div>
-    <div class="col-md-3 item-seat-money">= 165.000đ</div>
-  </div>
-  <div class="clearfix"></div>
-</div>
-<hr style="margin-top: 15px" />
-<div>
-  <div class="row">
-    <div class="col-md-6 item-seat-type">Ghế Thường</div>
-    <div class="col-md-3 item-seat-quantity">
-      3 x 55.000
-    </div>
-    <div class="col-md-3 item-seat-money">= 165.000đ</div>
-  </div>
-  <div class="clearfix"></div>
-</div> -->

@@ -85,6 +85,63 @@ export const useMovieStore = defineStore("movie", () => {
       console.log(error);
     }
   };
+  /**
+   * Cập nhật lại ghế dựa vào data realtime trả về
+   *
+   * @param {number | string} seatId
+   * @param {null | string} status
+   * @param {number | string} userId
+   */
+  const applyRealTimeSeatChange = (seatId, status, userId) => {
+    if (!showtime.value.data.seatMap) {
+      console.warn("⚠️ seatMap chưa được load!");
+      return;
+    }
+
+    const rows = Object.keys(showtime.value.data.seatMap);
+
+    for (const row of rows) {
+      const cols = Object.keys(showtime.value.data.seatMap[row]);
+      for (const col of cols) {
+        const seat = showtime.value.data.seatMap[row][col];
+        if (seat.id === seatId) {
+          seat.status = status;
+          seat.user_id = userId;
+
+          getSeatClass(seat);
+          isSeatSelected(seat);
+          isSeatHeldByOthers(seat);
+          return; // Thoát ngay khi tìm thấy
+        }
+      }
+    }
+  };
+  /**
+   * Mapping class từ database
+   *
+   * @param {*} seat
+   */
+  const getSeatClass = (seat) => {
+    return {
+      sold: seat.status === "sold",
+      available: seat.status === "available",
+    };
+  };
+  /**
+   *
+   *
+   * @param {*} seat
+   */
+  const isSeatSelected = (seat) => {
+    return seat.status === "hold" && seat.user_id == currentUserId;
+  };
+  /**
+   *
+   * @param {*} seat
+   */
+  const isSeatHeldByOthers = (seat) => {
+    return seat.status === "hold" && seat.user_id != currentUserId;
+  };
 
   return {
     movies,
@@ -98,5 +155,9 @@ export const useMovieStore = defineStore("movie", () => {
     showtime,
     chooseSeat,
     resetAndBuySeat,
+    applyRealTimeSeatChange,
+    getSeatClass,
+    isSeatSelected,
+    isSeatHeldByOthers,
   };
 });
