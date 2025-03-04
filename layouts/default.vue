@@ -21,7 +21,7 @@
     <!-- ==========View========== -->
 
     <!-- ==========Footer-Section========== -->
-    <!-- <LayoutFooter /> -->
+    <LayoutFooter />
     <!-- ==========Footer-Section========== -->
   </div>
 </template>
