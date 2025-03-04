@@ -207,10 +207,8 @@
                       style="margin-top: 25px; margin-bottom: 0px"
                     >
                       <div class="col-md-5 user-info-item font-16">
-                        <span class="bold user-info-item-label">
-                          Email:
-                          </span>
-                          <br />
+                        <span class="bold user-info-item-label"> Email: </span>
+                        <br />
                         <span class="user-info-item-value">
                           {{ authStore.user.email }}
                         </span>
@@ -818,6 +816,8 @@ const handleChooseSeat = async (seat) => {
     newStatus
   );
 
+  // updateSeatStatus(data.seat_id, data.status, data.user_id);
+
   processingSeats.delete(seat.id);
 };
 
@@ -827,6 +827,10 @@ const callEcho = () => {
   // console.log("🟢 Đã vào channel:", channel);
 
   channel.listen("RealTimeSeatEvent", (data) => {
+    console.time("⏳ Thời gian nhận sự kiện");
+    console.log("🔥 Nhận dữ liệu từ Pusher:", data);
+    console.timeEnd("⏳ Thời gian nhận sự kiện");
+
     // console.log("🔥 Nhận dữ liệu từ Pusher:", data);
     // console.log(data);
 
@@ -842,8 +846,13 @@ const updateSeatStatus = (seatId, newStatus, userId) => {
     return;
   }
 
-  console.log(movieStore.showtime.data.seatMap);
-  console.log("seatmap");
+  // console.log("seat_id");
+  // console.log(seatId, newStatus, userId);
+
+  // console.log(movieStore.showtime.data.seatMap);
+
+  // console.log(movieStore.showtime.data.seatMap);
+  // console.log("seatmap");
 
   Object.keys(movieStore.showtime.data.seatMap).forEach((row) => {
     Object.keys(movieStore.showtime.data.seatMap[row]).forEach((col) => {
@@ -859,7 +868,7 @@ const updateSeatStatus = (seatId, newStatus, userId) => {
       }
     });
   });
-  console.log(movieStore.showtime.data.seatMap);
+  // console.log(movieStore.showtime.data.seatMap);
   console.timeEnd("updateSeatStatus (cũ)");
 };
 

@@ -8,7 +8,7 @@ export const useFoodStore = defineStore("food", () => {
     try {
       const response = await fetchFoodsService();
 
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -20,7 +20,7 @@ export const useFoodStore = defineStore("food", () => {
 
       foodCombo.value = response.data;
 
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }

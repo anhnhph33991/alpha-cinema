@@ -31,7 +31,7 @@ export const useMovieStore = defineStore("movie", () => {
     try {
       movie.value = await fetchMovieService(slug);
 
-      console.log(movie.value);
+      // console.log(movie.value);
     } catch (error) {
       toast.error("call api lỗi");
     }
@@ -42,7 +42,7 @@ export const useMovieStore = defineStore("movie", () => {
       showtime.value = await fetchShowTimeBySlugService(slug);
       matrixColume.value = showtime.value.data.showTime.room.matrix_colume;
 
-      console.log(showtime.value);
+      // console.log(showtime.value);
       // console.log("hehe");
       // console.log(matrixColume.value);
 
@@ -56,10 +56,12 @@ export const useMovieStore = defineStore("movie", () => {
     try {
       const response = await chooseSeatService(id, seatId, userId, status);
 
-      console.log(response);
-      console.log(`user_id: ${currentUserId}`);
+      // console.log(response);
+      // console.log(`user_id: ${currentUserId}`);
 
       filterSeatsByUserId(response.data, currentUserId);
+
+      console.log("đoàn chim to");
     } catch (error) {
       toast.error(error.error);
       console.log(error);
@@ -71,7 +73,7 @@ export const useMovieStore = defineStore("movie", () => {
       (seat) => seat.user_id == userId && seat.status == "hold"
     );
 
-    console.log(seatSelected.value);
+    // console.log(seatSelected.value);
   };
 
   const resetAndBuySeat = async (id, seatId, userId, status) => {
