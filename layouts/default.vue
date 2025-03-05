@@ -24,6 +24,7 @@
     <!-- <LayoutFooter /> -->
     <!-- ==========Footer-Section========== -->
   </div>
+  
 </template>
 
 <script setup>
@@ -33,6 +34,9 @@ import "~/assets/style.css";
 import "~/assets/form.css";
 import "~/assets/movie.css";
 import "~/assets/antdv.css";
+
+
+
 
 const { y } = useWindowScroll();
 
