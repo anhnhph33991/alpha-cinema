@@ -20,7 +20,7 @@
 import { useAuthStore } from "#imports";
 
 definePageMeta({
-  middleware: ["auth"],
+  // middleware: ["auth"],
 });
 
 const authStore = useAuthStore();
