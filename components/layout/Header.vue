@@ -44,7 +44,7 @@
       class="navbar navbar-expand-lg al-header-section bg-white"
       :class="[{ 'al-header-active': isActive }]"
     >
-      <div class="container al-padding-header">
+      <div class="container al-padding-header al-with-header">
         <NuxtLink :to="{ name: 'index' }" class="navbar-brand">
           AlphaCinema
         </NuxtLink>
@@ -81,18 +81,27 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 al-pull-right">
-            <li v-for="(item, index) in navMenu" :key="index" class="nav-item">
-              <NuxtLink
-                :to="item.link"
-                exact-active-class="active"
-                class="nav-link al-nav-link"
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarSupportedContent"
+        >
+          <div>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 al-pull-right">
+              <li
+                v-for="(item, index) in navMenu"
+                :key="index"
+                class="nav-item"
               >
-                {{ item.title }}
-              </NuxtLink>
-            </li>
-          </ul>
+                <NuxtLink
+                  :to="item.link"
+                  exact-active-class="active"
+                  class="nav-link al-nav-link"
+                >
+                  {{ item.title }}
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -193,18 +202,14 @@ onMounted(async () => {
   padding: 10px 0;
 }
 
-.al-padding-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 90%;
-  max-width: 1200px;
+.al-with-header {
+  width: 100%;
+  min-width: auto;
 }
 
 .navbar-nav {
   display: flex;
   justify-content: center;
-  gap: 20px;
 }
 
 .navbar-nav .nav-item {
