@@ -84,16 +84,28 @@ const formattedImage = (image) => {
 
               <ul class="footer_ul2_amrc">
                 <li>
-                  <a href="#"><i class="bi bi-facebook fleft padding-right mt-0"></i> </a>
-                  <p><a href="#">{{ settings.facebook_link }}</a></p>
+                  <a href="#"
+                    ><i class="bi bi-facebook fleft padding-right mt-0"></i>
+                  </a>
+                  <p>
+                    <a href="#">{{ settings.facebook_link }}</a>
+                  </p>
                 </li>
                 <li>
-                  <a href="#"><i class="bi bi-youtube fleft padding-right mt-0"></i> </a>
-                  <p><a href="#">{{ settings.youtube_link }}</a></p>
+                  <a href="#"
+                    ><i class="bi bi-youtube fleft padding-right mt-0"></i>
+                  </a>
+                  <p>
+                    <a href="#">{{ settings.youtube_link }}</a>
+                  </p>
                 </li>
                 <li>
-                  <a href="#"><i class="bi bi-instagram fleft padding-right mt-0"></i> </a>
-                  <p><a href="#">{{ settings.instagram_link }}</a></p>
+                  <a href="#"
+                    ><i class="bi bi-instagram fleft padding-right mt-0"></i>
+                  </a>
+                  <p>
+                    <a href="#">{{ settings.instagram_link }}</a>
+                  </p>
                 </li>
               </ul>
               <!--footer_ul2_amrc ends here-->

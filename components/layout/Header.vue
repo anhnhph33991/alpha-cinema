@@ -12,7 +12,10 @@
                   </NuxtLink>
                 </li>
                 <li>
-                  <a @click.prevent="logout" class="al-register-border al-cursor-pointer">
+                  <a
+                    @click.prevent="logout"
+                    class="al-register-border al-cursor-pointer"
+                  >
                     <LogOut :size="16" />
                   </a>
                 </li>
@@ -23,11 +26,13 @@
                   <NuxtLink :to="{ name: 'login' }"> Đăng Nhập </NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink :to="{ name: 'register' }" class="al-register-border">
+                  <NuxtLink
+                    :to="{ name: 'register' }"
+                    class="al-register-border"
+                  >
                     Đăng Ký
                   </NuxtLink>
                 </li>
-                
               </template>
             </ul>
           </div>
@@ -35,30 +40,54 @@
       </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg al-header-section bg-white" :class="[{ 'al-header-active': isActive }]">
+    <nav
+      class="navbar navbar-expand-lg al-header-section bg-white"
+      :class="[{ 'al-header-active': isActive }]"
+    >
       <div class="container al-padding-header">
         <NuxtLink :to="{ name: 'index' }" class="navbar-brand">
           AlphaCinema
         </NuxtLink>
-        <div class="branch-dropdown">
-          <a-cascader v-model:value="value" :options="branchOptions" expand-trigger="hover" placeholder="Vui lòng chọn"
-          popupClassName="custom-dropdown" :dropdownStyle="{
-              maxHeight: 'unset',
-              overflow: 'visible',
-              height: 'auto',
-              minWidth: '200px'
-            }" />
+        <div class="branch-dropdown d-none d-xl-block">
+          <ClientOnly>
+            <a-cascader
+              v-model="value"
+              :options="branchOptions"
+              expand-trigger="hover"
+              placeholder="Vui lòng chọn"
+              popupClassName="custom-dropdown"
+              :dropdownStyle="{
+                maxHeight: 'unset',
+                overflow: 'visible',
+                height: 'auto',
+                minWidth: '200px',
+              }"
+              :displayRender="(labels) => labels.labels?.at(-1)"
+              @change="handleChangeCinema"
+            />
+          </ClientOnly>
         </div>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 al-pull-right">
             <li v-for="(item, index) in navMenu" :key="index" class="nav-item">
-              <NuxtLink :to="item.link" exact-active-class="active" class="nav-link al-nav-link">
+              <NuxtLink
+                :to="item.link"
+                exact-active-class="active"
+                class="nav-link al-nav-link"
+              >
                 {{ item.title }}
               </NuxtLink>
             </li>
@@ -75,28 +104,52 @@ import { navMenu } from "~/constants/menus";
 import { useAuthStore } from "~/stores/auth";
 import { useBranchStore } from "~/stores/branch";
 import { LogOut } from "lucide-vue-next";
+import { toast } from "vue-sonner";
 
 const authStore = useAuthStore();
 const branchStore = useBranchStore();
 const value = ref([]);
-const isActive = ref(false);
+const selectedBranchId = ref(null);
+const selectedCinemaId = ref(null);
 
+const props = defineProps({
+  isActive: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+});
 
 const logout = async () => {
   await authStore.logout();
 };
 
-
 const branchOptions = computed(() => {
-  return branchStore.branchs.map(branch => ({
+  return branchStore.branchs.map((branch) => ({
     value: branch.id,
     label: branch.name,
-    children: branch.cinemas?.map(cinema => ({
-      value: cinema.id,
-      label: cinema.name,
-    })) || []
+    disabled: !branch.cinemas || branch.cinemas.length === 0,
+    children:
+      branch.cinemas?.map((cinema) => ({
+        value: cinema.id,
+        label: cinema.name,
+      })) || [],
   }));
 });
+/**
+ * Lấy id của chi nhánh và rạp chiếu
+ *
+ * @param value - data chi nhánh, rạp chiếu
+ */
+const handleChangeCinema = (value) => {
+  if (value.length < 2) {
+    toast.error("Ấn lung tung gì đấy ? 🤬");
+    return;
+  }
+
+  selectedBranchId.value = value[0];
+  selectedCinemaId.value = value[1];
+};
 
 onMounted(async () => {
   try {
@@ -107,8 +160,9 @@ onMounted(async () => {
 });
 </script>
 
-
 <style>
+/* :where(.css-dev-only-do-not-override-1p3hq3p).ant-select .ant-select-clear */
+
 .al-header-section {
   display: flex;
   justify-content: center;
@@ -116,7 +170,6 @@ onMounted(async () => {
   width: 100%;
   padding: 10px 0;
 }
-
 
 .al-padding-header {
   display: flex;
@@ -132,17 +185,15 @@ onMounted(async () => {
   gap: 20px;
 }
 
-
 .navbar-nav .nav-item {
   flex: none;
   text-align: center;
   padding: 0 10px;
-  font-weight: bold; 
-  text-transform: uppercase; 
+  font-weight: bold;
+  text-transform: uppercase;
   font-family: "PT Sans Narrow", Arial, sans-serif;
   font-size: large;
 }
-
 
 .branch-dropdown {
   margin: 0 30px;
@@ -151,8 +202,8 @@ onMounted(async () => {
 
 .ant-cascader-menus {
   min-height: auto !important;
-  max-height: 300px !important; 
-  overflow: hidden !important; 
+  max-height: 300px !important;
+  overflow: hidden !important;
 }
 
 .ant-cascader-menu {
@@ -164,7 +215,6 @@ onMounted(async () => {
   padding: 0 !important;
   margin: 0 !important;
 }
-
 
 .ant-cascader-menu-item {
   padding: 10px 10px !important;
@@ -181,7 +231,6 @@ onMounted(async () => {
   color: white !important;
   width: 100% !important;
 }
-
 
 .ant-cascader-menu-item-active {
   background-color: #2a73dd !important;
@@ -201,11 +250,10 @@ onMounted(async () => {
   content: "";
   display: block;
   width: 100%;
-  height: 2px; 
-  background-color: #2a73dd; 
+  height: 2px;
+  background-color: #2a73dd;
   position: absolute;
   top: 0;
   left: 0;
 }
-
 </style>
