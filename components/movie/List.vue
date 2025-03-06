@@ -239,6 +239,7 @@
 import { ref, computed, watchEffect } from "vue";
 import { useMovieStore } from "~/stores/movie";
 
+const config = useRuntimeConfig();
 const movieStore = useMovieStore();
 const movieSelected = ref(null);
 const open = ref(false);
@@ -332,7 +333,7 @@ const limitText = (text, limit) => {
 };
 
 const formattedImage = (image) => {
-  return image ? `https://alphacinema.me/storage/${image}` : "";
+  return image ? `${config.public.BackEndUrl}/${image}` : "";
 };
 </script>
 

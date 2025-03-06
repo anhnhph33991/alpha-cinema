@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { fetchSettingService } from "@/services/setting"; // Import service
 
+const config = useRuntimeConfig();
 const settings = ref(null);
 
 onMounted(async () => {
@@ -13,7 +14,7 @@ onMounted(async () => {
   }
 });
 const formattedImage = (image) => {
-  return image ? `https://alphacinema.test/${image}` : "";
+  return image ? `${config.public.BackEndUrl}/${image}` : "";
 };
 </script>
 <template>
