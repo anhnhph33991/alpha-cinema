@@ -51,7 +51,7 @@
         <div class="branch-dropdown d-none d-xl-block">
           <ClientOnly>
             <a-cascader
-              v-model="value"
+              :value="value"
               :options="branchOptions"
               expand-trigger="hover"
               placeholder="Vui lòng chọn"
@@ -62,8 +62,9 @@
                 height: 'auto',
                 minWidth: '200px',
               }"
-              :displayRender="(labels) => labels.labels?.at(-1)"
+              :displayRender="(labels) => labels.labels?.at(-1) || 'no data'"
               @change="handleChangeCinema"
+              :allowClear="false"
             />
           </ClientOnly>
         </div>
@@ -141,15 +142,36 @@ const branchOptions = computed(() => {
  *
  * @param value - data chi nhánh, rạp chiếu
  */
-const handleChangeCinema = (value) => {
-  if (value.length < 2) {
+const handleChangeCinema = (newValue) => {
+  if (newValue.length < 2) {
     toast.error("Ấn lung tung gì đấy ? 🤬");
     return;
   }
 
-  selectedBranchId.value = value[0];
-  selectedCinemaId.value = value[1];
+  value.value = newValue;
+  [selectedBranchId.value, selectedCinemaId.value] = newValue;
 };
+
+watch(
+  branchOptions,
+  async (newOptions) => {
+    if (!newOptions.length) return;
+
+    const firstBranch = newOptions.find((branch) => branch.children.length > 0);
+    if (firstBranch) {
+      const firstCinema = firstBranch.children[0];
+
+      value.value = [firstBranch.value, firstCinema.value];
+      selectedBranchId.value = firstBranch.value;
+      selectedCinemaId.value = firstCinema.value;
+
+      await nextTick();
+
+      console.log("Mặc định đã chọn:", value.value);
+    }
+  },
+  { immediate: true }
+);
 
 onMounted(async () => {
   try {
