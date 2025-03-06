@@ -784,9 +784,9 @@ const handleChooseSeat = async (seat) => {
 
   processingSeats.add(seat.id);
 
-  movieStore.applyRealTimeSeatChange(seat.id, newStatus, newUserId);
+  // movieStore.applyRealTimeSeatChange(seat.id, newStatus, newUserId);
 
-  await movieStore.chooseSeat(
+  movieStore.chooseSeat(
     movieStore.showtime.data.showTime.id,
     seat.id,
     newUserId,
@@ -818,6 +818,7 @@ const handleNextOrder = async () => {
       coordinates_x: seat.coordinates_x,
       coordinates_y: seat.coordinates_y,
       type_seat_id: seat.type_seat_id || null,
+      seat_name: `${seat.coordinates_y}${seat.coordinates_x}`,
     }));
 
     // console.log(seatId);

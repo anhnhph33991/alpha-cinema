@@ -54,15 +54,17 @@ export const useMovieStore = defineStore("movie", () => {
 
   const chooseSeat = async (id, seatId, userId, status) => {
     try {
+      applyRealTimeSeatChange(seatId, status, userId);
+
       const response = await chooseSeatService(id, seatId, userId, status);
 
-      // console.log(response);
-      // console.log(`user_id: ${currentUserId}`);
+      console.log(response);
 
       filterSeatsByUserId(response.data, currentUserId);
 
       console.log("đoàn chim to");
     } catch (error) {
+      applyRealTimeSeatChange(seatId, "available", null);
       toast.error(error.error);
       console.log(error);
     }
