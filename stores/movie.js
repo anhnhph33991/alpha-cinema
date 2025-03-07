@@ -75,7 +75,7 @@ export const useMovieStore = defineStore("movie", () => {
       (seat) => seat.user_id == userId && seat.status == "hold"
     );
 
-    // console.log(seatSelected.value);
+    console.log(seatSelected.value);
   };
 
   const resetAndBuySeat = async (id, seatId, userId, status) => {
@@ -88,7 +88,7 @@ export const useMovieStore = defineStore("movie", () => {
     }
   };
   /**
-   * Cập nhật lại ghế dựa vào data realtime trả về
+   * Cập nhật class ghế dựa vào data realtime trả về
    *
    * @param {number | string} seatId
    * @param {null | string} status

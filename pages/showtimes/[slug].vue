@@ -1,74 +1,5 @@
 <template>
   <div class="movie-section padding-top bg-two" v-if="movieStore.showtime.data">
-    <!-- <section
-      class="details-banner hero-area seat-plan-banner"
-      style="background: url('/theme/img/banner/banner-movie-details.jpg')"
-    >
-      <div class="container">
-        <div class="details-banner-wrapper">
-          <div class="details-banner-content style-two">
-            <h3 class="title">
-              {{ movieStore.showtime.data.showTime.movie.name }}
-            </h3>
-          </div>
-        </div>
-      </div>
-    </section>
-    <div class="seat-plan-section padding-bottom">
-      <div class="screen-thumb">
-        <img :src="screen" alt="movie" />
-      </div>
-      <div class="container">
-        <div class="screen-area">
-          <div class="main-seat-layout">
-            <div>
-              <div
-                class="seat-row"
-                v-for="(row, rowName) in movieStore.showtime.data.seatMap"
-                :key="rowName"
-              >
-                <span class="row-label">{{ rowName }}</span>
-                <div
-                  v-for="seat in row"
-                  :key="seat.id"
-                  :class="[
-                    'seat',
-                    getSeatClass(seat),
-                    {
-                      selected: isSeatSelected(seat),
-                      hold: isSeatHeldByOthers(seat),
-                      'double-seat': seat.type_seat_id == 3,
-                    },
-                  ]"
-                  @click="handleChooseSeat(seat)"
-                >
-                  <Sofa v-if="seat.type_seat_id == 3" />
-                  <Armchair v-else />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="proceed-book mt-5">
-          <div class="proceed-to-book">
-            <div class="book-item">
-              <span>Your Selected Seat</span>
-              <h3 class="title">a1, a2</h3>
-            </div>
-            <div class="book-item">
-              <span>total price</span>
-              <h3 class="title">$200</h3>
-            </div>
-            <div class="book-item">
-              <a href="movie-checkout.html" class="custom-button">
-                checkout now
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     <div class="showtime-choose-seat h-1000">
       <div class="container">
         <div class="row">
@@ -109,9 +40,6 @@
                                 <Sofa v-if="seat.type_seat_id == 3" />
 
                                 <Armchair v-else />
-
-                                <!-- <Armchair v-if="seat.type_seat_id == 2" />
-                                <RockingChair v-if="seat.type_seat_id == 1" /> -->
                               </div>
                             </div>
                           </div>
@@ -136,21 +64,30 @@
                       :key="index"
                       class="fw-bold"
                     >
-                      {{ seat }},
+                      {{ seat }}
+                      <span v-if="index != seatNames.length - 1">,</span>
                     </p>
                   </div>
-
-                  <!-- <span class="d-flex gap-2">
-                    <small v-for="(seat, index) in seatNames" :key="index">
-                      {{ seat }}
-                    </small>
-                  </span> -->
                 </div>
-                <!-- <ul v-if="seatNames.length">
-                  <li v-for="(seat, index) in seatNames" :key="index">
-                    {{ seat }}
-                  </li>
-                </ul> -->
+
+                <div>
+                  <a-statistic-countdown
+                    :value="deadline"
+                    style="margin-right: 50px"
+                    @finish="onFinish"
+                    format="mm:ss"
+                  >
+                    <template #title>
+                      <span>Countdown</span>
+                      <a-tooltip placement="right">
+                        <template #title>
+                          <span>hurry up!</span>
+                        </template>
+                        <question-circle-two-tone style="margin-left: 5px" />
+                      </a-tooltip>
+                    </template>
+                  </a-statistic-countdown>
+                </div>
               </div>
             </div>
 
@@ -179,8 +116,8 @@
                       style="margin-top: 25px; margin-bottom: 0px"
                     >
                       <div class="col-md-5 user-info-item font-16">
-                        <span class="bold user-info-item-label">Họ Tên: </span
-                        ><br />
+                        <span class="bold user-info-item-label"> Họ Tên: </span>
+                        <br />
                         <span class="user-info-item-value">
                           {{ authStore.user.name }}
                         </span>
@@ -217,28 +154,6 @@
                     <br />
                     <br />
                     <div class="col-lg-12 ticket-selected mt-5">
-                      <!-- <div>
-                        <div class="row">
-                          <div class="col-md-6 item-seat-type">Ghế Vip</div>
-                          <div class="col-md-3 item-seat-quantity">
-                            3 x 55.000
-                          </div>
-                          <div class="col-md-3 item-seat-money">= 165.000đ</div>
-                        </div>
-                        <div class="clearfix"></div>
-                      </div>
-                      <hr style="margin-top: 15px" />
-                      <div>
-                        <div class="row">
-                          <div class="col-md-6 item-seat-type">Ghế Thường</div>
-                          <div class="col-md-3 item-seat-quantity">
-                            3 x 55.000
-                          </div>
-                          <div class="col-md-3 item-seat-money">= 165.000đ</div>
-                        </div>
-                        <div class="clearfix"></div>
-                      </div> -->
-
                       <div
                         v-for="(data, index) in filteredSeatGroups"
                         :key="index"
@@ -843,19 +758,27 @@ const handleNextOrder = async () => {
       status: "pending",
     };
 
-    const ticketResponse = await ticketStore.createTicket(dataTicket);
+    console.log(">>>>>data ticket<<<<<");
+    console.log(dataTicket);
+    console.log(">>>>>data seat id<<<<<");
+    console.log(seatId);
+    console.log(">>>>>data seat<<<<<");
+    console.log(newDataSeats);
 
-    if (!ticketResponse) {
-      throw new Error("Tạo ticket không thành công");
-    }
+    // const ticketResponse = await ticketStore.createTicket(dataTicket);
+
+    // if (!ticketResponse) {
+    //   throw new Error("Tạo ticket không thành công");
+    // }
 
     // call api reset ghế
-    await movieStore.resetAndBuySeat(
-      movieStore.showtime.data.showTime.id,
-      seatId,
-      movieStore.currentUserId,
-      "sold"
-    );
+
+    // await movieStore.resetAndBuySeat(
+    //   movieStore.showtime.data.showTime.id,
+    //   seatId,
+    //   movieStore.currentUserId,
+    //   "sold"
+    // );
 
     toast.success("Thanh toán thành công");
     navigateTo({ name: "booking-success" });
@@ -889,7 +812,8 @@ const seatNames = computed(() =>
     ? movieStore.seatSelected.map(
         (seat) => `${seat.coordinates_y}${seat.coordinates_x}`
       )
-    : []
+    : // .join(",")
+      []
 );
 
 const handleNextOrderOne = () => {
@@ -1018,6 +942,15 @@ const promiseAllApi = async () => {
     console.log(error);
   }
 };
+
+/**
+ * Đếm thời gian
+ */
+
+const onFinish = () => {
+  console.log("finished!");
+};
+const deadline = Date.now() + 1000 * 60 * 10;
 
 onMounted(() => {
   promiseAllApi();
