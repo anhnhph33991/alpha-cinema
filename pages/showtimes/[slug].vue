@@ -9,7 +9,7 @@
                 <div class="d-flex justify-content-center">
                   <div class="row">
                     <div class="col-lg-12">
-                      <img :src="screen" alt="luxchill" />
+                      <img :src="screen" alt="luxchill" class="w-100" />
                     </div>
 
                     <div class="seat-template mt-5">
@@ -49,8 +49,9 @@
                   </div>
                 </div>
               </div>
-              <hr />
-              <div>
+              <!-- <hr /> -->
+
+              <!-- <div>
                 <div
                   class="d-flex align-items-center align-content-center gap-2"
                 >
@@ -58,15 +59,8 @@
                     <p>Các ghế đã chọn:</p>
                   </div>
 
-                  <div class="d-flex gap-2">
-                    <p
-                      v-for="(seat, index) in seatNames"
-                      :key="index"
-                      class="fw-bold"
-                    >
-                      {{ seat }}
-                      <span v-if="index != seatNames.length - 1">,</span>
-                    </p>
+                  <div>
+                    <p class="fw-bold">{{ seatNames.join(", ") }}</p>
                   </div>
                 </div>
 
@@ -77,18 +71,9 @@
                     @finish="onFinish"
                     format="mm:ss"
                   >
-                    <template #title>
-                      <span>Countdown</span>
-                      <a-tooltip placement="right">
-                        <template #title>
-                          <span>hurry up!</span>
-                        </template>
-                        <question-circle-two-tone style="margin-left: 5px" />
-                      </a-tooltip>
-                    </template>
                   </a-statistic-countdown>
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <div
@@ -173,14 +158,17 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
-                        <hr
+                        <!-- <hr
                           v-if="index < filteredSeatGroups.length - 1"
                           style="margin-top: 15px"
-                        />
+                        /> -->
+
+                        <hr style="margin-top: 15px" />
                       </div>
                     </div>
-                    <hr data-v-aa786bab="" style="margin-top: 15px" />
                     <div class="col-lg-12">
+                      <!-- <hr style="margin-top: 15px" /> -->
+
                       <a-tabs v-model="activeKey">
                         <a-tab-pane key="1" tab="Combo">
                           <div class="table-responsive">
@@ -235,8 +223,9 @@
                           <a-empty />
                         </a-tab-pane>
                       </a-tabs>
+
+                      <hr style="margin-top: 15px" />
                     </div>
-                    <hr />
                     <div class="col-lg-12">
                       <div class="row">
                         <div class="col-md-6"></div>
@@ -270,6 +259,54 @@
                         >
                           {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Chân trang showtime -->
+            <div class="seat-row-footer bg-white seat-type-panel">
+              <div>
+                <div>
+                  <div class="row">
+                    <template v-if="isChoosingScreen">
+                      <div class="col-lg-8"></div>
+
+                      <div class="col-lg-2">
+                        <div class="total-price-label text-start">
+                          Tổng tiền
+                        </div>
+                        <div class="total-price-value text-center">
+                          {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ
+                        </div>
+                      </div>
+                    </template>
+
+                    <template v-else>
+                      <div class="col-lg-10">
+                        <div class="note-before-next">
+                          Vui lòng kiểm tra thông tin đầy đủ trước khi qua bước
+                          tiếp theo.
+                        </div>
+                        <div class="note-refund">
+                          <span style="color: red">*</span>
+                          Vé mua rồi không hoàn trả lại dưới mọi hình thức.
+                        </div>
+                      </div>
+                    </template>
+
+                    <div class="col-lg-2">
+                      <div class="time-to-label text-start">
+                        Thời gian còn lại
+                      </div>
+                      <div class="time-to-value text-end">
+                        <a-statistic-countdown
+                          :value="deadline"
+                          @finish="onFinish"
+                          format="mm:ss"
+                        >
+                        </a-statistic-countdown>
                       </div>
                     </div>
                   </div>
@@ -397,6 +434,19 @@
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                           <span class="bold fz-md">
                             {{ showtime.room.name }}
+                          </span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="padding-bottom-10 padding-top-10">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <Armchair :size="18" />
+                          Ghế ngồi:
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span class="bold fz-md">
+                            <p>{{ seatNames.join(", ") }}</p>
                           </span>
                         </div>
                       </div>
@@ -556,6 +606,19 @@
                         </div>
                       </div>
                     </li>
+                    <li class="padding-bottom-10 padding-top-10">
+                      <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <TvMinimal :size="18" />
+                          Ghê ngồi:
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                          <span class="bold fz-md">
+                            {{ showtime.room.name }}
+                          </span>
+                        </div>
+                      </div>
+                    </li>
                   </ul>
                 </div>
 
@@ -590,10 +653,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div >
-
-    </div> -->
   </div>
 
   <div v-else class="h-screen d-flex justify-content-center align-items-center">
@@ -612,6 +671,7 @@ import { useMovieStore } from "~/stores/movie";
 import { useAuthStore } from "~/stores/auth";
 import { useFoodStore } from "~/stores/food";
 import { useTicketStore } from "~/stores/ticket";
+import { usePaymentStore } from "~/stores/payment";
 import {
   Armchair,
   Sofa,
@@ -622,11 +682,12 @@ import {
   Tag,
   RockingChair,
 } from "lucide-vue-next";
-import { useWindowScroll } from "@vueuse/core";
+import { useWindowScroll, useElementSize } from "@vueuse/core";
 const { y } = useWindowScroll();
 
 const movieStore = useMovieStore();
 const foodStore = useFoodStore();
+const paymentStore = usePaymentStore();
 const ticketStore = useTicketStore();
 const route = useRoute();
 const slug = route.params.slug;
@@ -661,8 +722,9 @@ const activeKey = ref("1");
 /**
  * Image Vue
  */
-const screen =
-  "https://chieuphimquocgia.com.vn/_next/image?url=%2Fimages%2Fscreen.png&w=1920&q=75";
+// const screen =
+//   "https://chieuphimquocgia.com.vn/_next/image?url=%2Fimages%2Fscreen.png&w=1920&q=75";
+const screen = "https://betacinemas.vn/Assets/global/img/booking/ic-screen.png";
 // const seatRegular = "/theme/img/movie/seat-1-booked.png";
 
 // import SeatRegular from "~/assets/seat-icon.svg";
@@ -780,8 +842,10 @@ const handleNextOrder = async () => {
     //   "sold"
     // );
 
+    paymentStore.paymentMomo(dataTicket);
+
     toast.success("Thanh toán thành công");
-    navigateTo({ name: "booking-success" });
+    // navigateTo({ name: "booking-success" });
   } catch (error) {
     console.log(error);
     toast.error("Có lỗi xảy ra");
@@ -812,8 +876,7 @@ const seatNames = computed(() =>
     ? movieStore.seatSelected.map(
         (seat) => `${seat.coordinates_y}${seat.coordinates_x}`
       )
-    : // .join(",")
-      []
+    : []
 );
 
 const handleNextOrderOne = () => {
@@ -867,6 +930,8 @@ const priceAll = ref({
   payableAmount: 0,
 });
 
+const loadDefaultPrice = () => {};
+
 // const handleTotalPrice = computed(() => {
 //   if (!movieStore.seatSelected || movieStore.seatSelected.length === 0) {
 //     return 0; // Trả về 0 nếu không có ghế nào được chọn
@@ -875,16 +940,40 @@ const priceAll = ref({
 //   return movieStore.seatSelected.reduce((sum, seat) => sum + seat.price, 0);
 // });
 
-const handleTotalPrice = computed(() => {
-  const seatTotal =
-    movieStore.seatSelected?.reduce((sum, seat) => sum + seat.price, 0) || 0;
-  const foodTotal = newDataCombo.reduce(
-    (sum, combo) => sum + combo.quantity * combo.price,
-    0
+const handleSeatTotalPrice = computed(() => {
+  return (
+    movieStore.seatSelected?.reduce((sum, seat) => sum + seat.price, 0) || 0
   );
-
-  return seatTotal + foodTotal;
 });
+
+const handleComboFoodTotalPrice = computed(() => {
+  return newDataCombo?.reduce((sum, combo) => sum + combo.price, 0) || 0;
+});
+
+const handleFoodTotalPrice = computed(() => {
+  return 0;
+});
+
+const handleTotalPrice = computed(() => {
+  return (
+    handleSeatTotalPrice.value +
+    handleComboFoodTotalPrice.value +
+    handleFoodTotalPrice.value
+  );
+});
+
+// const
+
+// const handleTotalPrice = computed(() => {
+//   const seatTotal =
+//     movieStore.seatSelected?.reduce((sum, seat) => sum + seat.price, 0) || 0;
+//   const foodTotal = newDataCombo.reduce(
+//     (sum, combo) => sum + combo.quantity * combo.price,
+//     0
+//   );
+
+//   return seatTotal + foodTotal;
+// });
 
 const newDataCombo = reactive([]);
 
@@ -924,6 +1013,22 @@ const getQuantity = (id) => {
   return combo ? combo.quantity : 0;
 };
 
+/**
+ * Lắng nghe thay đổi của ghế để cập nhật giá tiền
+ *
+ */
+watch(
+  () => movieStore.seatSelected,
+  () => {
+    priceAll.value.totalAmount = handleTotalPrice.value;
+    priceAll.value.payableAmount =
+      handleTotalPrice.value - priceAll.value.discountAmount;
+  },
+  { deep: true, immediate: true }
+);
+/**
+ * Lắng nghe thay đổi tất cả giá tiền từ handleTotalPrice / giá ghế, giá combo, giá food
+ */
 watch(handleTotalPrice, (newTotal) => {
   priceAll.value.totalAmount = newTotal;
   priceAll.value.payableAmount = newTotal - priceAll.value.discountAmount;
@@ -949,8 +1054,22 @@ const promiseAllApi = async () => {
 
 const onFinish = () => {
   console.log("finished!");
+  toast.warning("Bạn đã hết thời gian giữ ghế");
+  navigateTo("/");
 };
-const deadline = Date.now() + 1000 * 60 * 10;
+
+const countdownDeadline = useCookie("countdownDeadline", {
+  maxAge: 600,
+  default: () => Date.now() + 1000 * 60 * 10,
+});
+
+const now = Date.now();
+
+const deadline = computed(() => {
+  return countdownDeadline.value > now
+    ? countdownDeadline.value
+    : now + 1000 * 60 * 10;
+});
 
 onMounted(() => {
   promiseAllApi();
@@ -1109,7 +1228,7 @@ h3,
 }
 
 .payment-form .item-seat-quantity {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -1132,11 +1251,63 @@ h3,
 
 .payment-form .total-money-name {
   color: rgb(253, 40, 2) !important;
-  font-size: 20px !important;
+  font-size: 17px !important;
 }
 
 .sidebar-md {
   display: none;
+}
+
+.movie-section .seat-type-panel {
+  padding: 15px 10px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.movie-section .total-price-label {
+  font-family: Oswald;
+  font-size: 18px;
+  color: #494c62;
+}
+
+.movie-section .total-price-value {
+  font-family: Oswald;
+  font-size: 18px;
+  margin-top: 10px;
+  color: #494c62;
+  color: #03599d;
+}
+
+.movie-section .time-to-label {
+  font-family: Oswald;
+  font-size: 18px;
+  color: #494c62;
+}
+
+.movie-section .time-to-value {
+  font-family: Oswald;
+  color: #1e1f28;
+  font-weight: 600;
+}
+
+.movie-section .time-to-value .ant-statistic-content {
+  font-family: Oswald;
+  color: #1e1f28;
+  font-size: 37.9px !important;
+  font-weight: 600;
+}
+
+.note-refund,
+.note-before-next {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: italic;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  padding-left: 15px;
+  color: #000000;
 }
 
 /** responsive */
