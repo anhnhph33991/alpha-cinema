@@ -333,7 +333,7 @@ const limitText = (text, limit) => {
 };
 
 const formattedImage = (image) => {
-  return image ? `${config.public.BackEndUrl}/${image}` : "";
+  return image ? `${config.public.BackEndUrl}/storage/${image}` : "";
 };
 </script>
 
