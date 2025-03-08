@@ -56,7 +56,7 @@
 
         <div class="branch-dropdown">
           <a-cascader
-            v-model:value="value"
+             :value="value"
             :options="branchOptions"
             expand-trigger="hover"
             placeholder="Vui lòng chọn"
@@ -108,7 +108,7 @@ import { useBranchStore } from "~/stores/branch";
 import { LogOut } from "lucide-vue-next";
 import { fetchSettingService } from "@/services/setting";
 
-const settings = ref(null);
+const settings = ref([]);
 
 const authStore = useAuthStore();
 const branchStore = useBranchStore();
