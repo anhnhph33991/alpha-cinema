@@ -23,4 +23,8 @@ export const navMenu = [
     title: "Liên hệ",
     link: "/contact",
   },
+  {
+    title: "Thành viên",
+    link: "/account",
+  },
 ];

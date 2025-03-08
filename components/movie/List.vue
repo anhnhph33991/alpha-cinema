@@ -104,7 +104,7 @@
     </template>
   </section> -->
 
-  <div v-if="movies.length > 0">
+  <div v-if="movies.length > 0" class="container">
     <div class="row">
       <div
         class="col-lg-3 col-md-3 col-sm-8 padding-right-30 padding-left-30 padding-bottom-30"
@@ -239,6 +239,7 @@
 import { ref, computed, watchEffect } from "vue";
 import { useMovieStore } from "~/stores/movie";
 
+const config = useRuntimeConfig();
 const movieStore = useMovieStore();
 const movieSelected = ref(null);
 const open = ref(false);
@@ -332,7 +333,7 @@ const limitText = (text, limit) => {
 };
 
 const formattedImage = (image) => {
-  return image ? `https://alphacinema.me/storage/${image}` : "";
+  return image ? `${config.public.BackEndUrl}/${image}` : "";
 };
 </script>
 
