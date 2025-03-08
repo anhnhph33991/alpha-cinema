@@ -254,13 +254,13 @@ onMounted(async () => {
 }
 
 .ant-cascader-menu-item:hover {
-  background-color: #2a73dd !important;
+  background-color: #043c4d !important;
   color: white !important;
   width: 100% !important;
 }
 
 .ant-cascader-menu-item-active {
-  background-color: #2a73dd !important;
+  background-color: #043c4d !important;
   color: white !important;
 }
 
@@ -277,8 +277,8 @@ onMounted(async () => {
   content: "";
   display: block;
   width: 100%;
-  height: 2px;
-  background-color: #2a73dd;
+  height: 2px; 
+  background-color: #043c4d; 
   position: absolute;
   top: 0;
   left: 0;
