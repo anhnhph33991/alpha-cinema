@@ -1,32 +1,60 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { fetchSettingService } from "@/services/setting"; // Import service
+import { ref, onMounted, computed } from "vue";
+import { fetchSettingService } from "@/services/setting";
+import { listBranchService } from "@/services/branch";
 
 const settings = ref(null);
+const branchs = ref([]); // Tránh lỗi khi dùng map()
 
 onMounted(async () => {
   try {
-    settings.value = await fetchSettingService();
-    console.log("settings.value", settings.value);
+    // Gọi API song song để lấy dữ liệu settings và branchs
+    const [settingsData, branchsData] = await Promise.all([
+      fetchSettingService(),
+      listBranchService(),
+    ]);
+
+    settings.value = settingsData;
+    branchs.value = branchsData?.data || []; // Đảm bảo tránh lỗi nếu API trả về undefined
+
+    // console.log("settings.value", settings.value);
+    // console.log("branchs.value", branchs.value);
   } catch (error) {
-    console.error("Không thể tải dữ liệu từ Backend:", error);
+    console.error("Lỗi khi gọi API:", error);
   }
 });
+
+// 🔥 Hiển thị dữ liệu theo format: `{setting.name} + {cinema.name} + {branch.name}`
+
+const combinedData = computed(() => {
+  if (!settings.value || !branchs.value) return [];
+
+  return branchs.value.flatMap((branch) =>
+    (branch.cinemas || []).map((cinema) => ({
+      text: `${settings.value.site_name}  ${cinema.name}, ${branch.name}`,
+    }))
+  );
+});
+
+// Định dạng ảnh với base URL từ biến môi trường
 const formattedImage = (image) => {
-  return image ? `https://alphacinema.test/${image}` : "";
+  const baseUrl =
+    import.meta.env.VITE_API_BASE_URL || "https://alphacinema.test/";
+  return image ? `${baseUrl}${image}` : "";
 };
 </script>
+
 <template>
   <div v-if="settings">
     <footer class="footer-section">
       <footer class="footer">
         <div class="container bottom_border">
           <div class="row">
-            <div class="col-sm-4 col-md col-6 col">
+            <div class="col-12 col-md-3 logo">
               <img
                 v-if="settings.website_logo"
                 class="logo-img border-radius-20"
-                :alt="settings.name"
+                :alt="settings.site_name"
                 :src="formattedImage(settings.website_logo)"
               />
               <!--headin5_amrc-->
@@ -43,18 +71,18 @@ const formattedImage = (image) => {
                 </li>
                 <li>
                   <i class="bi bi-caret-right-fill"></i>
-                  <NuxtLink to="/site-setting/chinh-sach-bao-mat">
+                  <NuxtLink to="/site-setting/policy">
                     Chính sách bảo mật</NuxtLink
                   >
                 </li>
                 <li>
                   <i class="bi bi-caret-right-fill"></i>
-                  <NuxtLink to="/site-setting/tin-tuc"> Tin tức</NuxtLink>
+                  <NuxtLink to="/site-setting/posts"> Tin tức</NuxtLink>
                 </li>
               </ul>
               <!--footer_ul_amrc ends here-->
             </div>
-            <div class="col-sm-4 col-md col-sm-4 col-12 col">
+            <div class="col-12 col-md-3">
               <h5 class="headin5_amrc col_white_amrc pt2">Liên Hệ</h5>
 
               <!--headin5_amrc-->
@@ -67,16 +95,18 @@ const formattedImage = (image) => {
               <p><i class="bi bi-telephone-fill"></i> {{ settings.phone }}</p>
               <p><i class="bi bi-envelope-at-fill"></i> {{ settings.email }}</p>
             </div>
-            <div class="col-sm-4 col-md col-6 col">
+            <div class="col-12 col-md-3">
               <h5 class="headin5_amrc col_white_amrc pt2">Các chi nhánh</h5>
               <!--headin5_amrc-->
               <ul class="footer_ul_amrc">
-                <li><a href="">Remove Background</a></li>
+                <li v-for="(item, index) in combinedData" :key="index">
+                  <i class="bi bi-dot"></i><a href="#">{{ item.text }}</a>
+                </li>
               </ul>
               <!--footer_ul_amrc ends here-->
             </div>
 
-            <div class="col-sm-4 col-md col-12 col">
+            <div class="col-12 col-md-3">
               <h5 class="headin5_amrc col_white_amrc pt2">
                 Kết nối với chúng tôi
               </h5>
@@ -84,16 +114,28 @@ const formattedImage = (image) => {
 
               <ul class="footer_ul2_amrc">
                 <li>
-                  <a href="#"><i class="bi bi-facebook fleft padding-right mt-0"></i> </a>
-                  <p><a href="#">{{ settings.facebook_link }}</a></p>
+                  <a href="#"
+                    ><i class="bi bi-facebook fleft padding-right mt-0"></i>
+                  </a>
+                  <p>
+                    <a href="#">{{ settings.facebook_link }}</a>
+                  </p>
                 </li>
                 <li>
-                  <a href="#"><i class="bi bi-youtube fleft padding-right mt-0"></i> </a>
-                  <p><a href="#">{{ settings.youtube_link }}</a></p>
+                  <a href="#"
+                    ><i class="bi bi-youtube fleft padding-right mt-0"></i>
+                  </a>
+                  <p>
+                    <a href="#">{{ settings.youtube_link }}</a>
+                  </p>
                 </li>
                 <li>
-                  <a href="#"><i class="bi bi-instagram fleft padding-right mt-0"></i> </a>
-                  <p><a href="#">{{ settings.instagram_link }}</a></p>
+                  <a href="#"
+                    ><i class="bi bi-instagram fleft padding-right mt-0"></i>
+                  </a>
+                  <p>
+                    <a href="#">{{ settings.instagram_link }}</a>
+                  </p>
                 </li>
               </ul>
               <!--footer_ul2_amrc ends here-->
@@ -138,11 +180,15 @@ const formattedImage = (image) => {
 <style>
 /* Footer */
 /*footer*/
+.logo {
+  filter: drop-shadow(3px 3px 5px rgba(192, 163, 163, 0.5));
+}
+    
 .col_white_amrc {
   color: #fff;
 }
 footer {
-  width: 100%;
+  /* width: 100%; */
   background-color: #263238;
   min-height: 250px;
   padding: 10px 0px 25px 0px;
@@ -202,6 +248,7 @@ footer p {
 .bottom_border {
   border-bottom: 1px solid #323f45;
   padding-bottom: 20px;
+  /* max-width: 80%; */
 }
 .foote_bottom_ul_amrc {
   list-style-type: none;
@@ -251,7 +298,7 @@ footer p {
   color: #fff;
 }
 .logo-img {
-  max-width: 200px;
+  max-width: 220px;
   height: auto;
 }
 </style>

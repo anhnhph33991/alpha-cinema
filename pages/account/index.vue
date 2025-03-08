@@ -7,16 +7,23 @@
         </a-tab-pane>
         <a-tab-pane key="2" tab="Thẻ Thành Viên">Tab Thẻ thành viên</a-tab-pane>
         <a-tab-pane key="3" tab="Hành Trình Điện Ảnh">
-          Tab Hành Trình Điện Ảnh
+          <MovieViewHistory />
         </a-tab-pane>
-        <a-tab-pane key="4" tab="Điểm Alpha">Tab Điểm Alpha</a-tab-pane>
-        <a-tab-pane key="5" tab="Voucher"> Tab Voucher </a-tab-pane>
+        <a-tab-pane key="4" tab="Điểm Alpha">
+          <Point />
+        </a-tab-pane>
+        <a-tab-pane key="5" tab="Voucher">
+          <Voucher />
+        </a-tab-pane>
       </a-tabs>
     </div>
   </div>
 </template>
 
 <script setup>
+import Voucher from "~/components/account/Voucher.vue";
+import MovieViewHistory from "~/components/account/MovieViewHistory.vue";
+import Point from "~/components/account/Point.vue";
 import { useAuthStore } from "#imports";
 
 definePageMeta({
@@ -26,4 +33,5 @@ definePageMeta({
 const authStore = useAuthStore();
 
 const activeKey = ref("1");
+// const LazyVoucher = defineAsyncComponent(() => import("~/components/account/Voucher.vue"));
 </script>
