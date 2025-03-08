@@ -220,7 +220,59 @@
                           </div>
                         </a-tab-pane>
                         <a-tab-pane key="2" tab="Đồ lẻ">
-                          <a-empty />
+                          <div class="table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col"></th>
+                                  <th scope="col">Tên combo</th>
+                                  <th scope="col">Mô tả</th>
+                                  <th scope="col">Số lượng</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr
+                                  v-for="combo in foodStore.foods"
+                                  :key="combo.id"
+                                >
+                                  <td scope="row">
+                                    <img
+                                      src="https://files.betacorp.vn/media/combopackage/2024/06/05/combo-online-26-101802-050624-36.png"
+                                      alt=""
+                                      class="combo-image"
+                                      width="130"
+                                      height="130"
+                                    />
+                                  </td>
+                                  <td class="combo-name">
+                                    {{ combo.name }}
+                                  </td>
+                                  <td class="combo-description">
+                                    {{ combo.description }}
+                                  </td>
+                                  <td>
+                                    <span>
+                                      {{ getQuantityFood(combo.id) }}
+                                    </span>
+                                    <span>
+                                      <button
+                                        @click="handleIncreaseFood(combo)"
+                                      >
+                                        +
+                                      </button>
+                                    </span>
+                                    <span>
+                                      <button
+                                        @click="handleDecreaseFood(combo)"
+                                      >
+                                        -
+                                      </button>
+                                    </span>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
                         </a-tab-pane>
                       </a-tabs>
 
@@ -738,6 +790,19 @@ const echo = useEcho();
 const processingSeats = new Set();
 
 const handleChooseSeat = async (seat) => {
+  // console.log(seat);
+  // console.log("<<<>>>>");
+  // console.log(movieStore.seatSelected);
+
+  // const newStatus =
+  //   seat.status === "hold" && seat.user_id == currentUserId
+  //     ? "available"
+  //     : "hold";
+
+  // movieStore.applyRealTimeSeatChange(seat.id, newStatus, currentUserId);
+
+  // return;
+
   if (processingSeats.has(seat.id)) {
     toast.warning("Có dấu hiệu spam, vui lòng thử lại 🤬");
     return;
@@ -760,8 +825,6 @@ const handleChooseSeat = async (seat) => {
   const newUserId = seat.user_id == currentUserId ? null : currentUserId;
 
   processingSeats.add(seat.id);
-
-  // movieStore.applyRealTimeSeatChange(seat.id, newStatus, newUserId);
 
   movieStore.chooseSeat(
     movieStore.showtime.data.showTime.id,
@@ -812,9 +875,10 @@ const handleNextOrder = async () => {
       voucher_discount: 0,
       point_use: 0,
       point_discount: 0,
-      payment_name: "",
+      payment_name: "momo",
       ticket_seats: newDataSeats,
       ticket_combos: newDataCombo.length > 0 ? newDataCombo : null,
+      ticket_foods: newDataFood.length > 0 ? newDataFood : null,
       total_price: priceAll.value.payableAmount,
       expiry: `${movieStore.showtime.data.showTime.date}|${movieStore.showtime.data.showTime.end_time}`,
       status: "pending",
@@ -842,7 +906,7 @@ const handleNextOrder = async () => {
     //   "sold"
     // );
 
-    paymentStore.paymentMomo(dataTicket);
+    paymentStore.paymentMomo(dataTicket, seatId);
 
     toast.success("Thanh toán thành công");
     // navigateTo({ name: "booking-success" });
@@ -930,8 +994,6 @@ const priceAll = ref({
   payableAmount: 0,
 });
 
-const loadDefaultPrice = () => {};
-
 // const handleTotalPrice = computed(() => {
 //   if (!movieStore.seatSelected || movieStore.seatSelected.length === 0) {
 //     return 0; // Trả về 0 nếu không có ghế nào được chọn
@@ -947,18 +1009,25 @@ const handleSeatTotalPrice = computed(() => {
 });
 
 const handleComboFoodTotalPrice = computed(() => {
-  return newDataCombo?.reduce((sum, combo) => sum + combo.price, 0) || 0;
+  return (
+    newDataCombo?.reduce(
+      (sum, combo) => sum + combo.quantity * combo.price,
+      0
+    ) || 0
+  );
 });
 
 const handleFoodTotalPrice = computed(() => {
-  return 0;
+  return (
+    newDataFood?.reduce((sum, food) => sum + food.quantity * food.price, 0) || 0
+  );
 });
 
 const handleTotalPrice = computed(() => {
   return (
-    handleSeatTotalPrice.value +
-    handleComboFoodTotalPrice.value +
-    handleFoodTotalPrice.value
+    +handleSeatTotalPrice.value +
+    +handleComboFoodTotalPrice.value +
+    +handleFoodTotalPrice.value
   );
 });
 
@@ -975,12 +1044,15 @@ const handleTotalPrice = computed(() => {
 //   return seatTotal + foodTotal;
 // });
 
+/**
+ * Xử lý combo fodd
+ */
 const newDataCombo = reactive([]);
 
 const increaseQuantity = (combo) => {
   console.log("mua do an");
 
-  const existingCombo = newDataCombo.find((item) => item.id === combo.id);
+  const existingCombo = newDataCombo.find((item) => item.id == combo.id);
 
   if (existingCombo) {
     // Nếu combo đã tồn tại, chỉ tăng số lượng
@@ -994,7 +1066,7 @@ const increaseQuantity = (combo) => {
 };
 
 const decreaseQuantity = (combo) => {
-  const index = newDataCombo.findIndex((item) => item.id === combo.id);
+  const index = newDataCombo.findIndex((item) => item.id == combo.id);
 
   if (index !== -1) {
     if (newDataCombo[index].quantity > 1) {
@@ -1009,8 +1081,40 @@ const decreaseQuantity = (combo) => {
 };
 
 const getQuantity = (id) => {
-  const combo = newDataCombo.find((item) => item.id === id);
+  const combo = newDataCombo.find((item) => item.id == id);
   return combo ? combo.quantity : 0;
+};
+
+/**
+ * Xử lý fodd
+ */
+const newDataFood = reactive([]);
+
+const handleIncreaseFood = (food) => {
+  const existingFood = newDataFood.find((item) => item.id == food.id);
+
+  if (existingFood) {
+    existingFood.quantity += 1;
+  } else {
+    newDataFood.push({ ...food, quantity: 1 });
+  }
+};
+
+const handleDecreaseFood = (food) => {
+  const index = newDataFood.findIndex((item) => item.id == food.id);
+
+  if (index != -1) {
+    if (newDataFood[index].quantity > 1) {
+      newDataFood[index].quantity -= 1;
+    } else {
+      newDataFood.splice(index, 1);
+    }
+  }
+};
+
+const getQuantityFood = (id) => {
+  const food = newDataFood.find((item) => item.id === id);
+  return food ? food.quantity : 0;
 };
 
 /**

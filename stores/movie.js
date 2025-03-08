@@ -21,7 +21,7 @@ export const useMovieStore = defineStore("movie", () => {
   const fetchMovies = async () => {
     try {
       movies.value = await fetchMoviesService();
-      console.log(movies.value);
+      // console.log(movies.value);
     } catch (error) {
       toast.error("call api lỗi");
     }
@@ -46,6 +46,11 @@ export const useMovieStore = defineStore("movie", () => {
       // console.log("hehe");
       // console.log(matrixColume.value);
 
+      // console.log("showtime");
+      // console.log(showtime.value);
+      // console.log("matrixColume");
+      // console.log(matrixColume.value);
+
       filterSeatsByUserId(showtime.value.data.seatMapRegular, currentUserId);
     } catch (error) {
       toast.error("call api lỗi");
@@ -58,7 +63,7 @@ export const useMovieStore = defineStore("movie", () => {
 
       const response = await chooseSeatService(id, seatId, userId, status);
 
-      console.log(response);
+      // console.log(response);
 
       filterSeatsByUserId(response.data, currentUserId);
 

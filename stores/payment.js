@@ -1,9 +1,12 @@
 import { paymentMomoService } from "~/services/payment";
 
 export const usePaymentStore = defineStore("payment", () => {
-  const paymentMomo = async (data) => {
+  const paymentMomo = async (data, seatIds) => {
     try {
-      const response = await paymentMomoService(data);
+      // console.log(data);
+      // console.log(seatIds);
+
+      const response = await paymentMomoService(data, seatIds);
 
       console.log(response);
 
