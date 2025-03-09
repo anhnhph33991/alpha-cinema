@@ -9,13 +9,13 @@
                 <div class="d-flex justify-content-center">
                   <div class="row">
                     <div class="blinking-box mb-3">
-                      <p class="blinking-text">
+                      <span class="blinking-text">
                         Theo quy định của cục điện ảnh, phim này không dành cho
                         khán giả dưới 16 tuổi.
-                      </p>
+                      </span>
                     </div>
 
-                    <div class="d-flex justify-content-center mb-3">
+                    <div class="d-flex justify-content-center mb-4 mt-4">
                       <div class="col bg-color">
                         <Armchair size="32" stroke-width="2" class="" />
                         <span class="note-seat-status-lable"> Ghế trống </span>
@@ -253,19 +253,30 @@
                                     {{ combo.description }}
                                   </td>
                                   <td>
-                                    <span class="mx-2">
-                                      {{ getQuantity(combo.id) }}
-                                    </span>
-                                    <span class="mx-1">
-                                      <button @click="increaseQuantity(combo)">
-                                        +
-                                      </button>
-                                    </span>
-                                    <span>
-                                      <button @click="decreaseQuantity(combo)">
-                                        -
-                                      </button>
-                                    </span>
+                                    <div class="d-flex justify-content-center">
+                                      <span class="mx-2">
+                                        {{ getQuantity(combo.id) }}
+                                      </span>
+                                      <span
+                                        class="mx-1 al-cursor-pointer"
+                                        @click="increaseQuantity(combo)"
+                                      >
+                                        <img :src="btnAdd" alt="" />
+                                        <!-- <button @click="increaseQuantity(combo)">
+                                          +
+                                        </button> -->
+                                      </span>
+                                      <span
+                                        class="al-cursor-pointer"
+                                        @click="decreaseQuantity(combo)"
+                                      >
+                                        <!-- <button @click="decreaseQuantity(combo)">
+                                          -
+                                        </button> -->
+
+                                        <img :src="btnRemove" alt="" />
+                                      </span>
+                                    </div>
                                   </td>
                                 </tr>
                               </tbody>
@@ -304,23 +315,35 @@
                                     {{ combo.description }}
                                   </td>
                                   <td>
-                                    <span class="mx-2">
-                                      {{ getQuantityFood(combo.id) }}
-                                    </span>
-                                    <span class="mx-1">
-                                      <button
+                                    <div class="d-flex justify-content-center">
+                                      <span class="mx-2">
+                                        {{ getQuantityFood(combo.id) }}
+                                      </span>
+                                      <span
+                                        class="mx-1 al-cursor-pointer"
                                         @click="handleIncreaseFood(combo)"
                                       >
-                                        +
-                                      </button>
-                                    </span>
-                                    <span>
-                                      <button
+                                        <img :src="btnAdd" alt="" />
+
+                                        <!-- <button
+                                        @click="handleIncreaseFood(combo)"
+                                      >
+                                        <img :src="btnAdd" alt="" />
+                                      </button> -->
+                                      </span>
+                                      <span
+                                        class="al-cursor-pointer"
                                         @click="handleDecreaseFood(combo)"
                                       >
-                                        -
-                                      </button>
-                                    </span>
+                                        <!-- <button
+                                        @click="handleDecreaseFood(combo)"
+                                      >
+                                        <img :src="btnRemove" alt="" />
+                                      </button> -->
+
+                                        <img :src="btnRemove" alt="" />
+                                      </span>
+                                    </div>
                                   </td>
                                 </tr>
                               </tbody>
@@ -978,6 +1001,9 @@ const screen = "https://betacinemas.vn/Assets/global/img/booking/ic-screen.png";
 // import SeatRegular from "~/assets/seat-icon.svg";
 import SeatRegular from "~/assets/seat-regular.svg";
 
+const btnRemove = "https://betacinemas.vn/Assets/global/img/booking/minus.png";
+const btnAdd = "https://betacinemas.vn/Assets/global/img/booking/plus.png";
+
 import { toast } from "vue-sonner";
 const echo = useEcho();
 
@@ -1116,7 +1142,7 @@ const handleNextOrder = async () => {
 
     paymentStore.paymentMomo(selectedPayment.value, dataTicket, seatId);
 
-    toast.success("Thanh toán thành công");
+    // toast.success("Thanh toán thành công");
     // navigateTo({ name: "booking-success" });
   } catch (error) {
     console.log(error);
@@ -1440,6 +1466,20 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.count-mix {
+  margin-top: 10px;
+}
+
+.btn-custom {
+  padding: 10px 0px;
+  background-color: #007bff;
+  color: black;
+}
+
+.table > :not(caption) > * > * {
+  background-color: #f8f8f8;
+}
+
 .blinking-box {
   display: flex;
   justify-content: center;
