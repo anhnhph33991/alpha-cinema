@@ -38,7 +38,7 @@ export default defineNuxtConfig({
   echo: {
     broadcaster: 'reverb',
     key: 'r6f2xqvoz9942lfwjser',
-    host: 'alphacinema.test',
+    host: 'alphacinema.me',
     port: 8080,
     scheme: 'http',
     transports: ['ws'],
