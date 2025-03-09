@@ -46,10 +46,10 @@ export const useMovieStore = defineStore("movie", () => {
       // console.log("hehe");
       // console.log(matrixColume.value);
 
-      // console.log("showtime");
-      // console.log(showtime.value);
-      // console.log("matrixColume");
-      // console.log(matrixColume.value);
+      console.log("showtime");
+      console.log(showtime.value);
+      console.log("matrixColume");
+      console.log(matrixColume.value);
 
       filterSeatsByUserId(showtime.value.data.seatMapRegular, currentUserId);
     } catch (error) {

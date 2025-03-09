@@ -742,7 +742,7 @@ const foodStore = useFoodStore();
 const paymentStore = usePaymentStore();
 const ticketStore = useTicketStore();
 const route = useRoute();
-const slug = route.params.slug;
+const slug = computed(() => route.params.slug);
 const currentUserId = useAuthStore().user.id;
 
 /**
@@ -1143,7 +1143,7 @@ watch(handleTotalPrice, (newTotal) => {
 const promiseAllApi = async () => {
   try {
     await Promise.all([
-      movieStore.fetchShowTimeBySlug(slug),
+      movieStore.fetchShowTimeBySlug(slug.value),
       foodStore.fetchFoods(),
       foodStore.fetchFoodCombo(),
     ]);
@@ -1162,7 +1162,7 @@ const onFinish = () => {
   navigateTo("/");
 };
 
-const countdownDeadline = useCookie("countdownDeadline", {
+const countdownDeadline = useCookie(`countdownDeadline-${slug.value}`, {
   maxAge: 600,
   default: () => Date.now() + 1000 * 60 * 10,
 });
@@ -1175,8 +1175,16 @@ const deadline = computed(() => {
     : now + 1000 * 60 * 10;
 });
 
-onMounted(() => {
-  promiseAllApi();
+watch(
+  () => slug.value,
+  (newSlug) => {
+    if (!newSlug) return;
+    console.log("Slug thay đổi:", newSlug);
+  }
+);
+
+onMounted(async () => {
+  await promiseAllApi();
   callEcho();
 });
 
