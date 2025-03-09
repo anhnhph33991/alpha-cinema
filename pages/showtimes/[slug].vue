@@ -4,10 +4,36 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-9">
-            <div class="choose-seat-row" v-if="isChoosingScreen">
+            <div class="choose-seat-row mt-3" v-if="isChoosingScreen">
               <div>
                 <div class="d-flex justify-content-center">
                   <div class="row">
+                    <div class="blinking-box mb-3">
+                      <p class="blinking-text">
+                        Theo quy định của cục điện ảnh, phim này không dành cho khán giả dưới 16 tuổi.
+                      </p>
+                    </div>
+
+                    <div class="d-flex justify-content-center mb-3">
+                      <div class="col bg-color">
+                        <Armchair size="32" stroke-width="2" class="" />
+                        <span class="note-seat-status-lable"> Ghế trống </span>
+                      </div>
+                      <div class="col">
+                        <Armchair size="32" stroke-width="2" class="text-primary" />
+                        <span class="note-seat-status-lable"> Ghế đang chọn </span>
+                      </div>
+                      <div class="col">
+                        <Armchair size="32" stroke-width="2" class="text-warning" />
+                        <span class="note-seat-status-lable"> Ghế đang giữ </span>
+                      </div>
+                      <div class="col">
+                        <Armchair size="32" stroke-width="2" class="text-danger" />
+                        <span class="note-seat-status-lable"> Ghế đã bán </span>
+                      </div>
+                     
+                    </div>
+
                     <div class="col-lg-12">
                       <img :src="screen" alt="luxchill" class="w-100" />
                     </div>
@@ -16,30 +42,31 @@
                       <div class="screen-area">
                         <div class="main-seat-layout">
                           <div>
-                            <div
-                              class="seat-row"
-                              v-for="(row, rowName) in movieStore.showtime.data
-                                .seatMap"
-                              :key="rowName"
-                            >
+                            <div class="seat-row" v-for="(row, rowName) in movieStore.showtime.data
+                              .seatMap" :key="rowName">
                               <span class="row-label">{{ rowName }}</span>
-                              <div
-                                v-for="seat in row"
-                                :key="seat.id"
-                                :class="[
-                                  'seat',
-                                  movieStore.getSeatClass(seat),
-                                  {
-                                    selected: movieStore.isSeatSelected(seat),
-                                    hold: movieStore.isSeatHeldByOthers(seat),
-                                    'double-seat': seat.type_seat_id == 3,
-                                  },
-                                ]"
-                                @click="handleChooseSeat(seat)"
-                              >
+                              <div v-for="seat in row" :key="seat.id" :class="[
+                                'seat',
+                                movieStore.getSeatClass(seat),
+                                {
+                                  selected: movieStore.isSeatSelected(seat),
+                                  hold: movieStore.isSeatHeldByOthers(seat),
+                                  'double-seat': seat.type_seat_id == 3,
+                                },
+                              ]" @click="handleChooseSeat(seat)">
                                 <Sofa v-if="seat.type_seat_id == 3" />
 
                                 <Armchair v-else />
+
+                                <!-- <img v-if="seat.status === 'sold'" :src="SeatSold" alt="Ghế đã bán" class="seat-icon" />
+                                <img v-else-if="seat.status === 'hold'" :src="SeatHold" alt="Ghế đang giữ"
+                                  class="seat-icon" />
+                                <img v-else-if="seat.type_seat_id == 3" :src="SeatDouble" alt="Ghế đôi"
+                                  class="seat-icon" />
+                                <img v-else-if="movieStore.isSeatSelected(seat)" :src="SeatSelected" alt="Ghế đang chọn"
+                                  class="seat-icon" />
+                                <img v-else :src="SeatSingle" alt="Ghế đơn" class="seat-icon" /> -->
+
                               </div>
                             </div>
                           </div>
@@ -76,30 +103,19 @@
               </div> -->
             </div>
 
-            <div
-              class="choose-seat-row payment-form mt-3"
-              v-if="!isChoosingScreen"
-            >
+            <div class="choose-seat-row payment-form mt-3" v-if="!isChoosingScreen">
               <div>
                 <div>
                   <div class="row">
-                    <div
-                      class="col-lg-12 payment-page-title"
-                      style="height: 35px; line-height: 35px"
-                    >
-                      <img
-                        style="height: 100%; float: left"
-                        src="https://betacinemas.vn/Assets/global/img/booking/ic-inforpayment.png"
-                      />
+                    <div class="col-lg-12 payment-page-title" style="height: 35px; line-height: 35px">
+                      <img style="height: 100%; float: left"
+                        src="https://betacinemas.vn/Assets/global/img/booking/ic-inforpayment.png" />
                       <div class="page-title" id="scroll-top">
                         THÔNG TIN THANH TOÁN
                       </div>
                     </div>
 
-                    <div
-                      class="col-lg-4 col-md-4 payment-user-info"
-                      style="margin-top: 25px; margin-bottom: 0px"
-                    >
+                    <div class="col-lg-4 col-md-4 payment-user-info" style="margin-top: 25px; margin-bottom: 0px">
                       <div class="col-md-5 user-info-item font-16">
                         <span class="bold user-info-item-label"> Họ Tên: </span>
                         <br />
@@ -109,10 +125,7 @@
                       </div>
                     </div>
 
-                    <div
-                      class="col-lg-4 col-md-4 payment-user-info"
-                      style="margin-top: 25px; margin-bottom: 0px"
-                    >
+                    <div class="col-lg-4 col-md-4 payment-user-info" style="margin-top: 25px; margin-bottom: 0px">
                       <div class="col-md-5 user-info-item font-16">
                         <span class="bold user-info-item-label">
                           Số điện thoại:
@@ -124,10 +137,7 @@
                       </div>
                     </div>
 
-                    <div
-                      class="col-lg-4 col-md-4 payment-user-info"
-                      style="margin-top: 25px; margin-bottom: 0px"
-                    >
+                    <div class="col-lg-4 col-md-4 payment-user-info" style="margin-top: 25px; margin-bottom: 0px">
                       <div class="col-md-5 user-info-item font-16">
                         <span class="bold user-info-item-label"> Email: </span>
                         <br />
@@ -139,10 +149,7 @@
                     <br />
                     <br />
                     <div class="col-lg-12 ticket-selected mt-5">
-                      <div
-                        v-for="(data, index) in filteredSeatGroups"
-                        :key="index"
-                      >
+                      <div v-for="(data, index) in filteredSeatGroups" :key="index">
                         <div>
                           <div class="row">
                             <div class="col-md-6 item-seat-type">
@@ -182,18 +189,11 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr
-                                  v-for="combo in foodStore.foodCombo"
-                                  :key="combo.id"
-                                >
+                                <tr v-for="combo in foodStore.foodCombo" :key="combo.id">
                                   <td scope="row">
                                     <img
                                       src="https://files.betacorp.vn/media/combopackage/2024/06/05/combo-online-26-101802-050624-36.png"
-                                      alt=""
-                                      class="combo-image"
-                                      width="130"
-                                      height="130"
-                                    />
+                                      alt="" class="combo-image" width="130" height="130" />
                                   </td>
                                   <td class="combo-name">
                                     {{ combo.name }}
@@ -202,8 +202,8 @@
                                     {{ combo.description }}
                                   </td>
                                   <td>
-                                    <span> {{ getQuantity(combo.id) }} </span>
-                                    <span>
+                                    <span class="mx-2"> {{ getQuantity(combo.id) }} </span>
+                                    <span class="mx-1">
                                       <button @click="increaseQuantity(combo)">
                                         +
                                       </button>
@@ -231,18 +231,11 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr
-                                  v-for="combo in foodStore.foods"
-                                  :key="combo.id"
-                                >
+                                <tr v-for="combo in foodStore.foods" :key="combo.id">
                                   <td scope="row">
                                     <img
                                       src="https://files.betacorp.vn/media/combopackage/2024/06/05/combo-online-26-101802-050624-36.png"
-                                      alt=""
-                                      class="combo-image"
-                                      width="130"
-                                      height="130"
-                                    />
+                                      alt="" class="combo-image" width="130" height="130" />
                                   </td>
                                   <td class="combo-name">
                                     {{ combo.name }}
@@ -251,20 +244,16 @@
                                     {{ combo.description }}
                                   </td>
                                   <td>
-                                    <span>
+                                    <span class="mx-2">
                                       {{ getQuantityFood(combo.id) }}
                                     </span>
-                                    <span>
-                                      <button
-                                        @click="handleIncreaseFood(combo)"
-                                      >
+                                    <span class="mx-1">
+                                      <button @click="handleIncreaseFood(combo)">
                                         +
                                       </button>
                                     </span>
                                     <span>
-                                      <button
-                                        @click="handleDecreaseFood(combo)"
-                                      >
+                                      <button @click="handleDecreaseFood(combo)">
                                         -
                                       </button>
                                     </span>
@@ -277,16 +266,110 @@
                       </a-tabs>
 
                       <hr style="margin-top: 15px" />
+                      <div class="voucher">
+                        <div class="col-lg-12 payment-page-title" style="height: 35px; line-height: 35px">
+                          <img style="height: 100%; float: left"
+                            src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png" />
+                          <div class="page-title" id="scroll-top">
+                            GIẢM GIÁ
+                          </div>
+                        </div>
+                        <div class="discount-section">
+
+
+                          <div class="beta-voucher" @click.prevent="isAlphaVoucherOpen = !isAlphaVoucherOpen">
+                            <span>Alpha Voucher</span>
+                            <a href="#">
+                              (Nhấn vào đây để xem danh sách voucher của bạn)
+                            </a>
+                          </div>
+
+                          <div v-if="isAlphaVoucherOpen">
+
+                            <hr class="discount-divider" />
+
+
+                            <div class="voucher-form">
+                              <div class="input-group">
+                                <label>Mã Voucher</label>
+                                <input type="text" placeholder="" />
+                              </div>
+
+                              <div class="input-group">
+                                <label>Mã PIN</label>
+                                <input type="text" placeholder="" />
+                              </div>
+
+                              <button class="apply-btn mt-4">ĐĂNG KÝ</button>
+                            </div>
+
+
+                            <div class="voucher-list">
+                              <h4>VOUCHER CỦA BẠN</h4>
+                              <table>
+                                <thead>
+                                  <tr>
+                                    <th>Mã voucher</th>
+                                    <th>Nội dung voucher</th>
+                                    <th>Ngày hết hạn</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="point-exchange-section">
+
+                          <div class="point-title" @click.prevent="isAlphaPointOpen = !isAlphaPointOpen">
+                            Điểm Alpha
+                            <a href="#">(Nhấn vào đây để xem điểm tích lũy của bạn)</a>
+                          </div>
+                          <div v-if="isAlphaPointOpen">
+                            <hr class="point-divider" />
+
+                            <div class="point-form">
+
+                              <div class="point-info">
+                                <span class="label">Điểm hiện có</span><br>
+                                <span class="point-value">0</span>
+                              </div>
+
+
+                              <div class="input-group">
+                                <label>Nhập điểm</label>
+                                <input type="text" placeholder="" />
+                              </div>
+
+
+                              <div class="discount-info">
+                                <span class="label">Số tiền được giảm</span>
+                                <span class="discount-value bold">= 0 vnđ</span>
+                              </div>
+
+
+                              <button class="exchange-btn mt-4">ĐỔI ĐIỂM</button>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
                     </div>
+
                     <div class="col-lg-12">
                       <div class="row">
                         <div class="col-md-6"></div>
                         <div class="col-md-3 item-seat-quantity">
                           Tổng tiền:
                         </div>
-                        <div
-                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
-                        >
+                        <div class="col-md-3 item-seat-money item-seat-total-money total-money-name">
                           {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
@@ -295,9 +378,7 @@
                         <div class="col-md-3 item-seat-quantity">
                           Tiền được giảm:
                         </div>
-                        <div
-                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
-                        >
+                        <div class="col-md-3 item-seat-money item-seat-total-money total-money-name">
                           0đ
                         </div>
                       </div>
@@ -306,13 +387,50 @@
                         <div class="col-md-3 item-seat-quantity">
                           Tiền cần thanh toán:
                         </div>
-                        <div
-                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
-                        >
+                        <div class="col-md-3 item-seat-money item-seat-total-money total-money-name">
                           {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
                     </div>
+
+                    <div class="payment-method-section">
+                      <div class="col-lg-12 payment-page-title" style="height: 35px; line-height: 35px">
+                        <img style="height: 100%; float: left"
+                          src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png" />
+                        <div class="page-title" id="scroll-top">
+                          PHƯƠNG THỨC THANH TOÁN
+                        </div>
+                      </div>
+                      <p class="mt-3 bold">Chọn thẻ thanh toán</p>
+                      <hr class="payment-divider" />
+
+
+                      <div class="payment-options">
+
+                        <label class="payment-option">
+                          <input type="radio" name="payment" value="domestic-card" v-model="selectedPayment" />
+                          <span class="custom-radio"></span>
+                          <img src="/assets/icon-card.png" alt="Thẻ nội địa" />
+                          <span>Thẻ nội địa</span>
+                        </label>
+
+
+                        <label class="payment-option">
+                          <input type="radio" name="payment" value="momo" v-model="selectedPayment" />
+                          <span class="custom-radio"></span>
+                          <img src="/assets/icon-momo.png" alt="Ví MoMo" />
+                          <span>Ví MoMo</span>
+                        </label>
+
+                        <label class="payment-option">
+                          <input type="radio" name="payment" value="VNpay" v-model="selectedPayment" />
+                          <span class="custom-radio"></span>
+                          <img src="/assets/icon-vnpay.png" alt="Ví VNpay" />
+                          <span>Ví VNpay</span>
+                        </label>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -353,11 +471,7 @@
                         Thời gian còn lại
                       </div>
                       <div class="time-to-value text-end">
-                        <a-statistic-countdown
-                          :value="deadline"
-                          @finish="onFinish"
-                          format="mm:ss"
-                        >
+                        <a-statistic-countdown :value="deadline" @finish="onFinish" format="mm:ss">
                         </a-statistic-countdown>
                       </div>
                     </div>
@@ -372,20 +486,13 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="pi-img-wrapper">
-                    <img
-                      class=""
-                      style="width: 100%"
-                      alt=""
-                      v-if="
-                        movieStore.showtime.data &&
-                        movieStore.showtime.data.showTime.movie.img_thumbnail
-                      "
-                      :src="
-                        formattedImage(
-                          movieStore.showtime.data.showTime.movie.img_thumbnail
-                        )
-                      "
-                    />
+                    <img class="" style="width: 100%" alt="" v-if="
+                      movieStore.showtime.data &&
+                      movieStore.showtime.data.showTime.movie.img_thumbnail
+                    " :src="formattedImage(
+                      movieStore.showtime.data.showTime.movie.img_thumbnail
+                    )
+                      " />
                   </div>
                 </div>
 
@@ -398,8 +505,7 @@
 
                 <div class="col-lg-12">
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
-                  >
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6">
@@ -430,14 +536,10 @@
                 </div>
 
                 <div class="col-lg-12">
-                  <hr
-                    class="border-dashed border-top-2"
-                    style="margin-top: 5px; margin-bottom: 5px"
-                  />
+                  <hr class="border-dashed border-top-2" style="margin-top: 5px; margin-bottom: 5px" />
 
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
-                  >
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -506,15 +608,9 @@
                   </ul>
                 </div>
 
-                <div
-                  class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center"
-                >
+                <div class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center">
                   <template v-if="!isChoosingScreen">
-                    <button
-                      class="btn btn-primary"
-                      @click="isChoosingScreen = true"
-                      v-if="!isChoosingScreen"
-                    >
+                    <button class="btn btn-primary" @click="isChoosingScreen = true" v-if="!isChoosingScreen">
                       Quay Lại
                     </button>
 
@@ -523,11 +619,7 @@
                     </button>
                   </template>
 
-                  <button
-                    class="btn btn-primary"
-                    @click="handleNextOrderOne"
-                    v-if="isChoosingScreen"
-                  >
+                  <button class="btn btn-primary" @click="handleNextOrderOne" v-if="isChoosingScreen">
                     Tiếp theo
                   </button>
                 </div>
@@ -540,20 +632,13 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="pi-img-wrapper">
-                    <img
-                      class=""
-                      style="width: 100%"
-                      alt=""
-                      v-if="
-                        movieStore.showtime.data &&
-                        movieStore.showtime.data.showTime.movie.img_thumbnail
-                      "
-                      :src="
-                        formattedImage(
-                          movieStore.showtime.data.showTime.movie.img_thumbnail
-                        )
-                      "
-                    />
+                    <img class="" style="width: 100%" alt="" v-if="
+                      movieStore.showtime.data &&
+                      movieStore.showtime.data.showTime.movie.img_thumbnail
+                    " :src="formattedImage(
+                      movieStore.showtime.data.showTime.movie.img_thumbnail
+                    )
+                      " />
                   </div>
                 </div>
 
@@ -566,8 +651,7 @@
 
                 <div class="col-lg-12">
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
-                  >
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6">
@@ -598,14 +682,10 @@
                 </div>
 
                 <div class="col-lg-12">
-                  <hr
-                    class="border-dashed border-top-2"
-                    style="margin-top: 5px; margin-bottom: 5px"
-                  />
+                  <hr class="border-dashed border-top-2" style="margin-top: 5px; margin-bottom: 5px" />
 
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
-                  >
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -674,15 +754,9 @@
                   </ul>
                 </div>
 
-                <div
-                  class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center"
-                >
+                <div class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center">
                   <template v-if="!isChoosingScreen">
-                    <button
-                      class="btn btn-primary"
-                      @click="isChoosingScreen = true"
-                      v-if="!isChoosingScreen"
-                    >
+                    <button class="btn btn-primary" @click="isChoosingScreen = true" v-if="!isChoosingScreen">
                       Quay Lại
                     </button>
 
@@ -691,11 +765,7 @@
                     </button>
                   </template>
 
-                  <button
-                    class="btn btn-primary"
-                    @click="handleNextOrderOne"
-                    v-if="isChoosingScreen"
-                  >
+                  <button class="btn btn-primary" @click="handleNextOrderOne" v-if="isChoosingScreen">
                     Tiếp theo
                   </button>
                 </div>
@@ -756,7 +826,7 @@ const authStore = useAuthStore();
 const isChoosingScreen = ref(true);
 
 const formattedImage = (image) => {
-  return image ? `https://alphacinema.me/storage/${image}` : "";
+  return image ? `http://alphacinema.test/storage/${image}` : "";
 };
 
 const showtime = computed(() => movieStore.showtime.data?.showTime || null);
@@ -781,8 +851,12 @@ const screen = "https://betacinemas.vn/Assets/global/img/booking/ic-screen.png";
 
 // import SeatRegular from "~/assets/seat-icon.svg";
 import SeatRegular from "~/assets/seat-regular.svg";
+
 import { toast } from "vue-sonner";
 const echo = useEcho();
+
+const isAlphaVoucherOpen = ref(false);
+const isAlphaPointOpen = ref(false);
 
 /**
  * Ngăn chặn spam click ghế
@@ -938,8 +1012,8 @@ const formattedStartTime = (time) => {
 const seatNames = computed(() =>
   movieStore.seatSelected?.length
     ? movieStore.seatSelected.map(
-        (seat) => `${seat.coordinates_y}${seat.coordinates_x}`
-      )
+      (seat) => `${seat.coordinates_y}${seat.coordinates_x}`
+    )
     : []
 );
 
@@ -1186,6 +1260,38 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.blinking-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+  animation: blink-bg 2s infinite;
+  background-color: #faebd7;
+  text-align: center;
+}
+
+@keyframes blink-bg {
+  0% {
+    background-color: #faebd7;
+  }
+
+  /* Màu nền ban đầu */
+  50% {
+    background-color: #fdcb96;
+  }
+
+  /* Màu nền nhấp nháy */
+  100% {
+    background-color: #faebd7;
+  }
+}
+
+.blinking-text {
+  font-weight: bold;
+  color: red;
+}
+
 .seat-row {
   display: flex;
   align-items: center;
@@ -1234,8 +1340,9 @@ onUnmounted(() => {
 }
 
 .seat:not(.empty-seat) {
-  border: 1px solid #ddd;
-  cursor: pointer; /* Chỉ có cursor khi ghế có dữ liệu */
+  /* border: 1px solid #ddd; */
+  cursor: pointer;
+  /* Chỉ có cursor khi ghế có dữ liệu */
 }
 
 .double-seat {
@@ -1412,6 +1519,434 @@ h3,
   text-align: left;
   padding-left: 15px;
   color: #000000;
+}
+
+.table-responsive table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.table thead th {
+  text-align: center;
+  vertical-align: middle;
+  font-weight: bold;
+  padding: 12px;
+}
+
+.table tbody tr {
+  display: table-row;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table tbody td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 12px;
+}
+
+.combo-name {
+  font-weight: bold;
+  font-size: 16px;
+  text-align: left;
+}
+
+.combo-description {
+  font-size: 14px;
+  max-width: 250px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.table td span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.quantity-controls button {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.quantity-controls .increase {
+  background-color: #0056b3;
+  color: white;
+}
+
+.quantity-controls .decrease {
+  background-color: #d3d3d3;
+  color: black;
+}
+
+.quantity-btn {
+  width: 25px;
+  height: 25px;
+  background-color: #f8f9fa;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-value {
+  min-width: 30px;
+  text-align: center;
+}
+
+.discount-section {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  border-bottom: 1px solid #d1d5db;
+}
+
+/* Tiêu đề "GIẢM GIÁ" */
+.discount-title {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e1f28;
+  margin-bottom: 5px;
+}
+
+.discount-title img {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+/* Beta Voucher */
+.beta-voucher {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #1e1f28;
+  margin-top: 5px;
+}
+
+.beta-voucher img {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+}
+
+.beta-voucher a {
+  font-style: italic;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+.beta-voucher a:hover {
+  text-decoration: underline;
+}
+
+/* Đường kẻ ngang */
+.discount-divider {
+  margin-top: 10px;
+  border-bottom: 1px solid #d1d5db;
+}
+
+/* Form nhập voucher */
+.voucher-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.input-group {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 45%;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #494c62;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+/* Nút đăng ký */
+.apply-btn {
+  background: linear-gradient(to right, #ff5f6d, #ff9966);
+  border: none;
+  padding: 8px 16px;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.apply-btn:hover {
+  background: linear-gradient(to right, #ff9966, #ff5f6d);
+}
+
+/* Bảng danh sách voucher */
+.voucher-list {
+  margin-top: 20px;
+}
+
+.voucher-list h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #494c62;
+  margin-bottom: 10px;
+}
+
+.voucher-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.voucher-list table thead {
+  background-color: #f8f9fa;
+}
+
+.voucher-list table th,
+.voucher-list table td {
+  border: 1px solid #d1d5db;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Container chính */
+.point-exchange-section {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  border-bottom: 1px solid #d1d5db;
+  margin: 50px 0;
+}
+
+/* Tiêu đề "Điểm Beta" */
+.point-title {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e1f28;
+  margin-bottom: 5px;
+}
+
+.point-title img {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.point-title a {
+  font-style: italic;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+.point-title a:hover {
+  text-decoration: underline;
+}
+
+/* Đường kẻ ngang */
+.point-divider {
+  margin-top: 10px;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.point-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.point-group {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 30%;
+}
+
+.point-value {
+  font-size: 18px;
+  color: #000;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #494c62;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.discount-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #494c62;
+  text-align: center;
+}
+
+.discount-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Nút đổi điểm */
+.exchange-btn {
+  background: linear-gradient(to right, #ff5f6d, #ff9966);
+  border: none;
+  padding: 8px 16px;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.exchange-btn:hover {
+  background: linear-gradient(to right, #ff9966, #ff5f6d);
+}
+
+/* Thanh toán */
+.payment-method-section {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  margin: 20px 0;
+}
+
+.payment-divider {
+  margin-top: 5px;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.payment-options {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-top: 10px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+.payment-option input {
+  display: none;
+}
+
+.custom-radio {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #555;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+.payment-option input:checked+.custom-radio::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #0044cc;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.payment-option img {
+  width: 40px;
+  height: 40px;
+}
+
+.payment-option span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1e1f28;
+}
+
+/* icon ghế */
+.seat-icon {
+  width: 40px;
+  /* Độ rộng ghế */
+  height: auto;
+  transition: transform 0.2s ease-in-out;
+}
+
+.selected .seat-icon {
+  filter: brightness(1.2);
+}
+
+.sold .seat-icon {
+  filter: grayscale(100%);
+}
+
+.hold .seat-icon {
+  filter: sepia(70%);
+}
+
+.seat:hover .seat-icon {
+  transform: scale(1.1);
 }
 
 /** responsive */
