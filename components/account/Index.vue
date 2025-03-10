@@ -5,17 +5,14 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="d-flex align-items-center mb-3">
-              <!-- <img
-                :src="
-                  dataForm.avatar
-                    ? URL.createObjectURL(dataForm.avatar)
-                    : 'default-avatar.png'
-                "
+              <img
+                :src="dataForm.avatar"
                 alt="avatar"
                 class="img-thumbnail"
                 width="150"
                 height="150"
-              /> -->
+              />
+
               <button
                 type="button"
                 class="btn btn-custom ms-3"
