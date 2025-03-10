@@ -80,7 +80,11 @@
         </div>
 
         <div class="col">
-          <a href="#" class="btn btn-google btn-2">
+          <a
+            href="https://alphacinema.me/auth/google/redirect"
+            class="btn btn-google btn-2"
+            rel="noopener noreferrer"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

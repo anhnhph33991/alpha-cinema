@@ -5,12 +5,31 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="d-flex align-items-center mb-3">
-              <img :src="dataForm.avatar ? URL.createObjectURL(dataForm.avatar) : 'default-avatar.png'" alt="avatar"
-                class="img-thumbnail" width="150" height="150" />
-              <button type="button" class="btn btn-custom ms-3" @click="triggerFileInput">
+              <!-- <img
+                :src="
+                  dataForm.avatar
+                    ? URL.createObjectURL(dataForm.avatar)
+                    : 'default-avatar.png'
+                "
+                alt="avatar"
+                class="img-thumbnail"
+                width="150"
+                height="150"
+              /> -->
+              <button
+                type="button"
+                class="btn btn-custom ms-3"
+                @click="triggerFileInput"
+              >
                 Tải ảnh lên
               </button>
-              <input type="file" class="d-none" id="avatar" @change="handleFileChange" ref="fileInput" />
+              <input
+                type="file"
+                class="d-none"
+                id="avatar"
+                @change="handleFileChange"
+                ref="fileInput"
+              />
             </div>
           </div>
 
@@ -31,7 +50,11 @@
                 <span class="text-danger">*</span>
                 Email
               </label>
-              <input type="email" class="form-control" v-model="dataForm.email" />
+              <input
+                type="email"
+                class="form-control"
+                v-model="dataForm.email"
+              />
               <small id="helpId" class="form-text text-muted">Help text</small>
             </div>
           </div>
@@ -42,7 +65,11 @@
                 <span class="text-danger">*</span>
                 Số điện thoại
               </label>
-              <input type="text" class="form-control" v-model="dataForm.phone" />
+              <input
+                type="text"
+                class="form-control"
+                v-model="dataForm.phone"
+              />
               <small id="helpId" class="form-text text-muted">Help text</small>
             </div>
           </div>
@@ -53,7 +80,11 @@
                 <span class="text-danger">*</span>
                 Ngày Sinh
               </label>
-              <input type="text" class="form-control" v-model="dataForm.birthday" />
+              <input
+                type="text"
+                class="form-control"
+                v-model="dataForm.birthday"
+              />
               <small id="helpId" class="form-text text-muted">Help text</small>
             </div>
           </div>
@@ -106,8 +137,14 @@
       </form>
     </div>
 
-    <a-modal :open="modal2Visible" title="ĐỔI MẬT KHẨU" centered @ok="handleOk" @cancel="modal2Visible = false">
-      <hr>
+    <a-modal
+      :open="modal2Visible"
+      title="ĐỔI MẬT KHẨU"
+      centered
+      @ok="handleOk"
+      @cancel="modal2Visible = false"
+    >
+      <hr />
       <div class="row mt-4">
         <div class="col-lg-12 col-md-12">
           <div class="mb-3">
@@ -115,7 +152,11 @@
               <span class="text-danger">*</span>
               Mật khẩu hiện tại
             </label>
-            <input type="password" class="form-control" v-model="formDataPassword.currentPassword" />
+            <input
+              type="password"
+              class="form-control"
+              v-model="formDataPassword.currentPassword"
+            />
             <small id="helpId" class="form-text text-muted">Help text</small>
           </div>
         </div>
@@ -125,7 +166,11 @@
               <span class="text-danger">*</span>
               Mật khẩu mới
             </label>
-            <input type="password" class="form-control" v-model="formDataPassword.newPassword" />
+            <input
+              type="password"
+              class="form-control"
+              v-model="formDataPassword.newPassword"
+            />
             <small id="helpId" class="form-text text-muted">Help text</small>
           </div>
         </div>
@@ -135,7 +180,11 @@
               <span class="text-danger">*</span>
               Xác nhận mật khẩu mới
             </label>
-            <input type="password" class="form-control" v-model="formDataPassword.confirmPassword" />
+            <input
+              type="password"
+              class="form-control"
+              v-model="formDataPassword.confirmPassword"
+            />
             <small id="helpId" class="form-text text-muted">Help text</small>
           </div>
         </div>
@@ -202,6 +251,8 @@ const submited = () => {
 };
 
 onMounted(() => {
+  console.log(props.user);
+
   dataForm.value = { ...props.user };
   console.log(dataForm.value);
 });
@@ -226,7 +277,6 @@ a {
   margin: 30px 0;
 }
 
-
 .form-select {
   border-radius: 0px;
 }
@@ -241,8 +291,8 @@ a {
 }
 
 .btn-custom {
-  background-color: #043c4d;  
-  color: white;               
+  background-color: #043c4d;
+  color: white;
   font-weight: bold;
   padding: 5px 10px;
   border-radius: 5px;
@@ -250,10 +300,9 @@ a {
 }
 
 .btn-custom:hover {
-  background-color: #047091;  
+  background-color: #047091;
 }
 hr {
-  border: 1px solid #a0a0a0; 
+  border: 1px solid #a0a0a0;
 }
-
 </style>

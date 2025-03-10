@@ -59,7 +59,6 @@ export default defineNuxtConfig({
       include: ['pusher-js']
     }
   },
-
   css: [
     'bootstrap/dist/css/bootstrap.min.css',
     'bootstrap-icons/font/bootstrap-icons.css'
