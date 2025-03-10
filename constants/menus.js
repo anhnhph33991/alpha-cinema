@@ -9,7 +9,7 @@ export const navMenu = [
   },
   {
     title: "Chính Sách",
-    link: "/policy",
+    link: "/site-setting/policy",
   },
   {
     title: "Giá Vé",
@@ -17,7 +17,7 @@ export const navMenu = [
   },
   {
     title: "Tin Tức",
-    link: "/posts",
+    link: "/site-setting/posts",
   },
   {
     title: "Liên hệ",
