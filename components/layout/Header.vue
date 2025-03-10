@@ -44,32 +44,35 @@
       class="navbar navbar-expand-lg al-header-section bg-white"
       :class="[{ 'al-header-active': isActive }]"
     >
-
-      <div class="container al-padding-header">
+      <div class="container al-padding-header al-with-header">
         <NuxtLink :to="{ name: 'index' }" class="navbar-brand">
-          <img
+          <!-- <img
             v-if="settings.length > 0 && settings[0].website_logo"
             class="logo-img border-radius-20"
             :alt="settings[0].site_name"
             :src="formattedImage(settings[0].website_logo)"
-          />
+          /> -->
+          AlphaCinema
         </NuxtLink>
-
-
-        <div class="branch-dropdown">
-          <a-cascader
-             :value="value"
-            :options="branchOptions"
-            expand-trigger="hover"
-            placeholder="Vui lòng chọn"
-            popupClassName="custom-dropdown"
-            :dropdownStyle="{
-              maxHeight: 'unset',
-              overflow: 'visible',
-              height: 'auto',
-              minWidth: '200px',
-            }"
-          />
+        <div class="branch-dropdown d-none d-xl-block">
+          <ClientOnly>
+            <a-cascader
+              :value="value"
+              :options="branchOptions"
+              expand-trigger="hover"
+              placeholder="Vui lòng chọn"
+              popupClassName="custom-dropdown"
+              :dropdownStyle="{
+                maxHeight: 'unset',
+                overflow: 'visible',
+                height: 'auto',
+                minWidth: '200px',
+              }"
+              :displayRender="(labels) => labels.labels?.at(-1) || 'no data'"
+              @change="handleChangeCinema"
+              :allowClear="false"
+            />
+          </ClientOnly>
         </div>
 
         <button
@@ -84,19 +87,27 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 al-pull-right">
-            <li v-for="(item, index) in navMenu" :key="index" class="nav-item">
-              <NuxtLink
-                :to="item.link"
-                exact-active-class="active"
-                class="nav-link al-nav-link"
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarSupportedContent"
+        >
+          <div>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 al-pull-right">
+              <li
+                v-for="(item, index) in navMenu"
+                :key="index"
+                class="nav-item"
               >
-                {{ item.title }}
-              </NuxtLink>
-            </li>
-          </ul>
+                <NuxtLink
+                  :to="item.link"
+                  exact-active-class="active"
+                  class="nav-link al-nav-link"
+                >
+                  {{ item.title }}
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -114,7 +125,6 @@ import { fetchSettingService } from "@/services/setting";
 
 const settings = ref([]);
 
-
 const authStore = useAuthStore();
 const branchStore = useBranchStore();
 const value = ref([]);
@@ -129,11 +139,12 @@ const props = defineProps({
   },
 });
 
-
 const formattedImage = (image) => {
   const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "https://alphacinema.test/";
-  return image ? `${baseUrl}${image}` : "";
+    import.meta.env.VITE_API_BASE_URL || "https://alphacinema.me/";
+  return image
+    ? `${baseUrl}${image}`
+    : "https://img.pikbest.com/origin/10/49/11/85tpIkbEsTcjq.png!w700wp";
 };
 
 const logout = async () => {
@@ -145,7 +156,6 @@ const branchOptions = computed(() => {
     value: branch.id,
     label: branch.name,
     disabled: !branch.cinemas || branch.cinemas.length === 0,
-
     children:
       branch.cinemas?.map((cinema) => ({
         value: cinema.id,
@@ -193,9 +203,6 @@ onMounted(async () => {
   try {
     await branchStore.listBranch();
     const settingsData = await Promise.all([fetchSettingService()]);
-
-    settings.value = settingsData;
-    console.log("settig", settings.value);
   } catch (error) {
     console.error("Lỗi khi lấy danh sách chi nhánh:", error);
   }
@@ -213,13 +220,9 @@ onMounted(async () => {
   padding: 10px 0;
 }
 
-
-.al-padding-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 90%;
-  max-width: 1200px;
+.al-with-header {
+  width: 100%;
+  min-width: auto;
 }
 
 .navbar-nav {
@@ -269,13 +272,13 @@ onMounted(async () => {
 }
 
 .ant-cascader-menu-item:hover {
-  background-color: #043c4d !important;
+  background-color: #2a73dd !important;
   color: white !important;
   width: 100% !important;
 }
 
 .ant-cascader-menu-item-active {
-  background-color: #043c4d !important;
+  background-color: #2a73dd !important;
   color: white !important;
 }
 
@@ -292,15 +295,10 @@ onMounted(async () => {
   content: "";
   display: block;
   width: 100%;
-  height: 2px; 
-  background-color: #043c4d; 
-
+  height: 2px;
+  background-color: #2a73dd;
   position: absolute;
   top: 0;
   left: 0;
-}
-.logo-img {
-  width: 130px;
-  height: auto;
 }
 </style>
