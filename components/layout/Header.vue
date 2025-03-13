@@ -46,6 +46,12 @@
     >
       <div class="container al-padding-header al-with-header">
         <NuxtLink :to="{ name: 'index' }" class="navbar-brand">
+          <!-- <img
+            v-if="settings.length > 0 && settings[0].website_logo"
+            class="logo-img border-radius-20"
+            :alt="settings[0].site_name"
+            :src="formattedImage(settings[0].website_logo)"
+          /> -->
           AlphaCinema
         </NuxtLink>
         <div class="branch-dropdown d-none d-xl-block">
@@ -115,6 +121,9 @@ import { useAuthStore } from "~/stores/auth";
 import { useBranchStore } from "~/stores/branch";
 import { LogOut } from "lucide-vue-next";
 import { toast } from "vue-sonner";
+import { fetchSettingService } from "@/services/setting";
+
+const settings = ref([]);
 
 const authStore = useAuthStore();
 const branchStore = useBranchStore();
@@ -129,6 +138,14 @@ const props = defineProps({
     default: false,
   },
 });
+
+const formattedImage = (image) => {
+  const baseUrl =
+    import.meta.env.VITE_API_BASE_URL || "https://alphacinema.me/";
+  return image
+    ? `${baseUrl}${image}`
+    : "https://img.pikbest.com/origin/10/49/11/85tpIkbEsTcjq.png!w700wp";
+};
 
 const logout = async () => {
   await authStore.logout();
@@ -185,6 +202,7 @@ watch(
 onMounted(async () => {
   try {
     await branchStore.listBranch();
+    const settingsData = await Promise.all([fetchSettingService()]);
   } catch (error) {
     console.error("Lỗi khi lấy danh sách chi nhánh:", error);
   }

@@ -32,7 +32,7 @@
 
 <script setup>
 // definePageMeta({
-//   middleware: "admin",
+//   middleware: "google",
 // });
 
 import { LayoutBanner, MovieList } from "#components";
@@ -43,6 +43,7 @@ const tabActive = ref("2");
 
 onMounted(async () => {
   movieStore.fetchMovies();
+  // console.log("Auth Google:", authGoogle.value);
 });
 </script>
 

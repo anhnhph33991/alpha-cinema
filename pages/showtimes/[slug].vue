@@ -4,15 +4,52 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-9">
-            <div class="choose-seat-row" v-if="isChoosingScreen">
+            <div class="choose-seat-row mt-3" v-if="isChoosingScreen">
               <div>
                 <div class="d-flex justify-content-center">
                   <div class="row">
                     <div class="blinking-box mb-3">
-                      <p class="blinking-text">
-                        Theo quy định của cục điện ảnh, phim này không dành cho khán giả dưới 16 tuổi.
-                      </p>
+                      <span class="blinking-text">
+                        Theo quy định của cục điện ảnh, phim này không dành cho
+                        khán giả dưới 16 tuổi.
+                      </span>
                     </div>
+
+                    <div class="d-flex justify-content-center mb-4 mt-4">
+                      <div class="col bg-color">
+                        <Armchair size="32" stroke-width="2" class="" />
+                        <span class="note-seat-status-lable"> Ghế trống </span>
+                      </div>
+                      <div class="col">
+                        <Armchair
+                          size="32"
+                          stroke-width="2"
+                          class="text-primary"
+                        />
+                        <span class="note-seat-status-lable">
+                          Ghế đang chọn
+                        </span>
+                      </div>
+                      <div class="col">
+                        <Armchair
+                          size="32"
+                          stroke-width="2"
+                          class="text-warning"
+                        />
+                        <span class="note-seat-status-lable">
+                          Ghế đang giữ
+                        </span>
+                      </div>
+                      <div class="col">
+                        <Armchair
+                          size="32"
+                          stroke-width="2"
+                          class="text-danger"
+                        />
+                        <span class="note-seat-status-lable"> Ghế đã bán </span>
+                      </div>
+                    </div>
+
                     <div class="col-lg-12">
                       <img :src="screen" alt="luxchill" class="w-100" />
                     </div>
@@ -181,17 +218,32 @@
                                     {{ combo.description }}
                                   </td>
                                   <td>
-                                    <span class="mx-2"> {{ getQuantity(combo.id) }} </span>
-                                    <span class="mx-1">
-                                      <button @click="increaseQuantity(combo)">
-                                        +
-                                      </button>
-                                    </span>
-                                    <span>
-                                      <button @click="decreaseQuantity(combo)">
-                                        -
-                                      </button>
-                                    </span>
+
+                                    <div class="d-flex justify-content-center">
+                                      <span class="mx-2">
+                                        {{ getQuantity(combo.id) }}
+                                      </span>
+                                      <span
+                                        class="mx-1 al-cursor-pointer"
+                                        @click="increaseQuantity(combo)"
+                                      >
+                                        <img :src="btnAdd" alt="" />
+                                        <!-- <button @click="increaseQuantity(combo)">
+                                          +
+                                        </button> -->
+                                      </span>
+                                      <span
+                                        class="al-cursor-pointer"
+                                        @click="decreaseQuantity(combo)"
+                                      >
+                                        <!-- <button @click="decreaseQuantity(combo)">
+                                          -
+                                        </button> -->
+
+                                        <img :src="btnRemove" alt="" />
+                                      </span>
+                                    </div>
+
                                   </td>
                                 </tr>
                               </tbody>
@@ -223,19 +275,37 @@
                                     {{ combo.description }}
                                   </td>
                                   <td>
-                                    <span class="mx-2">
-                                      {{ getQuantityFood(combo.id) }}
-                                    </span>
-                                    <span class="mx-1">
-                                      <button @click="handleIncreaseFood(combo)">
-                                        +
-                                      </button>
-                                    </span>
-                                    <span>
-                                      <button @click="handleDecreaseFood(combo)">
-                                        -
-                                      </button>
-                                    </span>
+
+                                    <div class="d-flex justify-content-center">
+                                      <span class="mx-2">
+                                        {{ getQuantityFood(combo.id) }}
+                                      </span>
+                                      <span
+                                        class="mx-1 al-cursor-pointer"
+                                        @click="handleIncreaseFood(combo)"
+                                      >
+                                        <img :src="btnAdd" alt="" />
+
+                                        <!-- <button
+                                        @click="handleIncreaseFood(combo)"
+                                      >
+                                        <img :src="btnAdd" alt="" />
+                                      </button> -->
+                                      </span>
+                                      <span
+                                        class="al-cursor-pointer"
+                                        @click="handleDecreaseFood(combo)"
+                                      >
+                                        <!-- <button
+                                        @click="handleDecreaseFood(combo)"
+                                      >
+                                        <img :src="btnRemove" alt="" />
+                                      </button> -->
+
+                                        <img :src="btnRemove" alt="" />
+                                      </span>
+                                    </div>
+
                                   </td>
                                 </tr>
                               </tbody>
@@ -246,17 +316,24 @@
 
                       <hr style="margin-top: 15px" />
                       <div class="voucher">
-                        <div class="col-lg-12 payment-page-title" style="height: 35px; line-height: 35px">
-                          <img style="height: 100%; float: left"
-                            src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png" />
-                          <div class="page-title" id="scroll-top">
-                            GIẢM GIÁ
-                          </div>
+
+                        <div
+                          class="col-lg-12 payment-page-title"
+                          style="height: 35px; line-height: 35px"
+                        >
+                          <img
+                            style="height: 100%; float: left"
+                            src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png"
+                          />
+                          <div class="page-title" id="scroll-top">GIẢM GIÁ</div>
                         </div>
                         <div class="discount-section">
-
-
-                          <div class="beta-voucher" @click.prevent="isAlphaVoucherOpen = !isAlphaVoucherOpen">
+                          <div
+                            class="beta-voucher"
+                            @click.prevent="
+                              isAlphaVoucherOpen = !isAlphaVoucherOpen
+                            "
+                          >
                             <span>Alpha Voucher</span>
                             <a href="#">
                               (Nhấn vào đây để xem danh sách voucher của bạn)
@@ -266,7 +343,6 @@
                           <div v-if="isAlphaVoucherOpen">
 
                             <hr class="discount-divider" />
-
 
                             <div class="voucher-form">
                               <div class="input-group">
@@ -282,7 +358,6 @@
                               <button class="apply-btn mt-4">ĐĂNG KÝ</button>
                             </div>
 
-
                             <div class="voucher-list">
                               <h4>VOUCHER CỦA BẠN</h4>
                               <table>
@@ -294,26 +369,27 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
 
-                                  </tr>
+                                  <tr></tr>
+
                                 </tbody>
                               </table>
                             </div>
                           </div>
                         </div>
 
-
                         <div class="point-exchange-section">
 
                           <div class="point-title" @click.prevent="isAlphaPointOpen = !isAlphaPointOpen">
                             Điểm Alpha
                             <a href="#">(Nhấn vào đây để xem điểm tích lũy của bạn)</a>
+
                           </div>
                           <div v-if="isAlphaPointOpen">
                             <hr class="point-divider" />
 
                             <div class="point-form">
+
 
                               <div class="point-info">
                                 <span class="label">Điểm hiện có</span><br>
@@ -326,12 +402,10 @@
                                 <input type="text" placeholder="" />
                               </div>
 
-
                               <div class="discount-info">
                                 <span class="label">Số tiền được giảm</span>
                                 <span class="discount-value bold">= 0 vnđ</span>
                               </div>
-
 
                               <button class="exchange-btn mt-4">ĐỔI ĐIỂM</button>
                             </div>
@@ -339,6 +413,7 @@
 
                         </div>
                       </div>
+
 
                     </div>
 
@@ -373,16 +448,17 @@
                     </div>
 
                     <div class="payment-method-section">
+
                       <div class="col-lg-12 payment-page-title" style="height: 35px; line-height: 35px">
                         <img style="height: 100%; float: left"
                           src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png" />
+
                         <div class="page-title" id="scroll-top">
                           PHƯƠNG THỨC THANH TOÁN
                         </div>
                       </div>
                       <p class="mt-3 bold">Chọn thẻ thanh toán</p>
                       <hr class="payment-divider" />
-
 
                       <div class="payment-options">
 
@@ -396,6 +472,7 @@
 
                         <label class="payment-option">
                           <input type="radio" name="payment" value="momo" v-model="selectedPayment" />
+
                           <span class="custom-radio"></span>
                           <img src="/assets/icon-momo.png" alt="Ví MoMo" />
                           <span>Ví MoMo</span>
@@ -403,13 +480,13 @@
 
                         <label class="payment-option">
                           <input type="radio" name="payment" value="VNpay" v-model="selectedPayment" />
+
                           <span class="custom-radio"></span>
                           <img src="/assets/icon-vnpay.png" alt="Ví VNpay" />
                           <span>Ví VNpay</span>
                         </label>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -791,8 +868,10 @@ const foodStore = useFoodStore();
 const paymentStore = usePaymentStore();
 const ticketStore = useTicketStore();
 const route = useRoute();
-const slug = route.params.slug;
+// const slug = route.params.slug;
+const slug = computed(() => route.params.slug);
 const currentUserId = useAuthStore().user.id;
+const config = useRuntimeConfig();
 
 /**
  *
@@ -805,7 +884,9 @@ const authStore = useAuthStore();
 const isChoosingScreen = ref(true);
 
 const formattedImage = (image) => {
+
   return image ? `http://alphacinema.test/storage/${image}` : "";
+
 };
 
 const showtime = computed(() => movieStore.showtime.data?.showTime || null);
@@ -830,19 +911,21 @@ const screen = "https://betacinemas.vn/Assets/global/img/booking/ic-screen.png";
 
 // import SeatRegular from "~/assets/seat-icon.svg";
 import SeatRegular from "~/assets/seat-regular.svg";
-
 import SeatSingle from "~/assets/chair (3).png";
 import SeatDouble from "~/assets/sofa.png";
 import SeatSelected from "~/assets/chair (4).png";
 import SeatSold from "~/assets/chair (3).png";
 import SeatHold from "~/assets/chair (3).png";
 
+const btnRemove = "https://betacinemas.vn/Assets/global/img/booking/minus.png";
+const btnAdd = "https://betacinemas.vn/Assets/global/img/booking/plus.png";
+
 import { toast } from "vue-sonner";
 const echo = useEcho();
 
-
 const isAlphaVoucherOpen = ref(false);
 const isAlphaPointOpen = ref(false);
+const selectedPayment = ref(null);
 
 
 /**
@@ -910,6 +993,11 @@ const handleNextOrder = async () => {
     // toast.success("Thanh toán đê");
     // console.log(movieStore.seatSelected);
 
+    if (!selectedPayment.value) {
+      toast.error("Vui lòng chọn phương thức thanh toán");
+      return;
+    }
+
     const seatId = movieStore.seatSelected.map((seat) => seat.id);
 
     const newDataSeats = movieStore.seatSelected.map((seat) => ({
@@ -936,7 +1024,7 @@ const handleNextOrder = async () => {
       voucher_discount: 0,
       point_use: 0,
       point_discount: 0,
-      payment_name: "momo",
+      payment_name: selectedPayment.value,
       ticket_seats: newDataSeats,
       ticket_combos: newDataCombo.length > 0 ? newDataCombo : null,
       ticket_foods: newDataFood.length > 0 ? newDataFood : null,
@@ -967,9 +1055,11 @@ const handleNextOrder = async () => {
     //   "sold"
     // );
 
-    paymentStore.paymentMomo(dataTicket, seatId);
+    // console.log(selectedPayment.value);
 
-    toast.success("Thanh toán thành công");
+    paymentStore.paymentMomo(selectedPayment.value, dataTicket, seatId);
+
+    // toast.success("Thanh toán thành công");
     // navigateTo({ name: "booking-success" });
   } catch (error) {
     console.log(error);
@@ -1204,7 +1294,7 @@ watch(handleTotalPrice, (newTotal) => {
 const promiseAllApi = async () => {
   try {
     await Promise.all([
-      movieStore.fetchShowTimeBySlug(slug),
+      movieStore.fetchShowTimeBySlug(slug.value),
       foodStore.fetchFoods(),
       foodStore.fetchFoodCombo(),
     ]);
@@ -1223,22 +1313,68 @@ const onFinish = () => {
   navigateTo("/");
 };
 
-const countdownDeadline = useCookie("countdownDeadline", {
+// const countdownDeadline = useCookie("countdownDeadline", {
+//   maxAge: 600,
+//   default: () => Date.now() + 1000 * 60 * 10,
+// });
+
+// const now = Date.now();
+
+// const deadline = computed(() => {
+//   return countdownDeadline.value > now
+//     ? countdownDeadline.value
+//     : now + 1000 * 60 * 10;
+// });
+
+//****
+//
+//
+//
+//
+//  */
+
+// const countdownDeadline = useCookie(`countdownDeadline-${slug.value}`, {
+//   maxAge: 600,
+//   default: () => Date.now() + 1000 * 60 * 10,
+// });
+
+// const now = Date.now();
+
+// const deadline = computed(() => {
+//   return countdownDeadline.value > now
+//     ? countdownDeadline.value
+//     : now + 1000 * 60 * 10;
+// });
+
+const countdownDeadline = useCookie(`countdownDeadline-${slug.value}`, {
   maxAge: 600,
-  default: () => Date.now() + 1000 * 60 * 10,
+  default: () => null, // Ban đầu đặt là null
 });
 
 const now = Date.now();
 
+// Hàm tính deadline
 const deadline = computed(() => {
-  return countdownDeadline.value > now
+  return countdownDeadline.value && countdownDeadline.value > now
     ? countdownDeadline.value
     : now + 1000 * 60 * 10;
 });
 
+watch(
+  () => slug.value,
+  (newSlug) => {
+    if (!newSlug) return;
+    console.log("Slug thay đổi:", newSlug);
+  }
+);
+
 onMounted(() => {
   promiseAllApi();
   callEcho();
+
+  if (!countdownDeadline.value) {
+    countdownDeadline.value = now + 1000 * 60 * 10;
+  }
 });
 
 onUnmounted(() => {
@@ -1247,12 +1383,35 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+
 .blinking-box {
   display: flex;
   justify-content: center; 
   align-items: center; 
   height: 60px; 
   width: 100%; 
+}
+.count-mix {
+  margin-top: 10px;
+}
+
+.btn-custom {
+  padding: 10px 0px;
+  background-color: #007bff;
+  color: black;
+}
+
+.table > :not(caption) > * > * {
+  background-color: #f8f8f8;
+}
+
+.blinking-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+
   animation: blink-bg 2s infinite;
   background-color: #faebd7;
   text-align: center;
@@ -1327,7 +1486,11 @@ onUnmounted(() => {
 }
 
 .seat:not(.empty-seat) {
+
   border: 1px solid #ddd;
+
+  /* border: 1px solid #ddd; */
+
   cursor: pointer;
   /* Chỉ có cursor khi ghế có dữ liệu */
 }
@@ -1785,7 +1948,6 @@ h3,
   flex-wrap: wrap;
 }
 
-
 .point-group {
   flex-grow: 1;
   display: flex;
@@ -1852,7 +2014,6 @@ h3,
 }
 
 
-
 /* Thanh toán */
 .payment-method-section {
   display: flex;
@@ -1872,7 +2033,6 @@ h3,
   gap: 30px;
   margin-top: 10px;
 }
-
 
 .payment-option {
   display: flex;
@@ -1898,7 +2058,7 @@ h3,
 }
 
 
-.payment-option input:checked+.custom-radio::after {
+.payment-option input:checked + .custom-radio::after {
   content: "";
   width: 10px;
   height: 10px;
@@ -1909,7 +2069,6 @@ h3,
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 
 .payment-option img {
   width: 40px;
@@ -1922,7 +2081,6 @@ h3,
   font-weight: bold;
   color: #1e1f28;
 }
-
 
 
 /* icon ghế */
@@ -1948,7 +2106,6 @@ h3,
 .seat:hover .seat-icon {
   transform: scale(1.1);
 }
-
 
 
 /** responsive */
