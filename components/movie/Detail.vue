@@ -924,7 +924,7 @@ const formattedStartTime = (time) => {
 const formattedImage = computed(() => {
   if (!props.movie.img_thumbnail) return "";
 
-  return `https://alphacinema.me/storage/${props.movie.img_thumbnail}`;
+  return `http://alphacinema.test/storage/${props.movie.img_thumbnail}`;
 });
 
 const navigateShowTime = (showtime) => {
