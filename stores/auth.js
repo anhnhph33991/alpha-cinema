@@ -21,11 +21,13 @@ export const useAuthStore = defineStore(
     const token = ref("");
     const isLogin = ref(false);
     const router = useRouter();
+    const isLoading = ref(false);
 
     /**
      * Xử lý login
      */
     const login = async (data) => {
+      isLoading.value = true;
       try {
         const response = await loginService(data);
 
@@ -41,7 +43,7 @@ export const useAuthStore = defineStore(
         router.push({ name: "index" });
       } catch (error) {
         console.log(error);
-
+        isLoading.value = false;
         toast.error("Đăng nhập thất bại");
       }
     };
@@ -72,7 +74,7 @@ export const useAuthStore = defineStore(
       }
     };
 
-    return { user, token, isLogin, login, register, logout };
+    return { user, token, isLogin, login, register, logout, isLoading };
   },
   {
     persist: {
