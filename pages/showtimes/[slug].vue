@@ -369,9 +369,23 @@
                                   </tr>
                                 </thead>
                                 <tbody>
+<<<<<<< HEAD
 
                                   <tr></tr>
 
+=======
+                                  <tr
+                                    v-for="voucher in voucherStore.vouchers"
+                                    :key="voucher.voucher_id"
+                                  >
+                                    <td>
+                                      {{ voucher.code }}
+                                      (X{{ voucher.usage_count }})
+                                    </td>
+                                    <td>{{ voucher.title }}</td>
+                                    <td>{{ voucher.end_date_time }}</td>
+                                  </tr>
+>>>>>>> d11aeb2feb9c2d924956fe3d1498d671ad9cb92e
                                 </tbody>
                               </table>
                             </div>
@@ -537,7 +551,7 @@
             </div>
           </div>
 
-          <div class="col-lg-3 sidebar" :style="{ top: sidebarTop + 'px' }">
+          <div class="col-lg-3 sidebar">
             <div class="bg-white">
               <div class="row">
                 <div class="col-lg-6">
@@ -850,6 +864,7 @@ import { useAuthStore } from "~/stores/auth";
 import { useFoodStore } from "~/stores/food";
 import { useTicketStore } from "~/stores/ticket";
 import { usePaymentStore } from "~/stores/payment";
+import { useVoucherStore } from "~/stores/voucher";
 import {
   Armchair,
   Sofa,
@@ -867,6 +882,7 @@ const movieStore = useMovieStore();
 const foodStore = useFoodStore();
 const paymentStore = usePaymentStore();
 const ticketStore = useTicketStore();
+const voucherStore = useVoucherStore();
 const route = useRoute();
 // const slug = route.params.slug;
 const slug = computed(() => route.params.slug);
@@ -1368,9 +1384,19 @@ watch(
   }
 );
 
+/**
+ * Logic voucher
+ */
+
+// const useVoucher = ref({
+
+// })
+
 onMounted(() => {
   promiseAllApi();
   callEcho();
+
+  voucherStore.fetchVouchers();
 
   if (!countdownDeadline.value) {
     countdownDeadline.value = now + 1000 * 60 * 10;

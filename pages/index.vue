@@ -31,15 +31,18 @@
 </template>
 
 <script setup>
-// definePageMeta({
-//   middleware: "google",
-// });
+definePageMeta({
+  middleware: "admin",
+});
 
 import { LayoutBanner, MovieList } from "#components";
 import { useMovieStore } from "~/stores/movie";
 
 const movieStore = useMovieStore();
 const tabActive = ref("2");
+const adminToken = useCookie("admin_token");
+
+console.log(adminToken.value);
 
 onMounted(async () => {
   movieStore.fetchMovies();
