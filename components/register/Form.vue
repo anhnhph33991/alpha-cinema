@@ -9,47 +9,62 @@
           <div class="row">
             <h2 class="title">Đăng Ký</h2>
           </div>
-          <form>
+          <!-- Form bắt đầu -->
+          <Form :validation-schema="validationSchema" @submit="onSubmit">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Họ tên</label
-                >
-                <input
+                  <span class="text-danger">*</span> Họ tên
+                </label>
+                <Field
+                  name="name"
                   type="text"
                   class="form-control"
                   placeholder="Họ tên"
+                  v-model="form.name"
                   autocomplete="off"
                 />
+                <ErrorMessage name="name" v-slot="{ message }">
+                  <div class="text-danger error-message">{{ message }}</div>
+                </ErrorMessage>
               </div>
               <div class="col-md-6 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Email</label
-                >
-                <input
+                  <span class="text-danger">*</span> Email
+                </label>
+                <Field
+                  name="email"
                   type="email"
                   class="form-control"
                   placeholder="luxchill@gmail.com"
+                  v-model="form.email"
                   autocomplete="off"
                 />
+                <ErrorMessage name="email" v-slot="{ message }">
+                  <div class="text-danger error-message">{{ message }}</div>
+                </ErrorMessage>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Mật khẩu</label
-                >
+                  <span class="text-danger">*</span> Mật khẩu
+                </label>
                 <div class="input-group input-group-flat">
-                  <input
-                    type="password"
+                  <Field
+                    name="password"
+                    :type="showPassword ? 'text' : 'password'"
                     class="form-control"
                     placeholder="Mật khẩu"
+                    v-model="form.password"
                     autocomplete="off"
                   />
-                  <span class="input-group-text">
+                  <span
+                    class="input-group-text"
+                    @click="togglePasswordVisibility"
+                  >
                     <a
-                      href="#"
                       class="link-secondary"
                       data-bs-toggle="tooltip"
                       aria-label="Show password"
@@ -80,50 +95,56 @@
                     </a>
                   </span>
                 </div>
+                <ErrorMessage name="password" v-slot="{ message }">
+                  <div class="text-danger error-message">{{ message }}</div>
+                </ErrorMessage>
               </div>
 
               <div class="col-md-6 mb-3">
                 <label class="form-label"> Giới tính</label>
                 <div class="input-group input-group-flat">
-                  <select class="form-control">
+                  <!-- <select class="form-control" v-model="form.gender">
                     <option value="" disabled selected>Chọn giới tính</option>
                     <option value="0">Nam</option>
                     <option value="1">Nữ</option>
-                  </select>
+                  </select> -->
+
+                  <Field name="gender" v-slot="{ field, errors }">
+                    <select v-bind="field" class="form-control">
+                      <option value="" disabled>Chọn giới tính</option>
+                      <option value="0">Nam</option>
+                      <option value="1">Nữ</option>
+                    </select>
+                    <div class="text-danger error-message">{{ errors[0] }}</div>
+                  </Field>
                 </div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label class="form-label">
-                  <span class="text-danger">*</span> Ngày sinh</label
-                >
-                <input type="date" class="form-control" />
+                <label class="form-label"> Ngày sinh</label>
+                <Field name="birthday" v-slot="{ field, errors }">
+                  <input type="date" class="form-control" v-bind="field" />
+                  <div class="text-danger error-message">{{ errors[0] }}</div>
+                </Field>
               </div>
               <div class="col-md-6 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Số điện thoại</label
-                >
-                <input
+                  <span class="text-danger">*</span> Số điện thoại
+                </label>
+                <Field
+                  name="phone"
                   type="tel"
                   class="form-control"
                   placeholder="Số điện thoại"
+                  v-model="form.phone"
                   autocomplete="off"
                 />
+                <ErrorMessage name="phone" v-slot="{ message }">
+                  <div class="text-danger error-message">{{ message }}</div>
+                </ErrorMessage>
               </div>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-check">
-                <input type="checkbox" class="form-check-input" />
-                <span class="form-check-label">
-                  Tôi cam kết tuân theo
-                  <a href="" class="text-blue">chính sách bảo mật</a> và
-                  <a href="" class="text-blue">điều kiện sử dụng</a> của
-                  AlphaCinema
-                </span>
-              </label>
             </div>
 
             <div class="form-footer">
@@ -131,11 +152,16 @@
                 Đăng Ký
               </button>
             </div>
-          </form>
+          </Form>
+
+          <!-- Form kết thúc -->
         </div>
 
         <div class="col">
-          <a href="#" class="btn btn-google btn-2">
+          <a
+            href="https://alphacinema.me/auth/google/redirect"
+            class="btn btn-google btn-2"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -153,18 +179,90 @@
         </div>
         <div class="text-center text-secondary mt-3">
           Bạn đã có tài khoản?
-          <a href="#">
-            <NuxtLink :to="{ name: 'login' }"> Đăng Nhập </NuxtLink>
-          </a>
+          <NuxtLink :to="{ name: 'login' }"> Đăng Nhập </NuxtLink>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { Form, Field, ErrorMessage } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
+import * as zod from "zod";
+
+// Show password
+const showPassword = ref(false);
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value;
+};
+
+// Định nghĩa schema validation sử dụng Zod
+const validationSchema = toTypedSchema(
+  zod.object({
+    name: zod.string().min(1, { message: "Vui lòng nhập họ tên" }),
+    email: zod
+      .string()
+      .min(1, { message: "Vui lòng nhập email" })
+      .email({ message: "Email không hợp lệ" }),
+    password: zod
+      .string()
+      .min(6, { message: "Mật khẩu phải có ít nhất 6 ký tự" }),
+    phone: zod.string().min(1, { message: "Vui lòng nhập số điện thoại" }),
+    gender: zod
+      .enum(["0", "1"], { message: "Giới tính phải là Nam hoặc Nữ" })
+      .refine((val) => val !== "", { message: "Bắt buộc chọn giới tính" }),
+    birthday: zod.preprocess(
+      (value) => value ?? "",
+      zod
+        .string()
+        .nonempty("Ngày sinh không được để trống")
+        .refine(
+          (value) => {
+            const date = new Date(value);
+            return !isNaN(date.getTime());
+          },
+          { message: "Ngày sinh không hợp lệ" }
+        )
+        .refine(
+          (value) => {
+            const date = new Date(value);
+            const today = new Date();
+            return date < today;
+          },
+          { message: "Ngày sinh không thể là ngày tương lai" }
+        )
+    ),
+  })
+);
+
+// Thông tin form
+const form = ref({
+  name: "",
+  email: "",
+  password: "",
+  gender: "",
+  birthday: "",
+  phone: "",
+});
+
+const emit = defineEmits(["submit-form"]);
+
+const onSubmit = async (value) => {
+  // console.log(value);
+  emit("submit-form", form.value);
+};
+</script>
 
 <style scoped>
+.error-message {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: #dc3545;
+  margin-top: 5px;
+  display: block;
+}
+
 .card-md {
   width: 100%;
 }
@@ -248,7 +346,12 @@
 
 .btn-google {
   width: 50%;
-  background-color: linear-gradient(to right, #0a64a7 0%, #258dcf 51%, #3db1f3 100%) !important;
+  background-color: linear-gradient(
+    to right,
+    #0a64a7 0%,
+    #258dcf 51%,
+    #3db1f3 100%
+  ) !important;
   border: 1px solid #1877f2;
   color: #fff;
   transition: background-color 0.5s ease, background-position 0.5s ease;

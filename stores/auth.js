@@ -52,9 +52,17 @@ export const useAuthStore = defineStore(
       try {
         const response = await registerService(data);
 
-        console.log(response);
+        if (response.status) {
+          token.value = response.data.token;
+          user.value = response.data.user;
+          isLogin.value = true;
+        }
+
+        toast.success("Đăng ký thành công");
+        router.push({ name: "index" });
       } catch (error) {
-        toast.error("lỗi");
+        toast.error("Đăng ký thất bại, vui lòng thử lại");
+        console.log(error);
       }
     };
 
@@ -65,6 +73,7 @@ export const useAuthStore = defineStore(
         token.value = "";
         user.value = {};
         isLogin.value = false;
+        isLoading.value = false;
 
         toast.success("Đăng xuất thành công");
         router.push({ name: "index" });

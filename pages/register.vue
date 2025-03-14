@@ -1,6 +1,7 @@
 <template>
   <div class="page page-center al-bg-light">
-    <RegisterForm />
+    <!-- <RegisterForm /> -->
+    <RegisterForm @submit-form="submited" />
   </div>
 </template>
 
@@ -8,4 +9,12 @@
 definePageMeta({
   middleware: "guest",
 });
+
+import { useAuthStore } from "~/stores/auth";
+
+const authStore = useAuthStore();
+
+const submited = (data) => {
+  authStore.register(data);
+};
 </script>
