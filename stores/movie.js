@@ -51,6 +51,8 @@ export const useMovieStore = defineStore("movie", () => {
       // console.log("matrixColume");
       // console.log(matrixColume.value);
 
+      console.log(showtime.value);
+
       filterSeatsByUserId(showtime.value.data.seatMapRegular, currentUserId);
     } catch (error) {
       toast.error("call api lỗi");

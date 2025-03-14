@@ -1073,7 +1073,30 @@ const handleNextOrder = async () => {
 
     // console.log(selectedPayment.value);
 
-    paymentStore.paymentMomo(selectedPayment.value, dataTicket, seatId);
+    const dataTicketNew = {
+      user: authStore.user,
+      cinema: movieStore.showtime.data.showTime.cinema,
+      room: movieStore.showtime.data.showTime.room,
+      movie: movieStore.showtime.data.showTime.movie,
+      showtime: movieStore.showtime.data.showTime,
+      voucher_code: null,
+      voucher_discount: 0,
+      point_use: 0,
+      point_discount: 0,
+      payment_name: selectedPayment.value,
+      ticket_seats: newDataSeats,
+      ticket_combos: newDataCombo.length > 0 ? newDataCombo : null,
+      ticket_foods: newDataFood.length > 0 ? newDataFood : null,
+      total_price: priceAll.value.payableAmount,
+      expiry: `${movieStore.showtime.data.showTime.date}|${movieStore.showtime.data.showTime.end_time}`,
+      status: "pending",
+    };
+
+    console.log("data new hehehe");
+
+    console.log(dataTicketNew);
+
+    // paymentStore.paymentMomo(selectedPayment.value, dataTicket, seatId);
 
     // toast.success("Thanh toán thành công");
     // navigateTo({ name: "booking-success" });
