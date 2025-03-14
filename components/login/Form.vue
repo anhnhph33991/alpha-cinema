@@ -3,12 +3,18 @@
     <div class="image-container">
       <!-- ảnh -->
     </div>
+
+    <div v-if="useAuthStore().isLoading" class="overlay">
+      <a-spin />
+    </div>
+
     <div class="container container-tight py-4 mt-5 card-md">
       <div class="card">
         <div class="card-body">
           <div class="row">
             <h2 class="title">Đăng Nhập</h2>
           </div>
+
           <form @submit.prevent="handleSubmit">
             <div class="row">
               <div class="col-md-12 mb-3">
@@ -125,6 +131,22 @@ const handleSubmit = () => {
 </script>
 
 <style scoped>
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7); /* Màu nền mờ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+/* Ẩn form nhưng vẫn giữ hiệu ứng mờ */
+.form-container {
+  position: relative;
+}
+
 .container-wrapper {
   position: relative;
   background-image: url("/public/background.jpg");

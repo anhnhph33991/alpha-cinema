@@ -21,11 +21,13 @@ export const useAuthStore = defineStore(
     const token = ref("");
     const isLogin = ref(false);
     const router = useRouter();
+    const isLoading = ref(false);
 
     /**
      * Xử lý login
      */
     const login = async (data) => {
+      isLoading.value = true;
       try {
         const response = await loginService(data);
 
@@ -41,7 +43,7 @@ export const useAuthStore = defineStore(
         router.push({ name: "index" });
       } catch (error) {
         console.log(error);
-
+        isLoading.value = false;
         toast.error("Đăng nhập thất bại");
       }
     };
@@ -72,16 +74,12 @@ export const useAuthStore = defineStore(
       }
     };
 
-    return { user, token, isLogin, login, register, logout };
+    return { user, token, isLogin, login, register, logout, isLoading };
   },
   {
     persist: {
       storage: piniaPluginPersistedstate.cookies({
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        domain: ".alphacinema.me", // Đặt cùng domain với admin_token
-        path: "/",
-        secure: true,
-        sameSite: "None",
       }),
     },
   }

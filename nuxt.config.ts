@@ -57,13 +57,13 @@ export default defineNuxtConfig({
     'bootstrap-icons/font/bootstrap-icons.css'
   ],
   compatibilityDate: '2024-11-01',
-  devtools: { enabled: true },
-  devServer: {
-    host: 'alphacinema.me',
-    port: 3000, // Giữ port khác với Laravel (thường là 443)
-    https: {
-      key: 'C:/laragon/etc/ssl/laragon.key', // Đường dẫn tới file key
-      cert: 'C:/laragon/etc/ssl/laragon.crt' // Đường dẫn tới file cert
-    }
-  }
+  // devtools: { enabled: true },
+  // devServer: {
+  //   host: 'alphacinema.me',
+  //   port: 3000, // Giữ port khác với Laravel (thường là 443)
+  //   https: {
+  //     key: 'C:/laragon/etc/ssl/laragon.key', // Đường dẫn tới file key
+  //     cert: 'C:/laragon/etc/ssl/laragon.crt' // Đường dẫn tới file cert
+  //   }
+  // }
 })
