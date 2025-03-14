@@ -58,18 +58,27 @@
                       <div class="screen-area">
                         <div class="main-seat-layout">
                           <div>
-                            <div class="seat-row" v-for="(row, rowName) in movieStore.showtime.data
-                              .seatMap" :key="rowName">
+                            <div
+                              class="seat-row"
+                              v-for="(row, rowName) in movieStore.showtime.data
+                                .seatMap"
+                              :key="rowName"
+                            >
                               <span class="row-label">{{ rowName }}</span>
-                              <div v-for="seat in row" :key="seat.id" :class="[
-                                'seat',
-                                movieStore.getSeatClass(seat),
-                                {
-                                  selected: movieStore.isSeatSelected(seat),
-                                  hold: movieStore.isSeatHeldByOthers(seat),
-                                  'double-seat': seat.type_seat_id == 3,
-                                },
-                              ]" @click="handleChooseSeat(seat)">
+                              <div
+                                v-for="seat in row"
+                                :key="seat.id"
+                                :class="[
+                                  'seat',
+                                  movieStore.getSeatClass(seat),
+                                  {
+                                    selected: movieStore.isSeatSelected(seat),
+                                    hold: movieStore.isSeatHeldByOthers(seat),
+                                    'double-seat': seat.type_seat_id == 3,
+                                  },
+                                ]"
+                                @click="handleChooseSeat(seat)"
+                              >
                                 <Sofa v-if="seat.type_seat_id == 3" />
 
                                 <Armchair v-else />
@@ -82,7 +91,6 @@
                                 <img v-else-if="movieStore.isSeatSelected(seat)" :src="SeatSelected" alt="Ghế đang chọn"
                                   class="seat-icon" />
                                 <img v-else :src="SeatSingle" alt="Ghế đơn" class="seat-icon" /> -->
-
                               </div>
                             </div>
                           </div>
@@ -119,19 +127,30 @@
               </div> -->
             </div>
 
-            <div class="choose-seat-row payment-form mt-3" v-if="!isChoosingScreen">
+            <div
+              class="choose-seat-row payment-form mt-3"
+              v-if="!isChoosingScreen"
+            >
               <div>
                 <div>
                   <div class="row">
-                    <div class="col-lg-12 payment-page-title" style="height: 35px; line-height: 35px">
-                      <img style="height: 100%; float: left"
-                        src="https://betacinemas.vn/Assets/global/img/booking/ic-inforpayment.png" />
+                    <div
+                      class="col-lg-12 payment-page-title"
+                      style="height: 35px; line-height: 35px"
+                    >
+                      <img
+                        style="height: 100%; float: left"
+                        src="https://betacinemas.vn/Assets/global/img/booking/ic-inforpayment.png"
+                      />
                       <div class="page-title" id="scroll-top">
                         THÔNG TIN THANH TOÁN
                       </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-4 payment-user-info" style="margin-top: 25px; margin-bottom: 0px">
+                    <div
+                      class="col-lg-4 col-md-4 payment-user-info"
+                      style="margin-top: 25px; margin-bottom: 0px"
+                    >
                       <div class="col-md-5 user-info-item font-16">
                         <span class="bold user-info-item-label"> Họ Tên: </span>
                         <br />
@@ -141,7 +160,10 @@
                       </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-4 payment-user-info" style="margin-top: 25px; margin-bottom: 0px">
+                    <div
+                      class="col-lg-4 col-md-4 payment-user-info"
+                      style="margin-top: 25px; margin-bottom: 0px"
+                    >
                       <div class="col-md-5 user-info-item font-16">
                         <span class="bold user-info-item-label">
                           Số điện thoại:
@@ -153,7 +175,10 @@
                       </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-4 payment-user-info" style="margin-top: 25px; margin-bottom: 0px">
+                    <div
+                      class="col-lg-4 col-md-4 payment-user-info"
+                      style="margin-top: 25px; margin-bottom: 0px"
+                    >
                       <div class="col-md-5 user-info-item font-16">
                         <span class="bold user-info-item-label"> Email: </span>
                         <br />
@@ -165,7 +190,10 @@
                     <br />
                     <br />
                     <div class="col-lg-12 ticket-selected mt-5">
-                      <div v-for="(data, index) in filteredSeatGroups" :key="index">
+                      <div
+                        v-for="(data, index) in filteredSeatGroups"
+                        :key="index"
+                      >
                         <div>
                           <div class="row">
                             <div class="col-md-6 item-seat-type">
@@ -205,11 +233,18 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr v-for="combo in foodStore.foodCombo" :key="combo.id">
+                                <tr
+                                  v-for="combo in foodStore.foodCombo"
+                                  :key="combo.id"
+                                >
                                   <td scope="row">
                                     <img
                                       src="https://files.betacorp.vn/media/combopackage/2024/06/05/combo-online-26-101802-050624-36.png"
-                                      alt="" class="combo-image" width="130" height="130" />
+                                      alt=""
+                                      class="combo-image"
+                                      width="130"
+                                      height="130"
+                                    />
                                   </td>
                                   <td class="combo-name">
                                     {{ combo.name }}
@@ -218,7 +253,6 @@
                                     {{ combo.description }}
                                   </td>
                                   <td>
-
                                     <div class="d-flex justify-content-center">
                                       <span class="mx-2">
                                         {{ getQuantity(combo.id) }}
@@ -243,7 +277,6 @@
                                         <img :src="btnRemove" alt="" />
                                       </span>
                                     </div>
-
                                   </td>
                                 </tr>
                               </tbody>
@@ -262,11 +295,18 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr v-for="combo in foodStore.foods" :key="combo.id">
+                                <tr
+                                  v-for="combo in foodStore.foods"
+                                  :key="combo.id"
+                                >
                                   <td scope="row">
                                     <img
                                       src="https://files.betacorp.vn/media/combopackage/2024/06/05/combo-online-26-101802-050624-36.png"
-                                      alt="" class="combo-image" width="130" height="130" />
+                                      alt=""
+                                      class="combo-image"
+                                      width="130"
+                                      height="130"
+                                    />
                                   </td>
                                   <td class="combo-name">
                                     {{ combo.name }}
@@ -275,7 +315,6 @@
                                     {{ combo.description }}
                                   </td>
                                   <td>
-
                                     <div class="d-flex justify-content-center">
                                       <span class="mx-2">
                                         {{ getQuantityFood(combo.id) }}
@@ -305,7 +344,6 @@
                                         <img :src="btnRemove" alt="" />
                                       </span>
                                     </div>
-
                                   </td>
                                 </tr>
                               </tbody>
@@ -316,7 +354,6 @@
 
                       <hr style="margin-top: 15px" />
                       <div class="voucher">
-
                         <div
                           class="col-lg-12 payment-page-title"
                           style="height: 35px; line-height: 35px"
@@ -341,7 +378,6 @@
                           </div>
 
                           <div v-if="isAlphaVoucherOpen">
-
                             <hr class="discount-divider" />
 
                             <div class="voucher-form">
@@ -369,11 +405,6 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-<<<<<<< HEAD
-
-                                  <tr></tr>
-
-=======
                                   <tr
                                     v-for="voucher in voucherStore.vouchers"
                                     :key="voucher.voucher_id"
@@ -385,7 +416,6 @@
                                     <td>{{ voucher.title }}</td>
                                     <td>{{ voucher.end_date_time }}</td>
                                   </tr>
->>>>>>> d11aeb2feb9c2d924956fe3d1498d671ad9cb92e
                                 </tbody>
                               </table>
                             </div>
@@ -393,23 +423,25 @@
                         </div>
 
                         <div class="point-exchange-section">
-
-                          <div class="point-title" @click.prevent="isAlphaPointOpen = !isAlphaPointOpen">
+                          <div
+                            class="point-title"
+                            @click.prevent="
+                              isAlphaPointOpen = !isAlphaPointOpen
+                            "
+                          >
                             Điểm Alpha
-                            <a href="#">(Nhấn vào đây để xem điểm tích lũy của bạn)</a>
-
+                            <a href="#"
+                              >(Nhấn vào đây để xem điểm tích lũy của bạn)</a
+                            >
                           </div>
                           <div v-if="isAlphaPointOpen">
                             <hr class="point-divider" />
 
                             <div class="point-form">
-
-
                               <div class="point-info">
-                                <span class="label">Điểm hiện có</span><br>
+                                <span class="label">Điểm hiện có</span><br />
                                 <span class="point-value">0</span>
                               </div>
-
 
                               <div class="input-group">
                                 <label>Nhập điểm</label>
@@ -421,14 +453,13 @@
                                 <span class="discount-value bold">= 0 vnđ</span>
                               </div>
 
-                              <button class="exchange-btn mt-4">ĐỔI ĐIỂM</button>
+                              <button class="exchange-btn mt-4">
+                                ĐỔI ĐIỂM
+                              </button>
                             </div>
                           </div>
-
                         </div>
                       </div>
-
-
                     </div>
 
                     <div class="col-lg-12">
@@ -437,7 +468,9 @@
                         <div class="col-md-3 item-seat-quantity">
                           Tổng tiền:
                         </div>
-                        <div class="col-md-3 item-seat-money item-seat-total-money total-money-name">
+                        <div
+                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
+                        >
                           {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
@@ -446,7 +479,9 @@
                         <div class="col-md-3 item-seat-quantity">
                           Tiền được giảm:
                         </div>
-                        <div class="col-md-3 item-seat-money item-seat-total-money total-money-name">
+                        <div
+                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
+                        >
                           0đ
                         </div>
                       </div>
@@ -455,17 +490,23 @@
                         <div class="col-md-3 item-seat-quantity">
                           Tiền cần thanh toán:
                         </div>
-                        <div class="col-md-3 item-seat-money item-seat-total-money total-money-name">
+                        <div
+                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
+                        >
                           {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
                     </div>
 
                     <div class="payment-method-section">
-
-                      <div class="col-lg-12 payment-page-title" style="height: 35px; line-height: 35px">
-                        <img style="height: 100%; float: left"
-                          src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png" />
+                      <div
+                        class="col-lg-12 payment-page-title"
+                        style="height: 35px; line-height: 35px"
+                      >
+                        <img
+                          style="height: 100%; float: left"
+                          src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png"
+                        />
 
                         <div class="page-title" id="scroll-top">
                           PHƯƠNG THỨC THANH TOÁN
@@ -475,17 +516,25 @@
                       <hr class="payment-divider" />
 
                       <div class="payment-options">
-
                         <label class="payment-option">
-                          <input type="radio" name="payment" value="domestic-card" v-model="selectedPayment" />
+                          <input
+                            type="radio"
+                            name="payment"
+                            value="domestic-card"
+                            v-model="selectedPayment"
+                          />
                           <span class="custom-radio"></span>
                           <img src="/assets/icon-card.png" alt="Thẻ nội địa" />
                           <span>Thẻ nội địa</span>
                         </label>
 
-
                         <label class="payment-option">
-                          <input type="radio" name="payment" value="momo" v-model="selectedPayment" />
+                          <input
+                            type="radio"
+                            name="payment"
+                            value="momo"
+                            v-model="selectedPayment"
+                          />
 
                           <span class="custom-radio"></span>
                           <img src="/assets/icon-momo.png" alt="Ví MoMo" />
@@ -493,7 +542,12 @@
                         </label>
 
                         <label class="payment-option">
-                          <input type="radio" name="payment" value="VNpay" v-model="selectedPayment" />
+                          <input
+                            type="radio"
+                            name="payment"
+                            value="VNpay"
+                            v-model="selectedPayment"
+                          />
 
                           <span class="custom-radio"></span>
                           <img src="/assets/icon-vnpay.png" alt="Ví VNpay" />
@@ -541,7 +595,11 @@
                         Thời gian còn lại
                       </div>
                       <div class="time-to-value text-end">
-                        <a-statistic-countdown :value="deadline" @finish="onFinish" format="mm:ss">
+                        <a-statistic-countdown
+                          :value="deadline"
+                          @finish="onFinish"
+                          format="mm:ss"
+                        >
                         </a-statistic-countdown>
                       </div>
                     </div>
@@ -556,13 +614,20 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="pi-img-wrapper">
-                    <img class="" style="width: 100%" alt="" v-if="
-                      movieStore.showtime.data &&
-                      movieStore.showtime.data.showTime.movie.img_thumbnail
-                    " :src="formattedImage(
-                      movieStore.showtime.data.showTime.movie.img_thumbnail
-                    )
-                      " />
+                    <img
+                      class=""
+                      style="width: 100%"
+                      alt=""
+                      v-if="
+                        movieStore.showtime.data &&
+                        movieStore.showtime.data.showTime.movie.img_thumbnail
+                      "
+                      :src="
+                        formattedImage(
+                          movieStore.showtime.data.showTime.movie.img_thumbnail
+                        )
+                      "
+                    />
                   </div>
                 </div>
 
@@ -575,7 +640,8 @@
 
                 <div class="col-lg-12">
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
+                  >
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6">
@@ -606,10 +672,14 @@
                 </div>
 
                 <div class="col-lg-12">
-                  <hr class="border-dashed border-top-2" style="margin-top: 5px; margin-bottom: 5px" />
+                  <hr
+                    class="border-dashed border-top-2"
+                    style="margin-top: 5px; margin-bottom: 5px"
+                  />
 
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
+                  >
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -678,9 +748,15 @@
                   </ul>
                 </div>
 
-                <div class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center">
+                <div
+                  class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center"
+                >
                   <template v-if="!isChoosingScreen">
-                    <button class="btn btn-primary" @click="isChoosingScreen = true" v-if="!isChoosingScreen">
+                    <button
+                      class="btn btn-primary"
+                      @click="isChoosingScreen = true"
+                      v-if="!isChoosingScreen"
+                    >
                       Quay Lại
                     </button>
 
@@ -689,7 +765,11 @@
                     </button>
                   </template>
 
-                  <button class="btn btn-primary" @click="handleNextOrderOne" v-if="isChoosingScreen">
+                  <button
+                    class="btn btn-primary"
+                    @click="handleNextOrderOne"
+                    v-if="isChoosingScreen"
+                  >
                     Tiếp theo
                   </button>
                 </div>
@@ -702,13 +782,20 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="pi-img-wrapper">
-                    <img class="" style="width: 100%" alt="" v-if="
-                      movieStore.showtime.data &&
-                      movieStore.showtime.data.showTime.movie.img_thumbnail
-                    " :src="formattedImage(
-                      movieStore.showtime.data.showTime.movie.img_thumbnail
-                    )
-                      " />
+                    <img
+                      class=""
+                      style="width: 100%"
+                      alt=""
+                      v-if="
+                        movieStore.showtime.data &&
+                        movieStore.showtime.data.showTime.movie.img_thumbnail
+                      "
+                      :src="
+                        formattedImage(
+                          movieStore.showtime.data.showTime.movie.img_thumbnail
+                        )
+                      "
+                    />
                   </div>
                 </div>
 
@@ -721,7 +808,8 @@
 
                 <div class="col-lg-12">
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
+                  >
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6">
@@ -752,10 +840,14 @@
                 </div>
 
                 <div class="col-lg-12">
-                  <hr class="border-dashed border-top-2" style="margin-top: 5px; margin-bottom: 5px" />
+                  <hr
+                    class="border-dashed border-top-2"
+                    style="margin-top: 5px; margin-bottom: 5px"
+                  />
 
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
+                  >
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -824,9 +916,15 @@
                   </ul>
                 </div>
 
-                <div class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center">
+                <div
+                  class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center"
+                >
                   <template v-if="!isChoosingScreen">
-                    <button class="btn btn-primary" @click="isChoosingScreen = true" v-if="!isChoosingScreen">
+                    <button
+                      class="btn btn-primary"
+                      @click="isChoosingScreen = true"
+                      v-if="!isChoosingScreen"
+                    >
                       Quay Lại
                     </button>
 
@@ -835,7 +933,11 @@
                     </button>
                   </template>
 
-                  <button class="btn btn-primary" @click="handleNextOrderOne" v-if="isChoosingScreen">
+                  <button
+                    class="btn btn-primary"
+                    @click="handleNextOrderOne"
+                    v-if="isChoosingScreen"
+                  >
                     Tiếp theo
                   </button>
                 </div>
@@ -900,9 +1002,7 @@ const authStore = useAuthStore();
 const isChoosingScreen = ref(true);
 
 const formattedImage = (image) => {
-
   return image ? `http://alphacinema.test/storage/${image}` : "";
-
 };
 
 const showtime = computed(() => movieStore.showtime.data?.showTime || null);
@@ -942,7 +1042,6 @@ const echo = useEcho();
 const isAlphaVoucherOpen = ref(false);
 const isAlphaPointOpen = ref(false);
 const selectedPayment = ref(null);
-
 
 /**
  * Ngăn chặn spam click ghế
@@ -1128,8 +1227,8 @@ const formattedStartTime = (time) => {
 const seatNames = computed(() =>
   movieStore.seatSelected?.length
     ? movieStore.seatSelected.map(
-      (seat) => `${seat.coordinates_y}${seat.coordinates_x}`
-    )
+        (seat) => `${seat.coordinates_y}${seat.coordinates_x}`
+      )
     : []
 );
 
@@ -1432,13 +1531,12 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
 .blinking-box {
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  height: 60px; 
-  width: 100%; 
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  width: 100%;
 }
 .count-mix {
   margin-top: 10px;
@@ -1535,7 +1633,6 @@ onMounted(() => {
 }
 
 .seat:not(.empty-seat) {
-
   border: 1px solid #ddd;
 
   /* border: 1px solid #ddd; */
@@ -2009,7 +2106,6 @@ h3,
   color: #000;
 }
 
-
 .input-group {
   display: flex;
   flex-direction: column;
@@ -2029,7 +2125,6 @@ h3,
   border: 1px solid #d1d5db;
   border-radius: 4px;
 }
-
 
 .discount-info {
   display: flex;
@@ -2062,7 +2157,6 @@ h3,
   background: linear-gradient(to right, #ff9966, #ff5f6d);
 }
 
-
 /* Thanh toán */
 .payment-method-section {
   display: flex;
@@ -2091,11 +2185,9 @@ h3,
   position: relative;
 }
 
-
 .payment-option input {
   display: none;
 }
-
 
 .custom-radio {
   width: 16px;
@@ -2105,7 +2197,6 @@ h3,
   display: inline-block;
   position: relative;
 }
-
 
 .payment-option input:checked + .custom-radio::after {
   content: "";
@@ -2124,13 +2215,11 @@ h3,
   height: 40px;
 }
 
-
 .payment-option span {
   font-size: 16px;
   font-weight: bold;
   color: #1e1f28;
 }
-
 
 /* icon ghế */
 .seat-icon {
@@ -2155,7 +2244,6 @@ h3,
 .seat:hover .seat-icon {
   transform: scale(1.1);
 }
-
 
 /** responsive */
 
