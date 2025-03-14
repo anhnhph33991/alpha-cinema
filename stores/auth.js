@@ -80,10 +80,6 @@ export const useAuthStore = defineStore(
     persist: {
       storage: piniaPluginPersistedstate.cookies({
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        domain: ".alphacinema.me", // Đặt cùng domain với admin_token
-        path: "/",
-        secure: true,
-        sameSite: "None",
       }),
     },
   }

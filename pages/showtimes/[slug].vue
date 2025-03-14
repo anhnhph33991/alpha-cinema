@@ -1482,9 +1482,9 @@ onMounted(() => {
   }
 });
 
-onUnmounted(() => {
-  echo.leaveChannel("showtime");
-});
+// onUnmounted(() => {
+//   echo.leaveChannel("showtime");
+// });
 </script>
 
 <style scoped>
