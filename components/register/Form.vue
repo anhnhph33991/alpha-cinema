@@ -9,87 +9,67 @@
           <div class="row">
             <h2 class="title">Đăng Ký</h2>
           </div>
-          <form>
+          <!-- Form bắt đầu -->
+          <Form :validation-schema="validationSchema" @submit="handleSubmit">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Họ tên</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Họ tên"
-                  autocomplete="off"
-                />
+                  <span class="text-danger">*</span> Họ tên
+                </label>
+                <Field name="fullName" type="text" class="form-control" placeholder="Họ tên" v-model="form.fullName"
+                  autocomplete="off" />
+                <ErrorMessage name="fullName" v-slot="{ message }">
+                  <div class="text-danger error-message">{{ message }}</div>
+                </ErrorMessage>
               </div>
               <div class="col-md-6 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Email</label
-                >
-                <input
-                  type="email"
-                  class="form-control"
-                  placeholder="luxchill@gmail.com"
-                  autocomplete="off"
-                />
+                  <span class="text-danger">*</span> Email
+                </label>
+                <Field name="email" type="email" class="form-control" placeholder="luxchill@gmail.com"
+                  v-model="form.email" autocomplete="off" />
+                <ErrorMessage name="email" v-slot="{ message }">
+                  <div class="text-danger error-message">{{ message }}</div>
+                </ErrorMessage>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Mật khẩu</label
-                >
+                  <span class="text-danger">*</span> Mật khẩu
+                </label>
                 <div class="input-group input-group-flat">
-                  <input
-                    type="password"
-                    class="form-control"
-                    placeholder="Mật khẩu"
-                    autocomplete="off"
-                  />
-                  <span class="input-group-text">
-                    <a
-                      href="#"
-                      class="link-secondary"
-                      data-bs-toggle="tooltip"
-                      aria-label="Show password"
-                      data-bs-original-title="Show password"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path
-                          stroke="none"
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        ></path>
+                  <Field name="password" :type="showPassword ? 'text' : 'password'" class="form-control"
+                    placeholder="Mật khẩu" v-model="form.password" autocomplete="off" />
+                  <span class="input-group-text" @click="togglePasswordVisibility">
+                    <a class="link-secondary" data-bs-toggle="tooltip" aria-label="Show password"
+                      data-bs-original-title="Show password">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
-                        <path
-                          d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"
-                        ></path>
+                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6">
+                        </path>
                       </svg>
                     </a>
                   </span>
                 </div>
+                <ErrorMessage name="password" v-slot="{ message }">
+                  <div class="text-danger error-message">{{ message }}</div>
+                </ErrorMessage>
               </div>
 
               <div class="col-md-6 mb-3">
                 <label class="form-label"> Giới tính</label>
                 <div class="input-group input-group-flat">
-                  <select class="form-control">
+                  <select class="form-control" v-model="form.gender">
                     <option value="" disabled selected>Chọn giới tính</option>
                     <option value="0">Nam</option>
                     <option value="1">Nữ</option>
                   </select>
+
                 </div>
               </div>
             </div>
@@ -97,74 +77,109 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Ngày sinh</label
-                >
-                <input type="date" class="form-control" />
+                  Ngày sinh</label>
+                  <input type="date" class="form-control" v-model="form.dob" />
               </div>
               <div class="col-md-6 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Số điện thoại</label
-                >
-                <input
-                  type="tel"
-                  class="form-control"
-                  placeholder="Số điện thoại"
-                  autocomplete="off"
-                />
+                  <span class="text-danger">*</span> Số điện thoại
+                </label>
+                <Field name="phone" type="tel" class="form-control" placeholder="Số điện thoại" v-model="form.phone"
+                  autocomplete="off" />
+                <ErrorMessage name="phone" v-slot="{ message }">
+                  <div class="text-danger error-message">{{ message }}</div>
+                </ErrorMessage>
               </div>
             </div>
 
-            <div class="mb-3">
-              <label class="form-check">
-                <input type="checkbox" class="form-check-input" />
-                <span class="form-check-label">
-                  Tôi cam kết tuân theo
-                  <a href="" class="text-blue">chính sách bảo mật</a> và
-                  <a href="" class="text-blue">điều kiện sử dụng</a> của
-                  AlphaCinema
-                </span>
-              </label>
-            </div>
-
             <div class="form-footer">
-              <button type="submit" class="btn btn-danger btn-3">
+              <button class="btn btn-danger btn-3">
                 Đăng Ký
               </button>
             </div>
-          </form>
+          </Form>
+          <!-- Form kết thúc -->
         </div>
 
         <div class="col">
-          <a href="#" class="btn btn-google btn-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-google"
-              viewBox="0 0 16 16"
-            >
+          <a href="https://alphacinema.me/auth/google/redirect" class="btn btn-google btn-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google"
+              viewBox="0 0 16 16">
               <path
-                d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"
-              />
+                d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z" />
             </svg>
             Tiếp tục với Google
           </a>
         </div>
         <div class="text-center text-secondary mt-3">
           Bạn đã có tài khoản?
-          <a href="#">
-            <NuxtLink :to="{ name: 'login' }"> Đăng Nhập </NuxtLink>
-          </a>
+          <NuxtLink :to="{ name: 'login' }"> Đăng Nhập </NuxtLink>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+import { defineEmits } from 'vue';
+import { Form, Field, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
+import * as zod from 'zod';
+
+// Show password
+const showPassword = ref(false);
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value;
+};
+
+// Định nghĩa schema validation sử dụng Zod
+const validationSchema = toTypedSchema(
+  zod.object({
+    fullName: zod.string().min(1, { message: 'Vui lòng nhập họ tên' }),
+    email: zod.string().min(1, { message: 'Vui lòng nhập email' }).email({ message: 'Email không hợp lệ' }),
+    password: zod.string().min(6, { message: 'Mật khẩu phải có ít nhất 6 ký tự' }),
+    dob: zod.string().min(1, { message: 'Vui lòng nhập ngày sinh' }), 
+    phone: zod.string().min(1, { message: 'Vui lòng nhập số điện thoại' }),
+    gender: zod.string().min(1, { message: 'Vui lòng chọn giới tính' }), 
+  })
+);
+
+
+// Thông tin form
+const form = ref({
+  fullName: '',
+  email: '',
+  password: '',
+  gender: '',
+  dob: '',
+  phone: '',
+  terms: false,
+});
+
+const emit = defineEmits(["submit-form"]);
+
+const handleSubmit = async() => {
+  // console.log('123');
+  
+
+  console.log('123');
+  
+  // console.log("Submitted values:", values);  
+  emit("submit-form", form.value);
+};
+
+</script>
 
 <style scoped>
+.error-message {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: #dc3545;
+  margin-top: 5px;
+  display: block;
+}
+
 .card-md {
   width: 100%;
 }
@@ -232,12 +247,10 @@
 
 .btn-3 {
   width: 30%;
-  background-image: linear-gradient(
-    to right,
-    #fc3606 0%,
-    #fda085 51%,
-    #fc7704 100%
-  ) !important;
+  background-image: linear-gradient(to right,
+      #fc3606 0%,
+      #fda085 51%,
+      #fc7704 100%) !important;
   background-size: 200% 100%;
   transition: background-position 0.5s ease;
 }

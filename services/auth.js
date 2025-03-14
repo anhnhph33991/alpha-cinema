@@ -13,20 +13,38 @@ export const loginService = async (data) => {
   }
 };
 
+// export const registerService = async (data) => {
+//   const { $axios } = useNuxtApp();
+//   try {
+//     const response = await $axios.post(`/v1/signup`, data);
+
+//     if (!response) {
+//       throw new Error("Invalid response");
+//     }
+
+//     return response;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
 export const registerService = async (data) => {
   const { $axios } = useNuxtApp();
   try {
     const response = await $axios.post(`/v1/signup`, data);
-
     if (!response) {
       throw new Error("Invalid response");
     }
-
+    console.log("Register response:", response); 
     return response;
   } catch (error) {
+    console.error("Error in register:", error); 
     throw error;
   }
 };
+
+
+
 
 export const logoutService = async () => {
   const { $axios } = useNuxtApp();

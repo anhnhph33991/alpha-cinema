@@ -49,12 +49,21 @@ export const useAuthStore = defineStore(
     const register = async (data) => {
       try {
         const response = await registerService(data);
-
-        console.log(response);
+    
+        if (response.status) {
+          token.value = response.data.token;
+          user.value = response.data.user;
+          isLogin.value = true;
+        }
+    
+        toast.success("Đăng ký thành công");
+        router.push({ name: "index" });
       } catch (error) {
-        toast.error("lỗi");
+        toast.error("Đăng ký thất bại, vui lòng thử lại");
+        console.log(error);
       }
     };
+    
 
     const logout = async () => {
       try {
