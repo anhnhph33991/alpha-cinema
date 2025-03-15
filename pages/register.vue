@@ -16,5 +16,6 @@ const authStore = useAuthStore();
 
 const submited = (data) => {
   authStore.register(data);
+  // console.log(data);
 };
 </script>

@@ -250,7 +250,7 @@ const emit = defineEmits(["submit-form"]);
 
 const onSubmit = async (value) => {
   // console.log(value);
-  emit("submit-form", form.value);
+  emit("submit-form", value);
 };
 </script>
 

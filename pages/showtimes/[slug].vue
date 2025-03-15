@@ -1562,6 +1562,9 @@ const handleApplyVoucher = () => {
     return;
   }
 
+
+  
+
   console.log(applyVoucher);
 
   if (applyVoucher.usage_count <= 0) {
