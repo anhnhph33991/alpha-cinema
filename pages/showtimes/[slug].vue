@@ -520,18 +520,6 @@
                           <input
                             type="radio"
                             name="payment"
-                            value="domestic-card"
-                            v-model="selectedPayment"
-                          />
-                          <span class="custom-radio"></span>
-                          <img src="/assets/icon-card.png" alt="Thẻ nội địa" />
-                          <span>Thẻ nội địa</span>
-                        </label>
-
-                        <label class="payment-option">
-                          <input
-                            type="radio"
-                            name="payment"
                             value="momo"
                             v-model="selectedPayment"
                           />
@@ -545,7 +533,7 @@
                           <input
                             type="radio"
                             name="payment"
-                            value="VNpay"
+                            value="vnpay"
                             v-model="selectedPayment"
                           />
 
@@ -1193,9 +1181,9 @@ const handleNextOrder = async () => {
 
     console.log("data new hehehe");
 
-    console.log(dataTicketNew);
+    // console.log(dataTicketNew);
 
-    // paymentStore.paymentMomo(selectedPayment.value, dataTicket, seatId);
+    paymentStore.paymentMomo(selectedPayment.value, dataTicket, seatId);
 
     // toast.success("Thanh toán thành công");
     // navigateTo({ name: "booking-success" });
@@ -1510,9 +1498,9 @@ watch(
  * Logic voucher
  */
 
-// const useVoucher = ref({
-
-// })
+const useVoucher = reactive({
+  code: "",
+});
 
 onMounted(() => {
   promiseAllApi();
