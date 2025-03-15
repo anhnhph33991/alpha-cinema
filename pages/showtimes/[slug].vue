@@ -383,7 +383,11 @@
                             <div class="voucher-form">
                               <div class="input-group">
                                 <label>Mã Voucher</label>
-                                <input type="text" placeholder="" />
+                                <input
+                                  type="text"
+                                  placeholder="Nhập mã voucher vào đây"
+                                  v-model.trim="useVoucher.code"
+                                />
                               </div>
 
                               <div class="input-group">
@@ -391,7 +395,12 @@
                                 <input type="text" placeholder="" />
                               </div>
 
-                              <button class="apply-btn mt-4">ĐĂNG KÝ</button>
+                              <button
+                                class="apply-btn mt-4"
+                                @click.prevent="handleApplyVoucher"
+                              >
+                                ĐĂNG KÝ
+                              </button>
                             </div>
 
                             <div class="voucher-list">
@@ -440,20 +449,41 @@
                             <div class="point-form">
                               <div class="point-info">
                                 <span class="label">Điểm hiện có</span><br />
-                                <span class="point-value">0</span>
+                                <span class="point-value">
+                                  {{
+                                    authStore.user.point.toLocaleString("vi-VN")
+                                  }}
+                                </span>
                               </div>
 
                               <div class="input-group">
                                 <label>Nhập điểm</label>
-                                <input type="text" placeholder="" />
+                                <input
+                                  type="number"
+                                  placeholder=""
+                                  v-model.trim="useVoucher.point"
+                                  :max="authStore.user.point"
+                                />
                               </div>
 
                               <div class="discount-info">
                                 <span class="label">Số tiền được giảm</span>
-                                <span class="discount-value bold">= 0 vnđ</span>
+                                <span class="discount-value bold"
+                                  >=
+                                  {{
+                                    Number(useVoucher.point).toLocaleString(
+                                      "vi-VN"
+                                    )
+                                  }}
+                                  vnđ</span
+                                >
                               </div>
 
-                              <button class="exchange-btn mt-4">
+                              <button
+                                type="button"
+                                class="exchange-btn mt-4"
+                                @click="handleApplyPoint"
+                              >
                                 ĐỔI ĐIỂM
                               </button>
                             </div>
@@ -482,7 +512,7 @@
                         <div
                           class="col-md-3 item-seat-money item-seat-total-money total-money-name"
                         >
-                          0đ
+                          {{ priceAll.discountAmount.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
                       <div class="row">
@@ -493,7 +523,7 @@
                         <div
                           class="col-md-3 item-seat-money item-seat-total-money total-money-name"
                         >
-                          {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ
+                          {{ priceAll.payableAmount.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
                     </div>
@@ -1160,30 +1190,30 @@ const handleNextOrder = async () => {
 
     // console.log(selectedPayment.value);
 
-    const dataTicketNew = {
-      user: authStore.user,
-      cinema: movieStore.showtime.data.showTime.cinema,
-      room: movieStore.showtime.data.showTime.room,
-      movie: movieStore.showtime.data.showTime.movie,
-      showtime: movieStore.showtime.data.showTime,
-      voucher_code: null,
-      voucher_discount: 0,
-      point_use: 0,
-      point_discount: 0,
-      payment_name: selectedPayment.value,
-      ticket_seats: newDataSeats,
-      ticket_combos: newDataCombo.length > 0 ? newDataCombo : null,
-      ticket_foods: newDataFood.length > 0 ? newDataFood : null,
-      total_price: priceAll.value.payableAmount,
-      expiry: `${movieStore.showtime.data.showTime.date}|${movieStore.showtime.data.showTime.end_time}`,
-      status: "pending",
-    };
+    // const dataTicketNew = {
+    //   user: authStore.user,
+    //   cinema: movieStore.showtime.data.showTime.cinema,
+    //   room: movieStore.showtime.data.showTime.room,
+    //   movie: movieStore.showtime.data.showTime.movie,
+    //   showtime: movieStore.showtime.data.showTime,
+    //   voucher_code: null,
+    //   voucher_discount: 0,
+    //   point_use: 0,
+    //   point_discount: 0,
+    //   payment_name: selectedPayment.value,
+    //   ticket_seats: newDataSeats,
+    //   ticket_combos: newDataCombo.length > 0 ? newDataCombo : null,
+    //   ticket_foods: newDataFood.length > 0 ? newDataFood : null,
+    //   total_price: priceAll.value.payableAmount,
+    //   expiry: `${movieStore.showtime.data.showTime.date}|${movieStore.showtime.data.showTime.end_time}`,
+    //   status: "pending",
+    // };
 
     console.log("data new hehehe");
 
-    // console.log(dataTicketNew);
+    console.log(dataTicket);
 
-    paymentStore.paymentMomo(selectedPayment.value, dataTicket, seatId);
+    // paymentStore.paymentMomo(selectedPayment.value, dataTicket, seatId);
 
     // toast.success("Thanh toán thành công");
     // navigateTo({ name: "booking-success" });
@@ -1264,11 +1294,21 @@ const filteredSeatGroups = computed(() => {
   // Chỉ lấy những nhóm có ghế được chọn
   return Object.values(categories).filter((group) => group.seats.length > 0);
 });
-
+/**
+ * Biến tiền
+ *
+ * totalAmount      = tổng tiền đơn hàng
+ * discountAmount   = tổng tiền được giảm
+ * payableAmount    = tổng tiền phải trả
+ *
+ *
+ */
 const priceAll = ref({
   totalAmount: 0,
   discountAmount: 0,
   payableAmount: 0,
+  discountFromVoucher: 0,
+  discountFromPoints: 0,
 });
 
 // const handleTotalPrice = computed(() => {
@@ -1415,6 +1455,15 @@ watch(handleTotalPrice, (newTotal) => {
   priceAll.value.payableAmount = newTotal - priceAll.value.discountAmount;
 });
 /**
+ * Thay đổi tiền tổng khi có discountAmount
+ */
+watch(
+  () => priceAll.value.discountAmount,
+  (newDiscount) => {
+    priceAll.value.payableAmount = priceAll.value.totalAmount - newDiscount;
+  }
+);
+/**
  * Call all api with promose.all
  */
 const promiseAllApi = async () => {
@@ -1500,7 +1549,64 @@ watch(
 
 const useVoucher = reactive({
   code: "",
+  point: 0,
 });
+
+const handleApplyVoucher = () => {
+  const applyVoucher = voucherStore.vouchers.find(
+    (voucher) => voucher.code === useVoucher.code
+  );
+
+  if (!applyVoucher) {
+    toast.error("Voucher không chính xác");
+    return;
+  }
+
+  console.log(applyVoucher);
+
+  if (applyVoucher.usage_count <= 0) {
+    toast.error("Làm lồn gì còn mà dùng 🤬");
+    return;
+  }
+
+  // priceAll.value.discountAmount = +applyVoucher.discount;
+
+  priceAll.value.discountFromVoucher = +applyVoucher.discount;
+  applyVoucher.usage_count -= 1;
+
+  priceAll.value.discountAmount =
+    priceAll.value.discountFromVoucher + priceAll.value.discountFromPoints;
+
+  console.log(priceAll.value.discountAmount);
+  console.log(priceAll.value.totalAmount);
+};
+
+const handleApplyPoint = () => {
+  const maxPoints = authStore.user.point || 0;
+  const applyPoints = Number(useVoucher.point) || 0;
+
+  const maxUsablePoints = Math.floor(priceAll.value.totalAmount * 0.5);
+
+  if (applyPoints > maxPoints) {
+    toast.error("Bạn không đủ điểm tiêu dùng");
+    useVoucher.point = maxPoints;
+    return;
+  }
+
+  if (applyPoints > Number(priceAll.value.totalAmount)) {
+    toast.error("Bạn chỉ có thể sử dụng tối đa 50% số tiền tổng đơn hàng.");
+    useVoucher.point = Math.min(maxPoints, maxUsablePoints);
+    return;
+  }
+
+  priceAll.value.discountFromPoints = applyPoints;
+  priceAll.value.discountAmount =
+    priceAll.value.discountFromVoucher + priceAll.value.discountFromPoints;
+
+  console.log(applyPoints);
+
+  // priceAll.value.discountAmount = discountAmount.value
+};
 
 onMounted(() => {
   promiseAllApi();
