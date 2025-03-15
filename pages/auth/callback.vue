@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h3>Change password</h3>
+    <h1>Hello</h1>
   </div>
 </template>
 
 <script setup>
 definePageMeta({
-  // middleware: ["auth"],
+  middleware: "google",
 });
 </script>

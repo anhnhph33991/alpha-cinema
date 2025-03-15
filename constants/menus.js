@@ -8,8 +8,8 @@ export const navMenu = [
     link: "/movies",
   },
   {
-    title: "Rạp",
-    link: "/cinemas",
+    title: "Chính Sách",
+    link: "/site-setting/policy",
   },
   {
     title: "Giá Vé",
@@ -17,7 +17,7 @@ export const navMenu = [
   },
   {
     title: "Tin Tức",
-    link: "/posts",
+    link: "/site-setting/posts",
   },
   {
     title: "Chính Sách",
@@ -26,5 +26,9 @@ export const navMenu = [
   {
     title: "Liên hệ",
     link: "/contact",
+  },
+  {
+    title: "Thành viên",
+    link: "/account",
   },
 ];

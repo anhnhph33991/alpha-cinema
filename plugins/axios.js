@@ -6,6 +6,7 @@ export default defineNuxtPlugin((NuxtApp) => {
 
   const instance = axios.create({
     baseURL: config.public.apiUrl,
+    withCredentials: true,
   });
 
   instance.interceptors.request.use((config) => {

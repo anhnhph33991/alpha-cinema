@@ -1,108 +1,309 @@
 <template>
-  <div class="container container-tight py-4 mt-5 card-md">
-    <div class="card">
-      <div class="card-body">
-        <h2 class="h2 text-center mb-4 mt-3">Đăng ký tài khoản</h2>
-        <form>
-          <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              placeholder="luxchill@gmail.com"
-              autocomplete="off"
-            />
+  <div class="container-wrapper">
+    <div class="image-container">
+      <!-- ảnh -->
+    </div>
+    <div class="container container-tight py-4 mt-5 card-md">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <h2 class="title">Đăng Ký</h2>
           </div>
-          <div class="mb-2">
-            <label class="form-label"> Mật khẩu </label>
-            <div class="input-group input-group-flat">
-              <input
-                type="password"
-                class="form-control"
-                placeholder="Mật khẩu"
-                autocomplete="off"
-              />
-              <span class="input-group-text">
-                <a
-                  href="#"
-                  class="link-secondary"
-                  data-bs-toggle="tooltip"
-                  aria-label="Show password"
-                  data-bs-original-title="Show password"
-                  ><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="icon"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
-                    <path
-                      d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"
-                    ></path>
-                  </svg>
-                </a>
-              </span>
+          <form>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">
+                  <span class="text-danger">*</span> Họ tên</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Họ tên"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">
+                  <span class="text-danger">*</span> Email</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="luxchill@gmail.com"
+                  autocomplete="off"
+                />
+              </div>
             </div>
-          </div>
-          <div class="mb-2">
-            <label class="form-check">
-              <input type="checkbox" class="form-check-input" />
-              <span class="form-check-label">
-                Tôi cam kết tuân theo
-                <a href="">chính sách bảo mật</a> và
-                <a href="">điều kiện sử dụng</a> của AlphaCinema
-              </span>
-            </label>
-          </div>
-          <div class="form-footer">
-            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
-          </div>
-        </form>
-      </div>
-      <div class="hr-text">hoặc</div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col">
-            <a href="#" class="btn w-100">
-              <!-- Download SVG icon from http://tabler-icons.io/i/brand-github -->
 
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                viewBox="0 0 50 50"
-                width="24"
-                height="24"
-                stroke-width="2"
-                stroke="currentColor"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M 26 2 C 13.308594 2 3 12.308594 3 25 C 3 37.691406 13.308594 48 26 48 C 35.917969 48 41.972656 43.4375 45.125 37.78125 C 48.277344 32.125 48.675781 25.480469 47.71875 20.9375 L 47.53125 20.15625 L 46.75 20.15625 L 26 20.125 L 25 20.125 L 25 30.53125 L 36.4375 30.53125 C 34.710938 34.53125 31.195313 37.28125 26 37.28125 C 19.210938 37.28125 13.71875 31.789063 13.71875 25 C 13.71875 18.210938 19.210938 12.71875 26 12.71875 C 29.050781 12.71875 31.820313 13.847656 33.96875 15.6875 L 34.6875 16.28125 L 41.53125 9.4375 L 42.25 8.6875 L 41.5 8 C 37.414063 4.277344 31.960938 2 26 2 Z M 26 4 C 31.074219 4 35.652344 5.855469 39.28125 8.84375 L 34.46875 13.65625 C 32.089844 11.878906 29.199219 10.71875 26 10.71875 C 18.128906 10.71875 11.71875 17.128906 11.71875 25 C 11.71875 32.871094 18.128906 39.28125 26 39.28125 C 32.550781 39.28125 37.261719 35.265625 38.9375 29.8125 L 39.34375 28.53125 L 27 28.53125 L 27 22.125 L 45.84375 22.15625 C 46.507813 26.191406 46.066406 31.984375 43.375 36.8125 C 40.515625 41.9375 35.320313 46 26 46 C 14.386719 46 5 36.609375 5 25 C 5 13.390625 14.386719 4 26 4 Z"
-                ></path>
-              </svg>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">
+                  <span class="text-danger">*</span> Mật khẩu</label
+                >
+                <div class="input-group input-group-flat">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Mật khẩu"
+                    autocomplete="off"
+                  />
+                  <span class="input-group-text">
+                    <a
+                      href="#"
+                      class="link-secondary"
+                      data-bs-toggle="tooltip"
+                      aria-label="Show password"
+                      data-bs-original-title="Show password"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path
+                          stroke="none"
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        ></path>
+                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                        <path
+                          d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"
+                        ></path>
+                      </svg>
+                    </a>
+                  </span>
+                </div>
+              </div>
 
-              Tiếp tục với google
-            </a>
-          </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label"> Giới tính</label>
+                <div class="input-group input-group-flat">
+                  <select class="form-control">
+                    <option value="" disabled selected>Chọn giới tính</option>
+                    <option value="0">Nam</option>
+                    <option value="1">Nữ</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">
+                  <span class="text-danger">*</span> Ngày sinh</label
+                >
+                <input type="date" class="form-control" />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">
+                  <span class="text-danger">*</span> Số điện thoại</label
+                >
+                <input
+                  type="tel"
+                  class="form-control"
+                  placeholder="Số điện thoại"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-check">
+                <input type="checkbox" class="form-check-input" />
+                <span class="form-check-label">
+                  Tôi cam kết tuân theo
+                  <a href="" class="text-blue">chính sách bảo mật</a> và
+                  <a href="" class="text-blue">điều kiện sử dụng</a> của
+                  AlphaCinema
+                </span>
+              </label>
+            </div>
+
+            <div class="form-footer">
+              <button type="submit" class="btn btn-danger btn-3">
+                Đăng Ký
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="col">
+          <a href="#" class="btn btn-google btn-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-google"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"
+              />
+            </svg>
+            Tiếp tục với Google
+          </a>
+        </div>
+        <div class="text-center text-secondary mt-3">
+          Bạn đã có tài khoản?
+          <a href="#">
+            <NuxtLink :to="{ name: 'login' }"> Đăng Nhập </NuxtLink>
+          </a>
         </div>
       </div>
-    </div>
-    <div class="text-center text-secondary mt-3">
-      Bạn đã có tài khoản?
-      <NuxtLink :to="{ name: 'login' }"> Đăng Nhập </NuxtLink>
     </div>
   </div>
 </template>
 
 <script setup></script>
+
+<style scoped>
+.card-md {
+  width: 100%;
+}
+
+.container-wrapper {
+  position: relative;
+  background-image: url("/public/background.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 50px 0;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  width: 100%;
+  max-width: 35rem;
+  margin-top: 0;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.title {
+  margin-bottom: 50px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  position: relative;
+}
+
+.title::after {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 2px;
+  background-color: #ff5722;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.container {
+  margin-bottom: 50px;
+}
+
+.btn {
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+  margin: 5px auto;
+}
+
+.btn-3 {
+  width: 30%;
+  background-image: linear-gradient(
+    to right,
+    #fc3606 0%,
+    #fda085 51%,
+    #fc7704 100%
+  ) !important;
+  background-size: 200% 100%;
+  transition: background-position 0.5s ease;
+}
+
+.btn-3:hover {
+  background-position: 100% 0;
+}
+
+.btn-google {
+  width: 50%;
+  background-color: linear-gradient(to right, #0a64a7 0%, #258dcf 51%, #3db1f3 100%) !important;
+  border: 1px solid #1877f2;
+  color: #fff;
+  transition: background-color 0.5s ease, background-position 0.5s ease;
+  background-size: 200% 100%;
+}
+
+.btn-google:hover {
+  background-position: 100% 0;
+}
+
+.hr-text {
+  text-align: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.hr-text:before,
+.hr-text:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.hr-text:before {
+  left: 0;
+}
+
+.hr-text:after {
+  right: 0;
+}
+
+.hr-text span {
+  position: relative;
+  font-size: 14px;
+  padding: 0 10px;
+}
+
+::placeholder {
+  color: #bbb;
+  opacity: 1;
+}
+
+.text-blue {
+  color: #5b9bd1;
+  text-decoration: none;
+}
+
+.text-blue:hover {
+  text-decoration: underline;
+}
+
+.text-center.text-secondary.mt-3 {
+  margin-bottom: 30px;
+}
+</style>

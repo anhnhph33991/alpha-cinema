@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-section">
+  <div class="movie-index-section">
     <div>
       <div class="container" v-if="movieStore.movies.data">
         <a-tabs v-model="tabActive" :default-active-key="'2'">
@@ -39,12 +39,12 @@ onMounted(async () => {
 </script>
 
 <style>
-.movie-section .ant-tabs-nav-wrap {
+.movie-index-section .ant-tabs-nav-wrap {
   display: flex;
   justify-content: center;
 }
 
-.movie-section .ant-tabs-tab-btn {
+.movie-index-section .ant-tabs-tab-btn {
   font-size: 1.4rem;
   font-weight: 600;
 }

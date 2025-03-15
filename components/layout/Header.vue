@@ -44,10 +44,30 @@
       class="navbar navbar-expand-lg al-header-section bg-white"
       :class="[{ 'al-header-active': isActive }]"
     >
-      <div class="container al-padding-header">
+      <div class="container al-padding-header al-with-header">
         <NuxtLink :to="{ name: 'index' }" class="navbar-brand">
-          <img src="/assets/logo.png" alt="" />
+          AlphaCinema
         </NuxtLink>
+        <div class="branch-dropdown d-none d-xl-block">
+          <ClientOnly>
+            <a-cascader
+              :value="value"
+              :options="branchOptions"
+              expand-trigger="hover"
+              placeholder="Vui lòng chọn"
+              popupClassName="custom-dropdown"
+              :dropdownStyle="{
+                maxHeight: 'unset',
+                overflow: 'visible',
+                height: 'auto',
+                minWidth: '200px',
+              }"
+              :displayRender="(labels) => labels.labels?.at(-1) || 'no data'"
+              @change="handleChangeCinema"
+              :allowClear="false"
+            />
+          </ClientOnly>
+        </div>
 
         <button
           class="navbar-toggler"
@@ -60,16 +80,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div>
-          <template>
-            <a-cascader
-              v-model:value="value"
-              :options="options"
-              expand-trigger="hover"
-              placeholder="Vui lòng chọn"
-            />
-          </template>
-        </div>
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 al-pull-right">
             <li v-for="(item, index) in navMenu" :key="index" class="nav-item">
@@ -89,21 +100,18 @@
 </template>
 
 <script setup>
+import { ref, onMounted, computed } from "vue";
 import { navMenu } from "~/constants/menus";
 import { useAuthStore } from "~/stores/auth";
 import { useBranchStore } from "~/stores/branch";
 import { LogOut } from "lucide-vue-next";
-import { ref } from "vue";
 
-const auth = useCookie("auth");
 const authStore = useAuthStore();
-const branchStore = useBranchStore();
-const options = ref([]);
-const value = ref([]);
+
 const logout = async () => {
   await authStore.logout();
 };
-gi
+
 const props = defineProps({
   isActive: {
     type: Boolean,
@@ -111,47 +119,98 @@ const props = defineProps({
     default: false,
   },
 });
-const formatDataToOptions = (data) => {
-  console.log("Dữ liệu trước khi format:", data); // Log kiểm tra dữ liệu từ API
-  return data.map((item) => ({
-    value: item.id,  // ID của branch
-    label: item.name, // Tên của branch
-    children: item.cinemas ? item.cinemas.map((cinema) => ({
-      value: cinema.id, // ID của cinema
-      label: cinema.name, // Tên của cinema
-    })) : [],
-  }));
-};
-onMounted(async () => {
-  await branchStore.listBranch();
-  // formatDataToOptions(branchStore.branchs);
-});
-watchEffect(() => {
- 
-    options.value = formatDataToOptions(branchStore.branchs);
-   
-  })
-// const options = [
-//   {
-//     value: "Minh Hải",
-//     label: "Minh Hải",
-//     children: [
-//       {
-//         value: "hangzhou",
-//         label: "Hangzhou",
-//       },
-//     ],
-//   },
-//   {
-//     value: "jiangsu",
-//     label: "Jiangsu",
-//     children: [
-//       {
-//         value: "nanjing",
-//         label: "Nanjing",
-//       },
-//     ],
-//   },
-// ];
-// const value = ref([]);
 </script>
+
+<style>
+/* :where(.css-dev-only-do-not-override-1p3hq3p).ant-select .ant-select-clear */
+
+.al-header-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.al-with-header {
+  width: 100%;
+  min-width: auto;
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-nav .nav-item {
+  flex: none;
+  text-align: center;
+  padding: 0 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: "PT Sans Narrow", Arial, sans-serif;
+  font-size: large;
+}
+
+.branch-dropdown {
+  margin: 0 30px;
+  font-size: 16px;
+}
+
+.ant-cascader-menus {
+  min-height: auto !important;
+  max-height: 300px !important;
+  overflow: hidden !important;
+}
+
+.ant-cascader-menu {
+  width: 200px !important;
+  max-height: none !important;
+  min-height: auto !important;
+  overflow: visible !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.ant-cascader-menu-item {
+  padding: 10px 10px !important;
+  position: relative;
+  border-bottom: 1px solid #ddd !important;
+}
+
+.ant-cascader-menu-item:last-child {
+  border-bottom: none !important;
+}
+
+.ant-cascader-menu-item:hover {
+  background-color: #2a73dd !important;
+  color: white !important;
+  width: 100% !important;
+}
+
+.ant-cascader-menu-item-active {
+  background-color: #2a73dd !important;
+  color: white !important;
+}
+
+.custom-dropdown {
+  max-height: none !important;
+  overflow: visible !important;
+  height: auto !important;
+  min-width: 200px !important;
+  position: absolute !important;
+  z-index: 9999 !important;
+}
+
+.custom-dropdown::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #2a73dd;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+</style>

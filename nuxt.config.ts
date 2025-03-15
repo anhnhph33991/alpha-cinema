@@ -17,7 +17,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiUrl: process.env.NUXT_API_URL
+      apiUrl: process.env.NUXT_API_URL,
+      BackEndUrl: process.env.NUXT_URL_ADMIN
     }
   },
   app: {
@@ -35,30 +36,34 @@ export default defineNuxtConfig({
     }
   },
   echo: {
-    broadcaster: 'pusher', // available: reverb, pusher
-    host: 'localhost',
-    key: 'e3060d09ca004eeff12d',
-    cluster: 'ap1',
+    broadcaster: 'reverb',
+    key: 'r6f2xqvoz9942lfwjser',
+    host: 'baselaravel.test',
     port: 8080,
-    scheme: 'https', // available: http, https
-    transports: ['ws', 'wss'],
-    // authentication: {
-    //   mode: 'cookie',
-    //   baseUrl: 'http://localhost:80',
-    //   authEndpoint: '/broadcasting/auth',
-    //   csrfEndpoint: '/sanctum/csrf-cookie',
-    //   csrfCookie: 'XSRF-TOKEN',
-    //   csrfHeader: 'X-XSRF-TOKEN',
-    // },
-    logLevel: 3,
-    properties: undefined,
+    scheme: 'http',
+    transports: ['ws'],
+    properties: {
+      encrypted: true,
+      rejectUnauthorized: false,
+    },
   },
   vite: {
     optimizeDeps: {
       include: ['pusher-js']
     }
   },
-  css: ['bootstrap/dist/css/bootstrap.min.css'],
+  css: [
+    'bootstrap/dist/css/bootstrap.min.css',
+    'bootstrap-icons/font/bootstrap-icons.css'
+  ],
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
+  devServer: {
+    host: 'baselaravel.test',
+    port: 3000, // Giữ port khác với Laravel (thường là 443)
+    https: {
+      key: 'C:/laragon/etc/ssl/laragon.key', // Đường dẫn tới file key
+      cert: 'C:/laragon/etc/ssl/laragon.crt' // Đường dẫn tới file cert
+    }
+  }
 })
