@@ -1211,9 +1211,19 @@ const handleNextOrder = async () => {
 
     console.log("data new hehehe");
 
-    console.log(dataTicket);
+    // console.log(dataTicket);
+    // console.log("voucher");
+    // console.log(useVoucher.code);
+    // console.log("point");
+    // console.log(useVoucher.point_after);
 
-    // paymentStore.paymentMomo(selectedPayment.value, dataTicket, seatId);
+    paymentStore.paymentMomo(
+      selectedPayment.value,
+      dataTicket,
+      seatId,
+      useVoucher.point_after,
+      useVoucher.code
+    );
 
     // toast.success("Thanh toán thành công");
     // navigateTo({ name: "booking-success" });
@@ -1550,6 +1560,7 @@ watch(
 const useVoucher = reactive({
   code: "",
   point: 0,
+  point_after: 0,
 });
 
 const handleApplyVoucher = () => {
@@ -1604,6 +1615,8 @@ const handleApplyPoint = () => {
     priceAll.value.discountFromVoucher + priceAll.value.discountFromPoints;
 
   console.log(applyPoints);
+
+  useVoucher.point_after = priceAll.value.payableAmount * 0.05;
 
   // priceAll.value.discountAmount = discountAmount.value
 };
