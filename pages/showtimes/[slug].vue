@@ -451,7 +451,9 @@
                                 <span class="label">Điểm hiện có</span><br />
                                 <span class="point-value">
                                   {{
-                                    authStore.user.point.toLocaleString("vi-VN")
+                                    Number(authStore.user.point).toLocaleString(
+                                      "vi-VN"
+                                    )
                                   }}
                                 </span>
                               </div>
