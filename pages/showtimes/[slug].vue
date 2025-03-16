@@ -1020,7 +1020,7 @@ const authStore = useAuthStore();
 const isChoosingScreen = ref(true);
 
 const formattedImage = (image) => {
-  return image ? `http://alphacinema.test/storage/${image}` : "";
+  return image ? `${config.public.BackEndUrl}/storage/${image}` : "";
 };
 
 const showtime = computed(() => movieStore.showtime.data?.showTime || null);
@@ -1562,9 +1562,6 @@ const handleApplyVoucher = () => {
     return;
   }
 
-
-  
-
   console.log(applyVoucher);
 
   if (applyVoucher.usage_count <= 0) {
@@ -1730,8 +1727,8 @@ onMounted(() => {
 }
 
 .seat:not(.empty-seat) {
-  border: 1px solid #ddd;
-
+  /* border: 1px solid #ddd; */
+  border-radius: 6px;
   /* border: 1px solid #ddd; */
 
   cursor: pointer;

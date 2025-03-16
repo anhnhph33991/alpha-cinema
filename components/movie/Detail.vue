@@ -764,7 +764,9 @@
             </div>
 
             <div class="mt-2 d-flex align-items-center gap-4 flex-grow-1">
-              <a class="fs-6 text-decoration-underline al-cursor-pointer"> Chi tiết nội dung </a>
+              <a class="fs-6 text-decoration-underline al-cursor-pointer">
+                Chi tiết nội dung
+              </a>
 
               <button
                 class="border border-warning rounded-pill py-2 px-4 text-warning bg-transparent btn-hover-scale"
@@ -855,6 +857,7 @@ const props = defineProps({
 });
 
 const activeKey = ref("1");
+const config = useRuntimeConfig();
 
 /**
  * Modal Show Trailer
@@ -924,7 +927,7 @@ const formattedStartTime = (time) => {
 const formattedImage = computed(() => {
   if (!props.movie.img_thumbnail) return "";
 
-  return `http://alphacinema.test/storage/${props.movie.img_thumbnail}`;
+  return `${config.public.BackEndUrl}/storage/${props.movie.img_thumbnail}`;
 });
 
 const navigateShowTime = (showtime) => {
@@ -1048,10 +1051,10 @@ h3 {
 }
 
 .movie-detail-section .btn {
-    padding: 5px 25px;
-    --bs-btn-border-radius: 0px;
-    color: black;
-    background-color: #cccccc;
-    --bs-btn-border-color: none;
+  padding: 5px 25px;
+  --bs-btn-border-radius: 0px;
+  color: black;
+  background-color: #cccccc;
+  --bs-btn-border-color: none;
 }
 </style>
