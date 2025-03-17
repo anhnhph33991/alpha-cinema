@@ -13,34 +13,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>ABC123</td>
-            <td>Giảm 10%</td>
-            <td>Khuyến mãi</td>
-            <td>2025-12-31</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- LỊCH SỬ VOUCHER -->
-    <h4 class="text-custom mt-4">LỊCH SỬ VOUCHER</h4>
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead class="table-light">
-          <tr>
-            <th>THỜI GIAN</th>
-            <th>MÃ VOUCHER</th>
-            <th>NỘI DUNG VOUCHER</th>
-            <th>TRẠNG THÁI</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>2025-01-01</td>
-            <td>XYZ789</td>
-            <td>Giảm 20%</td>
-            <td><span class="badge bg-success">Đã dùng</span></td>
+          <tr v-for="vc in dataVocher" :key="vc.voucher.id">
+            <td>{{ vc.voucher.code }}</td>
+            <td>{{ vc.voucher.title }}</td>
+            <td>{{ vc.voucher.description || 'Không có mô tả' }}</td>
+            <td>{{ vc.voucher.start_date_time || 'Không có ngày hết hạn' }}</td>
           </tr>
         </tbody>
       </table>
@@ -49,17 +26,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from "vue";
+import { accountStore } from "@/stores/account";
+import { useAuthStore } from "@/stores/auth";
 
+const voucherStore = accountStore();
+const authStore = useAuthStore();
+const dataVocher = ref([]);
 
-onMounted(() => {
-  // console.log("MemberCard component đã được mount!");
+onMounted(async () => {
+  if (authStore.isLogin) {
+    await voucherStore.loadVoucher(); // Đợi API load xong
+    console.log("Voucher vue", voucherStore.vouchers); // Kiểm tra dữ liệu trả về
+    dataVocher.value = voucherStore.vouchers.filter(v => v.voucher); // Chỉ lấy mục có voucher
+  }
 });
 </script>
 
 <style>
-
 .text-custom {
-color: #b58530 ;
+  color: #b58530;
 }
 </style>
