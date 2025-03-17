@@ -987,6 +987,7 @@ import { useFoodStore } from "~/stores/food";
 import { useTicketStore } from "~/stores/ticket";
 import { usePaymentStore } from "~/stores/payment";
 import { useVoucherStore } from "~/stores/voucher";
+import { useRankStore } from "~/stores/rank";
 import {
   Armchair,
   Sofa,
@@ -1005,6 +1006,7 @@ const foodStore = useFoodStore();
 const paymentStore = usePaymentStore();
 const ticketStore = useTicketStore();
 const voucherStore = useVoucherStore();
+const rankStore = useRankStore();
 const route = useRoute();
 // const slug = route.params.slug;
 const slug = computed(() => route.params.slug);
@@ -1216,8 +1218,8 @@ const handleNextOrder = async () => {
     // console.log(dataTicket);
     // console.log("voucher");
     // console.log(useVoucher.code);
-    // console.log("point");
-    // console.log(useVoucher.point_after);
+    console.log("point");
+    console.log(useVoucher.point_after);
 
     paymentStore.paymentMomo(
       selectedPayment.value,
@@ -1618,7 +1620,32 @@ const handleApplyPoint = () => {
 
   console.log(applyPoints);
 
-  useVoucher.point_after = priceAll.value.payableAmount * 0.05;
+  // useVoucher.point_after = priceAll.value.payableAmount * 0.05;
+
+  // useVoucher.point_after = authStore.user.point - useVoucher.point;
+
+  // const feedbackPercentage = rankStore.rankByUser.feedback_percentage || 0;
+
+  // useVoucher.point_after += Math.floor(
+  //   (feedbackPercentage / 100) * priceAll.value.payableAmount
+  // );
+
+  useVoucher.point_after =
+    Number(authStore.user.point) - Number(useVoucher.point);
+
+  const feedbackPercentage =
+    Number(rankStore.rankByUser.feedback_percentage) || 0;
+  const payableAmount = Number(priceAll.value.payableAmount);
+
+  // Đảm bảo các giá trị là số trước khi nhân chia
+  const pointsToAdd = Math.floor((feedbackPercentage / 100) * payableAmount);
+
+  useVoucher.point_after += pointsToAdd;
+
+  console.log(feedbackPercentage);
+
+  console.log("rank user");
+  console.log(rankStore.rankByUser);
 
   // priceAll.value.discountAmount = discountAmount.value
 };

@@ -8,4 +8,9 @@
 
 <script setup>
 import { Toaster } from "vue-sonner";
+import { useRankStore } from "~/stores/rank";
+
+onMounted(() => {
+  useRankStore().getRank();
+});
 </script>

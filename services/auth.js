@@ -42,3 +42,18 @@ export const logoutService = async () => {
     throw error;
   }
 };
+
+export const getRankService = async () => {
+  const { $axios } = useNuxtApp();
+  try {
+    const response = await $axios.get(`/v1/getRank`);
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
