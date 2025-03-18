@@ -1070,6 +1070,74 @@ const selectedPayment = ref(null);
  */
 const processingSeats = new Set();
 
+/**Check */
+const seatRows = computed(() => {
+  return Object.entries(movieStore.showtime.data.seatMap).map(
+    ([rowName, seats]) => ({
+      row: rowName,
+      seats: Object.values(seats),
+    })
+  );
+});
+
+/***############### */
+const checkSoleSeats = computed(() => {
+  let issueSeats = [];
+
+  seatRows.value.forEach(({ row, seats }) => {
+    let selectedIndexes = seats
+      .map((seat, index) =>
+        movieStore.isSeatSelected(seat) && seat.type_seat_id !== 3 ? index : -1
+      )
+      .filter((index) => index !== -1);
+
+    for (let i = 0; i < selectedIndexes.length - 1; i++) {
+      if (selectedIndexes[i + 1] - selectedIndexes[i] === 2) {
+        const emptyIndex = selectedIndexes[i] + 1;
+        if (!movieStore.isSeatSelected(seats[emptyIndex])) {
+          issueSeats.push(`${row}${seats[emptyIndex].id}`);
+        }
+      }
+    }
+  });
+
+  return issueSeats;
+});
+
+const checkEdgeSeats = computed(() => {
+  let issueSeats = [];
+
+  seatRows.value.forEach(({ row, seats }) => {
+    if (seats.length >= 2) {
+      const firstSeat = seats[0];
+      const secondSeat = seats[1];
+      const lastSeat = seats[seats.length - 1];
+      const beforeLastSeat = seats[seats.length - 2];
+
+      if (
+        !movieStore.isSeatSelected(firstSeat) &&
+        movieStore.isSeatSelected(secondSeat) &&
+        firstSeat.type_seat_id !== 3
+      ) {
+        issueSeats.push(`${row}${firstSeat.coordinates_x}`);
+      }
+
+      if (
+        !movieStore.isSeatSelected(lastSeat) &&
+        movieStore.isSeatSelected(beforeLastSeat) &&
+        lastSeat.type_seat_id !== 3
+      ) {
+        issueSeats.push(`${row}${lastSeat.coordinates_x}`);
+      }
+    }
+  });
+
+  console.log("checkEdgeSeats");
+  console.log(issueSeats);
+
+  return issueSeats;
+});
+
 const handleChooseSeat = async (seat) => {
   // console.log(seat);
   // console.log("<<<>>>>");
@@ -1098,6 +1166,10 @@ const handleChooseSeat = async (seat) => {
     toast.warning("Ghế này đang được giữ");
     return;
   }
+
+  /** */
+
+  console.log(seat);
 
   const newStatus =
     seat.status === "hold" && seat.user_id == currentUserId
@@ -1266,6 +1338,26 @@ const seatNames = computed(() =>
 
 const handleNextOrderOne = () => {
   if (movieStore.seatSelected?.length > 0) {
+    const soleSeatsIssues = checkSoleSeats.value;
+    const edgeSeatsIssues = checkEdgeSeats.value;
+
+    console.log(soleSeatsIssues);
+    console.log(edgeSeatsIssues);
+
+    if (soleSeatsIssues.length > 0) {
+      toast.warning(
+        `Bạn không được để trống ghế: ${soleSeatsIssues.join(", ")}`
+      );
+      return;
+    }
+
+    if (edgeSeatsIssues.length > 0) {
+      toast.warning(
+        `Bạn không được để trống ghế: ${edgeSeatsIssues.join(", ")}`
+      );
+      return;
+    }
+
     isChoosingScreen.value = false;
   } else {
     toast.warning("Vui lòng chọn ít nhất 1 ghế");
