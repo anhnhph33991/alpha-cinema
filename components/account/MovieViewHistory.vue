@@ -20,7 +20,7 @@
           <tr v-for="ticket in ticketStore.tickets" :key="ticket.id">
             <td>{{ ticket.id }}</td>
             <td>{{ ticket.movie.name }}</td>
-            <td>{{ ticket.cinema_id }}</td>
+            <td>{{ ticket.branch.name }} - {{ ticket.cinema.name }}</td>
             <td>{{ ticket.showtime.start_time }}</td>
             <td>
               {{

@@ -2,9 +2,20 @@
   <div class="container mt-4">
     <h4 class="text-custom fw-bold">TỔNG QUAN</h4>
     <div class="mb-4">
-      <p>Điểm đã tích lũy <span class="fw-bold">{{ point?.user?.point || 0 }} điểm</span></p>
-      <p>Điểm đã sử dụng <span class="fw-bold">{{ totalUsedPoints }} điểm</span></p>
-      <p>Điểm hiện có <span class="fw-bold">{{ remainingPoints }} điểm</span></p>
+      <p>
+        Điểm đã tích lũy :
+        <span v-if="point" class="fw-bold"
+          >{{ totalPointsUsed + point.user.point }} điểm</span
+        >
+      </p>
+      <p>
+        Điểm đã sử dụng :
+        <span class="fw-bold">{{ totalPointsUsed }} điểm</span>
+      </p>
+      <p>
+        Điểm hiện có :
+        <span v-if="point" class="fw-bold">{{ point.user.point }} điểm</span>
+      </p>
     </div>
 
     <h4 class="text-custom fw-bold">LỊCH SỬ ĐIỂM</h4>
@@ -18,12 +29,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(history, index) in historyPoints" :key="index">
-            <td>{{ formatDate(history.created_at) }}</td>
-            <td :class="{'text-success fw-bold': history.point > 0, 'text-danger fw-bold': history.point < 0}">
-              {{ history.point > 0 ? `+ ${history.point}` : history.point }}
+          <tr v-for="(item, index) in pointHistory" :key="index">
+            <td>{{new Date(item.date).toLocaleString("vi-VN") }}</td>
+            <td>{{ item.description }}</td>
+            <td :class="item.points < 0 ? 'text-danger' : 'text-success'">
+              {{ item.points }}
             </td>
-            <td>{{ history.description }}</td>
           </tr>
         </tbody>
       </table>
@@ -32,53 +43,42 @@
 </template>
 
   <script setup>
-  import { onMounted} from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
-import {fetchPoint} from "@/services/account.js";
+import { fetchRank, fetchPointHistory } from "@/services/account.js";
+import { useTicketStore } from "@/stores/ticket";
 
+const ticketStore = useTicketStore();
 const authStore = useAuthStore();
-const point = ref(null)
+const point = ref(null);
+const pointHistory = ref([])
+const totalPointsUsed = computed(() => {
+  return ticketStore.tickets.reduce(
+    (total, ticket) => total + Number(ticket.point_use || 0),
+    0
+  );
+});
+
 onMounted(async () => {
   if (authStore.isLogin) {
-    const data = await fetchPoint();
-    console.log("📌 API Response:", data); // Kiểm tra dữ liệu
+    const data = await fetchRank();
+    await ticketStore.loadTickets(); // Chờ load dữ liệu trước khi tính toán
+    pointHistory.value = await fetchPointHistory();
+    console.log(" API Response fetchRank:", data);
+    // console.log("Dữ liệu tickets:", ticketStore.tickets); // Kiểm tra dữ liệu ticketStore
+
     if (data) {
       point.value = data;
-      console.log("gias trij veef :",point.value);
-      
+      // console.log("Giá trị rank:", point.value);
+      // console.log("Tổng điểm sử dụng:", totalPointsUsed.value);
     }
-  
   }
-  
 });
-
-// Lấy danh sách lịch sử điểm từ API
-const historyPoints = computed(() => {
-  return point.value?.["history-point"] || []; // Mảng lịch sử điểm
-});
-
-// Tính tổng điểm đã sử dụng
-const totalUsedPoints = computed(() => {
-  return historyPoints.value.reduce((sum, history) => sum + history.point, 0);
-});
-
-// Tính điểm hiện có
-const remainingPoints = computed(() => {
-  return (point.value?.user?.point || 0) - totalUsedPoints.value;
-});
-
-// Định dạng ngày từ `created_at`
-const formatDate = (date) => {
-  if (!date) return "N/A";
-  const d = new Date(date);
-  return d.toLocaleDateString("vi-VN") + " " + d.toLocaleTimeString("vi-VN");
-};
-  </script>
+</script>
   
   <style>
-
-  .text-custom {
-  color: #043C4D;
-  }
-  </style>
+.text-custom {
+  color: #043c4d;
+}
+</style>
   

@@ -2,10 +2,12 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { useAuthStore } from "@/stores/auth";
-// import { accountStore } from "@/stores/account";
-import {fetchRank ,fetchPoint} from "@/services/account.js";
+import {fetchRank } from "@/services/account.js";
+import { useTicketStore } from "@/stores/ticket";
+
 
 const authStore = useAuthStore();
+const ticketStore = useTicketStore();
 const account = ref(null);
 const nextRank = ref(null);
 const progressPercentage = computed(() => {
@@ -14,11 +16,16 @@ const progressPercentage = computed(() => {
   const targetAmount = nextRank.value.total_spent;
   return Math.min((currentAmount / targetAmount) * 100, 100);
 });
-
+const totalPointsUsed = computed(() => {
+  return ticketStore.tickets.reduce(
+    (total, ticket) => total + Number(ticket.point_use || 0),
+    0
+  );
+});
 onMounted(async () => {
   if (authStore.isLogin) {
     const data = await fetchRank();
-    
+    await ticketStore.loadTickets(); 
     console.log("📌 API Response:", data); // Kiểm tra dữ liệu
 
     if (data) {
@@ -41,7 +48,7 @@ onMounted(async () => {
             <th>Hạng Thẻ</th>
             <th>Ngày Kích Hoạt</th>
             <th>Tổng Chi Tiêu</th>
-            <!-- <th>Điểm Tích Lũy</th> -->
+            <th>Điểm Tích Lũy</th>
             <th>Điểm Đã Tiêu</th>
             <th>Điểm Hiện có</th>
           </tr>
@@ -52,8 +59,8 @@ onMounted(async () => {
             <td>{{ new Date(account.user.created_at).toLocaleString("vi-VN") }}</td> 
 
             <td>{{ account.user.total_amount.toLocaleString() }} đ</td>
-            <td>{{ account.rank.feedback_percentage * account.user.total_amount.toLocaleString()  }} Điểm </td>
-            <td>điểm trong lịch sử </td>
+            <td>{{ totalPointsUsed + account.user.point }} Điểm </td>
+            <td>{{ totalPointsUsed }} Điểm </td>
             <td>{{ account.user.point }} Điểm </td>
           </tr>
         </tbody>
