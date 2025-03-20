@@ -18,9 +18,9 @@ export const useMovieStore = defineStore("movie", () => {
   const currentUserId = useAuthStore().user.id || null;
   const seatSelected = ref([]);
 
-  const fetchMovies = async () => {
+  const fetchMovies = async (branchId = "", cinemId = "") => {
     try {
-      movies.value = await fetchMoviesService();
+      movies.value = await fetchMoviesService(branchId, cinemId);
       // console.log(movies.value);
     } catch (error) {
       toast.error("call api lỗi");

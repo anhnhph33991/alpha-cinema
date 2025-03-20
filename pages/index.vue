@@ -204,7 +204,10 @@ const handleCancel = () => {
 };
 
 onMounted(async () => {
-  movieStore.fetchMovies();
+  movieStore.fetchMovies(
+    selectCinemaBranch.value.branch_id,
+    selectCinemaBranch.value.cinema_id
+  );
 
   // if (!dataSelectCity.value) {
   //   openModal.value = true;

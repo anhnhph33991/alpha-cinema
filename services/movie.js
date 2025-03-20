@@ -1,8 +1,10 @@
-export const fetchMoviesService = async () => {
+export const fetchMoviesService = async (branchId = "", cinemId = "") => {
   const { $axios } = useNuxtApp();
 
   try {
-    const response = await $axios.get("/v1/listMovies");
+    const response = await $axios.get("/v1/listMovies", {
+      params: { branchId: `${branchId}`, cinemId: `${cinemId}` },
+    });
 
     if (!response) {
       throw new Error("Invalid response");
