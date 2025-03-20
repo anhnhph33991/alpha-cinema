@@ -217,8 +217,8 @@ watch(
 
 onMounted(async () => {
   movieStore.fetchMovies(
-    selectCinemaBranch.value.branch_id,
-    selectCinemaBranch.value.cinema_id
+    selectCinemaBranch.value?.branch_id,
+    selectCinemaBranch.value?.cinema_id
   );
 
   // if (!dataSelectCity.value) {
