@@ -203,6 +203,18 @@ const handleCancel = () => {
   }
 };
 
+// watch(selectCinemaBranch, fetchMovies, { deep: true });
+watch(
+  selectCinemaBranch,
+  async (newData, oldData) => {
+    if (newData) {
+      console.log("new data");
+      await movieStore.fetchMovies(newData.branch_id, newData.cinema_id);
+    }
+  },
+  { deep: true }
+);
+
 onMounted(async () => {
   movieStore.fetchMovies(
     selectCinemaBranch.value.branch_id,
