@@ -131,6 +131,8 @@ const value = ref([]);
 const selectedBranchId = ref(null);
 const selectedCinemaId = ref(null);
 
+const selectCinemaBranch = useCookie("selectCinemaBranch");
+
 const props = defineProps({
   isActive: {
     type: Boolean,
@@ -174,6 +176,16 @@ const handleChangeCinema = (newValue) => {
     return;
   }
 
+  const result = {
+    branch_id: newValue[0],
+    cinema_id: newValue[1],
+  };
+
+  selectCinemaBranch.value = result;
+
+  console.log("select value new");
+  console.log(result);
+
   value.value = newValue;
   [selectedBranchId.value, selectedCinemaId.value] = newValue;
 };
@@ -198,8 +210,6 @@ const handleChangeCinema = (newValue) => {
 //   },
 //   { immediate: true }
 // );
-
-const selectCinemaBranch = useCookie("selectCinemaBranch");
 
 watch(
   selectCinemaBranch,
