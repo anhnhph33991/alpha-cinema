@@ -178,22 +178,40 @@ const handleChangeCinema = (newValue) => {
   [selectedBranchId.value, selectedCinemaId.value] = newValue;
 };
 
+// watch(
+//   branchOptions,
+//   async (newOptions) => {
+//     if (!newOptions.length) return;
+
+//     const firstBranch = newOptions.find((branch) => branch.children.length > 0);
+//     if (firstBranch) {
+//       const firstCinema = firstBranch.children[0];
+
+//       value.value = [firstBranch.value, firstCinema.value];
+//       selectedBranchId.value = firstBranch.value;
+//       selectedCinemaId.value = firstCinema.value;
+
+//       await nextTick();
+
+//       console.log("Mặc định đã chọn:", value.value);
+//     }
+//   },
+//   { immediate: true }
+// );
+
+const selectCinemaBranch = useCookie("selectCinemaBranch");
+
 watch(
-  branchOptions,
-  async (newOptions) => {
-    if (!newOptions.length) return;
+  selectCinemaBranch,
+  (newValue) => {
+    if (newValue) {
+      console.log("data select moi");
+      console.log(newValue);
 
-    const firstBranch = newOptions.find((branch) => branch.children.length > 0);
-    if (firstBranch) {
-      const firstCinema = firstBranch.children[0];
+      value.value = [newValue.branch_id, newValue.cinema_id];
 
-      value.value = [firstBranch.value, firstCinema.value];
-      selectedBranchId.value = firstBranch.value;
-      selectedCinemaId.value = firstCinema.value;
-
-      await nextTick();
-
-      console.log("Mặc định đã chọn:", value.value);
+      selectedBranchId.value = newValue.branch_id;
+      selectedCinemaId.value = newValue.cinema_id;
     }
   },
   { immediate: true }
