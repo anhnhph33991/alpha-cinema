@@ -904,8 +904,6 @@ let selectedIndexes = [];
 
 const handleChooseSeat = async (seat) => {
   const allSeats = movieStore.showtime.data.seatMap;
-  console.log(allSeats);
-  return;
   
   // 1️⃣ Lấy tất cả ghế trong hàng ghế mà seat đang thuộc về
   const rowSeats = allSeats[seat.coordinates_y];
