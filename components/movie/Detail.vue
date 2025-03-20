@@ -813,7 +813,7 @@
             :tab="formatDate(date)"
           >
             <div class="h-screen">
-              <div class="d-flex gap-1">
+              <div class="d-flex gap-1 flex-wrap">
                 <button
                   v-for="(showtime, index) in items"
                   :key="index"
