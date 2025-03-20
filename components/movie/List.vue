@@ -204,7 +204,7 @@
                   :tab="formatDate(date)"
                 >
                   <div class="tab-content">
-                    <div class="d-flex gap-1 al-tab-list">
+                    <div class="d-flex gap-1 al-tab-list flex-wrap">
                       <button
                         v-for="(showtime, index) in items"
                         :key="index"
