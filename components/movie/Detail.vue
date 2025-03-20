@@ -801,17 +801,6 @@
 
     <div class="w-100">
       <div class="container">
-        <!-- <a-tabs
-          v-model="activeKey"
-          :default-active-key="'1'"
-          :style="{ height: '200px' }"
-          @tabScroll="callback"
-        >
-          <a-tab-pane v-for="i in 20" :key="i" :tab="`Tab-${i}`">
-            <div class="h-screen">Content of tab {{ i }}</div>
-          </a-tab-pane>
-        </a-tabs> -->
-
         <a-tabs
           v-model="activeKey"
           :default-active-key="'1'"
