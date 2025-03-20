@@ -119,7 +119,7 @@
                   :to="{ name: 'movies-slug', params: { slug: movie.slug } }"
                 >
                   <img
-                    class="img-responsive border-radius-20"
+                    class="img-responsive border-radius-20 img-movie-response"
                     :alt="movie.name"
                     :src="formattedImage(movie.img_thumbnail)"
                   />

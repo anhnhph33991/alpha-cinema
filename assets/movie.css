@@ -25,6 +25,11 @@
     height: auto;
 }
 
+.img-movie-response {
+    width: 100%;
+    height: 380px
+}
+
 .sticker {
     position: absolute;
     top: 0;
