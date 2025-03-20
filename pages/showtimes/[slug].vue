@@ -1095,7 +1095,7 @@ const checkSoleSeats = computed(() => {
       if (selectedIndexes[i + 1] - selectedIndexes[i] === 2) {
         const emptyIndex = selectedIndexes[i] + 1;
         if (!movieStore.isSeatSelected(seats[emptyIndex])) {
-          issueSeats.push(`${row}${seats[emptyIndex].id}`);
+          issueSeats.push(`${row}${seats[emptyIndex].coordinates_x}`);
         }
       }
     }
