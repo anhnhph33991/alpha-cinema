@@ -32,9 +32,13 @@ import { useMovieStore } from "~/stores/movie";
 
 const movieStore = useMovieStore();
 const tabActive = ref("2");
+const selectCinemaBranch = useCookie("selectCinemaBranch");
 
 onMounted(async () => {
-  movieStore.fetchMovies();
+  movieStore.fetchMovies(
+    selectCinemaBranch.value?.branch_id,
+    selectCinemaBranch.value?.cinema_id
+  );
 });
 </script>
 
