@@ -35,7 +35,7 @@ import Voucher from "~/components/account/Voucher.vue";
 import MovieViewHistory from "~/components/account/MovieViewHistory.vue";
 import Point from "~/components/account/Point.vue";
 definePageMeta({
-  // middleware: ["auth"],
+  middleware: ["auth"],
 });
 
 const authStore = useAuthStore();
