@@ -37,9 +37,13 @@ export const useMovieStore = defineStore("movie", () => {
     }
   };
 
-  const fetchShowTimeBySlug = async (slug) => {
+  const fetchShowTimeBySlug = async (slug, branchId = "", cinemId = "") => {
     try {
-      showtime.value = await fetchShowTimeBySlugService(slug);
+      showtime.value = await fetchShowTimeBySlugService(
+        slug,
+        branchId,
+        cinemId
+      );
       matrixColume.value = showtime.value.data.showTime.room.matrix_colume;
 
       // console.log(showtime.value);
@@ -51,11 +55,16 @@ export const useMovieStore = defineStore("movie", () => {
       // console.log("matrixColume");
       // console.log(matrixColume.value);
 
-      console.log(showtime.value);
+      // console.log(showtime.value);
 
       filterSeatsByUserId(showtime.value.data.seatMapRegular, currentUserId);
     } catch (error) {
-      toast.error("call api lỗi");
+      if (error?.error && error.error.code == 404) {
+        navigateTo("/");
+        console.log(error);
+      }
+
+      // toast.error("call api lỗi");
     }
   };
 

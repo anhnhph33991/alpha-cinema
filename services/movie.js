@@ -36,11 +36,17 @@ export const fetchMovieService = async (slug, branchId = "", cinemId = "") => {
 
 // lấy show time bằng slug
 
-export const fetchShowTimeBySlugService = async (slug) => {
+export const fetchShowTimeBySlugService = async (
+  slug,
+  branchId = "",
+  cinemId = ""
+) => {
   const { $axios } = useNuxtApp();
 
   try {
-    const response = await $axios.get(`/v1/${slug}/showtimeDetail`);
+    const response = await $axios.get(`/v1/${slug}/showtimeDetail`, {
+      params: { branchId: `${branchId}`, cinemId: `${cinemId}` },
+    });
 
     if (!response) {
       throw new Error("Invalid response");

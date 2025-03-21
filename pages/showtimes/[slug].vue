@@ -1065,6 +1065,8 @@ const isAlphaVoucherOpen = ref(false);
 const isAlphaPointOpen = ref(false);
 const selectedPayment = ref(null);
 
+const selectCinemaBranch = useCookie("selectCinemaBranch");
+
 /**
  * Ngăn chặn spam click ghế
  */
@@ -1483,7 +1485,11 @@ watch(
 const promiseAllApi = async () => {
   try {
     await Promise.all([
-      movieStore.fetchShowTimeBySlug(slug.value),
+      movieStore.fetchShowTimeBySlug(
+        slug.value,
+        selectCinemaBranch.value?.branch_id,
+        selectCinemaBranch.value?.cinema_id
+      ),
       foodStore.fetchFoods(),
       foodStore.fetchFoodCombo(),
     ]);
