@@ -142,6 +142,8 @@ const mode = ref("top");
 const activeKey = ref(null); // Để null để cập nhật sau
 const showtimes = computed(() => movieStore.movie?.data?.showtimes || {});
 
+const selectCinemaBranch = useCookie("selectCinemaBranch");
+
 /**
  * Data active tab
  */
@@ -171,7 +173,11 @@ const handleCancel = () => {
 // Lắng nghe movieSelected thay đổi để fetch movie details
 watchEffect(async () => {
   if (movieSelected.value) {
-    await movieStore.fetchMovie(movieSelected.value.slug);
+    await movieStore.fetchMovie(
+      movieSelected.value.slug,
+      selectCinemaBranch.value?.branch_id,
+      selectCinemaBranch.value?.cinema_id
+    );
   }
 });
 

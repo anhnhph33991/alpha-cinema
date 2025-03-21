@@ -27,9 +27,9 @@ export const useMovieStore = defineStore("movie", () => {
     }
   };
 
-  const fetchMovie = async (slug) => {
+  const fetchMovie = async (slug, branchId = "", cinemId = "") => {
     try {
-      movie.value = await fetchMovieService(slug);
+      movie.value = await fetchMovieService(slug, branchId, cinemId);
 
       // console.log(movie.value);
     } catch (error) {
