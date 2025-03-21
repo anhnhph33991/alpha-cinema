@@ -31,7 +31,7 @@ export default defineNuxtConfig({
         { name: 'keywords', content: 'ticket, booking, online' },
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/theme/img/favicon.png' },
+        { rel: 'icon', type: 'image/x-icon', href: '/logo-alphacinema.svg' },
       ]
     }
   },
