@@ -25,11 +25,13 @@
             <td>
               {{
                 ticket.ticket_seats
-                  ? ticket.ticket_seats.map(seat => seat.name).join(", ")
+                  ? ticket.ticket_seats.map((seat) => seat.seat_name).join(", ")
                   : "Chưa đặt"
               }}
             </td>
-            <td>{{ticket.ticket_foods || ticket.ticket_foods || "Không có" }}</td>
+            <td>
+              {{ ticket.ticket_foods || ticket.ticket_foods || "Không có" }}
+            </td>
             <td>
               {{ new Date(ticket.created_at).toLocaleDateString("vi-VN") }}
             </td>
@@ -42,18 +44,14 @@
     </div>
   </div>
 </template>
- 
-  
-  <style>
+
+<style>
 .text-custom {
   color: #043c4d;
 }
 </style>
-  
 
-
-  
-  <script setup>
+<script setup>
 import { onMounted } from "vue";
 import { useTicketStore } from "@/stores/ticket";
 import { useAuthStore } from "@/stores/auth";
@@ -67,4 +65,3 @@ onMounted(() => {
   }
 });
 </script>
-  

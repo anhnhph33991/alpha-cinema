@@ -1,10 +1,8 @@
-
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { useAuthStore } from "@/stores/auth";
-import {fetchRank } from "@/services/account.js";
+import { fetchRank } from "@/services/account.js";
 import { useTicketStore } from "@/stores/ticket";
-
 
 const authStore = useAuthStore();
 const ticketStore = useTicketStore();
@@ -25,7 +23,7 @@ const totalPointsUsed = computed(() => {
 onMounted(async () => {
   if (authStore.isLogin) {
     const data = await fetchRank();
-    await ticketStore.loadTickets(); 
+    await ticketStore.loadTickets();
     console.log("📌 API Response:", data); // Kiểm tra dữ liệu
 
     if (data) {
@@ -36,7 +34,6 @@ onMounted(async () => {
   }
 });
 </script>
-
 
 <template>
   <div class="container-wrapper">
@@ -56,12 +53,14 @@ onMounted(async () => {
         <tbody v-if="account">
           <tr>
             <td>{{ account.rank.name }}</td>
-            <td>{{ new Date(account.user.created_at).toLocaleString("vi-VN") }}</td> 
+            <td>
+              {{ new Date(account.user.created_at).toLocaleString("vi-VN") }}
+            </td>
 
             <td>{{ account.user.total_amount.toLocaleString() }} đ</td>
-            <td>{{ totalPointsUsed + account.user.point }} Điểm </td>
-            <td>{{ totalPointsUsed }} Điểm </td>
-            <td>{{ account.user.point }} Điểm </td>
+            <td>{{ totalPointsUsed + account.user.point }} Điểm</td>
+            <td>{{ totalPointsUsed }} Điểm</td>
+            <td>{{ account.user.point }} Điểm</td>
           </tr>
         </tbody>
       </table>
@@ -71,14 +70,30 @@ onMounted(async () => {
           Bạn cần tích lũy thêm
           <strong>
             {{
-              (nextRank.total_spent - account.user.total_amount).toLocaleString()
-            }} VND
+              (
+                nextRank.total_spent - account.user.total_amount
+              ).toLocaleString()
+            }}
+            VND
           </strong>
           để nâng hạng <strong>{{ nextRank.name }}</strong>
         </p>
         <div class="progress-bar-wrapper">
-          <div class="progress-bar" :style="{ width: progressPercentage + '%' }"></div>
+          <div
+            class="progress-bar"
+            :style="{ width: progressPercentage + '%' }"
+          ></div>
         </div>
+
+        <!-- <a-progress
+          :stroke-color="{
+            '0%': '#108ee9',
+            '100%': '#87d068',
+          }"
+          :percent="progressPercentage"
+          :format="() => ''"
+        /> -->
+
         <div class="progress-mark-container">
           <div class="progress-mark start-mark">
             {{ account.rank.total_spent.toLocaleString() }} đ
@@ -94,10 +109,8 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-  
 
-  
-  <style scoped>
+<style scoped>
 .container-wrapper {
   display: flex;
   justify-content: center;
@@ -192,4 +205,3 @@ p {
   margin-right: 0;
 }
 </style>
-  
