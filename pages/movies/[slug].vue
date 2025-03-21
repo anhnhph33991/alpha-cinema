@@ -19,6 +19,7 @@ import { useMovieStore } from "~/stores/movie";
 const movieStore = useMovieStore();
 const route = useRoute();
 const slug = computed(() => route.params.slug);
+const selectCinemaBranch = useCookie("selectCinemaBranch");
 
 const loadMovie = () => {
   if (
@@ -26,7 +27,11 @@ const loadMovie = () => {
     slug.value !== movieStore.movie.data.movie?.slug
   ) {
     movieStore.movie = null;
-    movieStore.fetchMovie(slug.value);
+    movieStore.fetchMovie(
+      slug.value,
+      selectCinemaBranch.value?.branch_id,
+      selectCinemaBranch.value?.cinema_id
+    );
   }
 };
 
