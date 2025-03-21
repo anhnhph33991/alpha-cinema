@@ -57,6 +57,7 @@
         <div class="branch-dropdown d-none d-xl-block">
           <ClientOnly>
             <a-cascader
+              v-if="branchOptions.length > 0"
               :value="value"
               :options="branchOptions"
               expand-trigger="hover"
