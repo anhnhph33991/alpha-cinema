@@ -1,109 +1,4 @@
 <template>
-  <!-- <section class="movie-section padding-top bg-two" v-if="movies.length > 0">
-    <div class="container">
-      <div class="row flex-wrap-reverse justify-content-center">
-        <div class="col-lg-12">
-          <div class="article-section padding-bottom">
-            <slot name="header" />
-            <div class="row mb-30-none">
-              <div
-                class="col-sm-6 col-lg-4"
-                v-for="(item, index) in movies"
-                :key="index"
-              >
-                <div class="movie-grid">
-                  <div class="movie-thumb c-thumb">
-                    <NuxtLink
-                      :to="{
-                        name: 'movies-slug',
-                        params: { slug: item.slug },
-                      }"
-                    >
-                      <img
-                        src="https://files.betacorp.vn/media%2fimages%2f2025%2f02%2f06%2fngt%2Dpayoff%2Dposter%2D400x633%2D154653%2D060225%2D20.jpg"
-                        alt="movie"
-                      />
-                    </NuxtLink>
-                  </div>
-                  <div class="movie-content">
-                    <h5 class="title m-0">
-                      <NuxtLink
-                        :to="{
-                          name: 'movies-slug',
-                          params: { slug: item.slug },
-                        }"
-                      >
-                        {{ item.name }}
-                      </NuxtLink>
-                    </h5>
-
-                    <ul class="movie-rating-percent">
-                      <li>
-                        <i class="fal fa-shopping-cart"></i>
-                        <span class="content">88.8k</span>
-                      </li>
-                      <li>
-                        <a-button type="primary" @click="showModal(item)">
-                          Open Modal
-                        </a-button>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <template v-if="movieStore.movie.data">
-      <a-modal
-        :open="open"
-        width="1000px"
-        centered
-        :title="movieStore.movie.data.movie.name"
-        @cancel="handleCancel"
-        :footer="null"
-      >
-        <div>
-          <div>
-            <a-tabs
-              v-model="activeKey"
-              :tab-position="mode"
-              :style="{ height: 'auto' }"
-              @tabScroll="callback"
-            >
-              <template v-if="Object.keys(showtimes).length">
-                <a-tab-pane
-                  v-for="(items, date) in showtimes"
-                  :key="date"
-                  :tab="formatDate(date)"
-                >
-                  <div class="tab-content">
-                    <div class="d-flex gap-1 al-tab-list">
-                      <a-button
-                        type="primary"
-                        v-for="(showtime, index) in items"
-                        :key="index"
-                        @click="navigateShowTime(showtime)"
-                      >
-                        {{ formatTime(showtime.start_time) }}
-                      </a-button>
-                    </div>
-                  </div>
-                </a-tab-pane>
-              </template>
-              <template v-else>
-                <p>Loading showtimes...</p>
-              </template>
-            </a-tabs>
-          </div>
-        </div>
-      </a-modal>
-    </template>
-  </section> -->
-
   <div v-if="movies.length > 0" class="container">
     <div class="row">
       <div
@@ -119,7 +14,7 @@
                   :to="{ name: 'movies-slug', params: { slug: movie.slug } }"
                 >
                   <img
-                    class="img-responsive border-radius-20"
+                    class="img-responsive border-radius-20 img-movie-response"
                     :alt="movie.name"
                     :src="formattedImage(movie.img_thumbnail)"
                   />
@@ -204,7 +99,7 @@
                   :tab="formatDate(date)"
                 >
                   <div class="tab-content">
-                    <div class="d-flex gap-1 al-tab-list">
+                    <div class="d-flex gap-1 al-tab-list flex-wrap">
                       <button
                         v-for="(showtime, index) in items"
                         :key="index"
@@ -247,6 +142,8 @@ const mode = ref("top");
 const activeKey = ref(null); // Để null để cập nhật sau
 const showtimes = computed(() => movieStore.movie?.data?.showtimes || {});
 
+const selectCinemaBranch = useCookie("selectCinemaBranch");
+
 /**
  * Data active tab
  */
@@ -276,7 +173,11 @@ const handleCancel = () => {
 // Lắng nghe movieSelected thay đổi để fetch movie details
 watchEffect(async () => {
   if (movieSelected.value) {
-    await movieStore.fetchMovie(movieSelected.value.slug);
+    await movieStore.fetchMovie(
+      movieSelected.value.slug,
+      selectCinemaBranch.value?.branch_id,
+      selectCinemaBranch.value?.cinema_id
+    );
   }
 });
 

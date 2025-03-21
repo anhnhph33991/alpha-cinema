@@ -9,8 +9,11 @@
 <script setup>
 import { Toaster } from "vue-sonner";
 import { useRankStore } from "~/stores/rank";
+const auth = useCookie("auth");
 
 onMounted(() => {
-  useRankStore().getRank();
+  if (auth.value && auth.value.isLogin && auth.value.user) {
+    useRankStore().getRank();
+  }
 });
 </script>

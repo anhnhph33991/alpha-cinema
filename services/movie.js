@@ -1,8 +1,10 @@
-export const fetchMoviesService = async () => {
+export const fetchMoviesService = async (branchId = "", cinemId = "") => {
   const { $axios } = useNuxtApp();
 
   try {
-    const response = await $axios.get("/v1/listMovies");
+    const response = await $axios.get("/v1/listMovies", {
+      params: { branchId: `${branchId}`, cinemId: `${cinemId}` },
+    });
 
     if (!response) {
       throw new Error("Invalid response");
@@ -14,11 +16,13 @@ export const fetchMoviesService = async () => {
   }
 };
 
-export const fetchMovieService = async (slug) => {
+export const fetchMovieService = async (slug, branchId = "", cinemId = "") => {
   const { $axios } = useNuxtApp();
 
   try {
-    const response = await $axios.get(`/v1/${slug}/movieShowTimes`);
+    const response = await $axios.get(`/v1/${slug}/movieShowTimes`, {
+      params: { branchId: `${branchId}`, cinemId: `${cinemId}` },
+    });
 
     if (!response) {
       throw new Error("Invalid response");
@@ -32,11 +36,17 @@ export const fetchMovieService = async (slug) => {
 
 // lấy show time bằng slug
 
-export const fetchShowTimeBySlugService = async (slug) => {
+export const fetchShowTimeBySlugService = async (
+  slug,
+  branchId = "",
+  cinemId = ""
+) => {
   const { $axios } = useNuxtApp();
 
   try {
-    const response = await $axios.get(`/v1/${slug}/showtimeDetail`);
+    const response = await $axios.get(`/v1/${slug}/showtimeDetail`, {
+      params: { branchId: `${branchId}`, cinemId: `${cinemId}` },
+    });
 
     if (!response) {
       throw new Error("Invalid response");

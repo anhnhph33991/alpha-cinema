@@ -32,9 +32,24 @@ import { useMovieStore } from "~/stores/movie";
 
 const movieStore = useMovieStore();
 const tabActive = ref("2");
+const selectCinemaBranch = useCookie("selectCinemaBranch");
+
+watch(
+  selectCinemaBranch,
+  async (newData, oldData) => {
+    if (newData) {
+      console.log("new data");
+      await movieStore.fetchMovies(newData.branch_id, newData.cinema_id);
+    }
+  },
+  { deep: true }
+);
 
 onMounted(async () => {
-  movieStore.fetchMovies();
+  movieStore.fetchMovies(
+    selectCinemaBranch.value?.branch_id,
+    selectCinemaBranch.value?.cinema_id
+  );
 });
 </script>
 

@@ -57,6 +57,7 @@
         <div class="branch-dropdown d-none d-xl-block">
           <ClientOnly>
             <a-cascader
+              v-if="branchOptions.length > 0"
               :value="value"
               :options="branchOptions"
               expand-trigger="hover"
@@ -131,6 +132,8 @@ const value = ref([]);
 const selectedBranchId = ref(null);
 const selectedCinemaId = ref(null);
 
+const selectCinemaBranch = useCookie("selectCinemaBranch");
+
 const props = defineProps({
   isActive: {
     type: Boolean,
@@ -174,26 +177,52 @@ const handleChangeCinema = (newValue) => {
     return;
   }
 
+  const result = {
+    branch_id: newValue[0],
+    cinema_id: newValue[1],
+  };
+
+  selectCinemaBranch.value = result;
+
+  console.log("select value new");
+  console.log(result);
+
   value.value = newValue;
   [selectedBranchId.value, selectedCinemaId.value] = newValue;
 };
 
+// watch(
+//   branchOptions,
+//   async (newOptions) => {
+//     if (!newOptions.length) return;
+
+//     const firstBranch = newOptions.find((branch) => branch.children.length > 0);
+//     if (firstBranch) {
+//       const firstCinema = firstBranch.children[0];
+
+//       value.value = [firstBranch.value, firstCinema.value];
+//       selectedBranchId.value = firstBranch.value;
+//       selectedCinemaId.value = firstCinema.value;
+
+//       await nextTick();
+
+//       console.log("Mặc định đã chọn:", value.value);
+//     }
+//   },
+//   { immediate: true }
+// );
+
 watch(
-  branchOptions,
-  async (newOptions) => {
-    if (!newOptions.length) return;
+  selectCinemaBranch,
+  (newValue) => {
+    if (newValue) {
+      console.log("data select moi");
+      console.log(newValue);
 
-    const firstBranch = newOptions.find((branch) => branch.children.length > 0);
-    if (firstBranch) {
-      const firstCinema = firstBranch.children[0];
+      value.value = [newValue.branch_id, newValue.cinema_id];
 
-      value.value = [firstBranch.value, firstCinema.value];
-      selectedBranchId.value = firstBranch.value;
-      selectedCinemaId.value = firstCinema.value;
-
-      await nextTick();
-
-      console.log("Mặc định đã chọn:", value.value);
+      selectedBranchId.value = newValue.branch_id;
+      selectedCinemaId.value = newValue.cinema_id;
     }
   },
   { immediate: true }

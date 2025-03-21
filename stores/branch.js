@@ -14,5 +14,33 @@ export const useBranchStore = defineStore("branch", () => {
     }
   };
 
-  return { branchs, listBranch };
+  // const convertOptionBranch = () => {
+  //   return branchs.value.map((branch) => ({
+  //     value: branch.id,
+  //     label: branch.name,
+  //   }));
+  // };
+
+  const convertOptionBranch = () => {
+    return branchs.value
+      .filter(
+        (branch) => Array.isArray(branch.cinemas) && branch.cinemas.length > 0
+      )
+      .map((branch) => ({
+        value: branch.id,
+        label: branch.name,
+      }));
+  };
+
+  const convertOptionCinema = (branchId) => {
+    const branch = branchs.value.find((branch) => branch.id === branchId);
+    return (
+      branch?.cinemas?.map((cinema) => ({
+        value: cinema.id,
+        label: cinema.name,
+      })) || []
+    );
+  };
+
+  return { branchs, listBranch, convertOptionBranch, convertOptionCinema };
 });
