@@ -216,8 +216,8 @@ watch(
   selectCinemaBranch,
   (newValue) => {
     if (newValue) {
-      console.log("data select moi");
-      console.log(newValue);
+      // console.log("data select moi");
+      // console.log(newValue);
 
       value.value = [newValue.branch_id, newValue.cinema_id];
 

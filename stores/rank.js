@@ -1,4 +1,5 @@
 import { getRankService } from "~/services/auth";
+import { useAuthStore } from "@/stores/auth";
 
 export const useRankStore = defineStore(
   "rank",
@@ -8,10 +9,12 @@ export const useRankStore = defineStore(
     const getRank = async () => {
       try {
         const response = await getRankService();
-        rankByUser.value = response.data.rank;
-        console.log("rank");
 
-        console.log(response.data.rank);
+        console.log(response);
+
+        rankByUser.value = response.rank;
+        useAuthStore().user.point = response.user.point;
+        useAuthStore().user.total_amount = response.user.total_amount;
       } catch (error) {
         console.log(error);
       }
