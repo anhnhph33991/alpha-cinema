@@ -1612,39 +1612,6 @@ const onFinish = () => {
   navigateTo("/");
 };
 
-// const countdownDeadline = useCookie("countdownDeadline", {
-//   maxAge: 600,
-//   default: () => Date.now() + 1000 * 60 * 10,
-// });
-
-// const now = Date.now();
-
-// const deadline = computed(() => {
-//   return countdownDeadline.value > now
-//     ? countdownDeadline.value
-//     : now + 1000 * 60 * 10;
-// });
-
-//****
-//
-//
-//
-//
-//  */
-
-// const countdownDeadline = useCookie(`countdownDeadline-${slug.value}`, {
-//   maxAge: 600,
-//   default: () => Date.now() + 1000 * 60 * 10,
-// });
-
-// const now = Date.now();
-
-// const deadline = computed(() => {
-//   return countdownDeadline.value > now
-//     ? countdownDeadline.value
-//     : now + 1000 * 60 * 10;
-// });
-
 const countdownDeadline = useCookie(`countdownDeadline-${slug.value}`, {
   maxAge: 600,
   default: () => null, // Ban đầu đặt là null
