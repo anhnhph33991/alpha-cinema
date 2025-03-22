@@ -1292,8 +1292,12 @@ const handleNextOrder = async () => {
     // console.log(dataTicket);
     // console.log("voucher");
     // console.log(useVoucher.code);
-    console.log("point");
-    console.log(useVoucher.point_after);
+
+    if (useVoucher.point <= 0 || useVoucher.point == "") {
+      console.log("change point after buy");
+
+      useVoucher.point_after = authStore?.user.point;
+    }
 
     paymentStore.paymentMomo(
       selectedPayment.value,
@@ -1744,6 +1748,8 @@ const handleApplyPoint = () => {
 
   console.log("rank user");
   console.log(rankStore.rankByUser);
+  console.log("poin apply");
+  console.log(useVoucher.point);
 
   // priceAll.value.discountAmount = discountAmount.value
 };

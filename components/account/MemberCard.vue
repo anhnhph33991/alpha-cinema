@@ -78,21 +78,21 @@ onMounted(async () => {
           </strong>
           để nâng hạng <strong>{{ nextRank.name }}</strong>
         </p>
-        <div class="progress-bar-wrapper">
+        <!-- <div class="progress-bar-wrapper">
           <div
             class="progress-bar"
             :style="{ width: progressPercentage + '%' }"
           ></div>
-        </div>
+        </div> -->
 
-        <!-- <a-progress
+        <a-progress
           :stroke-color="{
             '0%': '#108ee9',
             '100%': '#87d068',
           }"
           :percent="progressPercentage"
           :format="() => ''"
-        /> -->
+        />
 
         <div class="progress-mark-container">
           <div class="progress-mark start-mark">
