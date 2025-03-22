@@ -1042,18 +1042,11 @@ const activeKey = ref("1");
 /**
  * Image Vue
  */
-// const screen =
-//   "https://chieuphimquocgia.com.vn/_next/image?url=%2Fimages%2Fscreen.png&w=1920&q=75";
 const screen = "https://betacinemas.vn/Assets/global/img/booking/ic-screen.png";
-// const seatRegular = "/theme/img/movie/seat-1-booked.png";
 
-// import SeatRegular from "~/assets/seat-icon.svg";
-import SeatRegular from "~/assets/seat-regular.svg";
-import SeatSingle from "~/assets/chair (3).png";
-import SeatDouble from "~/assets/sofa.png";
-import SeatSelected from "~/assets/chair (4).png";
-import SeatSold from "~/assets/chair (3).png";
-import SeatHold from "~/assets/chair (3).png";
+import SeatRegular from "~/assets/images/seat_regular.svg";
+import SeatVip from "~/assets/images/seat_vip.svg";
+import SeatDouble from "~/assets/images/seat_double.svg";
 
 const btnRemove = "https://betacinemas.vn/Assets/global/img/booking/minus.png";
 const btnAdd = "https://betacinemas.vn/Assets/global/img/booking/plus.png";
