@@ -82,15 +82,6 @@
                                 <Sofa v-if="seat.type_seat_id == 3" />
 
                                 <Armchair v-else />
-
-                                <!-- <img v-if="seat.status === 'sold'" :src="SeatSold" alt="Ghế đã bán" class="seat-icon" />
-                                <img v-else-if="seat.status === 'hold'" :src="SeatHold" alt="Ghế đang giữ"
-                                  class="seat-icon" />
-                                <img v-else-if="seat.type_seat_id == 3" :src="SeatDouble" alt="Ghế đôi"
-                                  class="seat-icon" />
-                                <img v-else-if="movieStore.isSeatSelected(seat)" :src="SeatSelected" alt="Ghế đang chọn"
-                                  class="seat-icon" />
-                                <img v-else :src="SeatSingle" alt="Ghế đơn" class="seat-icon" /> -->
                               </div>
                             </div>
                           </div>
@@ -100,31 +91,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <hr /> -->
-
-              <!-- <div>
-                <div
-                  class="d-flex align-items-center align-content-center gap-2"
-                >
-                  <div v-if="seatNames.length > 0">
-                    <p>Các ghế đã chọn:</p>
-                  </div>
-
-                  <div>
-                    <p class="fw-bold">{{ seatNames.join(", ") }}</p>
-                  </div>
-                </div>
-
-                <div>
-                  <a-statistic-countdown
-                    :value="deadline"
-                    style="margin-right: 50px"
-                    @finish="onFinish"
-                    format="mm:ss"
-                  >
-                  </a-statistic-countdown>
-                </div>
-              </div> -->
             </div>
 
             <div
@@ -1134,19 +1100,6 @@ const checkEdgeSeats = computed(() => {
 });
 
 const handleChooseSeat = async (seat) => {
-  // console.log(seat);
-  // console.log("<<<>>>>");
-  // console.log(movieStore.seatSelected);
-
-  // const newStatus =
-  //   seat.status === "hold" && seat.user_id == currentUserId
-  //     ? "available"
-  //     : "hold";
-
-  // movieStore.applyRealTimeSeatChange(seat.id, newStatus, currentUserId);
-
-  // return;
-
   if (processingSeats.has(seat.id)) {
     toast.warning("Có dấu hiệu spam, vui lòng thử lại 🤬");
     return;
