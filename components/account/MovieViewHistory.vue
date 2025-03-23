@@ -25,7 +25,8 @@
             <td>
               {{
                 ticket.ticket_seats
-                  ? ticket.ticket_seats.map(seat => seat.name).join(", ")
+                  ? ticket.ticket_seats
+                  .map(seat => seat.seat_name).join(", ")
                   : "Chưa đặt"
               }}
             </td>

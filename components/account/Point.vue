@@ -5,7 +5,7 @@
       <p>
         Điểm đã tích lũy :
         <span v-if="point" class="fw-bold"
-          >{{ totalPointsUsed + point.user.point }} điểm</span
+          >{{ totalPointsUsed + authStore.user.point }} điểm</span
         >
       </p>
       <p>
@@ -14,7 +14,7 @@
       </p>
       <p>
         Điểm hiện có :
-        <span v-if="point" class="fw-bold">{{ point.user.point }} điểm</span>
+        <span v-if="point" class="fw-bold">{{ authStore.user.point }} điểm</span>
       </p>
     </div>
 
