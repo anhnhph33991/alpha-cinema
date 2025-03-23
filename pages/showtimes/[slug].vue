@@ -17,13 +17,17 @@
 
                     <div class="d-flex justify-content-center mb-4 mt-4">
                       <div class="col bg-color">
-                        <Armchair size="32" stroke-width="2" class="" />
+                        <SeatRegular style="width: 32px; height: 32px" />
                         <span class="note-seat-status-lable"> Ghế trống </span>
                       </div>
                       <div class="col">
-                        <Armchair
+                        <!-- <Armchair
                           size="32"
                           stroke-width="2"
+                          class="text-primary"
+                        /> -->
+                        <SeatRegular
+                          style="width: 32px; height: 32px"
                           class="text-primary"
                         />
                         <span class="note-seat-status-lable">
@@ -31,9 +35,13 @@
                         </span>
                       </div>
                       <div class="col">
-                        <Armchair
+                        <!-- <Armchair
                           size="32"
                           stroke-width="2"
+                          class="text-warning"
+                        /> -->
+                        <SeatRegular
+                          style="width: 32px; height: 32px"
                           class="text-warning"
                         />
                         <span class="note-seat-status-lable">
@@ -41,9 +49,13 @@
                         </span>
                       </div>
                       <div class="col">
-                        <Armchair
+                        <!-- <Armchair
                           size="32"
                           stroke-width="2"
+                          class="text-danger"
+                        /> -->
+                        <SeatRegular
+                          style="width: 32px; height: 32px"
                           class="text-danger"
                         />
                         <span class="note-seat-status-lable"> Ghế đã bán </span>
@@ -64,11 +76,17 @@
                                 .seatMap"
                               :key="rowName"
                             >
-                              <span class="row-label">{{ rowName }}</span>
+                              <!-- <span class="row-label">{{ rowName }}</span> -->
                               <div
                                 v-for="seat in row"
                                 :key="seat.id"
+                                @click="handleChooseSeat(seat)"
                                 :class="[
+                                  'seat',
+                                  { 'double-seat': seat.type_seat_id == 3 },
+                                ]"
+                              >
+                                <!-- :class="[
                                   'seat',
                                   movieStore.getSeatClass(seat),
                                   {
@@ -76,12 +94,57 @@
                                     hold: movieStore.isSeatHeldByOthers(seat),
                                     'double-seat': seat.type_seat_id == 3,
                                   },
-                                ]"
-                                @click="handleChooseSeat(seat)"
-                              >
-                                <Sofa v-if="seat.type_seat_id == 3" />
+                                ]" -->
 
-                                <Armchair v-else />
+                                <!-- <Sofa v-if="seat.type_seat_id == 3" />
+
+                                <Armchair v-else /> -->
+
+                                <template v-if="seat.type_seat_id == 1">
+                                  <SeatRegular
+                                    style="width: 32px; height: 32px"
+                                    :class="[
+                                      movieStore.getSeatClass(seat),
+                                      {
+                                        selected:
+                                          movieStore.isSeatSelected(seat),
+                                        hold: movieStore.isSeatHeldByOthers(
+                                          seat
+                                        ),
+                                      },
+                                    ]"
+                                  />
+                                </template>
+                                <template v-if="seat.type_seat_id == 2">
+                                  <SeatVip
+                                    style="width: 28px; height: 28px"
+                                    :class="[
+                                      movieStore.getSeatClass(seat),
+                                      {
+                                        selected:
+                                          movieStore.isSeatSelected(seat),
+                                        hold: movieStore.isSeatHeldByOthers(
+                                          seat
+                                        ),
+                                      },
+                                    ]"
+                                  />
+                                </template>
+                                <template v-if="seat.type_seat_id == 3">
+                                  <SeatDouble
+                                    style="width: 40px; height: 40px"
+                                    :class="[
+                                      movieStore.getSeatClass(seat),
+                                      {
+                                        selected:
+                                          movieStore.isSeatSelected(seat),
+                                        hold: movieStore.isSeatHeldByOthers(
+                                          seat
+                                        ),
+                                      },
+                                    ]"
+                                  />
+                                </template>
                               </div>
                             </div>
                           </div>
@@ -1341,9 +1404,23 @@ const handleNextOrder = async () => {
     // console.log(useVoucher.code);
 
     if (useVoucher.point <= 0 || useVoucher.point == "") {
-      console.log("change point after buy");
+      // console.log("change point after buy");
 
-      useVoucher.point_after = authStore?.user.point;
+      // useVoucher.point_after = authStore?.user.point;
+
+      useVoucher.point_after =
+        Number(authStore.user.point) - Number(useVoucher.point);
+
+      const feedbackPercentage =
+        Number(rankStore.rankByUser.feedback_percentage) || 0;
+      const payableAmount = Number(priceAll.value.payableAmount);
+
+      // Đảm bảo các giá trị là số trước khi nhân chia
+      const pointsToAdd = Math.floor(
+        (feedbackPercentage / 100) * payableAmount
+      );
+
+      useVoucher.point_after += pointsToAdd;
     }
 
     paymentStore.paymentMomo(
@@ -1822,18 +1899,18 @@ onMounted(() => {
 }
 
 .selected {
-  background-color: #007bff;
-  color: white;
+  /* background-color: #007bff; */
+  color: #007bff;
 }
 
 .sold {
-  background-color: red;
-  color: black;
+  /* background-color: red; */
+  color: red;
 }
 
 .hold {
-  background-color: #ffc107;
-  color: black;
+  /* background-color: #ffc107; */
+  color: #ffc107;
 }
 
 .text-white {
