@@ -92,7 +92,7 @@
               :style="{ height: 'auto' }"
               @tabScroll="callback"
             >
-              <template v-if="Object.keys(showtimes).length">
+              <!-- <template v-if="Object.keys(showtimes).length">
                 <a-tab-pane
                   v-for="(items, date) in showtimes"
                   :key="date"
@@ -111,7 +111,55 @@
                     </div>
                   </div>
                 </a-tab-pane>
+              </template> -->
+
+              <template v-if="Object.keys(movieStore.groupedShowtimes).length">
+                <a-tab-pane
+                  v-for="(rooms, date) in movieStore.groupedShowtimes"
+                  :key="date"
+                  :tab="formatDate(date)"
+                >
+                  <div class="tab-content">
+                    <!-- <div class="d-flex gap-1 al-tab-list flex-wrap">
+                      <button
+                        v-for="(showtime, roomName) in rooms"
+                        :key="roomName"
+                        @click="navigateShowTime(showtime)"
+                        class="btn btn-primary"
+                      >
+                        {{ formatTime(showtime.start_time) }}
+                      </button>
+                    </div> -->
+                    <div
+                      v-for="(items, roomName) in rooms"
+                      :key="roomName"
+                      class="mb-3"
+                    >
+                      <h6 class="room-title">{{ roomName }}</h6>
+                      <div class="d-flex gap-1 al-tab-list flex-wrap">
+                        <a-button
+                          type="primary"
+                          v-for="(showtime, index) in items"
+                          :key="index"
+                          @click="navigateShowTime(showtime)"
+                        >
+                          {{ formatTime(showtime.start_time) }}
+                        </a-button>
+
+                        <!-- <button
+                          v-for="(showtime, index) in items"
+                          :key="index"
+                          @click="navigateShowTime(showtime)"
+                          class="btn btn-primary"
+                        >
+                          {{ formatTime(showtime.start_time) }}
+                        </button> -->
+                      </div>
+                    </div>
+                  </div>
+                </a-tab-pane>
               </template>
+
               <template v-else>
                 <p>Không có data...</p>
               </template>
@@ -251,7 +299,7 @@ const formattedImage = (image) => {
   padding: 5px 25px;
   --bs-btn-border-radius: 0px;
   color: black;
-  background-color: #cccccc;
+  background-color: lightgray;
   --bs-btn-border-color: none;
 }
 

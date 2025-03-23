@@ -31,11 +31,35 @@ export const useMovieStore = defineStore("movie", () => {
     try {
       movie.value = await fetchMovieService(slug, branchId, cinemId);
 
-      // console.log(movie.value);
+      console.log(movie.value);
+      console.log("showtime convert");
+      console.log(groupedShowtimes.value);
     } catch (error) {
+      console.log(error);
+
       toast.error("call api lỗi");
     }
   };
+
+  const groupedShowtimes = computed(() => {
+    if (!movie.value || !movie.value.data || !movie.value.data.showtimes) {
+      return {}; // Trả về object rỗng nếu dữ liệu chưa sẵn sàng
+    }
+
+    const grouped = {};
+    Object.entries(movie.value.data.showtimes).forEach(
+      ([date, showtimeList]) => {
+        grouped[date] = showtimeList.reduce((acc, showtime) => {
+          if (!acc[showtime.name_room]) {
+            acc[showtime.name_room] = [];
+          }
+          acc[showtime.name_room].push(showtime);
+          return acc;
+        }, {});
+      }
+    );
+    return grouped;
+  });
 
   const fetchShowTimeBySlug = async (slug, branchId = "", cinemId = "") => {
     try {
@@ -177,5 +201,6 @@ export const useMovieStore = defineStore("movie", () => {
     getSeatClass,
     isSeatSelected,
     isSeatHeldByOthers,
+    groupedShowtimes,
   };
 });
