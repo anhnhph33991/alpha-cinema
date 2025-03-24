@@ -62,8 +62,8 @@ export default defineNuxtConfig({
     host: 'alphacinema.me',
     port: 3000, // Giữ port khác với Laravel (thường là 443)
     https: {
-      key: 'C:/laragon/etc/ssl/laragon.key', // Đường dẫn tới file key
-      cert: 'C:/laragon/etc/ssl/laragon.crt' // Đường dẫn tới file cert
+      key: 'G:/laragon/laragon/etc/ssl/laragon.key', // Đường dẫn tới file key
+      cert: 'G:/laragon/laragon/etc/ssl/laragon.crt' // Đường dẫn tới file cert
     }
   }
 })
