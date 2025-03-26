@@ -40,7 +40,9 @@
               <div class="col-md-12">
                 <p>
                   Chưa nhận được otp
-                  <a @click.prevent="handleResetOtp">Gửi lại mã otp</a>
+                  <a @click.prevent="handleResetOtp" class="al-btn-verify-otp"
+                    >Gửi lại mã otp</a
+                  >
                 </p>
               </div>
             </div>
@@ -71,11 +73,16 @@ const handleSubmit = () => {
 };
 
 const handleResetOtp = () => {
-  console.log("hehee");
+  console.log("Gửi lại mã otp");
 };
 </script>
 
 <style scoped>
+.al-btn-verify-otp {
+  color: #3db1f3;
+  cursor: pointer;
+}
+
 .overlay {
   position: absolute;
   width: 100%;
