@@ -12,7 +12,7 @@
       <div class="card">
         <div class="card-body">
           <div class="row">
-            <h2 class="title">Đăng Nhập</h2>
+            <h2 class="title">Quên Mật Khẩu</h2>
           </div>
 
           <form @submit.prevent="handleSubmit">
@@ -28,93 +28,27 @@
                   v-model="form.email"
                   autocomplete="off"
                 />
-              </div>
 
-              <div class="col-md-12 mb-3">
-                <label class="form-label">
-                  <span class="text-danger">*</span> Mật khẩu</label
+                <small
+                  v-if="useAuthStore().errors && useAuthStore().errors.email"
+                  class="text-danger"
                 >
-                <div class="input-group input-group-flat">
-                  <input
-                    type="password"
-                    class="form-control"
-                    placeholder="Mật khẩu"
-                    v-model="form.password"
-                    autocomplete="off"
-                  />
-                  <span class="input-group-text">
-                    <a
-                      class="link-secondary"
-                      data-bs-toggle="tooltip"
-                      aria-label="Show password"
-                      data-bs-original-title="Show password"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path
-                          stroke="none"
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        ></path>
-                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
-                        <path
-                          d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"
-                        ></path>
-                      </svg>
-                    </a>
-                  </span>
-                </div>
+                  {{ useAuthStore().errors.email }}
+                </small>
               </div>
             </div>
 
             <div class="form-footer">
-              <button type="submit" class="btn btn-danger btn-3">
-                Đăng Nhập
-              </button>
+              <button type="submit" class="btn btn-danger btn-3">Gửi</button>
             </div>
+
+            <!-- <div class="form-footer">
+              <button type="submit" class="btn btn-danger btn-3">
+                Xác Nhận
+              </button>
+            </div> -->
           </form>
         </div>
-
-        <div class="col">
-          <a
-            href="https://alphacinema.me/auth/google/redirect"
-            class="btn btn-google btn-2"
-            rel="noopener noreferrer"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-google"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"
-              />
-            </svg>
-            Tiếp tục với Google
-          </a>
-        </div>
-      </div>
-
-      <div class="text-center text-secondary mt-3">
-        Bạn chưa có tài khoản?
-        <NuxtLink :to="{ name: 'register' }">Đăng Ký</NuxtLink>
-      </div>
-
-      <div class="text-center text-secondary mt-3">
-        <NuxtLink :to="{ name: 'forgot-password' }">Quên mật khâu</NuxtLink>
       </div>
     </div>
   </div>
@@ -125,12 +59,10 @@ const emit = defineEmits(["submit-form"]);
 
 const form = ref({
   email: "",
-  password: "",
 });
 
 const handleSubmit = () => {
-  console.log(form.value);
-  emit("submit-form", { ...form.value });
+  emit("submit-form", form.value.email);
 };
 </script>
 

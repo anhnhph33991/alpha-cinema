@@ -1,5 +1,12 @@
 import { toast } from "vue-sonner";
-import { loginService, logoutService, registerService } from "~/services/auth";
+import {
+  loginService,
+  logoutService,
+  registerService,
+  resetPasswordService,
+  sendOtpService,
+  verifyOtpService,
+} from "~/services/auth";
 
 export const useAuthStore = defineStore(
   "auth",
@@ -22,6 +29,10 @@ export const useAuthStore = defineStore(
     const isLogin = ref(false);
     const router = useRouter();
     const isLoading = ref(false);
+    const errors = reactive({});
+    const resetPasswordCookie = useCookie("reset_password_cookie", {
+      maxAge: 300,
+    });
 
     /**
      * Xử lý login
@@ -83,13 +94,93 @@ export const useAuthStore = defineStore(
       }
     };
 
-    return { user, token, isLogin, login, register, logout, isLoading };
+    const sendOtp = async (email) => {
+      isLoading.value = true;
+      try {
+        const response = await sendOtpService(email);
+
+        console.log(response);
+
+        resetPasswordCookie.value = {
+          ...(resetPasswordCookie.value || {}),
+          email: email,
+        };
+
+        toast.success(response.message);
+        isLoading.value = false;
+      } catch (error) {
+        isLoading.value = false;
+
+        if (error && error.errors) {
+          errors.email = error.errors.email;
+        }
+
+        console.log(error);
+        toast.error("Có lỗi xảy ra");
+      }
+    };
+
+    const verifyOtp = async (data) => {
+      isLoading.value = true;
+      try {
+        const response = await verifyOtpService(data);
+
+        if (response.data) {
+          resetPasswordCookie.value = {
+            ...(resetPasswordCookie.value || {}),
+            verify_otp: response.data.verify_otp,
+            otp: data.otp,
+          };
+        }
+
+        console.log(response);
+
+        toast.success(`${response.message}`);
+
+        isLoading.value = false;
+      } catch (error) {
+        isLoading.value = false;
+
+        toast.error(`${error.error}`);
+
+        console.log(error);
+      }
+    };
+
+    const resetPassword = async (data) => {
+      try {
+        const response = await resetPasswordService(data);
+        toast.success(`${response.message}`);
+        console.log(response);
+
+        resetPasswordCookie.value = null;
+        navigateTo("/login");
+      } catch (error) {
+        console.log(error);
+        // toast.error('Có lỗi xảy ra');
+      }
+    };
+
+    return {
+      user,
+      token,
+      errors,
+      isLogin,
+      login,
+      register,
+      logout,
+      isLoading,
+      sendOtp,
+      verifyOtp,
+      resetPassword,
+    };
   },
   {
     persist: {
       storage: piniaPluginPersistedstate.cookies({
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
       }),
+      omit: ["errors"],
     },
   }
 );

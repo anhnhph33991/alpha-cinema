@@ -57,3 +57,57 @@ export const getRankService = async () => {
     throw error;
   }
 };
+
+export const sendOtpService = async (email) => {
+  const { $axios } = useNuxtApp();
+  try {
+    const response = await $axios.post(`/v1/send-otp`, {
+      email: email,
+    });
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const verifyOtpService = async (data) => {
+  const { $axios } = useNuxtApp();
+  try {
+    const response = await $axios.post(`/v1/verify-otp`, {
+      email: data.email,
+      otp: data.otp,
+    });
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const resetPasswordService = async (data) => {
+  const { $axios } = useNuxtApp();
+  try {
+    const response = await $axios.post(`/v1/reset-password`, {
+      email: data.email,
+      otp: data.otp,
+      password: data.password,
+    });
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
