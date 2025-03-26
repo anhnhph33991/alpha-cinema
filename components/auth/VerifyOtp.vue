@@ -18,10 +18,15 @@
           <form @submit.prevent="handleSubmit">
             <div class="row">
               <div class="col-md-12 mb-3">
-                <label class="form-label">
-                  <span class="text-danger">*</span> OTP</label
-                >
-                <input
+                <ClientOnly>
+                  <PrimeInputOtp
+                    v-model="form.otp"
+                    :length="6"
+                    class="justify-content-center"
+                  />
+                </ClientOnly>
+
+                <!-- <input
                   type="number"
                   class="form-control"
                   placeholder="123456"
@@ -34,10 +39,10 @@
                   class="text-danger"
                 >
                   {{ useAuthStore().errors.otp }}
-                </small>
+                </small> -->
               </div>
 
-              <div class="col-md-12">
+              <div class="col-md-12 mt-3">
                 <p>
                   Chưa nhận được otp
                   <a @click.prevent="handleResetOtp" class="al-btn-verify-otp"
@@ -60,7 +65,8 @@
 </template>
 
 <script setup>
-import { NuxtLink } from "#components";
+import InputOtp from "primevue/inputotp";
+import { toast } from "vue-sonner";
 
 const emit = defineEmits(["submit-form-otp"]);
 
@@ -69,7 +75,13 @@ const form = ref({
 });
 
 const handleSubmit = () => {
+  if (form.value.otp.length < 6) {
+    toast.error("Vui lòng nhập đủ 6 số");
+    return;
+  }
+
   emit("submit-form-otp", form.value.otp);
+  form.value.otp = "";
 };
 
 const handleResetOtp = () => {

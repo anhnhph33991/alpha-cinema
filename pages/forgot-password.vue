@@ -51,7 +51,7 @@ const submitOtp = (data) => {
     otp: data,
   };
 
-  // console.log(formData);
+  console.log(formData);
 
   authStore.verifyOtp(formData);
 };

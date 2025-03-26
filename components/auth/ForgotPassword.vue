@@ -41,12 +41,6 @@
             <div class="form-footer">
               <button type="submit" class="btn btn-danger btn-3">Gửi</button>
             </div>
-
-            <!-- <div class="form-footer">
-              <button type="submit" class="btn btn-danger btn-3">
-                Xác Nhận
-              </button>
-            </div> -->
           </form>
         </div>
       </div>

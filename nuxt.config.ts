@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import Aura from '@primeuix/themes/aura';
+
 export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
@@ -10,8 +12,26 @@ export default defineNuxtConfig({
     '@ant-design-vue/nuxt',
     'nuxt-laravel-echo',
     'vue3-carousel-nuxt',
-    'nuxt-lucide-icons'
+    'nuxt-lucide-icons',
+    '@primevue/nuxt-module'
   ],
+  primevue: {
+    autoImport: false,
+    components: {
+      prefix: 'Prime',
+      include: ['Button', 'DataTable', 'InputOtp']
+    },
+    options: {
+      theme: {
+        preset: Aura,
+        options: {
+          prefix: 'p',
+          darkModeSelector: 'system',
+          cssLayer: false
+        }
+      }
+    }
+  },
   lucide: {
     namePrefix: 'Lux'
   },
