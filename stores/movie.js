@@ -102,7 +102,7 @@ export const useMovieStore = defineStore("movie", () => {
 
       filterSeatsByUserId(response.data, currentUserId);
 
-      console.log("đoàn chim to");
+      // console.log("đoàn chim to");
     } catch (error) {
       applyRealTimeSeatChange(seatId, "available", null);
       toast.error(error.error);
