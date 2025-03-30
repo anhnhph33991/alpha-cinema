@@ -1522,10 +1522,28 @@ const handleSeatTotalPrice = computed(() => {
   );
 });
 
+// const handleComboFoodTotalPrice = computed(() => {
+//   return (
+//     newDataCombo?.reduce(
+//       (sum, combo) => sum + combo.quantity * combo.price,
+//       0
+//     ) || 0
+//   );
+// });
+
+// const handleFoodTotalPrice = computed(() => {
+//   return (
+//     newDataFood?.reduce((sum, food) => sum + food.quantity * food.price, 0) || 0
+//   );
+// });
+
 const handleComboFoodTotalPrice = computed(() => {
   return (
     newDataCombo?.reduce(
-      (sum, combo) => sum + combo.quantity * combo.price,
+      (sum, combo) =>
+        sum +
+        combo.quantity *
+          (combo.price_sale > 0 ? combo.price_sale : combo.price),
       0
     ) || 0
   );
