@@ -45,7 +45,7 @@
       :class="[{ 'al-header-active': isActive }]"
     >
       <div class="container al-padding-header al-with-header">
-        <NuxtLink :to="{ name: 'index' }" class="navbar-brand">
+        <NuxtLink :to="{ name: 'index' }" class="navbar-brand text-center">
           <!-- <img
             v-if="settings.length > 0 && settings[0].website_logo"
             class="logo-img border-radius-20"
