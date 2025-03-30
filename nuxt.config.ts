@@ -13,7 +13,9 @@ export default defineNuxtConfig({
     'nuxt-laravel-echo',
     'vue3-carousel-nuxt',
     'nuxt-lucide-icons',
-    '@primevue/nuxt-module'
+    '@primevue/nuxt-module',
+    'nuxt-marquee',
+    'nuxt-auth-sanctum',
   ],
   primevue: {
     autoImport: false,
@@ -66,7 +68,25 @@ export default defineNuxtConfig({
       encrypted: true,
       rejectUnauthorized: false,
     },
+    authentication: {
+      mode: 'token',
+      baseUrl: 'https://alphacinema.me',
+      authEndpoint: '/broadcasting/auth',
+      csrfEndpoint: '/sanctum/csrf-cookie',
+      csrfCookie: 'XSRF-TOKEN',
+      csrfHeader: 'X-XSRF-TOKEN',
+    }
   },
+  // sanctum: {
+  //   baseUrl: 'https://alphacinema.me',
+  //   mode: 'token',
+  //   endpoints: {
+  //     csrf: '/sanctum/csrf-cookie',
+  //     login: '/api/v1/signin',
+  //     logout: '/logout',
+  //     user: '/api/user',
+  //   }
+  // },
   vite: {
     optimizeDeps: {
       include: ['pusher-js']

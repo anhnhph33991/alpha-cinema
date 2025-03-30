@@ -12,9 +12,12 @@ definePageMeta({
 import { LoginForm } from "#components";
 import { useAuthStore } from "~/stores/auth";
 
+// const { login } = useSanctumAuth();
+
 const authStore = useAuthStore();
 
-const submited = (data) => {
+const submited = async (data) => {
+  // await login(data);
   authStore.login(data);
 };
 </script>

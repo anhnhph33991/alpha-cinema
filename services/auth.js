@@ -111,3 +111,20 @@ export const resetPasswordService = async (data) => {
     throw error;
   }
 };
+
+export const getCsrfTokenService = async () => {
+  try {
+    const response = await $fetch(
+      `https://alphacinema.me/sanctum/csrf-cookie`,
+      { method: "GET", credentials: "include" }
+    );
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

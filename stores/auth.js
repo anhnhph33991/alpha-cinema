@@ -1,5 +1,6 @@
 import { toast } from "vue-sonner";
 import {
+  getCsrfTokenService,
   loginService,
   logoutService,
   registerService,
@@ -40,6 +41,7 @@ export const useAuthStore = defineStore(
     const login = async (data) => {
       isLoading.value = true;
       try {
+        await getCsrfTokenService();
         const response = await loginService(data);
 
         if (response.status) {
