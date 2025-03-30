@@ -52,7 +52,13 @@
             :alt="settings[0].site_name"
             :src="formattedImage(settings[0].website_logo)"
           /> -->
-          AlphaCinema
+          <!-- AlphaCinema -->
+          <!-- <Logo class="text-xl" style="width: 30%; height: 30%" /> -->
+          <img
+            src="/public/logo.png"
+            alt="logo-img border-radius-20"
+            style="width: 55%; height: 55%"
+          />
         </NuxtLink>
         <div class="branch-dropdown d-none d-xl-block">
           <ClientOnly>
@@ -123,6 +129,7 @@ import { useBranchStore } from "~/stores/branch";
 import { LogOut } from "lucide-vue-next";
 import { toast } from "vue-sonner";
 import { fetchSettingService } from "@/services/setting";
+import Logo from "~/assets/images/logo2.svg";
 
 const settings = ref([]);
 
