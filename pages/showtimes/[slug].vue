@@ -1341,7 +1341,7 @@ const handleNextOrder = async () => {
       room_id: movieStore.showtime.data.showTime.room_id,
       movie_id: movieStore.showtime.data.showTime.movie_id,
       showtime_id: movieStore.showtime.data.showTime.id,
-      voucher_code: null,
+      voucher_code: useVoucher.code ? useVoucher.code : null,
       voucher_discount: 0,
       point_use: 0,
       point_discount: 0,
@@ -1360,6 +1360,11 @@ const handleNextOrder = async () => {
     console.log(seatId);
     console.log(">>>>>data seat<<<<<");
     console.log(newDataSeats);
+
+    console.log("data voucher");
+    console.log(useVoucher.code);
+
+    return;
 
     // const ticketResponse = await ticketStore.createTicket(dataTicket);
 
@@ -1752,7 +1757,7 @@ const handleApplyVoucher = () => {
   console.log(applyVoucher);
 
   if (applyVoucher.usage_count <= 0) {
-    toast.error("Làm lồn gì còn mà dùng 🤬");
+    toast.error("Không còn voucher 🤬");
     return;
   }
 
