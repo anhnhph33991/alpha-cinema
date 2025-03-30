@@ -1364,7 +1364,7 @@ const handleNextOrder = async () => {
     console.log("data voucher");
     console.log(useVoucher.code);
 
-    return;
+    // return;
 
     // const ticketResponse = await ticketStore.createTicket(dataTicket);
 
