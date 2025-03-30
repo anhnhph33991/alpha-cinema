@@ -30,7 +30,18 @@
               }}
             </td>
             <td>
-              {{ ticket.ticket_foods || ticket.ticket_foods || "Không có" }}
+              <!-- {{ ticket.ticket_foods || ticket.ticket_foods || "Không có" }} -->
+
+              {{
+                ticket.ticket_foods
+                  ? ticket.ticket_foods.map((food) => food.name).join(", ")
+                  : "Chưa đặt"
+              }},
+              {{
+                ticket.ticket_combos
+                  ? ticket.ticket_combos.map((combo) => combo.name).join(", ")
+                  : "Chưa đặt"
+              }}
             </td>
             <td>
               {{ new Date(ticket.created_at).toLocaleDateString("vi-VN") }}
