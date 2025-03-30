@@ -41,7 +41,7 @@ const combinedData = computed(() => {
 const formattedImage = (image) => {
 
   const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "https://alphacinema.test/";
+    import.meta.env.VITE_API_BASE_URL || "https://alphacinema.me/";
   return image ? `${baseUrl}${image}` : "";
 
 };
@@ -50,258 +50,135 @@ const formattedImage = (image) => {
 <template>
   <div v-if="settings">
     <footer class="footer-section">
-      <footer class="footer">
-        <div class="container bottom_border">
-          <div class="row">
-            <div class="col-12 col-md-3 logo">
-              <img
-                v-if="settings.website_logo"
-                class="logo-img border-radius-20"
-                :alt="settings.site_name"
-                :src="formattedImage(settings.website_logo)"
-              />
-              <!--headin5_amrc-->
-              <ul class="footer_ul_amrc">
-                <li>
-                  <i class="bi bi-caret-right-fill"></i>
-                  <NuxtLink to="/site-setting/gioi-thieu"> Giới thiệu</NuxtLink>
-                </li>
-                <li>
-                  <i class="bi bi-caret-right-fill"></i>
-                  <NuxtLink to="/site-setting/dieu-khoan-dich-vu">
-                    Điều khoản dịch vụ</NuxtLink
-                  >
-                </li>
-                <li>
-                  <i class="bi bi-caret-right-fill"></i>
-                  <NuxtLink to="/site-setting/policy">
-                    Chính sách bảo mật</NuxtLink
-                  >
-                </li>
-                <li>
-                  <i class="bi bi-caret-right-fill"></i>
-                  <NuxtLink to="/site-setting/posts"> Tin tức</NuxtLink>
-                </li>
-              </ul>
-              <!--footer_ul_amrc ends here-->
-            </div>
-            <div class="col-12 col-md-3">
-              <h5 class="headin5_amrc col_white_amrc pt2">Liên Hệ</h5>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-3 logo">
+            <img
+              v-if="settings.website_logo"
+              class="logo-img"
+              :alt="settings.site_name"
+              :src="formattedImage(settings.website_logo)"
+            />
+           
+            <ul class="footer-links">
+              <li><NuxtLink to="/site-setting/gioi-thieu">Giới thiệu</NuxtLink></li>
+              <li><NuxtLink to="/site-setting/dieu-khoan-dich-vu">Điều khoản dịch vụ</NuxtLink></li>
+              <li><NuxtLink to="/site-setting/policy">Chính sách bảo mật</NuxtLink></li>
+              <li><NuxtLink to="/site-setting/posts">Tin tức</NuxtLink></li>
+            </ul>
+          </div>
+          
+          <div class="col-12 col-md-3 contact-info">
+            <h5 class="section-title">Liên Hệ</h5>
+            
+            <p><i class="bi bi-geo-alt-fill"></i> {{ settings.headquarters }}</p>
+            <p><i class="bi bi-telephone-fill"></i> {{ settings.phone }}</p>
+            <p><i class="bi bi-envelope-at-fill"></i> {{ settings.email }}</p>
+          </div>
 
-              <!--headin5_amrc-->
-              <p class="mb10">
-                {{ settings.slogan }}
-              </p>
-              <p>
-                <i class="bi bi-geo-alt-fill"></i> {{ settings.headquarters }}
-              </p>
-              <p><i class="bi bi-telephone-fill"></i> {{ settings.phone }}</p>
-              <p><i class="bi bi-envelope-at-fill"></i> {{ settings.email }}</p>
-            </div>
-            <div class="col-12 col-md-3">
-              <h5 class="headin5_amrc col_white_amrc pt2">Các chi nhánh</h5>
-              <!--headin5_amrc-->
-              <ul class="footer_ul_amrc">
+          <div class="col-12 col-md-3 branches">
+            <h5 class="section-title">Các chi nhánh</h5>
+            <ul class="footer_ul_amrc">
                 <li v-for="(item, index) in combinedData" :key="index">
                   <i class="bi bi-dot"></i><a href="#">{{ item.text }}</a>
                 </li>
               </ul>
-              <!--footer_ul_amrc ends here-->
+          </div>
+          
+          <div class="col-12 col-md-3 social-links">
+            <h5 class="section-title">Kết nối với chúng tôi</h5>
+            <div class="social-icons">
+              <a :href="settings.facebook_link" target="_blank"><i class="bi bi-facebook"></i></a>
+              <a :href="settings.youtube_link" target="_blank"><i class="bi bi-youtube"></i></a>
+              <a :href="settings.instagram_link" target="_blank"><i class="bi bi-instagram"></i></a>
             </div>
-
-            <div class="col-12 col-md-3">
-              <h5 class="headin5_amrc col_white_amrc pt2">
-                Kết nối với chúng tôi
-              </h5>
-              <!--headin5_amrc ends here-->
-
-              <ul class="footer_ul2_amrc">
-                <li>
-                  <a href="#"
-                    ><i class="bi bi-facebook fleft padding-right mt-0"></i>
-                  </a>
-                  <p>
-                    <a href="#">{{ settings.facebook_link }}</a>
-                  </p>
-                </li>
-                <li>
-                  <a href="#"
-                    ><i class="bi bi-youtube fleft padding-right mt-0"></i>
-                  </a>
-                  <p>
-                    <a href="#">{{ settings.youtube_link }}</a>
-                  </p>
-                </li>
-                <li>
-                  <a href="#"
-                    ><i class="bi bi-instagram fleft padding-right mt-0"></i>
-                  </a>
-                  <p>
-                    <a href="#">{{ settings.instagram_link }}</a>
-                  </p>
-                </li>
-              </ul>
-              <!--footer_ul2_amrc ends here-->
-            </div>
+            <p class="slogan">{{ settings.slogan }}</p>
           </div>
         </div>
+      </div>
 
-        <div class="container">
-          <ul class="foote_bottom_ul_amrc">
-            <li><a href="">Home</a></li>
-            <li><a href="">About</a></li>
-            <li><a href="">Services</a></li>
-            <li><a href="">Pricing</a></li>
-            <li><a href="">Blog</a></li>
-            <li><a href="">Contact</a></li>
-          </ul>
-          <!--foote_bottom_ul_amrc ends here-->
-          <p class="text-center">
-            Copyright @2025 | Designed With by <a href="#">AphaCinema</a>
-          </p>
-
-          <ul class="social_footer_ul">
-            <li>
-              <a href=""><i class="bi bi-facebook"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="bi bi-youtube"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="bi bi-linkedin"></i></a>
-            </li>
-            <li>
-              <a href=""><i class="bi bi-instagram"></i></a>
-            </li>
-          </ul>
-          <!--social_footer_ul ends here-->
-        </div>
-      </footer>
+      <div class="footer-bottom text-center">
+        <p>Copyright &copy; 2025 | Designed by <a href="#">AlphaCinema</a></p>
+      </div>
     </footer>
   </div>
 </template>
+
 <style>
-/* Footer */
-/*footer*/
-.logo {
-  filter: drop-shadow(3px 3px 5px rgba(192, 163, 163, 0.5));
-}
-    
-.col_white_amrc {
-  color: #fff;
-}
-footer {
-  /* width: 100%; */
-  background-color: #263238;
-  min-height: 250px;
-  padding: 10px 0px 25px 0px;
-}
-.pt2 {
-  padding-top: 40px;
-  margin-bottom: 20px;
-}
-footer p {
-  font-size: 13px;
+.footer-section {
+  background-color: #1a1d21;
   color: #ccc;
-  padding-bottom: 0px;
+  padding: 40px 0;
+}
+
+.footer-links, .branches ul {
+  list-style: none;
+  padding: 0;
+}
+.footer-links li, .branches ul li {
   margin-bottom: 8px;
 }
-.mb10 {
-  font-size: 20px;
-}
-.footer_ul_amrc {
-  margin: 0px;
-  list-style-type: none;
-  font-size: 14px;
-  padding: 0px 0px 10px 0px;
-}
-.footer_ul_amrc li {
-  padding: 0px 0px 5px 0px;
+.footer-links a, .branches a, .social-links a {
   color: #ccc;
-}
-.footer_ul_amrc li a {
-  color: #ccc;
-}
-.footer_ul_amrc li a:hover {
-  color: #fff;
+  transition: color 0.3s, text-decoration 0.3s;
   text-decoration: none;
 }
-.fleft {
-  float: left;
-}
-.padding-right {
-  padding-right: 10px;
+/* .footer-links a:hover, .branches a:hover, .social-links a:hover {
+  color: #6a5acd;
+  text-decoration: underline;
+} */
+
+.contact-info p, .branches ul li {
+  font-size: 16px;
+  margin-bottom: 6px;
 }
 
-.footer_ul2_amrc {
-  margin: 0px;
-  list-style-type: none;
-  padding: 0px;
-}
-.footer_ul2_amrc li p {
-  display: table;
-}
-.footer_ul2_amrc li a:hover {
-  text-decoration: none;
-}
-.footer_ul2_amrc li i {
-  margin-top: 5px;
-}
-
-.bottom_border {
-  border-bottom: 1px solid #323f45;
-  padding-bottom: 20px;
-  /* max-width: 80%; */
-}
-.foote_bottom_ul_amrc {
-  list-style-type: none;
-  padding: 0px;
-  display: table;
-  margin-top: 10px;
-  margin-right: auto;
-  margin-bottom: 10px;
-  margin-left: auto;
-}
-.foote_bottom_ul_amrc li {
-  display: inline;
-}
-.foote_bottom_ul_amrc li a {
-  color: #999;
-  margin: 0 12px;
-}
-
-.social_footer_ul {
-  display: table;
-  margin: 15px auto 0 auto;
-  list-style-type: none;
-}
-.social_footer_ul li {
-  padding-left: 20px;
-  padding-top: 10px;
-  float: left;
-}
-.social_footer_ul li a {
-  color: #ccc;
-  border: 1px solid #ccc;
-  padding: 8px;
-  border-radius: 50%;
-}
-.social_footer_ul li i {
-  width: 20px;
-  height: 20px;
-  text-align: center;
-}
-
-.footer a {
-  text-decoration: none !important;
-}
-
-.footer a:hover {
-  text-decoration: none !important;
-  color: #fff;
-}
 .logo-img {
-  max-width: 220px;
-  height: auto;
+  max-width: 200px;
+  margin-bottom: 15px;
+}
+.slogan {
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(45deg, #20b2aa, #6a5acd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.social-icons a {
+  margin-right: 10px;
+  font-size: 50px;
+  color: #ccc;
+  transition: transform 0.3s, color 0.3s;
+}
+.social-icons a:hover, .footer-links a:hover, .branches a:hover, .social-links a:hover  {
+  background: linear-gradient(45deg, #6a5acd, #20b2aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: scale(1.1);
+}
+
+.footer-bottom {
+  border-top: 1px solid #444;
+  padding: 10px 0;
+  font-size: 15px;
+}
+
+.section-title {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(45deg, #6a5acd, #20b2aa);
+  margin-top: 5px;
 }
 </style>
