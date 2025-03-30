@@ -41,7 +41,7 @@ const combinedData = computed(() => {
 const formattedImage = (image) => {
 
   const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "https://alphacinema.test/";
+    import.meta.env.VITE_API_BASE_URL || "https://alphacinema.me/";
   return image ? `${baseUrl}${image}` : "";
 
 };

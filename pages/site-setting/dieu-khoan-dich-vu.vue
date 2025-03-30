@@ -14,7 +14,7 @@ onMounted(async () => {
 });
 
 const formattedImage = (image) => {
-  return image ? `https://alphacinema.test/${image}` : "";
+  return image ? `https://alphacinema.me/${image}` : "";
 };
 </script>
 
