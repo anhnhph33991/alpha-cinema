@@ -268,11 +268,11 @@
                                 >
                                   <td scope="row">
                                     <img
-                                      src="https://files.betacorp.vn/media/combopackage/2024/06/05/combo-online-26-101802-050624-36.png"
+                                      :src="formattedImage(combo.img_thumbnail)"
                                       alt=""
                                       class="combo-image"
-                                      width="130"
-                                      height="130"
+                                      width="100"
+                                      height="100"
                                     />
                                   </td>
                                   <td class="combo-name">
@@ -318,7 +318,7 @@
                               <thead>
                                 <tr>
                                   <th scope="col"></th>
-                                  <th scope="col">Tên combo</th>
+                                  <th scope="col">Tên đồ ăn</th>
                                   <th scope="col">Mô tả</th>
                                   <th scope="col">Số lượng</th>
                                 </tr>
@@ -330,11 +330,11 @@
                                 >
                                   <td scope="row">
                                     <img
-                                      src="https://files.betacorp.vn/media/combopackage/2024/06/05/combo-online-26-101802-050624-36.png"
+                                      :src="formattedImage(combo.img_thumbnail)"
                                       alt=""
                                       class="combo-image"
-                                      width="130"
-                                      height="130"
+                                      width="100"
+                                      height="100"
                                     />
                                   </td>
                                   <td class="combo-name">
