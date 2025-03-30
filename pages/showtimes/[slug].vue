@@ -447,12 +447,14 @@
                                     v-for="voucher in voucherStore.vouchers"
                                     :key="voucher.voucher_id"
                                   >
-                                    <td>
-                                      {{ voucher.code }}
-                                      (X{{ voucher.usage_count }})
-                                    </td>
-                                    <td>{{ voucher.title }}</td>
-                                    <td>{{ voucher.end_date_time }}</td>
+                                    <template v-if="voucher.usage_count > 0">
+                                      <td>
+                                        {{ voucher.code }}
+                                        (X{{ voucher.usage_count }})
+                                      </td>
+                                      <td>{{ voucher.title }}</td>
+                                      <td>{{ voucher.end_date_time }}</td>
+                                    </template>
                                   </tr>
                                 </tbody>
                               </table>
@@ -1764,7 +1766,7 @@ const handleApplyVoucher = () => {
   // priceAll.value.discountAmount = +applyVoucher.discount;
 
   priceAll.value.discountFromVoucher = +applyVoucher.discount;
-  applyVoucher.usage_count -= 1;
+  // applyVoucher.usage_count -= 1;
 
   priceAll.value.discountAmount =
     priceAll.value.discountFromVoucher + priceAll.value.discountFromPoints;
