@@ -66,15 +66,30 @@ export async function fetchPointHistory() {
   }
 }
 
+// export async function updateProfileService(id, data) {
+//   const { $axios } = useNuxtApp();
+//   try {
+//     const response = await $axios.put(`/v1/${id}/update-profile`, data, {
+//       headers: {
+//         'Content-Type': 'multipart/form-data'
+//       }
+//     });
+//     if (!response) {
+//       console.error("Dữ liệu từ API không hợp lệ:", response);
+//       return [];
+//     }
+//     console.log("response", response);
+//     return response;
+//   } catch (error) {
+//     console.error("Lỗi khi gọi API updateProfile:", error);
+//     throw error;
+//   }
+// }
+
 export async function updateProfileService(id, data) {
   const { $axios } = useNuxtApp();
   try {
     const response = await $axios.put(`/v1/${id}/update-profile`, data);
-    if (!response) {
-      console.error("Dữ liệu từ API không hợp lệ:", response);
-      return [];
-    }
-    console.log("response", response);
     return response;
   } catch (error) {
     console.error("Lỗi khi gọi API updateProfile:", error);

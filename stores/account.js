@@ -18,22 +18,31 @@ export const accountStore = defineStore("account", () => {
   };
 
 
-  const useUpdateProfile = async (id, data) => {
+  // const useUpdateProfile = async (id, data) => {
 
+  //   try {
+  //     const response = await updateProfileService(id, data);
+
+  //     toast.success("Thay đổi thông tin thành công");
+
+  //   } catch (error) {
+
+  //     console.error("Lỗi trong store updateUserProfile:", error);
+
+  //     throw error;
+
+  //   }
+  // }
+  const useUpdateProfile = async (id, data) => {
     try {
       const response = await updateProfileService(id, data);
-
       toast.success("Thay đổi thông tin thành công");
-
     } catch (error) {
-
       console.error("Lỗi trong store updateUserProfile:", error);
-
       throw error;
-
     }
-  }
-
+  };
+  
   return { vouchers, loadVoucher, useUpdateProfile };
 });
 

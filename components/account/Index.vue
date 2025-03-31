@@ -7,7 +7,7 @@
             <div class="avatar-wrapper mb-2">
               <img :src="dataForm.avatar || avatarNull" alt="avatar" class="avatar-img" referrerpolicy="no-referrer" />
             </div>
-            
+            <input type="file" ref="fileInputRef" style="display: none" accept="image/*" @change="handleFileChange" />
             <button type="button" class="btn btn-custom mt-2" @click="triggerFileInput">Tải ảnh lên</button>
           </div>
 
@@ -69,8 +69,8 @@
               /> -->
 
                 <select v-model="dataForm.gender" class="form-select">
-                  <option value="0">Nam</option>
-                  <option value="1">Nữ</option>
+                  <option :value="0">Nam</option>
+                  <option :value="1">Nữ</option>
                 </select>
 
                 <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
@@ -141,7 +141,7 @@
 import { toast } from "vue-sonner";
 import avatarNull from "../../assets/images/avatarNull.png"
 import { accountStore } from "~/stores/account";
-
+const selectedFile = ref(null);
 const updateProfile = accountStore();
 
 const props = defineProps({
@@ -151,23 +151,26 @@ const props = defineProps({
 });
 
 const submited = () => {
-  updateProfile.useUpdateProfile(useAuthStore().user.id,dataForm.value);
-  useAuthStore().user = dataForm.value;
+  // if (selectedFile.value) {
+  //   dataForm.value.avatar = selectedFile.value
+  // }
+  updateProfile.useUpdateProfile(useAuthStore().user.id, dataForm.value);
+  // useAuthStore().user = dataForm.value;
   console.log("Thông tin form:", dataForm.value);
 };
+const fileInputRef = ref(null);
 
 const triggerFileInput = () => {
-  const fileInput = $refs.fileInput;
-  if (fileInput) {
-    fileInput.click();
+  if (fileInputRef.value) {
+    fileInputRef.value.click();
   }
 };
 
 const handleFileChange = (event) => {
   const file = event.target.files[0];
   if (file) {
-    dataForm.value.avatar = file;
-    console.log("File đã chọn:", file);
+    selectedFile.value = file;
+    dataForm.value.avatar = URL.createObjectURL(file);
   }
 };
 
