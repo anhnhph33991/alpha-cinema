@@ -3,124 +3,95 @@
     <div>
       <form @submit.prevent="submited" class="pt-4">
         <div class="row">
-          <div class="col-lg-12">
-            <div class="d-flex align-items-center mb-3">
-              <img
-                :src="dataForm.avatar"
-                alt="avatar"
-                class="img-thumbnail"
-                width="150"
-                height="150"
-              />
-
-              <button
-                type="button"
-                class="btn btn-custom ms-3"
-                @click="triggerFileInput"
-              >
-                Tải ảnh lên
-              </button>
-              <input
-                type="file"
-                class="d-none"
-                id="avatar"
-                @change="handleFileChange"
-                ref="fileInput"
-              />
+          <div class="col-lg-4 d-flex justify-content-center align-items-center flex-column mb-3">
+            <div class="avatar-wrapper mb-2">
+              <img :src="dataForm.avatar || avatarNull" alt="avatar" class="avatar-img" referrerpolicy="no-referrer" />
             </div>
+            <!-- Nếu muốn thêm nút sau này thì để ở đây -->
+            <!-- <button type="button" class="btn btn-custom mt-2" @click="triggerFileInput">Tải ảnh lên</button> -->
           </div>
 
-          <div class="col-lg-6">
-            <div class="mb-3">
-              <label for="" class="form-label">
-                <span class="text-danger">*</span>
-                Họ Tên
-              </label>
-              <input type="text" class="form-control" v-model="dataForm.name" />
-              <small id="helpId" class="form-text text-muted">Help text</small>
+          <div class="row col-lg-8">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="" class="form-label">
+                  <span class="text-danger">*</span>
+                  Họ Tên
+                </label>
+                <input type="text" class="form-control" v-model="dataForm.name" />
+                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+              </div>
             </div>
-          </div>
 
-          <div class="col-lg-6">
-            <div class="mb-3">
-              <label for="" class="form-label">
-                <span class="text-danger">*</span>
-                Email
-              </label>
-              <input
-                type="email"
-                class="form-control"
-                v-model="dataForm.email"
-              />
-              <small id="helpId" class="form-text text-muted">Help text</small>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="" class="form-label">
+                  <span class="text-danger">*</span>
+                  Email
+                </label>
+                <input type="email" class="form-control" v-model="dataForm.email" />
+                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+              </div>
             </div>
-          </div>
 
-          <div class="col-lg-6">
-            <div class="mb-3">
-              <label for="" class="form-label">
-                <span class="text-danger">*</span>
-                Số điện thoại
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="dataForm.phone"
-              />
-              <small id="helpId" class="form-text text-muted">Help text</small>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="" class="form-label">
+                  <span class="text-danger">*</span>
+                  Số điện thoại
+                </label>
+                <input type="text" class="form-control" v-model="dataForm.phone" />
+                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+              </div>
             </div>
-          </div>
 
-          <div class="col-lg-6">
-            <div class="mb-3">
-              <label for="" class="form-label">
-                <span class="text-danger">*</span>
-                Ngày Sinh
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="dataForm.birthday"
-              />
-              <small id="helpId" class="form-text text-muted">Help text</small>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="" class="form-label">
+                  <span class="text-danger">*</span>
+                  Ngày Sinh
+                </label>
+                <input type="text" class="form-control" v-model="dataForm.birthday" />
+                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+              </div>
             </div>
-          </div>
 
-          <div class="col-lg-6">
-            <div class="mb-3">
-              <label for="" class="form-label">
-                <span class="text-danger">*</span>
-                Giới Tính
-              </label>
-              <!-- <input
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="" class="form-label">
+                  <span class="text-danger">*</span>
+                  Giới Tính
+                </label>
+                <!-- <input
                 type="text"
                 class="form-control"
                 v-model="dataForm.gender"
               /> -->
 
-              <select v-model="dataForm.gender" class="form-select">
-                <option value="0">Nam</option>
-                <option value="1">Nữ</option>
-              </select>
+                <select v-model="dataForm.gender" class="form-select">
+                  <option value="0">Nam</option>
+                  <option value="1">Nữ</option>
+                </select>
 
-              <small id="helpId" class="form-text text-muted">Help text</small>
+                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+              </div>
             </div>
-          </div>
 
-          <div class="col-lg-6">
-            <div class="mb-3">
-              <label for="" class="form-label">
-                <span class="text-danger">*</span>
-                Họ Tên
-              </label>
-              <input type="text" class="form-control" v-model="dataForm.name" />
-              <small id="helpId" class="form-text text-muted">Help text</small>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="" class="form-label">
+                  <span class="text-danger">*</span>
+                  Họ Tên
+                </label>
+                <input type="text" class="form-control" v-model="dataForm.name" />
+                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+              </div>
             </div>
-          </div>
 
-          <div class="col-lg-12">
-            <label for="" class="form-label">Địa chỉ </label>
-            <textarea name="" id="" class="form-control" rows="2"></textarea>
+            <div class="col-lg-12">
+              <label for="" class="form-label">Địa chỉ </label>
+              <textarea name="" id="" class="form-control" rows="2"></textarea>
+            </div>
           </div>
 
           <div class="col-lg-12 mt-3 pass">
@@ -134,13 +105,7 @@
       </form>
     </div>
 
-    <a-modal
-      :open="modal2Visible"
-      title="ĐỔI MẬT KHẨU"
-      centered
-      @ok="handleOk"
-      @cancel="modal2Visible = false"
-    >
+    <a-modal :open="modal2Visible" title="ĐỔI MẬT KHẨU" centered @ok="handleOk" @cancel="modal2Visible = false">
       <hr />
       <div class="row mt-4">
         <div class="col-lg-12 col-md-12">
@@ -149,12 +114,8 @@
               <span class="text-danger">*</span>
               Mật khẩu hiện tại
             </label>
-            <input
-              type="password"
-              class="form-control"
-              v-model="formDataPassword.currentPassword"
-            />
-            <small id="helpId" class="form-text text-muted">Help text</small>
+            <input type="password" class="form-control" v-model="formDataPassword.currentPassword" />
+            <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
           </div>
         </div>
         <div class="col-lg-12 col-md-12">
@@ -163,12 +124,8 @@
               <span class="text-danger">*</span>
               Mật khẩu mới
             </label>
-            <input
-              type="password"
-              class="form-control"
-              v-model="formDataPassword.newPassword"
-            />
-            <small id="helpId" class="form-text text-muted">Help text</small>
+            <input type="password" class="form-control" v-model="formDataPassword.newPassword" />
+            <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
           </div>
         </div>
         <div class="col-lg-12 col-md-12">
@@ -177,12 +134,8 @@
               <span class="text-danger">*</span>
               Xác nhận mật khẩu mới
             </label>
-            <input
-              type="password"
-              class="form-control"
-              v-model="formDataPassword.confirmPassword"
-            />
-            <small id="helpId" class="form-text text-muted">Help text</small>
+            <input type="password" class="form-control" v-model="formDataPassword.confirmPassword" />
+            <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
           </div>
         </div>
       </div>
@@ -192,6 +145,7 @@
 
 <script setup>
 import { toast } from "vue-sonner";
+import avatarNull from "../../assets/images/avatarNull.png"
 
 const props = defineProps({
   user: {
@@ -235,6 +189,7 @@ const formDataPassword = ref({
 
 const handleChangePassword = () => {
   modal2Visible.value = true;
+
 };
 
 const handleOk = () => {
@@ -249,9 +204,7 @@ const submited = () => {
 
 onMounted(() => {
   console.log(props.user);
-
   dataForm.value = { ...props.user };
-  console.log(dataForm.value);
 });
 </script>
 
@@ -299,7 +252,24 @@ a {
 .btn-custom:hover {
   background-color: #047091;
 }
+
 hr {
   border: 1px solid #a0a0a0;
 }
+
+.avatar-wrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 </style>

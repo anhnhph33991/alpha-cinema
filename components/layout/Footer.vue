@@ -41,7 +41,7 @@ const combinedData = computed(() => {
 const formattedImage = (image) => {
 
   const baseUrl =
-    import.meta.env.VITE_API_BASE_URL || "https://alphacinema.test/";
+    import.meta.env.VITE_API_BASE_URL || "https://alphacinema.me/";
   return image ? `${baseUrl}${image}` : "";
 
 };
@@ -54,12 +54,8 @@ const formattedImage = (image) => {
         <div class="container bottom_border">
           <div class="row">
             <div class="col-12 col-md-3 logo">
-              <img
-                v-if="settings.website_logo"
-                class="logo-img border-radius-20"
-                :alt="settings.site_name"
-                :src="formattedImage(settings.website_logo)"
-              />
+              <img v-if="settings.website_logo" class="logo-img border-radius-20" :alt="settings.site_name"
+                :src="formattedImage(settings.website_logo)" />
               <!--headin5_amrc-->
               <ul class="footer_ul_amrc">
                 <li>
@@ -69,14 +65,12 @@ const formattedImage = (image) => {
                 <li>
                   <i class="bi bi-caret-right-fill"></i>
                   <NuxtLink to="/site-setting/dieu-khoan-dich-vu">
-                    Điều khoản dịch vụ</NuxtLink
-                  >
+                    Điều khoản dịch vụ</NuxtLink>
                 </li>
                 <li>
                   <i class="bi bi-caret-right-fill"></i>
                   <NuxtLink to="/site-setting/policy">
-                    Chính sách bảo mật</NuxtLink
-                  >
+                    Chính sách bảo mật</NuxtLink>
                 </li>
                 <li>
                   <i class="bi bi-caret-right-fill"></i>
@@ -117,24 +111,21 @@ const formattedImage = (image) => {
 
               <ul class="footer_ul2_amrc">
                 <li>
-                  <a href="#"
-                    ><i class="bi bi-facebook fleft padding-right mt-0"></i>
+                  <a href="#"><i class="bi bi-facebook fleft padding-right mt-0"></i>
                   </a>
                   <p>
                     <a href="#">{{ settings.facebook_link }}</a>
                   </p>
                 </li>
                 <li>
-                  <a href="#"
-                    ><i class="bi bi-youtube fleft padding-right mt-0"></i>
+                  <a href="#"><i class="bi bi-youtube fleft padding-right mt-0"></i>
                   </a>
                   <p>
                     <a href="#">{{ settings.youtube_link }}</a>
                   </p>
                 </li>
                 <li>
-                  <a href="#"
-                    ><i class="bi bi-instagram fleft padding-right mt-0"></i>
+                  <a href="#"><i class="bi bi-instagram fleft padding-right mt-0"></i>
                   </a>
                   <p>
                     <a href="#">{{ settings.instagram_link }}</a>
@@ -186,49 +177,59 @@ const formattedImage = (image) => {
 .logo {
   filter: drop-shadow(3px 3px 5px rgba(192, 163, 163, 0.5));
 }
-    
+
 .col_white_amrc {
   color: #fff;
 }
+
 footer {
   /* width: 100%; */
   background-color: #263238;
   min-height: 250px;
   padding: 10px 0px 25px 0px;
 }
+
 .pt2 {
   padding-top: 40px;
   margin-bottom: 20px;
 }
+
 footer p {
   font-size: 13px;
   color: #ccc;
   padding-bottom: 0px;
   margin-bottom: 8px;
 }
+
 .mb10 {
   font-size: 20px;
 }
+
 .footer_ul_amrc {
   margin: 0px;
   list-style-type: none;
   font-size: 14px;
   padding: 0px 0px 10px 0px;
 }
+
 .footer_ul_amrc li {
   padding: 0px 0px 5px 0px;
   color: #ccc;
 }
+
 .footer_ul_amrc li a {
   color: #ccc;
 }
+
 .footer_ul_amrc li a:hover {
   color: #fff;
   text-decoration: none;
 }
+
 .fleft {
   float: left;
 }
+
 .padding-right {
   padding-right: 10px;
 }
@@ -238,12 +239,15 @@ footer p {
   list-style-type: none;
   padding: 0px;
 }
+
 .footer_ul2_amrc li p {
   display: table;
 }
+
 .footer_ul2_amrc li a:hover {
   text-decoration: none;
 }
+
 .footer_ul2_amrc li i {
   margin-top: 5px;
 }
@@ -253,6 +257,7 @@ footer p {
   padding-bottom: 20px;
   /* max-width: 80%; */
 }
+
 .foote_bottom_ul_amrc {
   list-style-type: none;
   padding: 0px;
@@ -262,9 +267,11 @@ footer p {
   margin-bottom: 10px;
   margin-left: auto;
 }
+
 .foote_bottom_ul_amrc li {
   display: inline;
 }
+
 .foote_bottom_ul_amrc li a {
   color: #999;
   margin: 0 12px;
@@ -275,17 +282,20 @@ footer p {
   margin: 15px auto 0 auto;
   list-style-type: none;
 }
+
 .social_footer_ul li {
   padding-left: 20px;
   padding-top: 10px;
   float: left;
 }
+
 .social_footer_ul li a {
   color: #ccc;
   border: 1px solid #ccc;
   padding: 8px;
   border-radius: 50%;
 }
+
 .social_footer_ul li i {
   width: 20px;
   height: 20px;
@@ -300,6 +310,7 @@ footer p {
   text-decoration: none !important;
   color: #fff;
 }
+
 .logo-img {
   max-width: 220px;
   height: auto;

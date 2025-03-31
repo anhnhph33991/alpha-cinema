@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="account-section al-bg-light">
-        <div class="account-tab">
+        <div class="account-tab fw-semibold">
           <ClientOnly>
             <a-tabs v-model="activeKey">
               <a-tab-pane key="1" tab="Thông Tin Tài Khoản">
