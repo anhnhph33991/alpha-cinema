@@ -54,7 +54,7 @@ const formattedImage = (image) => {
         <div class="container bottom_border">
           <div class="row">
             <div class="col-12 col-md-3 logo">
-              <img v-if="settings.website_logo" class="logo-img border-radius-20" :alt="settings.site_name"
+              <img v-if="settings.website_logo" width="150" class="logo-img border-radius-20" :alt="settings.site_name"
                 :src="formattedImage(settings.website_logo)" />
               <!--headin5_amrc-->
               <ul class="footer_ul_amrc">

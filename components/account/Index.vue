@@ -7,8 +7,8 @@
             <div class="avatar-wrapper mb-2">
               <img :src="dataForm.avatar || avatarNull" alt="avatar" class="avatar-img" referrerpolicy="no-referrer" />
             </div>
-            <!-- Nếu muốn thêm nút sau này thì để ở đây -->
-            <!-- <button type="button" class="btn btn-custom mt-2" @click="triggerFileInput">Tải ảnh lên</button> -->
+            
+            <button type="button" class="btn btn-custom mt-2" @click="triggerFileInput">Tải ảnh lên</button>
           </div>
 
           <div class="row col-lg-8">
@@ -18,7 +18,7 @@
                   <span class="text-danger">*</span>
                   Họ Tên
                 </label>
-                <input type="text" class="form-control" v-model="dataForm.name" />
+                <input type="text" placeholder="Nhập họ và tên " class="form-control" v-model="dataForm.name" />
                 <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
               </div>
             </div>
@@ -29,7 +29,7 @@
                   <span class="text-danger">*</span>
                   Email
                 </label>
-                <input type="email" class="form-control" v-model="dataForm.email" />
+                <input type="email" placeholder="Nhập email" class="form-control" v-model="dataForm.email" />
                 <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
               </div>
             </div>
@@ -40,7 +40,7 @@
                   <span class="text-danger">*</span>
                   Số điện thoại
                 </label>
-                <input type="text" class="form-control" v-model="dataForm.phone" />
+                <input type="text" class="form-control" placeholder="Nhập số điện thoại" v-model="dataForm.phone" />
                 <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
               </div>
             </div>
@@ -51,12 +51,12 @@
                   <span class="text-danger">*</span>
                   Ngày Sinh
                 </label>
-                <input type="text" class="form-control" v-model="dataForm.birthday" />
+                <input type="date" class="form-control" v-model="dataForm.birthday" />
                 <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
               </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="mb-3">
                 <label for="" class="form-label">
                   <span class="text-danger">*</span>
@@ -77,30 +77,24 @@
               </div>
             </div>
 
-            <div class="col-lg-6">
-              <div class="mb-3">
-                <label for="" class="form-label">
-                  <span class="text-danger">*</span>
-                  Họ Tên
-                </label>
-                <input type="text" class="form-control" v-model="dataForm.name" />
-                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
-              </div>
-            </div>
 
             <div class="col-lg-12">
               <label for="" class="form-label">Địa chỉ </label>
-              <textarea name="" id="" class="form-control" rows="2"></textarea>
+              <textarea name="" id="" class="form-control" rows="2" placeholder="Nhập địa chỉ !!!"
+                v-model="dataForm.address"></textarea>
+            </div>
+            <div class="col-lg-12 text-end mt-3">
+              <button class="btn btn-primary btn-2 btn-p-5">Cập nhật</button>
+
+              <a class="ms-3 pass" @click.prevent="handleChangePassword">Đổi mật khẩu</a>
             </div>
           </div>
 
-          <div class="col-lg-12 mt-3 pass">
-            <a @click.prevent="handleChangePassword">Đổi mật khẩu</a>
-          </div>
+          <!-- <div class="col-lg-12 mt-3">
+           
+          </div> -->
 
-          <div class="col-lg-12 text-center mt-3">
-            <button class="btn btn-primary btn-2 btn-p-5">Cập Nhật</button>
-          </div>
+
         </div>
       </form>
     </div>
@@ -146,12 +140,22 @@
 <script setup>
 import { toast } from "vue-sonner";
 import avatarNull from "../../assets/images/avatarNull.png"
+import { accountStore } from "~/stores/account";
+
+const updateProfile = accountStore();
 
 const props = defineProps({
   user: {
     required: true,
   },
 });
+
+const submited = () => {
+  updateProfile.useUpdateProfile(useAuthStore().user.id,dataForm.value);
+  useAuthStore().user = dataForm.value;
+  console.log("Thông tin form:", dataForm.value);
+};
+
 const triggerFileInput = () => {
   const fileInput = $refs.fileInput;
   if (fileInput) {
@@ -198,9 +202,7 @@ const handleOk = () => {
   toast.success("Đổi mật khẩu");
 };
 
-const submited = () => {
-  toast.success("Thay đổi thông tin thành công");
-};
+
 
 onMounted(() => {
   console.log(props.user);
@@ -258,8 +260,8 @@ hr {
 }
 
 .avatar-wrapper {
-  width: 120px;
-  height: 120px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid #ccc;
@@ -271,5 +273,4 @@ hr {
   height: 100%;
   object-fit: cover;
 }
-
 </style>
