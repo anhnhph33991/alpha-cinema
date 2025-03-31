@@ -1344,9 +1344,11 @@ const handleNextOrder = async () => {
       movie_id: movieStore.showtime.data.showTime.movie_id,
       showtime_id: movieStore.showtime.data.showTime.id,
       voucher_code: useVoucher.code ? useVoucher.code : null,
-      voucher_discount: 0,
-      point_use: 0,
-      point_discount: 0,
+      voucher_discount: priceAll.value.discountFromVoucher
+        ? priceAll.value.discountFromVoucher
+        : 0,
+      point_use: useVoucher.point ? useVoucher.point : 0,
+      point_discount: useVoucher.point ? useVoucher.point : 0,
       payment_name: selectedPayment.value,
       ticket_seats: newDataSeats,
       ticket_combos: newDataCombo.length > 0 ? newDataCombo : null,
@@ -1366,7 +1368,7 @@ const handleNextOrder = async () => {
     console.log("data voucher");
     console.log(useVoucher.code);
 
-    return;
+    // return;
 
     // const ticketResponse = await ticketStore.createTicket(dataTicket);
 
@@ -1513,6 +1515,8 @@ const priceAll = ref({
   payableAmount: 0,
   discountFromVoucher: 0,
   discountFromPoints: 0,
+  discountFromVoucherSeat: 0,
+  discountFromVoucherFood: 0,
 });
 
 // const handleTotalPrice = computed(() => {
@@ -1751,23 +1755,80 @@ const handleApplyVoucher = () => {
     (voucher) => voucher.code === useVoucher.code
   );
 
+  console.log(applyVoucher);
+
   if (!applyVoucher) {
     toast.error("Voucher không chính xác");
     return;
   }
 
-  console.log(applyVoucher);
+  // console.log(applyVoucher);
 
   if (applyVoucher.usage_count <= 0) {
     toast.error("Không còn voucher 🤬");
     return;
   }
 
-  // priceAll.value.discountAmount = +applyVoucher.discount;
+  if (applyVoucher.type_voucher == 1) {
+    const totalPriceFoodAndCombo =
+      +handleComboFoodTotalPrice.value + +handleFoodTotalPrice.value;
+
+    priceAll.value.discountFromVoucherSeat = +handleSeatTotalPrice.value;
+
+    // console.log("giá đồ ăn");
+    // console.log(totalPriceFoodAndCombo);
+    // console.log("giá giảm dành riêng cho đồ ăn");
+    // console.log(applyVoucher.discount);
+    // return;
+
+    if (totalPriceFoodAndCombo <= 0) {
+      toast.error("Bạn chưa chọn đồ ăn nào, không thể sử dụng voucher này");
+      return;
+    }
+
+    if (totalPriceFoodAndCombo < +applyVoucher.discount) {
+      toast.error("Giá đồ ăn quá thấp, không thể sử dụng voucher");
+      return;
+    }
+
+    priceAll.value.discountFromVoucherFood =
+      +totalPriceFoodAndCombo - applyVoucher.discount;
+
+    // console.log("giá combo");
+    // console.log(handleComboFoodTotalPrice.value);
+
+    // console.log("giá đồ lẻ");
+    // console.log(handleFoodTotalPrice.value);
+
+    console.log("tổng giá đồ ăn");
+    console.log(totalPriceFoodAndCombo);
+
+    console.log("giảm giá đồ ăn");
+    console.log(priceAll.value.discountFromVoucherFood);
+
+    console.log("giá ghế đã trừ");
+    console.log(priceAll.value.discountFromVoucherSeat);
+  } else {
+    console.log("voucher ghế");
+    console.log(handleSeatTotalPrice.value);
+
+    priceAll.value.discountFromVoucherSeat =
+      +handleSeatTotalPrice.value - +applyVoucher.discount;
+
+    priceAll.value.discountFromVoucherFood =
+      +handleComboFoodTotalPrice.value + +handleFoodTotalPrice.value;
+
+    console.log("giá ghế đã trừ");
+    console.log(priceAll.value.discountFromVoucherSeat);
+    console.log("giảm giá đồ ăn");
+    console.log(priceAll.value.discountFromVoucherFood);
+  }
 
   priceAll.value.discountFromVoucher = +applyVoucher.discount;
   // applyVoucher.usage_count -= 1;
+  console.log(priceAll.value.discountFromVoucher);
 
+  // return;
   priceAll.value.discountAmount =
     priceAll.value.discountFromVoucher + priceAll.value.discountFromPoints;
 
