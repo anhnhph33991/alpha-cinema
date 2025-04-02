@@ -1,4 +1,3 @@
-
 export async function fetchVoucher() {
   const { $axios } = useNuxtApp();
   try {
@@ -13,7 +12,10 @@ export async function fetchVoucher() {
     }
     return response.vouchers;
   } catch (error) {
-    console.error("Lỗi khi lấy voucher:", error.response ? error.response.data : error);
+    console.error(
+      "Lỗi khi lấy voucher:",
+      error.response ? error.response.data : error
+    );
     return [];
   }
 }
@@ -27,42 +29,43 @@ export async function fetchRank() {
     }
     console.log("response", response);
     return response;
-
-  } catch (error) {
-
-  }
+  } catch (error) {}
 }
 
 export async function fetchPointHistory() {
   const { $axios } = useNuxtApp();
   try {
     // Gọi API lấy thông tin Rank
-    const rankResponse = await $axios.get('/v1/getRank')
-    const feedbackPercentage = rankResponse.data?.feedback_percentage || 0
+    const rankResponse = await $axios.get("/v1/getRank");
+    const feedbackPercentage = rankResponse?.rank?.feedback_percentage || 0;
 
     // Gọi API lấy lịch sử giao dịch
-    const ticketResponse = await $axios.get('/v1/ticket-by-user')
-    const ticketHistory = ticketResponse.data || []
+    const ticketResponse = await $axios.get("/v1/ticket-by-user");
+    const ticketHistory = ticketResponse.data || [];
 
     // Xử lý dữ liệu điểm trừ từ ticket
-    const pointData = ticketHistory.map(item => ({
+    const pointData = ticketHistory.map((item) => ({
       date: item.created_at || "Không rõ",
-      description: `Trừ điểm khi mua vé: ${item.movie?.name || 'Không rõ'}`,
-      points: -Math.abs(item.point_use || 0) // Đảm bảo điểm trừ luôn âm
-    }))
+      description: `Trừ điểm khi mua vé: ${item.movie?.name || "Không rõ"}`,
+      points: `-${Math.abs(item.point_use || 0)}`, // Đảm bảo điểm trừ luôn âm
+    }));
 
     // Xử lý dữ liệu điểm cộng từ ticket
-    const feedbackData = ticketHistory.map(item => ({
+    const feedbackData = ticketHistory.map((item) => ({
       date: item.created_at || "Không rõ",
-      description: `Điểm thưởng từ vé phim: ${item.movie?.name || 'Không rõ'}`,
-      points: Math.floor((feedbackPercentage / 100) * (item.total_price || 0))
-    }))
+      description: `Điểm thưởng từ vé phim: ${item.movie?.name || "Không rõ"}`,
+      points: `+${Math.floor(
+        (feedbackPercentage / 100) * (item.total_price || 0)
+      )}`,
+    }));
 
     // Gộp và sắp xếp theo ngày mới nhất lên đầu
-    return [...pointData, ...feedbackData].sort((a, b) => new Date(b.date) - new Date(a.date))
+    return [...pointData, ...feedbackData].sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
   } catch (error) {
-    console.error('Lỗi khi lấy dữ liệu lịch sử điểm:', error)
-    return []
+    console.error("Lỗi khi lấy dữ liệu lịch sử điểm:", error);
+    return [];
   }
 }
 
