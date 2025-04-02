@@ -2,7 +2,7 @@
   <div v-if="movies.length > 0" class="container h-screen">
     <div class="row">
       <div
-        class="col-lg-3 col-md-3 col-sm-8 padding-right-30 padding-left-30 padding-bottom-30"
+        class="col-lg-3 col-md-6 col-sm-12 padding-bottom-30 padding-right-30 padding-left-30"
         v-for="movie in movies"
         :key="movie.id"
       >
