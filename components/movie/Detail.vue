@@ -61,7 +61,16 @@
             </div>
 
             <div class="d-flex align-items-center mt-2 gap-3 small">
-              <p class="text-white">Danh mục: {{ movie.category }}</p>
+              <p class="text-white">
+                Danh mục:
+
+                <!-- {{ movie.category }} -->
+                {{
+                  movie.movie_genres
+                    ? movie.movie_genres.map((item) => item).join(", ")
+                    : "Chưa đặt"
+                }}
+              </p>
               <p class="text-white">-</p>
               <!-- <p class="text-white">Mỹ</p> -->
               <p class="text-white">Thời lượng: {{ movie.duration }} phút</p>

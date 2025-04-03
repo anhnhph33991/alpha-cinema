@@ -701,7 +701,15 @@
                         </div>
                         <div class="col-lg-6">
                           <span class="bold fz-md">
-                            {{ showtime.movie.category }}
+                            <!-- {{ showtime.movie.category }} -->
+
+                            {{
+                              showtime.movie.movie_genres
+                                ? showtime.movie.movie_genres
+                                    .map((item) => item)
+                                    .join(", ")
+                                : "Chưa đặt"
+                            }}
                           </span>
                         </div>
                       </div>

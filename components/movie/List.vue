@@ -52,7 +52,12 @@
               >
                 <li style="max-height: 50px">
                   <span class="bold opacity-08"> Thể loại:</span>
-                  {{ movie.category }}
+                  <!-- {{ movie.category }} -->
+                  {{
+                    movie.movie_genres
+                      ? movie.movie_genres.map((item) => item).join(", ")
+                      : "Chưa đặt"
+                  }}
                 </li>
                 <li>
                   <span class="bold opacity-08"> Thời lượng:</span>
