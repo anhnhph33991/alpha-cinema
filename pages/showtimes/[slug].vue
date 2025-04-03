@@ -1517,6 +1517,7 @@ const priceAll = ref({
   discountFromPoints: 0,
   discountFromVoucherSeat: 0,
   discountFromVoucherFood: 0,
+  discountSeatAfter: 0,
 });
 
 // const handleTotalPrice = computed(() => {
@@ -1702,6 +1703,7 @@ const promiseAllApi = async () => {
       ),
       foodStore.fetchFoods(),
       foodStore.fetchFoodCombo(),
+      voucherStore.fetchVouchers(),
     ]);
   } catch (error) {
     console.log(error);
@@ -1818,11 +1820,26 @@ const handleApplyVoucher = () => {
     priceAll.value.discountFromVoucherFood =
       +handleComboFoodTotalPrice.value + +handleFoodTotalPrice.value;
 
-    console.log("giá ghế đã trừ");
-    console.log(priceAll.value.discountFromVoucherSeat);
-    console.log("giảm giá đồ ăn");
-    console.log(priceAll.value.discountFromVoucherFood);
+    // console.log("giá ghế đã trừ");
+    // console.log(priceAll.value.discountFromVoucherSeat);
+    // console.log("giảm giá đồ ăn");
+    // console.log(priceAll.value.discountFromVoucherFood);
+
+    if (priceAll.value.discountSeatAfter <= 0) {
+      priceAll.value.discountSeatAfter = handleSeatTotalPrice.value;
+    }
+
+    if (
+      priceAll.value.discountSeatAfter - +applyVoucher.discount <
+      handleSeatTotalPrice.value * 0.3
+    ) {
+      toast.warning(
+        "Không thể dùng điểm vì tổng số tiền giảm vượt quá 70% giá gốc"
+      );
+      return;
+    }
   }
+  // return;
 
   priceAll.value.discountFromVoucher = +applyVoucher.discount;
   // applyVoucher.usage_count -= 1;
@@ -1831,6 +1848,11 @@ const handleApplyVoucher = () => {
   // return;
   priceAll.value.discountAmount =
     priceAll.value.discountFromVoucher + priceAll.value.discountFromPoints;
+
+  /**
+   *
+   */
+  priceAll.value.discountSeatAfter -= +applyVoucher.discount;
 
   console.log(priceAll.value.discountAmount);
   console.log(priceAll.value.totalAmount);
@@ -1844,13 +1866,38 @@ const handleApplyPoint = () => {
 
   if (applyPoints > maxPoints) {
     toast.error("Bạn không đủ điểm tiêu dùng");
-    useVoucher.point = maxPoints;
+    useVoucher.point = 0;
     return;
   }
 
-  if (applyPoints > Number(priceAll.value.totalAmount)) {
-    toast.error("Bạn chỉ có thể sử dụng tối đa 50% số tiền tổng đơn hàng.");
-    useVoucher.point = Math.min(maxPoints, maxUsablePoints);
+  console.log("giá vé");
+  console.log(handleSeatTotalPrice.value);
+
+  // priceAll.value.discountFromVoucherSeat
+
+  // if (applyPoints > Number(priceAll.value.totalAmount)) {
+  //   toast.error("Bạn chỉ có thể sử dụng tối đa 50% số tiền tổng đơn hàng.");
+  //   useVoucher.point = Math.min(maxPoints, maxUsablePoints);
+  //   return;
+  // }
+
+  // nếu chưa dùng voucher đặt giá tiền ghế vào giá giảm
+  if (priceAll.value.discountSeatAfter <= 0) {
+    priceAll.value.discountSeatAfter = handleSeatTotalPrice.value;
+  }
+
+  // console.log("giá tiền 03");
+  // console.log(handleSeatTotalPrice.value * 0.3);
+  // console.log("giá tiền giảm");
+  // console.log(priceAll.value.discountFromVoucherSeat - applyPoints);
+
+  if (
+    priceAll.value.discountSeatAfter - applyPoints <
+    handleSeatTotalPrice.value * 0.3
+  ) {
+    toast.warning(
+      "Không thể dùng điểm vì tổng số tiền giảm vượt quá 70% giá gốc"
+    );
     return;
   }
 
@@ -1858,7 +1905,15 @@ const handleApplyPoint = () => {
   priceAll.value.discountAmount =
     priceAll.value.discountFromVoucher + priceAll.value.discountFromPoints;
 
-  console.log(applyPoints);
+  /**
+   * discountSeatAfter là giá tiền cuối sẽ check là 70% giá ghế
+   */
+
+  priceAll.value.discountSeatAfter -= applyPoints;
+  console.log("giá ghế mới");
+  console.log(priceAll.value.discountSeatAfter);
+
+  // console.log(applyPoints);
 
   // useVoucher.point_after = priceAll.value.payableAmount * 0.05;
 
@@ -1882,12 +1937,14 @@ const handleApplyPoint = () => {
 
   useVoucher.point_after += pointsToAdd;
 
-  console.log(feedbackPercentage);
+  // console.log(feedbackPercentage);
 
-  console.log("rank user");
-  console.log(rankStore.rankByUser);
-  console.log("poin apply");
-  console.log(useVoucher.point);
+  // console.log("rank user");
+  // console.log(rankStore.rankByUser);
+  // console.log("poin apply");
+  // console.log(useVoucher.point);
+  // console.log("giá tiền ghế đã giảm");
+  // console.log(priceAll.value.discountSeatAfter);
 
   // priceAll.value.discountAmount = discountAmount.value
 };
@@ -1895,8 +1952,6 @@ const handleApplyPoint = () => {
 onMounted(() => {
   promiseAllApi();
   callEcho();
-
-  voucherStore.fetchVouchers();
 
   if (!countdownDeadline.value) {
     countdownDeadline.value = now + 1000 * 60 * 10;
