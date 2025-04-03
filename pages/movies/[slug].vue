@@ -1,5 +1,5 @@
 <template>
-  <div v-if="movieStore.movie?.data">
+  <div v-if="movieStore.movie?.data" class="h-screen">
     <MovieDetail
       :slug="slug"
       :movie="movieStore.movie?.data.movie"
