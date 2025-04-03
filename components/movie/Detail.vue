@@ -91,9 +91,9 @@
             </div>
 
             <div class="mt-2 d-flex align-items-center gap-4 flex-grow-1">
-              <a class="fs-6 text-decoration-underline al-cursor-pointer">
+              <!-- <a class="fs-6 text-decoration-underline al-cursor-pointer">
                 Chi tiết nội dung
-              </a>
+              </a> -->
 
               <button
                 class="border border-warning rounded-pill py-2 px-4 text-warning bg-transparent btn-hover-scale"
