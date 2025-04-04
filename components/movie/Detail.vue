@@ -126,7 +126,7 @@
       ></iframe>
     </a-modal>
 
-    <div class="w-100">
+    <div class="w-100 h-screen" v-if="!isUpcomingMovie">
       <div class="container">
         <a-tabs
           v-model="activeKey"
@@ -155,6 +155,8 @@
         </a-tabs>
       </div>
     </div>
+
+    <div class="w-100 h-screen" v-else></div>
   </div>
 </template>
 
@@ -249,6 +251,20 @@ const formattedImage = computed(() => {
 const navigateShowTime = (showtime) => {
   navigateTo({ name: "showtimes-slug", params: { slug: showtime.slug } });
 };
+
+const isUpcomingMovie = computed(() => {
+  // Lấy thời gian hiện tại theo múi giờ Việt Nam
+  const nowVN = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" })
+  );
+
+  const releaseDate = new Date(props.movie.release_date);
+  const createdAt = new Date(props.movie.created_at);
+
+  return (
+    releaseDate > nowVN && createdAt <= nowVN && props.movie.is_special != 1
+  );
+});
 
 onMounted(() => {
   console.log(props.slug);

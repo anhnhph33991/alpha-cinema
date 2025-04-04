@@ -21,7 +21,7 @@ export const useMovieStore = defineStore("movie", () => {
   const fetchMovies = async (branchId = "", cinemId = "") => {
     try {
       movies.value = await fetchMoviesService(branchId, cinemId);
-      // console.log(movies.value);
+      console.log(movies.value);
     } catch (error) {
       toast.error("call api lỗi");
     }

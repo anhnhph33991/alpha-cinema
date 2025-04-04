@@ -66,7 +66,11 @@
               </ul>
             </div>
 
-            <div class="text-center padding-bottom-30" style="min-height: 85px">
+            <div
+              class="text-center padding-bottom-30"
+              style="min-height: 85px"
+              v-if="btnBuy"
+            >
               <a
                 style="display: block"
                 class="btn btn-2 btn-mua-ve2 fancybox-fast-view"
@@ -179,7 +183,7 @@
     class="mt-5 h-screen d-flex justify-content-center align-items-center"
     v-else
   >
-    <a-empty />
+    <a-empty description="Không có dữ liệu" />
   </div>
 </template>
 
@@ -205,6 +209,10 @@ const tabActive = ref(1);
 defineProps({
   movies: {
     type: Array,
+    required: true,
+  },
+  btnBuy: {
+    type: Boolean,
     required: true,
   },
 });
