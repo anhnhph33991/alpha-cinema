@@ -21,11 +21,6 @@
                         <span class="note-seat-status-lable"> Ghế trống </span>
                       </div>
                       <div class="col">
-                        <!-- <Armchair
-                          size="32"
-                          stroke-width="2"
-                          class="text-primary"
-                        /> -->
                         <SeatRegular
                           style="width: 32px; height: 32px"
                           class="text-primary"
@@ -35,11 +30,6 @@
                         </span>
                       </div>
                       <div class="col">
-                        <!-- <Armchair
-                          size="32"
-                          stroke-width="2"
-                          class="text-warning"
-                        /> -->
                         <SeatRegular
                           style="width: 32px; height: 32px"
                           class="text-warning"
@@ -49,11 +39,6 @@
                         </span>
                       </div>
                       <div class="col">
-                        <!-- <Armchair
-                          size="32"
-                          stroke-width="2"
-                          class="text-danger"
-                        /> -->
                         <SeatRegular
                           style="width: 32px; height: 32px"
                           class="text-danger"
@@ -1104,73 +1089,6 @@ const selectCinemaBranch = useCookie("selectCinemaBranch");
  */
 const processingSeats = new Set();
 
-/**Check */
-// const seatRows = computed(() => {
-//   return Object.entries(movieStore.showtime.data.seatMap).map(
-//     ([rowName, seats]) => ({
-//       row: rowName,
-//       seats: Object.values(seats),
-//     })
-//   );
-// });
-
-// const checkSoleSeats = computed(() => {
-//   let issueSeats = [];
-
-//   seatRows.value.forEach(({ row, seats }) => {
-//     let selectedIndexes = seats
-//       .map((seat, index) =>
-//         movieStore.isSeatSelected(seat) && seat.type_seat_id !== 3 ? index : -1
-//       )
-//       .filter((index) => index !== -1);
-
-//     for (let i = 0; i < selectedIndexes.length - 1; i++) {
-//       if (selectedIndexes[i + 1] - selectedIndexes[i] === 2) {
-//         const emptyIndex = selectedIndexes[i] + 1;
-//         if (!movieStore.isSeatSelected(seats[emptyIndex])) {
-//           issueSeats.push(`${row}${seats[emptyIndex].coordinates_x}`);
-//         }
-//       }
-//     }
-//   });
-
-//   return issueSeats;
-// });
-
-// const checkEdgeSeats = computed(() => {
-//   let issueSeats = [];
-
-//   seatRows.value.forEach(({ row, seats }) => {
-//     if (seats.length >= 2) {
-//       const firstSeat = seats[0];
-//       const secondSeat = seats[1];
-//       const lastSeat = seats[seats.length - 1];
-//       const beforeLastSeat = seats[seats.length - 2];
-
-//       if (
-//         !movieStore.isSeatSelected(firstSeat) &&
-//         movieStore.isSeatSelected(secondSeat) &&
-//         firstSeat.type_seat_id !== 3
-//       ) {
-//         issueSeats.push(`${row}${firstSeat.coordinates_x}`);
-//       }
-
-//       if (
-//         !movieStore.isSeatSelected(lastSeat) &&
-//         movieStore.isSeatSelected(beforeLastSeat) &&
-//         lastSeat.type_seat_id !== 3
-//       ) {
-//         issueSeats.push(`${row}${lastSeat.coordinates_x}`);
-//       }
-//     }
-//   });
-
-//   console.log("checkEdgeSeats");
-//   console.log(issueSeats);
-
-//   return issueSeats;
-// });
-
 const clonedSeatRows = ref([]);
 
 const seatRows = computed(() => {
@@ -1375,44 +1293,6 @@ const handleNextOrder = async () => {
 
     console.log("data voucher");
     console.log(useVoucher.code);
-
-    // return;
-
-    // const ticketResponse = await ticketStore.createTicket(dataTicket);
-
-    // if (!ticketResponse) {
-    //   throw new Error("Tạo ticket không thành công");
-    // }
-
-    // call api reset ghế
-
-    // await movieStore.resetAndBuySeat(
-    //   movieStore.showtime.data.showTime.id,
-    //   seatId,
-    //   movieStore.currentUserId,
-    //   "sold"
-    // );
-
-    // console.log(selectedPayment.value);
-
-    // const dataTicketNew = {
-    //   user: authStore.user,
-    //   cinema: movieStore.showtime.data.showTime.cinema,
-    //   room: movieStore.showtime.data.showTime.room,
-    //   movie: movieStore.showtime.data.showTime.movie,
-    //   showtime: movieStore.showtime.data.showTime,
-    //   voucher_code: null,
-    //   voucher_discount: 0,
-    //   point_use: 0,
-    //   point_discount: 0,
-    //   payment_name: selectedPayment.value,
-    //   ticket_seats: newDataSeats,
-    //   ticket_combos: newDataCombo.length > 0 ? newDataCombo : null,
-    //   ticket_foods: newDataFood.length > 0 ? newDataFood : null,
-    //   total_price: priceAll.value.payableAmount,
-    //   expiry: `${movieStore.showtime.data.showTime.date}|${movieStore.showtime.data.showTime.end_time}`,
-    //   status: "pending",
-    // };
 
     console.log("data new hehehe");
 
