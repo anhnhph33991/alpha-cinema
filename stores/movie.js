@@ -70,6 +70,9 @@ export const useMovieStore = defineStore("movie", () => {
       );
       matrixColume.value = showtime.value.data.showTime.room.matrix_colume;
 
+      console.log("ghế");
+      console.log(showtime.value);
+
       // console.log(showtime.value);
       // console.log("hehe");
       // console.log(matrixColume.value);
@@ -185,6 +188,73 @@ export const useMovieStore = defineStore("movie", () => {
     return seat.status === "hold" && seat.user_id != currentUserId;
   };
 
+  function checkSeatClass(seat) {
+    let baseClass = "seat-test seat-cell"; // Các class cơ bản luôn có
+
+    if (seat.status === "available") {
+      return `${baseClass} seat-used`;
+    }
+
+    if (seat.status === "sold") {
+      return `${baseClass} seat-sold`;
+    }
+
+    if (seat.status === "hold" && seat.user_id === currentUserId) {
+      return `${baseClass} seat-select`;
+    }
+
+    // Trường hợp mặc định nếu không khớp điều kiện nào
+    return `${baseClass} seat-used`;
+  }
+
+  const mappingSeatTwo = (seat) => {
+    if (seat.status == "hold") {
+      if (seat.user_id == currentUserId) {
+        return "seat-select";
+      }
+
+      return "seat-hold";
+    }
+
+    if (seat.status == "sold") {
+      return "seat-sold";
+    }
+
+    return "";
+  };
+
+  const mappingSeatDouble = (seat) => {
+    if (seat.status == "hold") {
+      if (seat.user_id == currentUserId) {
+        return "seat-select";
+      }
+
+      return "seat-hold";
+    }
+
+    if (seat.status == "sold") {
+      return "seat-sold";
+    }
+
+    return "";
+  };
+
+  const mappingSeatNormal = (seat) => {
+    if (seat.status == "hold") {
+      if (seat.user_id == currentUserId) {
+        return "seat-select";
+      }
+
+      return "seat-hold";
+    }
+
+    if (seat.status == "sold") {
+      return "seat-sold";
+    }
+
+    return "";
+  };
+
   return {
     movies,
     movie,
@@ -202,5 +272,9 @@ export const useMovieStore = defineStore("movie", () => {
     isSeatSelected,
     isSeatHeldByOthers,
     groupedShowtimes,
+    checkSeatClass,
+    mappingSeatTwo,
+    mappingSeatDouble,
+    mappingSeatNormal,
   };
 });

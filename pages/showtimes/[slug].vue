@@ -15,35 +15,48 @@
                       </span>
                     </div>
 
-                    <div class="d-flex justify-content-center mb-4 mt-4">
-                      <div class="col bg-color">
-                        <SeatRegular style="width: 32px; height: 32px" />
+                    <div class="d-flex justify-content-center mb-4 mt-4 row">
+                      <div
+                        class="col-lg-3 col-md-2 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
+                      >
+                        <div class="seat-cell seat-used seat-test"></div>
                         <span class="note-seat-status-lable"> Ghế trống </span>
                       </div>
-                      <div class="col">
-                        <SeatRegular
-                          style="width: 32px; height: 32px"
-                          class="text-primary"
-                        />
-                        <span class="note-seat-status-lable">
-                          Ghế đang chọn
-                        </span>
+                      <div class="col-lg-3 col-md-2 col-xl-3 col-sm-12">
+                        <div
+                          class="col bg-color d-flex justify-content-center align-items-center gap-2"
+                        >
+                          <div
+                            class="seat-cell seat-used seat-select seat-test"
+                          ></div>
+                          <span class="note-seat-status-lable">
+                            Ghế đang chọn
+                          </span>
+                        </div>
                       </div>
-                      <div class="col">
-                        <SeatRegular
-                          style="width: 32px; height: 32px"
-                          class="text-warning"
-                        />
-                        <span class="note-seat-status-lable">
-                          Ghế đang giữ
-                        </span>
+                      <div class="col-lg-3 col-md-2 col-xl-3 col-sm-12">
+                        <div
+                          class="col bg-color d-flex justify-content-center align-items-center gap-2"
+                        >
+                          <div
+                            class="seat-cell seat-used seat-hold seat-test"
+                          ></div>
+                          <span class="note-seat-status-lable">
+                            Ghế đang giữ
+                          </span>
+                        </div>
                       </div>
-                      <div class="col">
-                        <SeatRegular
-                          style="width: 32px; height: 32px"
-                          class="text-danger"
-                        />
-                        <span class="note-seat-status-lable"> Ghế đã bán </span>
+                      <div class="col-lg-3 col-md-2 col-xl-3 col-sm-12">
+                        <div
+                          class="col bg-color d-flex justify-content-center align-items-center gap-2"
+                        >
+                          <div
+                            class="seat-cell seat-used seat-sold seat-test"
+                          ></div>
+                          <span class="note-seat-status-lable">
+                            Ghế đã bán
+                          </span>
+                        </div>
                       </div>
                     </div>
 
@@ -86,7 +99,15 @@
                                 <Armchair v-else /> -->
 
                                 <template v-if="seat.type_seat_id == 1">
-                                  <SeatRegular
+                                  <div
+                                    class="seat-cell seat-used seat-test"
+                                    :class="movieStore.mappingSeatNormal(seat)"
+                                  >
+                                    {{ seat.coordinates_y
+                                    }}{{ seat.coordinates_x }}
+                                  </div>
+
+                                  <!-- <SeatRegular
                                     style="width: 32px; height: 32px"
                                     :class="[
                                       movieStore.getSeatClass(seat),
@@ -98,37 +119,25 @@
                                         ),
                                       },
                                     ]"
-                                  />
+                                  /> -->
                                 </template>
                                 <template v-if="seat.type_seat_id == 2">
-                                  <SeatVip
-                                    style="width: 28px; height: 28px"
-                                    :class="[
-                                      movieStore.getSeatClass(seat),
-                                      {
-                                        selected:
-                                          movieStore.isSeatSelected(seat),
-                                        hold: movieStore.isSeatHeldByOthers(
-                                          seat
-                                        ),
-                                      },
-                                    ]"
-                                  />
+                                  <div
+                                    class="seat-cell seat-used seat-vip"
+                                    :class="movieStore.mappingSeatTwo(seat)"
+                                  >
+                                    {{ seat.coordinates_y
+                                    }}{{ seat.coordinates_x }}
+                                  </div>
                                 </template>
                                 <template v-if="seat.type_seat_id == 3">
-                                  <SeatDouble
-                                    style="width: 40px; height: 40px"
-                                    :class="[
-                                      movieStore.getSeatClass(seat),
-                                      {
-                                        selected:
-                                          movieStore.isSeatSelected(seat),
-                                        hold: movieStore.isSeatHeldByOthers(
-                                          seat
-                                        ),
-                                      },
-                                    ]"
-                                  />
+                                  <div
+                                    class="seat-cell seat-used seat-double"
+                                    :class="movieStore.mappingSeatDouble(seat)"
+                                  >
+                                    {{ seat.coordinates_y
+                                    }}{{ seat.coordinates_x }}
+                                  </div>
                                 </template>
                               </div>
                             </div>
@@ -1602,14 +1611,32 @@ const promiseAllApi = async () => {
  * Đếm thời gian
  */
 
-const onFinish = () => {
+const onFinish = async () => {
   console.log("finished!");
   toast.warning("Bạn đã hết thời gian giữ ghế");
+
+  const seatId = movieStore.seatSelected.map((seat) => seat.id);
+  const statusDefault = "available";
+  const userId = authStore.user.id;
+  const showtimeId = movieStore.showtime.data.showTime.id;
+
+  // console.log("show time id");
+  // console.log(showtimeId);
+  // console.log("userId");
+  // console.log(userId);
+  // console.log("seatId");
+  // console.log(seatId);
+
+  // console.log(seatId);
+
+  // await movieStore.resetAndBuySeat(showtimeId, seatId, userId, statusDefault);
+
   navigateTo("/");
 };
 
 const countdownDeadline = useCookie(`countdownDeadline-${slug.value}`, {
   maxAge: 600,
+  // maxAge: 20,
   default: () => null, // Ban đầu đặt là null
 });
 
@@ -1620,7 +1647,23 @@ const deadline = computed(() => {
   return countdownDeadline.value && countdownDeadline.value > now
     ? countdownDeadline.value
     : now + 1000 * 60 * 10;
+  // now + 1000 * 20;
 });
+
+// const countdownDeadline = useCookie(`countdownDeadline-${slug.value}`, {
+//   maxAge: 10, // Chỉ lưu cookie trong 20 giây
+//   default: () => null,
+// });
+
+// const now = computed(() => Date.now());
+
+// const deadline = computed(() => {
+//   if (!countdownDeadline.value) {
+//     // Nếu chưa có giá trị trong cookie, đặt deadline là 20 giây từ bây giờ
+//     countdownDeadline.value = now.value + 1000 * 10;
+//   }
+//   return countdownDeadline.value;
+// });
 
 watch(
   () => slug.value,
@@ -1852,6 +1895,96 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* code css new */
+
+.seat-used {
+  background-color: transparent !important;
+  background-repeat: no-repeat;
+  background-size: 35px 35px;
+  background-position: center;
+  color: #fff;
+  font-family: SFProText;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+}
+
+.seat-cell {
+  width: 40px;
+  /* float: left; */
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  line-height: 40px;
+  font-size: 11px;
+}
+
+.seat-test {
+  background-image: url("https://betacinemas.vn/Assets/global/img/booking/seat-unselect-normal.png");
+}
+
+.seat-hold.seat-test {
+  background-image: url("/public/images/seat-process-normal.png");
+}
+
+.seat-used.seat-sold.seat-test {
+  background-image: url("/public/images/seat-buy-normal.png");
+}
+
+.seat-select.seat-test {
+  background-image: url("/public/images/seat-select-normal.png");
+}
+
+.seat-vip {
+  background-image: url("https://betacinemas.vn/Assets/global/img/booking/seat-unselect-vip.png");
+}
+
+.seat-used.seat-hold.seat-vip {
+  background-image: url("/public/images/seat-process-vip.png");
+}
+
+.seat-used.seat-sold.seat-vip {
+  background-image: url("/public/images/seat-buy-vip.png");
+}
+
+.seat-used.seat-select.seat-vip {
+  background-image: url("/public/images/seat-select-vip.png");
+}
+
+.seat-double {
+  background-image: url("https://betacinemas.vn/Assets/global/img/booking/seat-unselect-double.png");
+}
+
+.seat-used.seat-hold.seat-double {
+  background-image: url("/public/images/seat-process-double.png");
+}
+
+.seat-used.seat-sold.seat-double {
+  background-image: url("/public/images/seat-buy-double.png");
+}
+
+.seat-used.seat-select.seat-double {
+  background-image: url("/public/images/seat-select-double.png");
+}
+
+.seat-used.seat-double {
+  width: 90px !important;
+  background-size: 60px 30px;
+}
+
+.seat-used {
+  color: #494c62 !important;
+}
+
+.seat-used.seat-select.seat-normal {
+  background-image: url("https://betacinemas.vn/Assets/global/img/booking/seat-select-normal.png");
+}
+
+/* code css new */
 .blinking-box {
   display: flex;
   justify-content: center;

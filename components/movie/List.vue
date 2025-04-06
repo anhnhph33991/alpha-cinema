@@ -66,11 +66,7 @@
               </ul>
             </div>
 
-            <div
-              class="text-center padding-bottom-30"
-              style="min-height: 85px"
-              v-if="btnBuy"
-            >
+            <div class="text-center padding-bottom-30" style="min-height: 85px">
               <a
                 style="display: block"
                 class="btn btn-2 btn-mua-ve2 fancybox-fast-view"
@@ -211,10 +207,10 @@ defineProps({
     type: Array,
     required: true,
   },
-  btnBuy: {
-    type: Boolean,
-    required: true,
-  },
+  // btnBuy: {
+  //   type: Boolean,
+  //   required: true,
+  // },
 });
 
 // Hàm mở modal và chọn phim
