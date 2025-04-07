@@ -27,9 +27,42 @@ export const useMovieStore = defineStore("movie", () => {
     }
   };
 
-  const fetchMovie = async (slug, branchId = "", cinemId = "") => {
+  // const fetchMovies = async (branchId = "", cinemaId = "") => {
+  //   const cacheKey = generateCacheKey(branchId, cinemaId);
+  //   const cacheData = localStorage.getItem(cacheKey);
+
+  //   if (cacheData) {
+  //     const parsed = JSON.parse(cacheData);
+
+  //     if (isCacheValid(parsed.timestamp)) {
+  //       movies.value = parsed.data;
+  //       console.log("📦 Dữ liệu phim lấy từ cache:", parsed.data);
+  //       return;
+  //     } else {
+  //       console.log("⏰ Cache hết hạn, gọi lại API...");
+  //     }
+  //   }
+
+  //   try {
+  //     const data = await fetchMoviesService(branchId, cinemaId);
+  //     movies.value = data;
+
+  //     localStorage.setItem(
+  //       cacheKey,
+  //       JSON.stringify({ timestamp: Date.now(), data })
+  //     );
+
+  //     // movies.value = await fetchMoviesService(branchId, cinemaId);
+  //     console.log(movies.value);
+  //   } catch (error) {
+  //     console.error("❌ Lỗi khi gọi API fetchMoviesService:", error);
+  //     toast.error("call api lỗi");
+  //   }
+  // };
+
+  const fetchMovie = async (slug, branchId = "", cinemaId = "") => {
     try {
-      movie.value = await fetchMovieService(slug, branchId, cinemId);
+      movie.value = await fetchMovieService(slug, branchId, cinemaId);
 
       console.log(movie.value);
       console.log("showtime convert");
@@ -253,6 +286,18 @@ export const useMovieStore = defineStore("movie", () => {
     }
 
     return "";
+  };
+  /**
+   * Mapping key cache localstorage
+   */
+  const generateCacheKey = (branchId, cinemaId) => {
+    return `movies_${branchId || "all"}_${cinemaId || "all"}`;
+  };
+
+  const isCacheValid = (timestamp) => {
+    const now = Date.now();
+    const TEN_MINUTES = 10 * 60 * 1000;
+    return now - timestamp < TEN_MINUTES;
   };
 
   return {
