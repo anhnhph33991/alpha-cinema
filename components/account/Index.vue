@@ -253,7 +253,15 @@
           <div class="row">
             <div class="col-lg-12 col-md-12">
               <div class="mb-3">
-                <a-form-item name="currentPassword">
+                <a-form-item
+                  name="currentPassword"
+                  :rules="[
+                    {
+                      required: true,
+                      message: 'Vui lòng nhập mật khẩu hiện tại!',
+                    },
+                  ]"
+                >
                   <label class="form-label">
                     <span class="text-danger">*</span> Mật khẩu hiện tại
                   </label>
@@ -269,7 +277,15 @@
 
             <div class="col-lg-12 col-md-12">
               <div class="mb-3">
-                <a-form-item name="newPassword">
+                <a-form-item
+                  name="newPassword"
+                  :rules="[
+                    {
+                      required: true,
+                      message: 'Vui lòng nhập mật khẩu mới',
+                    },
+                  ]"
+                >
                   <label class="form-label">
                     <span class="text-danger">*</span> Mật khẩu mới
                   </label>
@@ -285,7 +301,15 @@
 
             <div class="col-lg-12 col-md-12">
               <div class="mb-3">
-                <a-form-item name="confirmPassword">
+                <a-form-item
+                  name="confirmPassword"
+                  :rules="[
+                    {
+                      required: true,
+                      message: 'Vui lòng nhập xác nhận mật khẩu!',
+                    },
+                  ]"
+                >
                   <label class="form-label">
                     <span class="text-danger">*</span> Xác nhận mật khẩu mới
                   </label>

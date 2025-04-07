@@ -166,12 +166,18 @@ export const useAuthStore = defineStore(
       try {
         const response = await changePasswordService(data);
 
-        log(response);
+        console.log(response);
         toast.success("Đổi mật khẩu thành công");
 
         return true;
       } catch (error) {
         console.log(error);
+
+        if (error && error.error && error.error.message) {
+          toast.error(error.error.message);
+          return;
+        }
+
         return false;
       }
     };
