@@ -610,7 +610,36 @@
                 <div>
                   <div class="row">
                     <template v-if="isChoosingScreen">
-                      <div class="col-lg-8"></div>
+                      <div class="col-lg-8">
+                        <div class="row">
+                          <div
+                            class="col-lg-3 col-md-2 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
+                          >
+                            <div class="seat-cell seat-used seat-test"></div>
+                            <span class="note-seat-status-lable">
+                              Ghế thường
+                            </span>
+                          </div>
+
+                          <div
+                            class="col-lg-3 col-md-2 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
+                          >
+                            <div class="seat-cell seat-used seat-vip"></div>
+                            <span class="note-seat-status-lable">
+                              Ghế Vip
+                            </span>
+                          </div>
+
+                          <div
+                            class="col-lg-3 col-md-2 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
+                          >
+                            <div class="seat-cell seat-used seat-double"></div>
+                            <span class="note-seat-status-lable">
+                              Ghế Đôi
+                            </span>
+                          </div>
+                        </div>
+                      </div>
 
                       <div class="col-lg-2">
                         <div class="total-price-label text-start">
