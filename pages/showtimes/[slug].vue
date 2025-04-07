@@ -15,47 +15,100 @@
                       </span>
                     </div>
 
-                    <div class="d-flex justify-content-center mb-4 mt-4 row">
-                      <div
-                        class="col-lg-3 col-md-2 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
-                      >
-                        <div class="seat-cell seat-used seat-test"></div>
-                        <span class="note-seat-status-lable"> Ghế trống </span>
-                      </div>
-                      <div class="col-lg-3 col-md-2 col-xl-3 col-sm-12">
+                    <div class="mb-4 mt-4">
+                      <!-- <div class="row">
                         <div
-                          class="col bg-color d-flex justify-content-center align-items-center gap-2"
+                          class="col-12 col-lg-3 col-md-6 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
                         >
-                          <div
-                            class="seat-cell seat-used seat-select seat-test"
-                          ></div>
+                          <div class="seat-cell seat-used seat-test"></div>
                           <span class="note-seat-status-lable">
-                            Ghế đang chọn
+                            Ghế trống
                           </span>
                         </div>
-                      </div>
-                      <div class="col-lg-3 col-md-2 col-xl-3 col-sm-12">
-                        <div
-                          class="col bg-color d-flex justify-content-center align-items-center gap-2"
-                        >
+                        <div class="col-12 col-lg-3 col-md-6 col-xl-3 col-sm-12">
                           <div
-                            class="seat-cell seat-used seat-hold seat-test"
-                          ></div>
-                          <span class="note-seat-status-lable">
-                            Ghế đang giữ
-                          </span>
+                            class="col bg-color d-flex justify-content-center align-items-center gap-2"
+                          >
+                            <div
+                              class="seat-cell seat-used seat-select seat-test"
+                            ></div>
+                            <span class="note-seat-status-lable">
+                              Ghế đang chọn
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-lg-3 col-md-2 col-xl-3 col-sm-12">
-                        <div
-                          class="col bg-color d-flex justify-content-center align-items-center gap-2"
-                        >
+                        <div class="col-12 col-lg-3 col-md-6 col-xl-3 col-sm-12">
                           <div
-                            class="seat-cell seat-used seat-sold seat-test"
-                          ></div>
-                          <span class="note-seat-status-lable">
-                            Ghế đã bán
-                          </span>
+                            class="col bg-color d-flex justify-content-center align-items-center gap-2"
+                          >
+                            <div
+                              class="seat-cell seat-used seat-hold seat-test"
+                            ></div>
+                            <span class="note-seat-status-lable">
+                              Ghế đang giữ
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-3 col-md-6 col-xl-3 col-sm-12">
+                          <div
+                            class="col bg-color d-flex justify-content-center align-items-center gap-2"
+                          >
+                            <div
+                              class="seat-cell seat-used seat-sold seat-test"
+                            ></div>
+                            <span class="note-seat-status-lable">
+                              Ghế đã bán
+                            </span>
+                          </div>
+                        </div>
+                      </div> -->
+
+                      <div class="row align-items-center g-3">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                          <div
+                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
+                          >
+                            <div class="seat-cell seat-used seat-test"></div>
+                            <span class="note-seat-status-lable"
+                              >Ghế trống</span
+                            >
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                          <div
+                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
+                          >
+                            <div
+                              class="seat-cell seat-used seat-select seat-test"
+                            ></div>
+                            <span class="note-seat-status-lable"
+                              >Ghế đang chọn</span
+                            >
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                          <div
+                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
+                          >
+                            <div
+                              class="seat-cell seat-used seat-hold seat-test"
+                            ></div>
+                            <span class="note-seat-status-lable"
+                              >Ghế đang giữ</span
+                            >
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                          <div
+                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
+                          >
+                            <div
+                              class="seat-cell seat-used seat-sold seat-test"
+                            ></div>
+                            <span class="note-seat-status-lable"
+                              >Ghế đã bán</span
+                            >
+                          </div>
                         </div>
                       </div>
                     </div>
