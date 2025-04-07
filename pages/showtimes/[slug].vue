@@ -102,10 +102,24 @@
                                   <div
                                     class="seat-cell seat-used seat-test"
                                     :class="movieStore.mappingSeatNormal(seat)"
+                                    :style="{
+                                      color:
+                                        seat.status !== 'available'
+                                          ? 'white !important'
+                                          : '',
+                                    }"
                                   >
                                     {{ seat.coordinates_y
                                     }}{{ seat.coordinates_x }}
                                   </div>
+
+                                  <!-- <div
+                                    class="seat-cell seat-used seat-test"
+                                    :class="movieStore.mappingSeatNormal(seat)"
+                                  >
+                                    {{ seat.coordinates_y
+                                    }}{{ seat.coordinates_x }}
+                                  </div> -->
 
                                   <!-- <SeatRegular
                                     style="width: 32px; height: 32px"
@@ -122,18 +136,48 @@
                                   /> -->
                                 </template>
                                 <template v-if="seat.type_seat_id == 2">
-                                  <div
+                                  <!-- <div
                                     class="seat-cell seat-used seat-vip"
                                     :class="movieStore.mappingSeatTwo(seat)"
+                                  >
+                                    {{ seat.coordinates_y
+                                    }}{{ seat.coordinates_x }}
+                                  </div> -->
+
+                                  <div
+                                    class="seat-cell seat-used seat-vip"
+                                    :class="[movieStore.mappingSeatTwo(seat)]"
+                                    :style="{
+                                      color:
+                                        seat.status !== 'available'
+                                          ? 'white !important'
+                                          : '',
+                                    }"
                                   >
                                     {{ seat.coordinates_y
                                     }}{{ seat.coordinates_x }}
                                   </div>
                                 </template>
                                 <template v-if="seat.type_seat_id == 3">
-                                  <div
+                                  <!-- <div
                                     class="seat-cell seat-used seat-double"
                                     :class="movieStore.mappingSeatDouble(seat)"
+                                  >
+                                    {{ seat.coordinates_y
+                                    }}{{ seat.coordinates_x }}
+                                  </div> -->
+
+                                  <div
+                                    class="seat-cell seat-used seat-double"
+                                    :class="[
+                                      movieStore.mappingSeatDouble(seat),
+                                    ]"
+                                    :style="{
+                                      color:
+                                        seat.status !== 'available'
+                                          ? 'white !important'
+                                          : '',
+                                    }"
                                   >
                                     {{ seat.coordinates_y
                                     }}{{ seat.coordinates_x }}

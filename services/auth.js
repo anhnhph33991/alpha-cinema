@@ -111,3 +111,18 @@ export const resetPasswordService = async (data) => {
     throw error;
   }
 };
+
+export const changePasswordService = async (data) => {
+  const { $axios } = useNuxtApp();
+  try {
+    const response = await $axios.post(`/v1/change-password`, data);
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

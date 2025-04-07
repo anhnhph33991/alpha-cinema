@@ -1,5 +1,6 @@
 import { toast } from "vue-sonner";
 import {
+  changePasswordService,
   loginService,
   logoutService,
   registerService,
@@ -161,6 +162,20 @@ export const useAuthStore = defineStore(
       }
     };
 
+    const changePassword = async (data) => {
+      try {
+        const response = await changePasswordService(data);
+
+        log(response);
+        toast.success("Đổi mật khẩu thành công");
+
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    };
+
     return {
       user,
       token,
@@ -173,6 +188,7 @@ export const useAuthStore = defineStore(
       sendOtp,
       verifyOtp,
       resetPassword,
+      changePassword,
     };
   },
   {

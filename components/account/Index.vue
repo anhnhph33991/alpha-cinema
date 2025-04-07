@@ -3,12 +3,31 @@
     <div>
       <form @submit.prevent="submited" class="pt-4">
         <div class="row">
-          <div class="col-lg-4 d-flex justify-content-center align-items-center flex-column mb-3">
+          <div
+            class="col-lg-4 d-flex justify-content-center align-items-center flex-column mb-3"
+          >
             <div class="avatar-wrapper mb-2">
-              <img :src="dataForm.avatar || avatarNull" alt="avatar" class="avatar-img" referrerpolicy="no-referrer" />
+              <img
+                :src="dataForm.avatar || avatarNull"
+                alt="avatar"
+                class="avatar-img"
+                referrerpolicy="no-referrer"
+              />
             </div>
-            <input type="file" ref="fileInputRef" style="display: none" accept="image/*" @change="handleFileChange" />
-            <button type="button" class="btn btn-custom mt-2" @click="triggerFileInput">Tải ảnh lên</button>
+            <input
+              type="file"
+              ref="fileInputRef"
+              style="display: none"
+              accept="image/*"
+              @change="handleFileChange"
+            />
+            <button
+              type="button"
+              class="btn btn-custom mt-2"
+              @click="triggerFileInput"
+            >
+              Tải ảnh lên
+            </button>
           </div>
 
           <div class="row col-lg-8">
@@ -18,7 +37,12 @@
                   <span class="text-danger">*</span>
                   Họ Tên
                 </label>
-                <input type="text" placeholder="Nhập họ và tên " class="form-control" v-model="dataForm.name" />
+                <input
+                  type="text"
+                  placeholder="Nhập họ và tên "
+                  class="form-control"
+                  v-model="dataForm.name"
+                />
                 <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
               </div>
             </div>
@@ -29,7 +53,12 @@
                   <span class="text-danger">*</span>
                   Email
                 </label>
-                <input type="email" placeholder="Nhập email" class="form-control" v-model="dataForm.email" />
+                <input
+                  type="email"
+                  placeholder="Nhập email"
+                  class="form-control"
+                  v-model="dataForm.email"
+                />
                 <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
               </div>
             </div>
@@ -40,7 +69,12 @@
                   <span class="text-danger">*</span>
                   Số điện thoại
                 </label>
-                <input type="text" class="form-control" placeholder="Nhập số điện thoại" v-model="dataForm.phone" />
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Nhập số điện thoại"
+                  v-model="dataForm.phone"
+                />
                 <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
               </div>
             </div>
@@ -51,7 +85,11 @@
                   <span class="text-danger">*</span>
                   Ngày Sinh
                 </label>
-                <input type="date" class="form-control" v-model="dataForm.birthday" />
+                <input
+                  type="date"
+                  class="form-control"
+                  v-model="dataForm.birthday"
+                />
                 <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
               </div>
             </div>
@@ -77,39 +115,54 @@
               </div>
             </div>
 
-
             <div class="col-lg-12">
               <label for="" class="form-label">Địa chỉ </label>
-              <textarea name="" id="" class="form-control" rows="2" placeholder="Nhập địa chỉ !!!"
-                v-model="dataForm.address"></textarea>
+              <textarea
+                name=""
+                id=""
+                class="form-control"
+                rows="2"
+                placeholder="Nhập địa chỉ !!!"
+                v-model="dataForm.address"
+              ></textarea>
             </div>
             <div class="col-lg-12 text-end mt-3">
               <button class="btn btn-primary btn-2 btn-p-5">Cập nhật</button>
 
-              <a class="ms-3 pass" @click.prevent="handleChangePassword">Đổi mật khẩu</a>
+              <a class="ms-3 pass" @click.prevent="handleChangePassword"
+                >Đổi mật khẩu</a
+              >
             </div>
           </div>
 
           <!-- <div class="col-lg-12 mt-3">
            
           </div> -->
-
-
         </div>
       </form>
     </div>
 
-    <a-modal :open="modal2Visible" title="ĐỔI MẬT KHẨU" centered @ok="handleOk" @cancel="modal2Visible = false">
+    <a-modal
+      :open="modal2Visible"
+      title="ĐỔI MẬT KHẨU"
+      centered
+      @ok="handleOk"
+      @cancel="modal2Visible = false"
+      :footer="null"
+    >
       <hr />
-      <div class="row mt-4">
+      <!-- <div class="row mt-4">
         <div class="col-lg-12 col-md-12">
           <div class="mb-3">
             <label for="" class="form-label">
               <span class="text-danger">*</span>
               Mật khẩu hiện tại
             </label>
-            <input type="password" class="form-control" v-model="formDataPassword.currentPassword" />
-            <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+            <input
+              type="password"
+              class="form-control"
+              v-model="formDataPassword.currentPassword"
+            />
           </div>
         </div>
         <div class="col-lg-12 col-md-12">
@@ -118,8 +171,11 @@
               <span class="text-danger">*</span>
               Mật khẩu mới
             </label>
-            <input type="password" class="form-control" v-model="formDataPassword.newPassword" />
-            <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+            <input
+              type="password"
+              class="form-control"
+              v-model="formDataPassword.newPassword"
+            />
           </div>
         </div>
         <div class="col-lg-12 col-md-12">
@@ -128,21 +184,142 @@
               <span class="text-danger">*</span>
               Xác nhận mật khẩu mới
             </label>
-            <input type="password" class="form-control" v-model="formDataPassword.confirmPassword" />
-            <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+            <input
+              type="password"
+              class="form-control"
+              v-model="formDataPassword.confirmPassword"
+            />
           </div>
         </div>
-      </div>
+      </div> -->
+
+      <!-- <a-form
+        :model="formChangePassword"
+        name="basic"
+        :label-col="{ span: 8 }"
+        :wrapper-col="{ span: 16 }"
+        autocomplete="off"
+        @finish="onFinish"
+        @finishFailed="onFinishFailed"
+      >
+        <div class="row mt-4">
+          <div class="col-lg-12 col-md-12">
+            <div class="mb-3">
+              <a-form-item name="currentPassword">
+                <label class="form-label">
+                  <span class="text-danger">*</span> Mật khẩu hiện tại
+                </label>
+                <a-input-password
+                  v-model="formChangePassword.currentPassword"
+                />
+              </a-form-item>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12">
+            <div class="mb-3">
+              <label for="" class="form-label">
+                <span class="text-danger">*</span>
+                Mật khẩu mới
+              </label>
+              <a-input-password v-model="formChangePassword.newPassword" />
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12">
+            <div class="mb-3">
+              <label for="" class="form-label">
+                <span class="text-danger">*</span>
+                Xác nhận mật khẩu mới
+              </label>
+              <a-input-password v-model="formChangePassword.confirmPassword" />
+            </div>
+          </div>
+
+          <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
+            <a-button type="primary" html-type="submit">Submit</a-button>
+          </a-form-item>
+        </div>
+      </a-form> -->
+
+      <a-form
+        :model="formChangePassword"
+        name="basic"
+        :label-col="{ span: 8 }"
+        :wrapper-col="{ span: 16 }"
+        autocomplete="off"
+        @finish="onFinish"
+        @finishFailed="onFinishFailed"
+      >
+        <div class="d-flex justify-content-center align-items-center">
+          <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <div class="mb-3">
+                <a-form-item name="currentPassword">
+                  <label class="form-label">
+                    <span class="text-danger">*</span> Mật khẩu hiện tại
+                  </label>
+                  <a-input-password
+                    :value="formChangePassword.currentPassword"
+                    @update:value="
+                      (val) => (formChangePassword.currentPassword = val)
+                    "
+                  />
+                </a-form-item>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12">
+              <div class="mb-3">
+                <a-form-item name="newPassword">
+                  <label class="form-label">
+                    <span class="text-danger">*</span> Mật khẩu mới
+                  </label>
+                  <a-input-password
+                    :value="formChangePassword.newPassword"
+                    @update:value="
+                      (val) => (formChangePassword.newPassword = val)
+                    "
+                  />
+                </a-form-item>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12">
+              <div class="mb-3">
+                <a-form-item name="confirmPassword">
+                  <label class="form-label">
+                    <span class="text-danger">*</span> Xác nhận mật khẩu mới
+                  </label>
+                  <a-input-password
+                    :value="formChangePassword.confirmPassword"
+                    @update:value="
+                      (val) => (formChangePassword.confirmPassword = val)
+                    "
+                  />
+                </a-form-item>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12">
+              <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
+                <a-button type="primary" html-type="submit">Xác nhận</a-button>
+              </a-form-item>
+            </div>
+          </div>
+        </div>
+      </a-form>
     </a-modal>
   </div>
 </template>
 
 <script setup>
 import { toast } from "vue-sonner";
-import avatarNull from "../../assets/images/avatarNull.png"
+import avatarNull from "../../assets/images/avatarNull.png";
 import { accountStore } from "~/stores/account";
+import { useAuthStore } from "~/stores/auth";
 const selectedFile = ref(null);
 const updateProfile = accountStore();
+
+const authStore = useAuthStore();
 
 const props = defineProps({
   user: {
@@ -194,18 +371,42 @@ const formDataPassword = ref({
   confirmPassword: "",
 });
 
+const formChangePassword = reactive({
+  currentPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+});
+
 const handleChangePassword = () => {
   modal2Visible.value = true;
-
 };
 
 const handleOk = () => {
+  authStore.changePassword({
+    password_old: formChangePassword.currentPassword,
+    password: formChangePassword.newPassword,
+  });
+
   console.log(formDataPassword.value);
 
   toast.success("Đổi mật khẩu");
 };
 
+const onFinish = (values) => {
+  const response = authStore.changePassword({
+    password_old: values.currentPassword,
+    password: values.newPassword,
+  });
 
+  // if (response) {
+  //   modal2Visible.value = false;
+  // }
+
+  console.log(response);
+};
+const onFinishFailed = (errorInfo) => {
+  console.log("Failed:", errorInfo);
+};
 
 onMounted(() => {
   console.log(props.user);
