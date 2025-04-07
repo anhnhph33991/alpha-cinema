@@ -611,7 +611,7 @@
                   <div class="row">
                     <template v-if="isChoosingScreen">
                       <div class="col-lg-8">
-                        <div class="row">
+                        <!-- <div class="row">
                           <div
                             class="col-lg-3 col-md-2 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
                           >
@@ -638,7 +638,7 @@
                               Ghế Đôi
                             </span>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
 
                       <div class="col-lg-2">
@@ -1909,6 +1909,13 @@ const handleApplyPoint = () => {
   // priceAll.value.discountAmount = discountAmount.value
 };
 
+//**
+// Code new
+//  */
+
+//**
+// Code new
+//  */
 onMounted(() => {
   promiseAllApi();
   callEcho();
