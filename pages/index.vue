@@ -74,6 +74,12 @@
                     />
                   </ClientOnly>
                 </div>
+
+                <div class="text-center">
+                  <a-button type="primary" @click="handleSubmitVerifyEmail"
+                    >Gửi</a-button
+                  >
+                </div>
               </div>
             </a-card>
           </div>
@@ -117,6 +123,19 @@ definePageMeta({
 const form = ref({
   otp: "",
 });
+
+const handleSubmitVerifyEmail = async () => {
+  try {
+    console.log(form.value.otp);
+    const data = {
+      email: authStore.user.email,
+      otp: form.value.otp,
+    };
+    authStore.confirmEmail(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 watch(
   () => form.otp,
@@ -236,15 +255,28 @@ watch(
   { deep: true }
 );
 
-watch(
-  () => authStore.user,
-  (user) => {
-    if (user && user.email_verified_at === null) {
-      openModalVerifyEmail.value = true;
-    }
-  },
-  { immediate: true, deep: true }
-);
+// watch(
+//   () => authStore.user,
+//   (user) => {
+//     if (user && user.email_verified_at && user?.email_verified_at === null) {
+//       openModalVerifyEmail.value = true;
+//     }
+//   },
+//   { immediate: true, deep: true }
+// );
+
+// watch(
+//   () => authStore.user,
+//   (user) => {
+//     const isNeedVerify =
+//       user &&
+//       (!("email_verified_at" in user) || user.email_verified_at === null);
+//     if (isNeedVerify) {
+//       openModalVerifyEmail.value = true;
+//     }
+//   },
+//   { immediate: true, deep: true }
+// );
 
 /**
  * Data 3 tab
@@ -323,6 +355,8 @@ onMounted(async () => {
     selectCinemaBranch.value?.branch_id,
     selectCinemaBranch.value?.cinema_id
   );
+
+  // authStore.verifyEmail(authStore.user.email);
 
   // if (!dataSelectCity.value) {
   //   openModal.value = true;

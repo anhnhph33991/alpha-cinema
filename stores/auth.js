@@ -200,6 +200,13 @@ export const useAuthStore = defineStore(
         console.log(response);
       } catch (error) {
         console.log(error);
+
+        if (error && error.error) {
+          toast.error(error.error);
+          return;
+        }
+
+        toast.error("Có lỗi xảy ra");
       }
     };
 
