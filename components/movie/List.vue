@@ -71,6 +71,7 @@
                 style="display: block"
                 class="btn btn-2 btn-mua-ve2 fancybox-fast-view"
                 @click.prevent="showModal(movie)"
+                v-if="btnBuy"
               >
                 MUA VÉ
               </a>
@@ -207,10 +208,10 @@ defineProps({
     type: Array,
     required: true,
   },
-  // btnBuy: {
-  //   type: Boolean,
-  //   required: true,
-  // },
+  btnBuy: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 // Hàm mở modal và chọn phim

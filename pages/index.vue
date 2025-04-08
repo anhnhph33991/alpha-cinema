@@ -89,16 +89,16 @@
       <div class="container" v-if="movieStore.movies.data">
         <a-tabs v-model="tabActive" :default-active-key="'2'">
           <a-tab-pane key="1" tab="Phim Sắp Chiếu">
-            <!-- <MovieList :movies="movieIsUpcoming" :btnBuy="false" /> -->
-            <MovieList :movies="[]" />
+            <!-- <MovieList :movies="[]" /> -->
+            <MovieList :movies="movieIsUpcoming" :btnBuy="false" />
           </a-tab-pane>
           <a-tab-pane key="2" tab="Phim Đang Chiếu">
-            <MovieList :movies="movieStore.movies?.data || []" />
-            <!-- <MovieList :movies="movieIsShowing || []" :btnBuy="true" /> -->
+            <!-- <MovieList :movies="movieStore.movies?.data || []" /> -->
+            <MovieList :movies="movieIsShowing || []" :btnBuy="true" />
           </a-tab-pane>
           <a-tab-pane key="3" tab="Suất Chiếu Đặc Biệt">
-            <!-- <MovieList :movies="movieIsSpecial" :btnBuy="true" /> -->
-            <MovieList :movies="[]" />
+            <MovieList :movies="movieIsSpecial" :btnBuy="true" />
+            <!-- <MovieList :movies="[]" /> -->
           </a-tab-pane>
         </a-tabs>
       </div>
@@ -372,6 +372,11 @@ onMounted(async () => {
   await branchStore.listBranch();
   optionBranch.value = branchStore.convertOptionBranch();
   // console.log("Auth Google:", authGoogle.value);
+});
+
+useSeoMeta({
+  title: "Alpha Cinema",
+  description: "Website cinema ticket booking",
 });
 </script>
 
