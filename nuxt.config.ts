@@ -59,9 +59,10 @@ export default defineNuxtConfig({
     broadcaster: 'reverb',
     key: process.env.NUXT_ECHO_KEY,
     host: process.env.NUXT_ECHO_HOST,
-    port: 8080,
-    scheme: 'http',
-    transports: ['ws'],
+    // port: 8080,
+    port: 443,
+    scheme: 'https',
+    transports: ['wss'],
     properties: {
       encrypted: true,
       rejectUnauthorized: false,
