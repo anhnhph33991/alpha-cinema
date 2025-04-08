@@ -4,50 +4,81 @@
     <LayoutBanner />
 
     <div class="mt-5 home-section">
-      <a-modal
-        :open="openModal"
-        width="1000px"
-        centered
-        @cancel="handleCancel"
-        :footer="null"
-      >
-        <div>
-          <div class="row p-3">
-            <div class="col-lg-6 col-md-6">
-              <div class="mb-3 text-center">
-                <label class="form-label">Tỉnh/Thành Phố</label>
-                <a-select
-                  :value="valueBranch"
-                  show-search
-                  placeholder="Chọn Tỉnh/Thành phố"
-                  style="width: 100%"
-                  :options="optionBranch"
-                  :filter-option="filterOptionBranch"
-                  @focus="handleFocus"
-                  @blur="handleBlur"
-                  @change="handleChangeBranch"
-                ></a-select>
+      <ClientOnly>
+        <a-modal
+          :open="openModal"
+          width="1000px"
+          centered
+          @cancel="handleCancel"
+          :footer="null"
+        >
+          <div>
+            <div class="row p-3">
+              <div class="col-lg-6 col-md-6">
+                <div class="mb-3 text-center">
+                  <label class="form-label">Tỉnh/Thành Phố</label>
+                  <a-select
+                    :value="valueBranch"
+                    show-search
+                    placeholder="Chọn Tỉnh/Thành phố"
+                    style="width: 100%"
+                    :options="optionBranch"
+                    :filter-option="filterOptionBranch"
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    @change="handleChangeBranch"
+                  ></a-select>
+                </div>
               </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-              <div class="mb-3 text-center">
-                <label class="form-label">Tên rạp</label>
-                <a-select
-                  :value="valueCinema"
-                  show-search
-                  placeholder="Chọn rạp chiếu"
-                  style="width: 100%"
-                  :options="optionCinema"
-                  :filter-option="filterOptionCinema"
-                  @focus="handleFocus"
-                  @blur="handleBlur"
-                  @change="handleChangeCinema"
-                ></a-select>
+              <div class="col-lg-6 col-md-6">
+                <div class="mb-3 text-center">
+                  <label class="form-label">Tên rạp</label>
+                  <a-select
+                    :value="valueCinema"
+                    show-search
+                    placeholder="Chọn rạp chiếu"
+                    style="width: 100%"
+                    :options="optionCinema"
+                    :filter-option="filterOptionCinema"
+                    @focus="handleFocus"
+                    @blur="handleBlur"
+                    @change="handleChangeCinema"
+                  ></a-select>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </a-modal>
+        </a-modal>
+      </ClientOnly>
+
+      <ClientOnly>
+        <a-modal
+          :open="openModalVerifyEmail"
+          width="1000px"
+          centered
+          @cancel="handleCancelVerifyEmail"
+          :footer="null"
+        >
+          <div class="d-flex justify-content-center align-items-center">
+            <a-card :bordered="false" style="width: 300px">
+              <div>
+                <div>
+                  <h6 class="text-center fw-bold">Vui lòng kiểm tra email</h6>
+                </div>
+                <div style="padding: 3rem 0">
+                  <ClientOnly>
+                    <PrimeInputOtp
+                      v-model="form.otp"
+                      :length="6"
+                      class="justify-content-center"
+                    />
+                  </ClientOnly>
+                </div>
+              </div>
+            </a-card>
+          </div>
+        </a-modal>
+      </ClientOnly>
 
       <div class="container" v-if="movieStore.movies.data">
         <a-tabs v-model="tabActive" :default-active-key="'2'">
@@ -83,15 +114,41 @@ definePageMeta({
   middleware: "admin",
 });
 
+const form = ref({
+  otp: "",
+});
+
+watch(
+  () => form.otp,
+  (val) => {
+    if (val.length == 6) {
+      // verifyEmailService();
+
+      console.log("1111");
+    }
+  }
+);
+
+const handleVerifyOtp = async () => {
+  try {
+    const response = await authStore.verifyOtp(form.otp);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 import { LayoutBanner, MovieList } from "#components";
 import { useMovieStore } from "~/stores/movie";
 import { useBranchStore } from "~/stores/branch";
+import { useAuthStore } from "~/stores/auth";
 
 const movieStore = useMovieStore();
 const branchStore = useBranchStore();
+const authStore = useAuthStore();
 
 const tabActive = ref("2");
 const openModal = ref(false);
+const openModalVerifyEmail = ref(false);
 
 const selectCinemaBranch = useCookie("selectCinemaBranch", {
   maxAge: 60 * 60 * 24,
@@ -102,42 +159,9 @@ const selectCinemaBranch = useCookie("selectCinemaBranch", {
 const optionBranch = ref([]);
 const optionCinema = ref([]);
 
-// const options = ref([
-//   {
-//     value: "jack",
-//     label: "Jack",
-//   },
-//   {
-//     value: "lucy",
-//     label: "Lucy",
-//   },
-//   {
-//     value: "tom",
-//     label: "Tom",
-//   },
-// ]);
-
 const handleChangeBranch = (value) => {
   console.log(`Branch select: ${value}`);
   valueBranch.value = value;
-
-  // if (value == 1) {
-  //   optionCinema.value = [
-  //     {
-  //       value: 1,
-  //       label: "Alpha Hồ Tùng Mậu",
-  //     },
-  //     {
-  //       value: 2,
-  //       label: "Alpha Hoài Đức",
-  //     },
-  //     {
-  //       value: 3,
-  //       label: "Alpha Hai Bà Trưng",
-  //     },
-  //   ];
-  //   return;
-  // }
 
   if (value) {
     valueCinema.value = undefined;
@@ -192,19 +216,13 @@ const valueCinema = ref(undefined);
 
 const value = ref(undefined);
 
-// dataSelectCity.value = {
-//   branch_id: 1,
-//   cinema_id: 1,
-// };
-
 const handleCancel = () => {
   if (valueBranch.value && valueCinema.value) {
-    // console.log(valueBranch.value);
-    // console.log(valueCinema.value);
-    // return;
     openModal.value = false;
   }
 };
+
+const handleCancelVerifyEmail = () => {};
 
 // watch(selectCinemaBranch, fetchMovies, { deep: true });
 watch(
@@ -216,6 +234,16 @@ watch(
     }
   },
   { deep: true }
+);
+
+watch(
+  () => authStore.user,
+  (user) => {
+    if (user && user.email_verified_at === null) {
+      openModalVerifyEmail.value = true;
+    }
+  },
+  { immediate: true, deep: true }
 );
 
 /**

@@ -7,6 +7,10 @@
     <!-- ==========Overlay========== -->
     <!-- <div class="overlay"></div> -->
 
+    <!-- <a-back-top>
+      <template #icon><PlusOutlined /></template>
+    </a-back-top> -->
+
     <a-back-top />
     <!-- ==========Overlay========== -->
 
@@ -24,19 +28,16 @@
     <LayoutFooter />
     <!-- ==========Footer-Section========== -->
   </div>
-  
 </template>
 
 <script setup>
+import { ArrowUpOutlined } from "@ant-design/icons-vue";
 import { useWindowScroll } from "@vueuse/core";
 import "~/assets/main.css";
 import "~/assets/style.css";
 import "~/assets/form.css";
 import "~/assets/movie.css";
 import "~/assets/antdv.css";
-
-
-
 
 const { y } = useWindowScroll();
 

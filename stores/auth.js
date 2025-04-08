@@ -1,11 +1,13 @@
 import { toast } from "vue-sonner";
 import {
   changePasswordService,
+  confirmVerifyEmailService,
   loginService,
   logoutService,
   registerService,
   resetPasswordService,
   sendOtpService,
+  verifyEmailService,
   verifyOtpService,
 } from "~/services/auth";
 
@@ -182,6 +184,25 @@ export const useAuthStore = defineStore(
       }
     };
 
+    const verifyEmail = async (data) => {
+      try {
+        const response = await verifyEmailService(data);
+
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const confirmEmail = async (data) => {
+      try {
+        const response = await confirmVerifyEmailService(data);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     return {
       user,
       token,
@@ -195,6 +216,8 @@ export const useAuthStore = defineStore(
       verifyOtp,
       resetPassword,
       changePassword,
+      verifyEmail,
+      confirmEmail,
     };
   },
   {

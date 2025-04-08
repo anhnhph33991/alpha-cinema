@@ -126,3 +126,33 @@ export const changePasswordService = async (data) => {
     throw error;
   }
 };
+
+export const verifyEmailService = async (data) => {
+  const { $axios } = useNuxtApp();
+  try {
+    const response = await $axios.post(`/v1/verify-email`, data);
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const confirmVerifyEmailService = async (data) => {
+  const { $axios } = useNuxtApp();
+  try {
+    const response = await $axios.post(`/v1/confirm-email`, data);
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
