@@ -8,7 +8,11 @@
       class="carousel-full-width"
     >
       <Slide v-for="(slide, index) in slides" :key="index">
-        <img :src="slide" alt="Slide" class="img-fluid w-100" />
+        <img
+          :src="slide"
+          alt="Slide"
+          class="img-fluid w-100 al-slide-height-500"
+        />
       </Slide>
 
       <template #addons>
@@ -45,6 +49,9 @@ defineProps({
 </script>
 
 <style scoped>
+.al-slide-height-500 {
+  height: 500px;
+}
 .al-slide-pagination {
   color: #fff;
 }
@@ -59,7 +66,7 @@ defineProps({
 }
 
 .img-fluid {
-  height: auto;
+  /* height: auto; */
   object-fit: cover;
 }
 

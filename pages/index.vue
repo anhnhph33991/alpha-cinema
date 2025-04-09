@@ -278,6 +278,19 @@ watch(
 //   { immediate: true, deep: true }
 // );
 
+watch(
+  () => authStore.user,
+  (user) => {
+    const hasUserData = user && Object.keys(user).length > 0;
+    const isEmailUnverified = user?.email_verified_at == null;
+
+    if (hasUserData && isEmailUnverified) {
+      openModalVerifyEmail.value = true;
+    }
+  },
+  { immediate: true, deep: true }
+);
+
 /**
  * Data 3 tab
  */

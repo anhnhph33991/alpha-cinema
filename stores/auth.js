@@ -17,6 +17,7 @@ export const useAuthStore = defineStore(
     const user = ref({
       name: "",
       email: "",
+      email_verified_at: "",
       avatar: "",
       phone: "",
       address: "",
