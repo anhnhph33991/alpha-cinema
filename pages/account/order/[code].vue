@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <ClientOnly>
+      <a-page-header
+        style="border: 1px solid rgb(235, 237, 240)"
+        :breadcrumb="{ routes }"
+      />
+    </ClientOnly>
     <div class="row">
       <div class="col-xl-9 col-lg-12 col-md-12">
         <div class="card mt-2 mb-5">
@@ -254,9 +260,30 @@ const route = useRoute();
 
 const code = route.params.code;
 
+const routes = [
+  {
+    path: "/",
+    breadcrumbName: "Trang chủ",
+  },
+  {
+    path: "account",
+    breadcrumbName: "Đặt vé",
+  },
+  {
+    path: "second",
+    breadcrumbName: "Third-level Menu",
+  },
+];
+
 onMounted(() => {
   console.log(code);
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+:where(
+    .css-dev-only-do-not-override-1p3hq3p
+  ).ant-page-header.ant-page-header-ghost {
+  background-color: white;
+}
+</style>
