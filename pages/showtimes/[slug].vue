@@ -625,7 +625,8 @@
                         <div
                           class="col-md-3 item-seat-money item-seat-total-money total-money-name"
                         >
-                          {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ
+                          <!-- {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ -->
+                          {{ totalWithTax.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
                       <div class="row">
@@ -647,7 +648,8 @@
                         <div
                           class="col-md-3 item-seat-money item-seat-total-money total-money-name"
                         >
-                          {{ priceAll.payableAmount.toLocaleString("vi-VN") }}đ
+                          <!-- {{ priceAll.payableAmount.toLocaleString("vi-VN") }}đ -->
+                          {{ payableWithTax.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
                     </div>
@@ -743,7 +745,8 @@
                           Tổng tiền
                         </div>
                         <div class="total-price-value text-center">
-                          {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ
+                          <!-- {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ -->
+                          {{ payableWithTax.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
                     </template>
@@ -1372,6 +1375,15 @@ const callEcho = () => {
   });
 };
 
+const vatRate = computed(() => authStore.vat.rate); // 8%
+
+const baseAmount = computed(() => priceAll.value.payableAmount);
+
+// Tính tổng cộng có VAT
+const totalWithVAT = computed(() => {
+  return baseAmount.value + (baseAmount.value * vatRate.value) / 100;
+});
+
 const handleNextOrder = async () => {
   try {
     // toast.success("Thanh toán đê");
@@ -1405,6 +1417,7 @@ const handleNextOrder = async () => {
       movie_id: movieStore.showtime.data.showTime.movie_id,
       showtime_id: movieStore.showtime.data.showTime.id,
       voucher_code: useVoucher.code ? useVoucher.code : null,
+      vat: authStore.vat.rate,
       voucher_discount: priceAll.value.discountFromVoucher
         ? priceAll.value.discountFromVoucher
         : 0,
@@ -1414,10 +1427,17 @@ const handleNextOrder = async () => {
       ticket_seats: newDataSeats,
       ticket_combos: newDataCombo.length > 0 ? newDataCombo : null,
       ticket_foods: newDataFood.length > 0 ? newDataFood : null,
-      total_price: priceAll.value.payableAmount,
+      // total_price: +((priceAll.value.payableAmount * authStore.vat.rate) / 100),
+      total_price: +payableWithTax.value,
       expiry: `${movieStore.showtime.data.showTime.date}|${movieStore.showtime.data.showTime.end_time}`,
       status: "pending",
     };
+
+    // console.log("giá tiền cũ 11/04/2025");
+    // console.log(+((priceAll.value.payableAmount * authStore.vat.rate) / 100));
+
+    console.log("giá tiền mới 11/04/2025");
+    console.log(payableWithTax.value);
 
     console.log(">>>>>data ticket<<<<<");
     console.log(dataTicket);
@@ -1430,7 +1450,7 @@ const handleNextOrder = async () => {
     console.log(useVoucher.code);
 
     console.log("data new hehehe");
-
+    // return;
     // console.log(dataTicket);
     // console.log("voucher");
     // console.log(useVoucher.code);
@@ -1685,6 +1705,23 @@ const getQuantityFood = (id) => {
 };
 
 /**
+ * Thay đổi giá kèm vat
+ */
+// watch(movieStore.seatSelected, (newVal) => {
+//   if (newVal.length > 0) {
+//     console.log("lắng nghe seat update vat");
+
+//     priceAll.value.totalAmount += priceAll.value.totalAmount * 0.08;
+//     priceAll.value.payableAmount += priceAll.value.payableAmount * 0.08;
+//   }
+// });
+
+// watch(
+//   () => movieStore.seatSelected,
+//   () => {}
+// );
+
+/**
  * Lắng nghe thay đổi của ghế để cập nhật giá tiền
  *
  */
@@ -1694,6 +1731,16 @@ watch(
     priceAll.value.totalAmount = handleTotalPrice.value;
     priceAll.value.payableAmount =
       handleTotalPrice.value - priceAll.value.discountAmount;
+
+    // if (movieStore.seatSelected.length > 0) {
+    //   priceAll.value.totalAmount = priceAll.value.totalAmount;
+    //   priceAll.value.payableAmount = priceAll.value.payableAmount;
+    // }
+
+    // if (movieStore.seatSelected.length > 0) {
+    //   priceAll.value.totalAmount += priceAll.value.totalAmount * 0.08;
+    //   priceAll.value.payableAmount += priceAll.value.payableAmount * 0.08;
+    // }
   },
   { deep: true, immediate: true }
 );
@@ -2006,6 +2053,24 @@ const handleApplyPoint = () => {
   // priceAll.value.discountAmount = discountAmount.value
 };
 
+/**
+ * 11/04/2025
+ */
+
+const totalWithTax = computed(() => {
+  const amount = priceAll.value.totalAmount;
+  return amount > 0 ? amount + amount * 0.08 : 0;
+});
+
+const payableWithTax = computed(() => {
+  const amount = priceAll.value.payableAmount;
+  return amount > 0 ? amount + amount * 0.08 : 0;
+});
+
+/**
+ * 11/04/2025
+ */
+
 //**
 // Code new
 //  */
@@ -2020,6 +2085,11 @@ onMounted(() => {
   if (!countdownDeadline.value) {
     countdownDeadline.value = now + 1000 * 60 * 10;
   }
+
+  // if (movieStore.seatSelected.length > 0) {
+  //   priceAll.value.totalAmount += priceAll.value.totalAmount * 0.08;
+  //   priceAll.value.payableAmount += priceAll.value.payableAmount * 0.08;
+  // }
 });
 
 // onUnmounted(() => {

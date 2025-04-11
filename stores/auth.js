@@ -31,12 +31,15 @@ export const useAuthStore = defineStore(
     });
     const token = ref("");
     const isLogin = ref(false);
+    const vat = ref("");
     const router = useRouter();
     const isLoading = ref(false);
     const errors = reactive({});
     const resetPasswordCookie = useCookie("reset_password_cookie", {
       maxAge: 300,
     });
+
+    const rankByUser = useCookie("rank");
 
     /**
      * Xử lý login
@@ -50,9 +53,12 @@ export const useAuthStore = defineStore(
           token.value = response.data.token;
           user.value = response.data.user;
           isLogin.value = true;
+          vat.value = response.data.vat;
         }
 
         console.log(response);
+
+        // return;
 
         toast.success("Đăng nhập thành công");
         router.push({ name: "index" });
@@ -89,6 +95,7 @@ export const useAuthStore = defineStore(
         user.value = {};
         isLogin.value = false;
         isLoading.value = false;
+        rankByUser.value = {};
 
         toast.success("Đăng xuất thành công");
         router.push({ name: "index" });
@@ -213,6 +220,7 @@ export const useAuthStore = defineStore(
 
     return {
       user,
+      vat,
       token,
       errors,
       isLogin,

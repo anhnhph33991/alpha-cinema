@@ -22,6 +22,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       authStore.isLogin = authData.isLogin;
       authStore.token = authData.token;
       authStore.user = authData.user;
+      authStore.vat = authData.vat;
       console.log("update auth store");
 
       authGoogle.value = null;
