@@ -2057,15 +2057,28 @@ const handleApplyPoint = () => {
  * 11/04/2025
  */
 
+// const totalWithTax = computed(() => {
+//   const amount = priceAll.value.totalAmount;
+//   return amount > 0 ? amount + amount * 0.08 : 0;
+// });
+
+// const payableWithTax = computed(() => {
+//   const amount = priceAll.value.payableAmount;
+//   return amount > 0 ? amount + amount * 0.08 : 0;
+// });
+
 const totalWithTax = computed(() => {
   const amount = priceAll.value.totalAmount;
-  return amount > 0 ? amount + amount * 0.08 : 0;
+  const rate = authStore.vat.rate / 100; // chuyển từ 8 thành 0.08
+  return amount > 0 ? amount + amount * rate : 0;
 });
 
 const payableWithTax = computed(() => {
   const amount = priceAll.value.payableAmount;
-  return amount > 0 ? amount + amount * 0.08 : 0;
+  const rate = authStore.vat.rate / 100;
+  return amount > 0 ? amount + amount * rate : 0;
 });
+
 
 /**
  * 11/04/2025
