@@ -1431,6 +1431,12 @@ const handleNextOrder = async () => {
       total_price: +payableWithTax.value,
       expiry: `${movieStore.showtime.data.showTime.date}|${movieStore.showtime.data.showTime.end_time}`,
       status: "pending",
+      price_percentage: {
+        ticket_percentage: rankStore.rankByUser.ticket_percentage || 0,
+        food_percentage: rankStore.rankByUser.combo_percentage || 0,
+        price_ticket_percentage: handleSeatTotalPrice.value,
+        price_food_percentage: handleDiscountedFoodTotalPrice.value,
+      },
     };
 
     // console.log("giá tiền cũ 11/04/2025");
@@ -1449,8 +1455,38 @@ const handleNextOrder = async () => {
     console.log("data voucher");
     console.log(useVoucher.code);
 
-    console.log("data new hehehe");
-    // return;
+    // console.log("data new hehehe");
+
+    // console.log("giá tiền ghế khi chưa trừ");
+    // console.log(handleSeatTotalPrice.value);
+    // // 256000;
+    // console.log("giá tiền ghế khi đã trừ");
+
+    // const priceSaleTicket =
+    //   handleSeatTotalPrice.value -
+    //   (handleSeatTotalPrice.value * rankStore.rankByUser.ticket_percentage) /
+    //     100;
+
+    // const discountedPrice =
+    //   handleSeatTotalPrice.value *
+    //   (1 - rankStore.rankByUser.ticket_percentage / 100);
+
+    // console.log(discountedPrice);
+    // // 230400
+    // console.log("Phần trăm được giảm");
+    // console.log(rankStore.rankByUser.ticket_percentage);
+
+    console.log("giá tiền ghế");
+    console.log(handleSeatTotalPrice.value);
+
+    console.log("giá tiền tổng combo và food ban đầu");
+
+    console.log(+handleComboFoodTotalPrice.value + +handleFoodTotalPrice.value);
+
+    console.log("giá tiền tổng combo và food - 10% combo");
+    console.log(handleDiscountedFoodTotalPrice.value);
+
+    return;
     // console.log(dataTicket);
     // console.log("voucher");
     // console.log(useVoucher.code);
@@ -1572,9 +1608,16 @@ const priceAll = ref({
 // });
 
 const handleSeatTotalPrice = computed(() => {
-  return (
-    movieStore.seatSelected?.reduce((sum, seat) => sum + seat.price, 0) || 0
-  );
+  // return (
+  //   movieStore.seatSelected?.reduce((sum, seat) => sum + seat.price, 0) || 0
+  // );
+
+  const total =
+    movieStore.seatSelected?.reduce((sum, seat) => sum + seat.price, 0) || 0;
+  const discount = rankStore.rankByUser.ticket_percentage || 0;
+  // return total * (1 - discount / 100);
+
+  return Math.ceil(total * (1 - discount / 100));
 });
 
 // const handleComboFoodTotalPrice = computed(() => {
@@ -1610,11 +1653,24 @@ const handleFoodTotalPrice = computed(() => {
   );
 });
 
+// biến tính giá tiền đồ ăn được giảm từ rank
+
+const handleDiscountedFoodTotalPrice = computed(() => {
+  const total =
+    (+handleComboFoodTotalPrice.value || 0) +
+    (+handleFoodTotalPrice.value || 0);
+  const discount = rankStore.rankByUser.combo_percentage || 0;
+
+  // return total * (1 - discount / 100);
+  return Math.ceil(total * (1 - discount / 100));
+});
+
 const handleTotalPrice = computed(() => {
   return (
     +handleSeatTotalPrice.value +
-    +handleComboFoodTotalPrice.value +
-    +handleFoodTotalPrice.value
+    // +handleComboFoodTotalPrice.value +
+    // +handleFoodTotalPrice.value
+    +handleDiscountedFoodTotalPrice.value
   );
 });
 
@@ -1876,8 +1932,9 @@ const handleApplyVoucher = () => {
   }
 
   if (applyVoucher.type_voucher == 1) {
-    const totalPriceFoodAndCombo =
-      +handleComboFoodTotalPrice.value + +handleFoodTotalPrice.value;
+    // const totalPriceFoodAndCombo =
+    //   +handleComboFoodTotalPrice.value + +handleFoodTotalPrice.value;
+    const totalPriceFoodAndCombo = +handleDiscountedFoodTotalPrice;
 
     priceAll.value.discountFromVoucherSeat = +handleSeatTotalPrice.value;
 
@@ -1921,8 +1978,10 @@ const handleApplyVoucher = () => {
     priceAll.value.discountFromVoucherSeat =
       +handleSeatTotalPrice.value - +applyVoucher.discount;
 
+    // priceAll.value.discountFromVoucherFood =
+    //   +handleComboFoodTotalPrice.value + +handleFoodTotalPrice.value;
     priceAll.value.discountFromVoucherFood =
-      +handleComboFoodTotalPrice.value + +handleFoodTotalPrice.value;
+      +handleDiscountedFoodTotalPrice.value;
 
     // console.log("giá ghế đã trừ");
     // console.log(priceAll.value.discountFromVoucherSeat);
@@ -2068,17 +2127,18 @@ const handleApplyPoint = () => {
 // });
 
 const totalWithTax = computed(() => {
-  const amount = priceAll.value.totalAmount;
-  const rate = authStore.vat.rate / 100; // chuyển từ 8 thành 0.08
-  return amount > 0 ? amount + amount * rate : 0;
+  const amount = Number(priceAll.value.totalAmount);
+  const rate = Number(authStore.vat.rate / 100); // chuyển từ 8 thành 0.08
+  // return amount > 0 ? amount + amount * rate : 0;
+  return Math.ceil(amount > 0 ? amount + amount * rate : 0);
 });
 
 const payableWithTax = computed(() => {
-  const amount = priceAll.value.payableAmount;
-  const rate = authStore.vat.rate / 100;
-  return amount > 0 ? amount + amount * rate : 0;
+  const amount = Number(priceAll.value.payableAmount);
+  const rate = Number(authStore.vat.rate / 100);
+  // return amount > 0 ? amount + amount * rate : 0;
+  return Math.ceil(amount > 0 ? amount + amount * rate : 0);
 });
-
 
 /**
  * 11/04/2025
