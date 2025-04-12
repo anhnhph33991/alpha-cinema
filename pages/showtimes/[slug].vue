@@ -1486,7 +1486,7 @@ const handleNextOrder = async () => {
     console.log("giá tiền tổng combo và food - 10% combo");
     console.log(handleDiscountedFoodTotalPrice.value);
 
-    return;
+    // return;
     // console.log(dataTicket);
     // console.log("voucher");
     // console.log(useVoucher.code);
