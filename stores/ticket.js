@@ -1,8 +1,13 @@
 import { defineStore } from "pinia";
-import { createTicketService, fetchTicketHistory } from "~/services/ticket";
+import {
+  createTicketService,
+  fetchTicketHistory,
+  findByCodeService,
+} from "~/services/ticket";
 
 export const useTicketStore = defineStore("ticket", () => {
   const tickets = ref([]);
+  const ticket = ref({});
 
   // Hàm tạo vé
   const createTicket = async (data) => {
@@ -20,14 +25,20 @@ export const useTicketStore = defineStore("ticket", () => {
       tickets.value = await fetchTicketHistory();
 
       console.log(tickets.value);
-      
-
     } catch (error) {
       console.log("Lỗi khi tải lịch sử vé:", error);
     }
   };
 
-  return { tickets, createTicket, loadTickets };
+  const findByCode = async (code) => {
+    try {
+      const response = await findByCodeService(code);
+      ticket.value = response.data.ticket;
+      console.log(ticket.value);
+    } catch (error) {
+      console.log("Lỗi khi tải lịch sử vé:", error);
+    }
+  };
+
+  return { tickets, ticket, createTicket, loadTickets, findByCode };
 });
-
-

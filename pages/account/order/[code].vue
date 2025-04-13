@@ -1,10 +1,20 @@
 <template>
   <div class="container">
     <ClientOnly>
-      <a-page-header
-        style="border: 1px solid rgb(235, 237, 240)"
-        :breadcrumb="{ routes }"
-      />
+      <a-page-header style="border: 1px solid rgb(235, 237, 240)">
+        <template #breadcrumb>
+          <a-breadcrumb>
+            <a-breadcrumb-item v-for="(route, index) in routes" :key="index">
+              <NuxtLink v-if="index !== routes.length - 1" :to="route.path">
+                {{ route.breadcrumbName }}
+              </NuxtLink>
+              <span v-else>
+                {{ route.breadcrumbName }}
+              </span>
+            </a-breadcrumb-item>
+          </a-breadcrumb>
+        </template>
+      </a-page-header>
     </ClientOnly>
     <div class="row">
       <div class="col-xl-9 col-lg-12 col-md-12">
@@ -13,7 +23,12 @@
             <div class="d-flex justify-content-between p-2">
               <div class="fst-normal fw-bold">Thông tin vé</div>
               <div>
-                <span class="badge bg-warning">Chờ xác nhận</span>
+                <span
+                  class="badge"
+                  :class="mappingStatus[ticketStore.ticket?.status]?.class"
+                >
+                  {{ mappingStatus[ticketStore.ticket?.status]?.label || "" }}
+                </span>
               </div>
             </div>
           </div>
@@ -22,7 +37,7 @@
             <div class="row">
               <div class="col-lg-4">
                 <img
-                  src="https://alphacinema.me/storage/movie_images/LyfJghF3fgpYG5aNNK2ndwcOmfPSgVPAMKjtPNG2.png"
+                  :src="formatImage(ticketStore.ticket?.movie?.img_thumbnail)"
                   alt="phim hay"
                   style="width: 100%; height: 100%"
                   class="mb-3"
@@ -37,7 +52,7 @@
                           class="mb-4 fs-4 fw-bold"
                           style="color: rgb(81, 86, 190)"
                         >
-                          Nghi Lễ Trục Quỷ
+                          {{ ticketStore.ticket?.movie?.name }}
                         </h6>
                       </div>
                     </div>
@@ -46,14 +61,16 @@
                       10:00 - 11:24 (12/04/2025)
                     </div>
                     <div class="col-3 text-16">Thời lượng</div>
-                    <div class="col-9 text-start text-16 fw-medium">84</div>
+                    <div class="col-9 text-start text-16 fw-medium">
+                      {{ ticketStore.ticket?.movie?.duration }} phút
+                    </div>
                     <div class="col-3 text-16">Định dạng</div>
                     <div class="col-9 text-start text-16 fw-medium">
                       2D Lồng Tiếng
                     </div>
                     <div class="col-3 text-16">Phòng chiếu</div>
                     <div class="col-9 text-start text-16 fw-medium">
-                      HN_M792
+                      {{ ticketStore.ticket?.room?.name }}
                     </div>
                     <div class="col-3 text-16">Thể loại</div>
                     <div class="col-9 text-start text-16 fw-medium">Tâm lý</div>
@@ -62,24 +79,11 @@
                       <div class="row">
                         <span
                           class="col-2 border border-secondary-subtle rouder-3 mx-1 mb-2 text-center"
-                          >I11</span
+                          v-for="seat in ticketStore.ticket?.ticket_seats"
+                          :key="seat.id"
                         >
-                        <span
-                          class="col-2 border border-secondary-subtle rouder-3 mx-1 mb-2 text-center"
-                          >I12</span
-                        >
-                        <span
-                          class="col-2 border border-secondary-subtle rouder-3 mx-1 mb-2 text-center"
-                          >J10</span
-                        >
-                        <span
-                          class="col-2 border border-secondary-subtle rouder-3 mx-1 mb-2 text-center"
-                          >J11</span
-                        >
-                        <span
-                          class="col-2 border border-secondary-subtle rouder-3 mx-1 mb-2 text-center"
-                          >J12</span
-                        >
+                          {{ seat.seat_name }}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -87,54 +91,42 @@
               </div>
               <hr class="mt-4" />
               <div class="col-xl-12">
-                <div class="fs-5 fw-semibold">Đồ ăn</div>
+                <div class="fs-5 fw-semibold mb-2">Đồ ăn</div>
 
                 <!-- combo -->
-                <div class="row">
-                  <div class="col-md-6 mb-3">
+                <div
+                  class="row"
+                  v-if="ticketStore.ticket?.ticket_combos?.length > 0"
+                >
+                  <div
+                    class="col-md-6 mb-3"
+                    v-for="combo in ticketStore.ticket?.ticket_combos"
+                    :key="combo.id"
+                  >
                     <div class="card h-100">
                       <div class="card-body row">
                         <div class="col-4">
                           <img
-                            class="w-100 h-75"
-                            src="https://alphacinema.me/storage/comboImages/QpaY6X34CWEZuhn1danLRsxUe0wgIDHExU2OHvqb.png"
-                            alt="Combo ngọt ngào"
+                            class="w-100"
+                            :src="formatImage(combo?.img_thumbnail)"
+                            :alt="combo.name"
                           />
                         </div>
                         <div class="col-8">
-                          <h6 class="card-title">Combo ngọt ngào</h6>
+                          <h6 class="card-title">
+                            {{ combo.name }}
+                          </h6>
                           <ul class="list-unstyled mb-2">
-                            <li>Bỏng ngô thường (SL: 1)</li>
-                            <li>Nước Cocacola (SL: 2)</li>
+                            <li v-for="food in combo?.foods" :key="food.id">
+                              {{ food.name }} (SL: {{ food.quantity }})
+                            </li>
                           </ul>
                           <p class="mb-0">
-                            2 x 90.000 VND =
-                            <span class="price">180.000</span>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <div class="card h-100">
-                      <div class="card-body row">
-                        <div class="col-4">
-                          <img
-                            class="w-100 h-75"
-                            src="https://alphacinema.me/storage/comboImages/RQ8UPqOcPraPy4F4fSG3T4kD6GmXSan2cR6V9Ety.png"
-                            alt="Combo Gia đình"
-                          />
-                        </div>
-                        <div class="col-8">
-                          <h6 class="card-title">Combo Gia đình</h6>
-                          <ul class="list-unstyled mb-2">
-                            <li>Bỏng ngô thường (SL: 2)</li>
-                            <li>Nước Cocacola (SL: 4)</li>
-                            <li>Khoai tây chiên (SL: 1)</li>
-                          </ul>
-                          <p class="mb-0">
-                            2 x 210.000 VND =
-                            <span class="price">420.000</span>
+                            {{ combo?.quantity }} x
+                            {{ formatPrice(getComboPrice(combo)) }}đ =
+                            <span class="price">
+                              {{ formatPrice(totalComboPrice(combo)) }}đ
+                            </span>
                           </p>
                         </div>
                       </div>
@@ -142,44 +134,35 @@
                   </div>
                 </div>
                 <!-- Food -->
-                <div class="row">
-                  <div class="col-md-6 mb-3">
+                <div
+                  class="row"
+                  v-if="ticketStore.ticket?.ticket_foods?.length > 0"
+                >
+                  <div
+                    class="col-md-6 mb-3"
+                    v-for="food in ticketStore.ticket?.ticket_foods"
+                    :key="food.id"
+                  >
                     <div class="card h-100">
                       <div class="card-body row">
                         <div class="col-4">
                           <img
                             class="w-100 h-75"
-                            src="https://alphacinema.me/storage/foodImages/9rx7OY31Z4rXHkeBRxnvDEaoco9sGZtOLtG45a6L.png"
+                            :src="formatImage(food?.img_thumbnail)"
                             alt="Sinh tố bơ"
                           />
                         </div>
                         <div class="col-8">
-                          <h6 class="card-title">Sinh tố bơ</h6>
+                          <h6 class="card-title">
+                            {{ food?.name }}
+                          </h6>
 
                           <p class="mb-0">
-                            2 x 50.000 VND =
-                            <span class="price">100.000</span>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <div class="card h-100">
-                      <div class="card-body row">
-                        <div class="col-4">
-                          <img
-                            class="w-100 h-75"
-                            src="https://alphacinema.me/storage/foodImages/Hpy6jIoYMX6pFVL41N5L5e20y081dmx1fQyZJhuY.png"
-                            alt="Bánh ngọt"
-                          />
-                        </div>
-                        <div class="col-8">
-                          <h6 class="card-title">Bánh ngọt</h6>
-
-                          <p class="mb-0">
-                            3 x 25.000 VND =
-                            <span class="price">75.000</span>
+                            {{ food?.quantity }} x
+                            {{ formatPrice(food?.price) }} =
+                            <span class="price">
+                              {{ formatPrice(totalFoodPrice(food)) }}đ
+                            </span>
                           </p>
                         </div>
                       </div>
@@ -204,15 +187,24 @@
             <div class="row">
               <div class="mb-1">
                 <span class="text-body-secondary"> Tên: </span>
-                <small class="fw-medium">Anh Nguyễn Hoàng</small>
+                <small class="fw-medium">
+                  {{ authStore?.user?.name }}
+                </small>
               </div>
               <div class="mb-1">
                 <span class="text-body-secondary"> Email: </span>
-                <small class="fw-medium">hoang838604@gmail.com</small>
+                <small class="fw-medium">
+                  {{ authStore?.user?.email }}
+                </small>
               </div>
               <div class="mb-1">
-                <span class="text-body-secondary"> SĐT: </span>
-                <small class="fw-medium text-danger">Chưa có</small>
+                <span class="text-body-secondary"> Sđt: </span>
+                <small
+                  class="fw-medium"
+                  :class="{ 'text-danger': !authStore?.user?.phone }"
+                >
+                  {{ authStore?.user?.phone || "Chưa có" }}
+                </small>
               </div>
             </div>
           </div>
@@ -229,23 +221,30 @@
             <div class="row">
               <div class="mb-1">
                 <span class="text-body-secondary"> Thời gian: </span>
-                <small class="fw-medium">20:03 - 11/04/2025</small>
+                <!-- <small class="fw-medium">20:03 - 11/04/2025</small> -->
+                <small class="fw-medium">
+                  {{ formatDateTime(ticketStore.ticket?.created_at) }}
+                </small>
               </div>
               <div class="mb-1">
                 <span class="text-body-secondary"> Phương thức: </span>
-                <small class="fw-medium">VNPAY</small>
+                <small class="fw-medium">
+                  {{ ticketStore.ticket?.payment_name?.toUpperCase() }}
+                </small>
               </div>
               <div class="mb-1">
-                <span class="text-body-secondary"> Tiền Vé: </span>
-                <small class="fw-medium text-danger">292.000đ</small>
+                <span class="text-body-secondary"> Tiền vé: </span>
+                <small class="fw-medium text-danger">Chưa in</small>
               </div>
               <div class="mb-1">
-                <span class="text-body-secondary"> Tiền Đồ ăn: </span>
-                <small class="fw-medium text-danger">775.000đ</small>
+                <span class="text-body-secondary"> Tiền đồ ăn: </span>
+                <small class="fw-medium text-danger"> Chưa in </small>
               </div>
               <div class="mb-1">
                 <span class="text-body-secondary"> Tổng tiền: </span>
-                <small class="fw-medium text-danger">1.098.360đ</small>
+                <small class="fw-medium text-danger">
+                  {{ formatPrice(ticketStore.ticket?.total_price) }}đ
+                </small>
               </div>
             </div>
           </div>
@@ -256,7 +255,14 @@
 </template>
 
 <script setup>
+import { useTicketStore } from "@/stores/ticket";
+import { useAuthStore } from "@/stores/auth";
+
+const config = useRuntimeConfig();
 const route = useRoute();
+
+const ticketStore = useTicketStore();
+const authStore = useAuthStore();
 
 const code = route.params.code;
 
@@ -266,17 +272,79 @@ const routes = [
     breadcrumbName: "Trang chủ",
   },
   {
-    path: "account",
+    path: "/account",
     breadcrumbName: "Đặt vé",
   },
   {
-    path: "second",
-    breadcrumbName: "Third-level Menu",
+    path: "code",
+    breadcrumbName: `${code}`,
   },
 ];
 
+const formatImage = (image) => {
+  return `${config.public.BackEndUrl}/storage/${image}`;
+};
+/**
+ *  Mapping label và class dựa vào status của order
+ */
+const mappingStatus = {
+  pending: {
+    label: "Chờ xác nhận",
+    class: "bg-warning",
+  },
+  confirmed: {
+    label: "Đã xác nhận",
+    class: "bg-success",
+  },
+};
+/**
+ * Tính toán tổng tiền của combo
+ */
+const totalComboPrice = (combo) => {
+  const price = combo?.price_sale > 0 ? combo.price_sale : combo.price;
+  return (combo?.quantity || 0) * (price || 0);
+};
+/**
+ * Tính toán tổng tiền của food
+ */
+const totalFoodPrice = (food) => {
+  return (food?.quantity || 0) * (food?.price || 0);
+};
+/**
+ * Format giá tiền về định dạng việt nam
+ */
+const formatPrice = (price) => {
+  return new Intl.NumberFormat("vi-VN").format(price);
+};
+/**
+ *  Lấy giá tiền của từng combo
+ */
+const getComboPrice = (combo) => {
+  return combo?.price_sale > 0 ? combo.price_sale : combo.price;
+};
+/**
+ * Định dạng ngày
+ */
+const formatDateTime = (isoString) => {
+  if (!isoString) return "Không rõ thời gian";
+
+  const date = new Date(isoString);
+
+  const time = date.toLocaleTimeString("vi-VN", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  const day = date.toLocaleDateString("vi-VN");
+
+  return `${time} - ${day}`;
+};
+
 onMounted(() => {
-  console.log(code);
+  // console.log(code);
+
+  ticketStore.findByCode(code);
 });
 </script>
 
