@@ -11,7 +11,8 @@
         <img
           :src="slide"
           alt="Slide"
-          class="img-fluid w-100 al-slide-height-500"
+          class="w-100 al-slide-height-500"
+          style="object-fit: fill"
         />
       </Slide>
 
