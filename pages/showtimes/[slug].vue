@@ -636,7 +636,7 @@
                         </div>
                         <div
                           class="col-md-3 item-seat-money item-seat-total-money total-money-name"
-                        >
+                        > 
                           {{ priceAll.discountAmount.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>

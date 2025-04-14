@@ -58,22 +58,37 @@
                     </div>
                     <div class="col-3 text-16">Lịch chiếu</div>
                     <div class="col-9 text-start text-16 fw-medium">
-                      10:00 - 11:24 (12/04/2025)
+                      {{ ticketStore.ticket?.showtime?.start_time }}  -  {{ ticketStore.ticket?.showtime?.end_time }}  ({{ ticketStore.ticket?.showtime?.date }})
                     </div>
+
                     <div class="col-3 text-16">Thời lượng</div>
                     <div class="col-9 text-start text-16 fw-medium">
                       {{ ticketStore.ticket?.movie?.duration }} phút
                     </div>
+
                     <div class="col-3 text-16">Định dạng</div>
                     <div class="col-9 text-start text-16 fw-medium">
-                      2D Lồng Tiếng
+                      {{ ticketStore.ticket?.movie?.movie_versions[0] }}
                     </div>
+
                     <div class="col-3 text-16">Phòng chiếu</div>
                     <div class="col-9 text-start text-16 fw-medium">
                       {{ ticketStore.ticket?.room?.name }}
                     </div>
+
                     <div class="col-3 text-16">Thể loại</div>
-                    <div class="col-9 text-start text-16 fw-medium">Tâm lý</div>
+                    <div class="col-9 text-start text-16 fw-medium">
+                    <span v-for="(genres, index) in ticketStore.ticket?.movie?.movie_genres" :key="index">
+                      {{ 
+                        genres === 'Horror' ? 'Kinh dị' : 
+                        genres === 'Action' ? 'Hành động' : 
+                        genres === 'Comedy' ? 'Hài' : genres 
+                      }}
+                       <span v-if="index < ticketStore.ticket?.movie?.movie_genres.length - 1">, </span>
+                    </span>
+                   
+                  </div>
+
                     <div class="col-3 text-16">Ghế ngồi</div>
                     <div class="col-9 text-start text-16 fw-medium">
                       <div class="row">
@@ -232,14 +247,26 @@
                   {{ ticketStore.ticket?.payment_name?.toUpperCase() }}
                 </small>
               </div>
-              <div class="mb-1">
-                <span class="text-body-secondary"> Tiền vé: </span>
-                <small class="fw-medium text-danger">Chưa in</small>
+              <div class="mb-1" v-if="ticketStore.ticket?.price_percentage?.price_ticket_percentage">
+                <span class="text-body-secondary">Tiền vé: </span>
+                <small class="fw-medium text-danger">
+                  {{ 
+                    formatPrice(
+                      (
+                        (ticketStore.ticket?.price_percentage?.price_ticket_percentage 
+                        - (ticketStore.ticket?.voucher_type == 1 ? ticketStore.ticket?.voucher_discount : 0) 
+                        - ticketStore.ticket?.point_discount) 
+                      ) * (1 + ticketStore.ticket?.vat / 100)
+                    ) 
+                  }}đ
+                </small>
               </div>
+
               <div class="mb-1">
                 <span class="text-body-secondary"> Tiền đồ ăn: </span>
                 <small class="fw-medium text-danger"> Chưa in </small>
               </div>
+              
               <div class="mb-1">
                 <span class="text-body-secondary"> Tổng tiền: </span>
                 <small class="fw-medium text-danger">
@@ -314,7 +341,8 @@ const totalFoodPrice = (food) => {
  * Format giá tiền về định dạng việt nam
  */
 const formatPrice = (price) => {
-  return new Intl.NumberFormat("vi-VN").format(price);
+  const integerPrice = Math.floor(price);
+  return new Intl.NumberFormat("vi-VN").format(integerPrice);
 };
 /**
  *  Lấy giá tiền của từng combo
