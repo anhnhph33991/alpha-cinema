@@ -218,7 +218,7 @@
                   class="fw-medium"
                   :class="{ 'text-danger': !authStore?.user?.phone }"
                 >
-                  {{ authStore?.user?.phone || "Chưa có" }}
+                  {{ authStore?.user?.phone || "Chưa cập nhật" }}
                 </small>
               </div>
             </div>
@@ -262,9 +262,16 @@
                 </small>
               </div>
 
-              <div class="mb-1">
+              <div class="mb-1" v-if="ticketStore.ticket?.price_percentage?.price_food_percentage">
                 <span class="text-body-secondary"> Tiền đồ ăn: </span>
-                <small class="fw-medium text-danger"> Chưa in </small>
+                <small class="fw-medium text-danger"> {{ 
+                  formatPrice( 
+                    (
+                    (ticketStore.ticket?.price_percentage?.price_food_percentage
+                    - (ticketStore.ticket?.voucher_type == 0 ? ticketStore.ticket?.voucher_discount : 0) ) * (1 + ticketStore.ticket?.vat / 100)
+                    )
+                  )
+                }} </small>
               </div>
               
               <div class="mb-1">
@@ -382,4 +389,20 @@ onMounted(() => {
   ).ant-page-header.ant-page-header-ghost {
   background-color: white;
 }
+
+@media (max-width: 720px) {
+  /* Your CSS rules here */
+  .row>.col-lg-4{
+    display: flex;
+    justify-content: center;
+  }
+  .row > .col-lg-4 > img {
+    max-width: 64%;    
+    max-height: 80%;   
+  }
+  .text-16{
+    font-size: 14px !important;
+  }
+}
+
 </style>
