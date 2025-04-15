@@ -28,6 +28,7 @@
                   v-model="form.email"
                   autocomplete="off"
                 />
+                <div class="text-danger fw-semibold"></div>
               </div>
 
               <div class="col-md-12 mb-3">
@@ -36,13 +37,13 @@
                 >
                 <div class="input-group input-group-flat">
                   <input
-                    type="password"
+                    :type="showPassword ? 'text' : 'password'" 
                     class="form-control"
                     placeholder="Mật khẩu"
                     v-model="form.password"
                     autocomplete="off"
                   />
-                  <span class="input-group-text">
+                  <span class="input-group-text" @click="showPwd">
                     <a
                       class="link-secondary"
                       data-bs-toggle="tooltip"
@@ -128,10 +129,17 @@ const form = ref({
   password: "",
 });
 
+const showPassword = ref(false);
+
+const showPwd = () =>{
+  showPassword.value = !showPassword.value;
+}
 const handleSubmit = () => {
   console.log(form.value);
   emit("submit-form", { ...form.value });
 };
+
+
 </script>
 
 <style scoped>
