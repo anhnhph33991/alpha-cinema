@@ -28,7 +28,11 @@
                   v-model="form.email"
                   autocomplete="off"
                 />
-                <div class="text-danger fw-semibold"></div>
+
+                <div class="text-danger fw-semibold" v-if="errors.email">{{ errors.email }}</div>
+                <div v-if="authStore?.errors?.sigin?.email" class="text-danger fw-semibold">
+                {{  authStore?.errors?.sigin?.email }}
+              </div>
               </div>
 
               <div class="col-md-12 mb-3">
@@ -75,6 +79,11 @@
                     </a>
                   </span>
                 </div>
+              </div>
+
+              <div class="text-danger fw-semibold" v-if="errors.password">{{ errors.password }}</div>
+              <div v-if="authStore?.errors?.sigin?.password" class="text-danger fw-semibold">
+                {{  authStore?.errors?.sigin?.password }}
               </div>
             </div>
 
@@ -123,22 +132,55 @@
 
 <script setup>
 const emit = defineEmits(["submit-form"]);
-
+const authStore = useAuthStore();
 const form = ref({
   email: "",
   password: "",
 });
+
+const errors = ref({
+  email: "",
+  password: ""
+})
 
 const showPassword = ref(false);
 
 const showPwd = () =>{
   showPassword.value = !showPassword.value;
 }
-const handleSubmit = () => {
-  console.log(form.value);
-  emit("submit-form", { ...form.value });
+
+const isValidEmail = (email)=>{
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email)
+}
+
+const validateForm = () => {
+  errors.value.email = "";
+  errors.value.password = "";
+
+  // Validate email
+  if (!form.value.email || !isValidEmail(form.value.email)) {
+    errors.value.email = "Email không hợp lệ.";
+  }
+
+  // Validate password
+  if (!form.value.password || form.value.password.length < 8) {
+    errors.value.password = "Mật khẩu phải có ít nhất 8 ký tự.";
+  }
+
+  // Trả về true nếu không có lỗi
+  return !errors.value.email && !errors.value.password;
 };
 
+const handleSubmit = () => {
+  const isValid = validateForm();
+
+  if (isValid) {
+    console.log("Form submitted:", form.value);
+    emit("submit-form", { ...form.value });
+  }
+
+};
 
 </script>
 
