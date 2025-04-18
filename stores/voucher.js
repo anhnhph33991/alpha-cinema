@@ -6,8 +6,8 @@ export const useVoucherStore = defineStore("voucher", () => {
   const fetchVouchers = async () => {
     try {
       /**
-       * Voucher có 
-       * 
+       * Voucher có
+       *
        * inactive // voucher ngừng hoạt động
        * upcoming // vourhcer chưa có hiệu lực
        * expired // voucher đã hết hạn
@@ -16,7 +16,10 @@ export const useVoucherStore = defineStore("voucher", () => {
       const response = await fetchVouchersService();
 
       if (response.vouchers) {
-        vouchers.value = response.vouchers;
+        // vouchers.value = response.vouchers;
+        vouchers.value = response.vouchers.filter(
+          (voucher) => voucher.status === "active"
+        );
       }
 
       console.log("all voucher");
