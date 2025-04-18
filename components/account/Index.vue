@@ -8,7 +8,7 @@
           >
             <div class="avatar-wrapper mb-2">
               <img
-                :src="dataForm.avatar || avatarNull"
+                :src="dataForm.previewAvatar || avatarNull"
                 alt="avatar"
                 class="avatar-img"
                 referrerpolicy="no-referrer"
@@ -28,6 +28,14 @@
             >
               Tải ảnh lên
             </button>
+
+            <small
+              v-if="updateProfile.errors.avatar"
+              id="helpId"
+              class="form-text text-danger"
+            >
+              {{ updateProfile.errors.avatar }}
+            </small>
           </div>
 
           <div class="row col-lg-8">
@@ -42,40 +50,48 @@
                   placeholder="Nhập họ và tên "
                   class="form-control"
                   v-model="dataForm.name"
+                  @input="updateProfile.clearFieldError('name')"
                 />
-                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                <small
+                  v-if="updateProfile.errors.name"
+                  id="helpId"
+                  class="form-text text-danger"
+                >
+                  {{ updateProfile.errors.name }}
+                </small>
               </div>
             </div>
 
             <div class="col-lg-6">
               <div class="mb-3">
-                <label for="" class="form-label">
-                  <span class="text-danger">*</span>
-                  Email
-                </label>
+                <label for="" class="form-label"> Email </label>
                 <input
                   type="email"
                   placeholder="Nhập email"
                   class="form-control"
                   v-model="dataForm.email"
+                  :disabled="true"
                 />
-                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
               </div>
             </div>
 
             <div class="col-lg-6">
               <div class="mb-3">
-                <label for="" class="form-label">
-                  <span class="text-danger">*</span>
-                  Số điện thoại
-                </label>
+                <label for="" class="form-label"> Số điện thoại </label>
                 <input
                   type="text"
                   class="form-control"
                   placeholder="Nhập số điện thoại"
                   v-model="dataForm.phone"
+                  @input="updateProfile.clearFieldError('phone')"
                 />
-                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                <small
+                  v-if="updateProfile.errors.phone"
+                  id="helpId"
+                  class="form-text text-danger"
+                >
+                  {{ updateProfile.errors.phone }}
+                </small>
               </div>
             </div>
 
@@ -89,8 +105,15 @@
                   type="date"
                   class="form-control"
                   v-model="dataForm.birthday"
+                  @change="updateProfile.clearFieldError('birthday')"
                 />
-                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                <small
+                  v-if="updateProfile.errors.birthday"
+                  id="helpId"
+                  class="form-text text-danger"
+                >
+                  {{ updateProfile.errors.birthday }}
+                </small>
               </div>
             </div>
 
@@ -100,18 +123,23 @@
                   <span class="text-danger">*</span>
                   Giới Tính
                 </label>
-                <!-- <input
-                type="text"
-                class="form-control"
-                v-model="dataForm.gender"
-              /> -->
 
-                <select v-model="dataForm.gender" class="form-select">
+                <select
+                  v-model="dataForm.gender"
+                  class="form-select"
+                  @change="updateProfile.clearFieldError('gender')"
+                >
                   <option :value="0">Nam</option>
                   <option :value="1">Nữ</option>
                 </select>
 
-                <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                <small
+                  v-if="updateProfile.errors.gender"
+                  id="helpId"
+                  class="form-text text-danger"
+                >
+                  {{ updateProfile.errors.gender }}
+                </small>
               </div>
             </div>
 
@@ -121,10 +149,19 @@
                 name=""
                 id=""
                 class="form-control"
-                rows="2"
+                rows="3"
                 placeholder="Nhập địa chỉ !!!"
                 v-model="dataForm.address"
+                @input="updateProfile.clearFieldError('gender')"
               ></textarea>
+
+              <small
+                v-if="updateProfile.errors.address"
+                id="helpId"
+                class="form-text text-danger"
+              >
+                {{ updateProfile.errors.address }}
+              </small>
             </div>
             <div class="col-lg-12 text-end mt-3">
               <button class="btn btn-primary btn-2 btn-p-5">Cập nhật</button>
@@ -134,10 +171,6 @@
               >
             </div>
           </div>
-
-          <!-- <div class="col-lg-12 mt-3">
-           
-          </div> -->
         </div>
       </form>
     </div>
@@ -255,12 +288,16 @@
               <div class="mb-3">
                 <a-form-item
                   name="currentPassword"
-                  :rules="[
-                    {
-                      required: true,
-                      message: 'Vui lòng nhập mật khẩu hiện tại!',
-                    },
-                  ]"
+                  :help="
+                    authStore?.errors && authStore?.errors.password_old
+                      ? authStore?.errors.password_old
+                      : ''
+                  "
+                  :validate-status="
+                    authStore?.errors && authStore?.errors.password_old
+                      ? 'error'
+                      : ''
+                  "
                 >
                   <label class="form-label">
                     <span class="text-danger">*</span> Mật khẩu hiện tại
@@ -268,7 +305,10 @@
                   <a-input-password
                     :value="formChangePassword.currentPassword"
                     @update:value="
-                      (val) => (formChangePassword.currentPassword = val)
+                      (val) => {
+                        formChangePassword.currentPassword = val;
+                        authStore.errors.password_old = null;
+                      }
                     "
                   />
                 </a-form-item>
@@ -279,12 +319,16 @@
               <div class="mb-3">
                 <a-form-item
                   name="newPassword"
-                  :rules="[
-                    {
-                      required: true,
-                      message: 'Vui lòng nhập mật khẩu mới',
-                    },
-                  ]"
+                  :help="
+                    authStore?.errors && authStore?.errors.password
+                      ? authStore?.errors.password
+                      : ''
+                  "
+                  :validate-status="
+                    authStore?.errors && authStore?.errors.password
+                      ? 'error'
+                      : ''
+                  "
                 >
                   <label class="form-label">
                     <span class="text-danger">*</span> Mật khẩu mới
@@ -292,31 +336,10 @@
                   <a-input-password
                     :value="formChangePassword.newPassword"
                     @update:value="
-                      (val) => (formChangePassword.newPassword = val)
-                    "
-                  />
-                </a-form-item>
-              </div>
-            </div>
-
-            <div class="col-lg-12 col-md-12">
-              <div class="mb-3">
-                <a-form-item
-                  name="confirmPassword"
-                  :rules="[
-                    {
-                      required: true,
-                      message: 'Vui lòng nhập xác nhận mật khẩu!',
-                    },
-                  ]"
-                >
-                  <label class="form-label">
-                    <span class="text-danger">*</span> Xác nhận mật khẩu mới
-                  </label>
-                  <a-input-password
-                    :value="formChangePassword.confirmPassword"
-                    @update:value="
-                      (val) => (formChangePassword.confirmPassword = val)
+                      (val) => {
+                        formChangePassword.newPassword = val;
+                        authStore.errors.password = null;
+                      }
                     "
                   />
                 </a-form-item>
@@ -351,13 +374,28 @@ const props = defineProps({
   },
 });
 
+const avatarUpload = ref(null);
+
 const submited = () => {
-  // if (selectedFile.value) {
-  //   dataForm.value.avatar = selectedFile.value
-  // }
-  updateProfile.useUpdateProfile(useAuthStore().user.id, dataForm.value);
-  // useAuthStore().user = dataForm.value;
-  console.log("Thông tin form:", dataForm.value);
+  // updateProfile.useUpdateProfile(useAuthStore().user.id, dataForm.value);
+
+  updateProfile.useUpdateProfile(useAuthStore().user.id, {
+    name: dataForm.value.name,
+    phone: dataForm.value.phone,
+    avatar: avatarUpload.value ?? null,
+    address: dataForm.value.address,
+    gender: dataForm.value.gender,
+    birthday: dataForm.value.birthday,
+  });
+
+  console.log({
+    name: dataForm.value.name,
+    phone: dataForm.value.phone,
+    avatar: avatarUpload.value ?? null,
+    address: dataForm.value.address,
+    gender: dataForm.value.gender,
+    birthday: dataForm.value.birthday,
+  });
 };
 const fileInputRef = ref(null);
 
@@ -369,9 +407,18 @@ const triggerFileInput = () => {
 
 const handleFileChange = (event) => {
   const file = event.target.files[0];
+
   if (file) {
     selectedFile.value = file;
-    dataForm.value.avatar = URL.createObjectURL(file);
+    dataForm.value.previewAvatar = URL.createObjectURL(file);
+    // dataForm.value.avatar = file;
+    avatarUpload.value = file;
+    updateProfile.errors.avatar = null;
+  } else {
+    dataForm.value.previewAvatar = props.user.avatar;
+    // dataForm.value.avatar = null;
+    avatarUpload.value = null;
+    updateProfile.errors.avatar = null;
   }
 };
 
@@ -384,6 +431,7 @@ const dataForm = ref({
   address: "",
   gender: "",
   birthday: "",
+  previewAvatar: "",
 });
 
 /**
@@ -403,6 +451,12 @@ const formChangePassword = reactive({
 
 const handleChangePassword = () => {
   modal2Visible.value = true;
+
+  authStore.errors.password = null;
+  authStore.errors.password_old = null;
+
+  formChangePassword.currentPassword = null;
+  formChangePassword.newPassword = null;
 };
 
 const handleOk = () => {
@@ -422,19 +476,27 @@ const onFinish = (values) => {
     password: values.newPassword,
   });
 
-  // if (response) {
-  //   modal2Visible.value = false;
-  // }
-
   console.log(response);
+
+  if (response.status == true) {
+    modal2Visible.value = false;
+    return;
+  }
 };
 const onFinishFailed = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
 onMounted(() => {
-  console.log(props.user);
+  // console.log(props.user);
   dataForm.value = { ...props.user };
+
+  if (dataForm.value.avatar) {
+    dataForm.value.previewAvatar = dataForm.value.avatar;
+    console.log(dataForm.value.previewAvatar);
+  }
+
+  console.log(dataForm.value);
 });
 </script>
 
