@@ -8,6 +8,7 @@ import {
 export const useTicketStore = defineStore("ticket", () => {
   const tickets = ref([]);
   const ticket = ref({});
+  const isLoading = ref(false);
 
   // Hàm tạo vé
   const createTicket = async (data) => {
@@ -31,14 +32,17 @@ export const useTicketStore = defineStore("ticket", () => {
   };
 
   const findByCode = async (code) => {
+    isLoading.value = true;
     try {
       const response = await findByCodeService(code);
       ticket.value = response.data.ticket;
       console.log(ticket.value);
     } catch (error) {
       console.log("Lỗi khi tải lịch sử vé:", error);
+    } finally {
+      isLoading.value = false;
     }
   };
 
-  return { tickets, ticket, createTicket, loadTickets, findByCode };
+  return { tickets, ticket, isLoading, createTicket, loadTickets, findByCode };
 });

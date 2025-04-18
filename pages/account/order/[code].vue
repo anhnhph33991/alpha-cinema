@@ -16,7 +16,15 @@
         </template>
       </a-page-header>
     </ClientOnly>
-    <div class="row">
+
+    <div
+      v-if="ticketStore.isLoading"
+      class="min-vh-100 d-flex justify-content-center align-items-center"
+    >
+      <a-spin />
+    </div>
+
+    <div class="row" v-else>
       <div class="col-xl-9 col-lg-12 col-md-12">
         <div class="card mt-2 mb-5">
           <div class="card-header">
@@ -58,7 +66,10 @@
                     </div>
                     <div class="col-3 text-16">Lịch chiếu</div>
                     <div class="col-9 text-start text-16 fw-medium">
-                      {{ ticketStore.ticket?.showtime?.start_time }}  -  {{ ticketStore.ticket?.showtime?.end_time }}  ({{ ticketStore.ticket?.showtime?.date }})
+                      {{ ticketStore.ticket?.showtime?.start_time }} -
+                      {{ ticketStore.ticket?.showtime?.end_time }} ({{
+                        ticketStore.ticket?.showtime?.date
+                      }})
                     </div>
 
                     <div class="col-3 text-16">Thời lượng</div>
@@ -78,16 +89,29 @@
 
                     <div class="col-3 text-16">Thể loại</div>
                     <div class="col-9 text-start text-16 fw-medium">
-                    <span v-for="(genres, index) in ticketStore.ticket?.movie?.movie_genres" :key="index">
-                      {{ 
-                        genres === 'Horror' ? 'Kinh dị' : 
-                        genres === 'Action' ? 'Hành động' : 
-                        genres === 'Comedy' ? 'Hài' : genres 
-                      }}
-                       <span v-if="index < ticketStore.ticket?.movie?.movie_genres.length - 1">, </span>
-                    </span>
-                   
-                  </div>
+                      <span
+                        v-for="(genres, index) in ticketStore.ticket?.movie
+                          ?.movie_genres"
+                        :key="index"
+                      >
+                        {{
+                          genres === "Horror"
+                            ? "Kinh dị"
+                            : genres === "Action"
+                            ? "Hành động"
+                            : genres === "Comedy"
+                            ? "Hài"
+                            : genres
+                        }}
+                        <span
+                          v-if="
+                            index <
+                            ticketStore.ticket?.movie?.movie_genres.length - 1
+                          "
+                          >,
+                        </span>
+                      </span>
+                    </div>
 
                     <div class="col-3 text-16">Ghế ngồi</div>
                     <div class="col-9 text-start text-16 fw-medium">
@@ -247,33 +271,49 @@
                   {{ ticketStore.ticket?.payment_name?.toUpperCase() }}
                 </small>
               </div>
-              <div class="mb-1" v-if="ticketStore.ticket?.price_percentage?.price_ticket_percentage">
+              <div
+                class="mb-1"
+                v-if="
+                  ticketStore.ticket?.price_percentage?.price_ticket_percentage
+                "
+              >
                 <span class="text-body-secondary">Tiền vé: </span>
                 <small class="fw-medium text-danger">
-                  {{ 
+                  {{
                     formatPrice(
-                      (
-                        (ticketStore.ticket?.price_percentage?.price_ticket_percentage 
-                        - (ticketStore.ticket?.voucher_type == 1 ? ticketStore.ticket?.voucher_discount : 0) 
-                        - ticketStore.ticket?.point_discount) 
-                      ) * (1 + ticketStore.ticket?.vat / 100)
-                    ) 
+                      (ticketStore.ticket?.price_percentage
+                        ?.price_ticket_percentage -
+                        (ticketStore.ticket?.voucher_type == 1
+                          ? ticketStore.ticket?.voucher_discount
+                          : 0) -
+                        ticketStore.ticket?.point_discount) *
+                        (1 + ticketStore.ticket?.vat / 100)
+                    )
                   }}đ
                 </small>
               </div>
 
-              <div class="mb-1" v-if="ticketStore.ticket?.price_percentage?.price_food_percentage">
+              <div
+                class="mb-1"
+                v-if="
+                  ticketStore.ticket?.price_percentage?.price_food_percentage
+                "
+              >
                 <span class="text-body-secondary"> Tiền đồ ăn: </span>
-                <small class="fw-medium text-danger"> {{ 
-                  formatPrice( 
-                    (
-                    (ticketStore.ticket?.price_percentage?.price_food_percentage
-                    - (ticketStore.ticket?.voucher_type == 0 ? ticketStore.ticket?.voucher_discount : 0) ) * (1 + ticketStore.ticket?.vat / 100)
+                <small class="fw-medium text-danger">
+                  {{
+                    formatPrice(
+                      (ticketStore.ticket?.price_percentage
+                        ?.price_food_percentage -
+                        (ticketStore.ticket?.voucher_type == 0
+                          ? ticketStore.ticket?.voucher_discount
+                          : 0)) *
+                        (1 + ticketStore.ticket?.vat / 100)
                     )
-                  )
-                }} </small>
+                  }}
+                </small>
               </div>
-              
+
               <div class="mb-1">
                 <span class="text-body-secondary"> Tổng tiền: </span>
                 <small class="fw-medium text-danger">
@@ -392,17 +432,16 @@ onMounted(() => {
 
 @media (max-width: 720px) {
   /* Your CSS rules here */
-  .row>.col-lg-4{
+  .row > .col-lg-4 {
     display: flex;
     justify-content: center;
   }
   .row > .col-lg-4 > img {
-    max-width: 64%;    
-    max-height: 80%;   
+    max-width: 64%;
+    max-height: 80%;
   }
-  .text-16{
+  .text-16 {
     font-size: 14px !important;
   }
 }
-
 </style>
