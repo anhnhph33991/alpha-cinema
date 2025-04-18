@@ -2033,6 +2033,12 @@ const handleApplyPoint = () => {
     return;
   }
 
+  if (applyPoints < 0) {
+    toast.error("Không được nhập âm");
+    useVoucher.point = 0;
+    return;
+  }
+
   console.log("giá vé");
   console.log(handleSeatTotalPrice.value);
 
