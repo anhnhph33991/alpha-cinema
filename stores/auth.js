@@ -188,7 +188,12 @@ export const useAuthStore = defineStore(
           return;
         }
 
-        return false;
+        if (error && error.errors) {
+          errors.password_old = error.errors.password_old;
+          errors.password = error.errors.password;
+          console.log(errors);
+          return;
+        }
       }
     };
 

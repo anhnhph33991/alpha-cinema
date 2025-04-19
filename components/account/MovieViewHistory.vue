@@ -5,18 +5,22 @@
       <table class="table table-bordered">
         <thead class="table-light">
           <tr>
-            <th>MÃ HÓA ĐƠN</th>
-            <th>PHIM</th>
-            <th>RẠP CHIẾU</th>
-            <th>SUẤT CHIẾU</th>
-            <th>GHẾ ĐÃ ĐẶT</th>
-            <th>NGÀY ĐẶT</th>
-            <th></th>
+            <th class="text-center">MÃ HÓA ĐƠN</th>
+            <th class="text-center">PHIM</th>
+            <th class="text-center">RẠP CHIẾU</th>
+            <th class="text-center">SUẤT CHIẾU</th>
+            <th class="text-center">GHẾ ĐÃ ĐẶT</th>
+            <th class="text-center">NGÀY ĐẶT</th>
+            <th class="text-center"></th>
           </tr>
         </thead>
 
         <tbody>
-          <tr v-for="ticket in ticketStore.tickets" :key="ticket.id">
+          <tr
+            v-for="ticket in ticketStore.tickets"
+            :key="ticket.id"
+            class="text-center"
+          >
             <td class="align-content-center">
               {{ ticket.code }}
             </td>
@@ -34,18 +38,6 @@
                   : "Chưa đặt"
               }}
             </td>
-            <!-- <td class="align-content-center">
-              {{
-                ticket.ticket_foods
-                  ? ticket.ticket_foods.map((food) => food.name).join(", ")
-                  : "Chưa đặt"
-              }},
-              {{
-                ticket.ticket_combos
-                  ? ticket.ticket_combos.map((combo) => combo.name).join(", ")
-                  : "Chưa đặt"
-              }}
-            </td> -->
 
             <td class="align-content-center">
               {{ formatVietnamTime(ticket.created_at) }}

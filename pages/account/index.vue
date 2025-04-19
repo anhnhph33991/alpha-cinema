@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="account-section al-bg-light">
+      <div class="account-section al-bg-light min-vh-100">
         <div class="account-tab fw-semibold">
           <ClientOnly>
             <a-tabs v-model="activeKey">
@@ -14,12 +14,12 @@
               <a-tab-pane key="3" tab="Hành Trình Điện Ảnh">
                 <MovieViewHistory />
               </a-tab-pane>
-              <a-tab-pane key="4" tab="Điểm Alpha">
+              <!-- <a-tab-pane key="4" tab="Điểm Alpha">
                 <Point />
               </a-tab-pane>
               <a-tab-pane key="5" tab="Voucher">
                 <Voucher />
-              </a-tab-pane>
+              </a-tab-pane> -->
             </a-tabs>
           </ClientOnly>
         </div>
