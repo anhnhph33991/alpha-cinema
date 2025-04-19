@@ -15,7 +15,9 @@ import { useAuthStore } from "~/stores/auth";
 const authStore = useAuthStore();
 
 const submited = (data) => {
-  authStore.register(data);
+
+  // authStore.register(data);
+  authStore.checkUserResgister(data);
   // console.log(data);
 };
 </script>

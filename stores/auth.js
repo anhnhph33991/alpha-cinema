@@ -5,6 +5,7 @@ import {
   loginService,
   logoutService,
   registerService,
+  checkUserResgisterService,
   resetPasswordService,
   sendOtpService,
   verifyEmailService,
@@ -45,7 +46,7 @@ export const useAuthStore = defineStore(
      * Xử lý login
      */
     const login = async (data) => {
-      isLoading.value = true;
+
       try {
         const response = await loginService(data);
 
@@ -59,6 +60,7 @@ export const useAuthStore = defineStore(
         console.log(response);
 
         // return;
+        isLoading.value = true;
 
         toast.success("Đăng nhập thành công");
         router.push({ name: "index" });
@@ -66,8 +68,8 @@ export const useAuthStore = defineStore(
         errors.sigin = error;
         console.log(errors);
         isLoading.value = false;
-        toast.error("Đăng nhập thất bại");
-        return 
+        // toast.error("Đăng nhập thất bại");
+        return
       }
     };
 
@@ -85,7 +87,29 @@ export const useAuthStore = defineStore(
         router.push({ name: "index" });
       } catch (error) {
         toast.error("Đăng ký thất bại, vui lòng thử lại");
-        console.log(error);
+        errors.resgister = error;
+        console.log(errors.resgister);
+        console.log(errors.resgister.errors.email[0]);
+      }
+    };
+
+    const checkUserResgister = async (data) => {
+      try {
+        const response = await checkUserResgisterService(data);
+
+        // if (response.status) {
+        //   token.value = response.data.token;
+        //   user.value = response.data.user;
+        //   isLogin.value = true;
+        // }
+
+        // toast.success("Đăng ký thành công");
+        // router.push({ name: "index" });
+      } catch (error) {
+        // toast.error("Đăng ký thất bại, vui lòng thử lại");
+        errors.resgister = error;
+        console.log(errors.resgister);
+        // console.log(errors.resgister.errors.email[0]);
       }
     };
 
@@ -207,7 +231,15 @@ export const useAuthStore = defineStore(
     const confirmEmail = async (data) => {
       try {
         const response = await confirmVerifyEmailService(data);
-        console.log(response);
+        // console.log(response);
+        if (response.status) {
+          token.value = response.data.token;
+          user.value = response.data.user;
+          isLogin.value = true;
+        }
+
+        toast.success("Đăng ký thành công");
+        router.push({ name: "index" });
       } catch (error) {
         console.log(error);
 
@@ -228,6 +260,7 @@ export const useAuthStore = defineStore(
       isLogin,
       login,
       register,
+      checkUserResgister,
       logout,
       isLoading,
       sendOtp,

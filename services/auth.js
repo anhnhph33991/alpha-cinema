@@ -28,6 +28,21 @@ export const registerService = async (data) => {
   }
 };
 
+export const checkUserResgisterService = async (data) => {
+  const { $axios } = useNuxtApp();
+  try {
+    const response = await $axios.post(`/v1/checkUserResgister`, data);
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const logoutService = async () => {
   const { $axios } = useNuxtApp();
   try {

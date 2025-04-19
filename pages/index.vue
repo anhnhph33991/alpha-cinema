@@ -51,7 +51,7 @@
         </a-modal>
       </ClientOnly>
 
-      <ClientOnly>
+      <!-- <ClientOnly>
         <a-modal
           :open="openModalVerifyEmail"
           width="1000px"
@@ -84,7 +84,7 @@
             </a-card>
           </div>
         </a-modal>
-      </ClientOnly>
+      </ClientOnly> -->
 
       <div class="container">
         <ClientOnly>

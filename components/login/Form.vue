@@ -8,6 +8,41 @@
       <a-spin />
     </div>
 
+    <!-- <ClientOnly>
+        <a-modal
+          :open="openModalVerifyEmail"
+          width="1000px"
+          centered
+          @cancel="handleCancelVerifyEmail"
+          :footer="null"
+        >
+          <div class="d-flex justify-content-center align-items-center">
+            <a-card :bordered="false" style="width: 300px">
+              <div>
+                <div>
+                  <h6 class="text-center fw-bold">Vui lòng kiểm tra email</h6>
+                </div>
+                <div style="padding: 3rem 0">
+                  <ClientOnly>
+                    <PrimeInputOtp
+                      v-model="form.otp"
+                      :length="6"
+                      class="justify-content-center"
+                    />
+                  </ClientOnly>
+                </div>
+
+                <div class="text-center">
+                  <a-button type="primary" @click="handleSubmitVerifyEmail"
+                    >Gửi</a-button
+                  >
+                </div>
+              </div>
+            </a-card>
+          </div>
+        </a-modal>
+      </ClientOnly> -->
+
     <div class="container container-tight py-4 mt-5 card-md">
       <div class="card">
         <div class="card-body">
@@ -21,18 +56,9 @@
                 <label class="form-label">
                   <span class="text-danger">*</span> Email</label
                 >
-                <input
-                  type="email"
-                  class="form-control"
-                  placeholder="luxchill@gmail.com"
-                  v-model="form.email"
-                  autocomplete="off"
-                />
-
-                <div class="text-danger fw-semibold" v-if="errors.email">{{ errors.email }}</div>
-                <div v-if="authStore?.errors?.sigin?.email" class="text-danger fw-semibold">
-                {{  authStore?.errors?.sigin?.email }}
-              </div>
+                <input type="email" v-model="form.email" placeholder="Nhập email"  class="form-control" />
+                <div v-if="emailError" class="text-danger fw-semibold">{{ emailError }}</div>
+                
               </div>
 
               <div class="col-md-12 mb-3">
@@ -81,10 +107,7 @@
                 </div>
               </div>
 
-              <div class="text-danger fw-semibold" v-if="errors.password">{{ errors.password }}</div>
-              <div v-if="authStore?.errors?.sigin?.password" class="text-danger fw-semibold">
-                {{  authStore?.errors?.sigin?.password }}
-              </div>
+              <div v-if="passwordError" class="text-danger fw-semibold">{{ passwordError }}</div>
             </div>
 
             <div class="form-footer">
@@ -132,6 +155,7 @@
 
 <script setup>
 const emit = defineEmits(["submit-form"]);
+const openModalVerifyEmail = ref(false);
 const authStore = useAuthStore();
 const form = ref({
   email: "",
@@ -155,22 +179,63 @@ const isValidEmail = (email)=>{
 }
 
 const validateForm = () => {
-  errors.value.email = "";
-  errors.value.password = "";
+  errors.value.email = ""
+  errors.value.password = ""
 
-  // Validate email
-  if (!form.value.email || !isValidEmail(form.value.email)) {
-    errors.value.email = "Email không hợp lệ.";
+  let isValid = true
+
+  if (!form.value.email) {
+    errors.value.email = "Vui lòng nhập email."
+    isValid = false
+  } else if (!isValidEmail(form.value.email)) {
+    errors.value.email = "Email không hợp lệ."
+    isValid = false
   }
 
-  // Validate password
-  if (!form.value.password || form.value.password.length < 8) {
-    errors.value.password = "Mật khẩu phải có ít nhất 8 ký tự.";
+  if (!form.value.password) {
+    errors.value.password = "Vui lòng nhập mật khẩu."
+    isValid = false
+  } else if (form.value.password.length < 8) {
+    errors.value.password = "Mật khẩu phải có ít nhất 8 ký tự."
+    isValid = false
   }
 
-  // Trả về true nếu không có lỗi
-  return !errors.value.email && !errors.value.password;
-};
+  return isValid
+}
+
+const emailError = computed(() => {
+  return errors.value.email || authStore.errors?.sigin?.email || "";
+});
+
+const passwordError = computed(() => {
+  return errors.value.password || authStore.errors?.sigin?.password || "";
+});
+
+// Xóa lỗi server khi người dùng thay đổi input
+watch(() => form.value.email, () => {
+  if (authStore.errors?.sigin?.email) {
+    authStore.errors.sigin.email = "";
+  }
+});
+
+watch(() => form.value.password, () => {
+  if (authStore.errors?.sigin?.password) {
+    authStore.errors.sigin.password = "";
+  }
+});
+
+// watch(
+//   () => authStore.user,
+//   (user) => {
+//     const hasUserData = user && Object.keys(user).length > 0;
+//     const isEmailUnverified = user?.email_verified_at == null;
+
+//     if (hasUserData && isEmailUnverified) {
+//       openModalVerifyEmail.value = true;
+//     }
+//   },
+//   { immediate: true, deep: true }
+// );
 
 const handleSubmit = () => {
   const isValid = validateForm();
@@ -179,9 +244,14 @@ const handleSubmit = () => {
     console.log("Form submitted:", form.value);
     emit("submit-form", { ...form.value });
   }
-
 };
 
+const handleCancelVerifyEmail = () => {
+  openModalVerifyEmail.value = false;
+};
+
+const handleSubmitVerifyEmail = () =>{
+}
 </script>
 
 <style scoped>
