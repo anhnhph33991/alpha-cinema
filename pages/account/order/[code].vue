@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container min-vh-100">
     <ClientOnly>
       <a-page-header style="border: 1px solid rgb(235, 237, 240)">
         <template #breadcrumb>
@@ -128,8 +128,8 @@
                   </div>
                 </div>
               </div>
-              <hr class="mt-4" />
-              <div class="col-xl-12">
+              <hr class="mt-4" v-if="isHasComboOrFood" />
+              <div class="col-xl-12" v-if="isHasComboOrFood">
                 <div class="fs-5 fw-semibold mb-2">Đồ ăn</div>
 
                 <!-- combo -->
@@ -415,6 +415,22 @@ const formatDateTime = (isoString) => {
 
   return `${time} - ${day}`;
 };
+/**
+ * Kiểm tra đồ ăn tồn tại
+ */
+const isHasComboOrFood = computed(() => {
+  return (
+    (ticketStore.ticket?.ticket_combos?.length || 0) > 0 ||
+    (ticketStore.ticket?.ticket_foods?.length || 0) > 0
+  );
+});
+
+// const isHasComboOrFood = computed(() => {
+//   return (
+//     (ticketStore.ticket?.ticket_combos?.length || 0) > 0 ||
+//     (ticketStore.ticket?.ticket_foods?.length || 0) > 0
+//   );
+// });
 
 onMounted(() => {
   // console.log(code);

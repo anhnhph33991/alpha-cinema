@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="account-section al-bg-light">
+      <div class="account-section al-bg-light min-vh-100">
         <div class="account-tab fw-semibold">
           <ClientOnly>
             <a-tabs v-model="activeKey">
