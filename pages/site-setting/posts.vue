@@ -1,129 +1,234 @@
-<script setup>
-import { ref, onMounted } from 'vue'
-import { fetchSettingService } from "@/services/setting";
-
-const siteInfo = ref(null)
-
-onMounted(async () => {
-  try {
-    siteInfo.value = await fetchSettingService();
-    console.log("siteInfo.value", siteInfo.value);
-  } catch (error) {
-    console.error("Không thể tải dữ liệu từ Backend:", error);
-  }
-});
-
-const formattedImage = (image) => {
-  return image ? `https://alphacinema.test/${image}` : "";
-};
-</script>
-
 <template>
-  <div
-    v-if="siteInfo"
-    class="site-wrapper"
-    :style="siteInfo.background_image ? `background-image: url(${formattedImage(siteInfo.background_image)})` : ''"
-  >
-    <div class="overlay"></div>
-    <div class="container py-5">
-      <!-- Phần Header -->
-      <div class="text-center mb-5">
-        <img
-          v-if="siteInfo.news_img"
-          class="content-img img-fluid shadow-lg rounded-4 border border-primary"
-          :alt="siteInfo.name"
-          :src="formattedImage(siteInfo.news_img)"
-        />
-        <h1 class="fw-bold mt-3 text-gradient animated-gradient">{{ siteInfo.site_name }}</h1>
-        <p class="text-white fs-5">{{ siteInfo.slogan }}</p>
-      </div>
+    <div class="zing-layout">
+        <!-- Cột trái: Tin phụ -->
+        <aside class="left-sidebar">
+            <h3>Tin điện ảnh</h3>
+            <ul class="sub-news">
+                <li><a href="#">[Phim Việt] Mai – Điện ảnh và sự chữa lành</a></li>
+                <li><a href="#">Cuộc đổ bộ của bom tấn Hollywood hè 2025</a></li>
+                <li><a href="#">CGV mở thêm 5 rạp tại miền Trung</a></li>
+                <li><a href="#">Trailer Deadpool 3 khiến fan phát cuồng</a></li>
+                <li><a href="#">Phim hoạt hình Nhật Bản vẫn giữ vững vị thế</a></li>
+                <li><a href="#">Cú lột xác ngoạn mục của điện ảnh Hàn</a></li>
+            </ul>
+        </aside>
 
-      <!-- Giới thiệu -->
-      <section class="p-5 shadow-lg rounded-4 content-card">
-        <h2 class="text-white fw-semibold mb-3">🌟 Tin tức  </h2>
-        <div class="text-light fs-5" v-html="siteInfo.news"></div>
-      </section>
-    </div>
-  </div>
+        <!-- Cột giữa: Tin chính -->
+        <main class="main-content">
+            <div class="news-article">
+                <img src="/images/news-banner.jpg" alt="Banner" class="news-banner" />
+                <h1 class="news-title">Alpha Cinema ra mắt loạt phim bom tấn mùa hè 2025</h1>
+                <p class="news-lead">Cập nhật nhanh chóng các tin tức mới nhất về phim ảnh!</p>
 
-  <!-- Hiển thị khi chưa có dữ liệu -->
-  <div v-else class="text-center py-5">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Đang tải...</span>
+                <div class="article-body">
+                    <section>
+                        <h2>1. Avengers: New Era – Kỷ nguyên mới của vũ trụ Marvel</h2>
+                        <img src="/images/avengers.jpg" class="article-img" />
+                        <p>
+                            "Avengers: New Era" đánh dấu sự chuyển giao từ thế hệ cũ sang thế hệ siêu anh hùng mới như
+                            Ironheart, Kate Bishop, và Spider-Man trẻ tuổi...
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2>2. The Lost Kingdom – Hành trình khám phá Atlantis</h2>
+                        <img src="/images/lost-kingdom.jpg" class="article-img" />
+                        <p>
+                            Với kỹ xảo tuyệt đẹp và cốt truyện hấp dẫn, "The Lost Kingdom" đưa người xem vào thế giới
+                            Atlantis thần thoại...
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2>3. Frozen 3 – Elsa trở lại trong hành trình mới</h2>
+                        <img src="/images/frozen3.jpg" class="article-img" />
+                        <p>
+                            Phần ba của Frozen hứa hẹn sẽ mang đến những khoảnh khắc xúc động và âm nhạc tuyệt vời...
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2>4. Inside Out 2 – Cảm xúc trưởng thành</h2>
+                        <img src="/images/insideout2.jpg" class="article-img" />
+                        <p>
+                            Bộ phim hoạt hình đình đám trở lại với phiên bản mới, xoay quanh tuổi dậy thì của Riley cùng
+                            những cảm xúc phức tạp hơn...
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2>5. Mission Impossible 8 – Lần cuối của Ethan Hunt?</h2>
+                        <img src="/images/mi8.jpg" class="article-img" />
+                        <p>
+                            Tom Cruise trở lại với những pha hành động nghẹt thở. Đây có thể là phần cuối của chuỗi
+                            Mission Impossible huyền thoại...
+                        </p>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <!-- Cột phải: Tin nổi bật -->
+        <aside class="right-sidebar">
+            <h3>Tin nổi bật</h3>
+            <ul class="highlight-list">
+                <li><a href="#">Top 10 phim không thể bỏ lỡ hè 2025</a></li>
+                <li><a href="#">Oscar 2025: Dự đoán và bất ngờ</a></li>
+                <li><a href="#">Gặp gỡ dàn diễn viên của The Marvels</a></li>
+                <li><a href="#">Bản đồ các rạp chiếu toàn quốc</a></li>
+                <li><a href="#">Phim Việt đại thắng phòng vé</a></li>
+                <li><a href="#">Lịch chiếu phim mới cập nhật mỗi ngày</a></li>
+            </ul>
+
+            <h3>Video trailer</h3>
+            <div class="video-container">
+                <iframe width="100%" height="200" src="https://www.youtube.com/embed/VyHV0BRtdxo" frameborder="0"
+                    allowfullscreen></iframe>
+            </div>
+
+            <h3>Được quan tâm</h3>
+            <ul class="highlight-list">
+                <li><a href="#">Review phim: The Boy and the Heron (Ghibli)</a></li>
+                <li><a href="#">Dune 2 – Cuộc chiến sa mạc khốc liệt</a></li>
+                <li><a href="#">Marvel công bố Phase 6: Có gì hot?</a></li>
+                <li><a href="#">Netflix ra mắt phim Việt đầu tiên</a></li>
+            </ul>
+        </aside>
     </div>
-  </div>
 </template>
 
 <style scoped>
-/* Ảnh nền với hiệu ứng làm mờ */
-.site-wrapper {
-  position: relative;
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+.zing-layout {
+    display: flex;
+    gap: 30px;
+    padding: 40px 20px;
+    max-width: 1400px;
+    margin: auto;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    color: #111827;
 }
 
-.site-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  z-index: 1;
+.left-sidebar,
+.right-sidebar {
+    flex: 1.2;
+    padding: 0 15px;
 }
 
-.container {
-  position: relative;
-  z-index: 2;
+.left-sidebar {
+    border-right: 1px solid #e5e7eb;
 }
 
-/* Ảnh */
-.content-img {
-  max-width: 90%;
-  max-height: 350px;
-  object-fit: cover;
-  transition: transform 0.3s ease-in-out;
-}
-.content-img:hover {
-  transform: scale(1.05);
+.right-sidebar {
+    border-left: 1px solid #e5e7eb;
 }
 
-/* Hiệu ứng Gradient động */
-.animated-gradient {
-  background: linear-gradient(270deg, #91ff7e, #ff758c, #399b12, #ff758c);
-  background-size: 300% 300%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientMove 5s infinite ease-in-out;
+.main-content {
+    flex: 2.8;
+    padding: 0 10px;
 }
 
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+.news-article {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 30px;
 }
 
-/* Card nội dung */
-.content-card {
-  background: rgba(121, 140, 135, 0.55);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease-in-out;
+.news-banner {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 16px;
 }
-.content-card:hover {
-  transform: translateY(-5px);
+
+.news-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #0f172a;
+    border-left: 5px solid #3b82f6;
+    padding-left: 15px;
+}
+
+.news-lead {
+    font-size: 1.2rem;
+    color: #6b7280;
+    margin: 10px 0 30px;
+}
+
+.article-body h2 {
+    margin-top: 40px;
+    font-size: 1.5rem;
+    color: #1f2937;
+}
+
+.article-body p {
+    text-align: justify;
+    margin-top: 10px;
+    line-height: 1.8;
+}
+
+.article-img {
+    width: 100%;
+    border-radius: 12px;
+    margin: 20px 0;
+    transition: transform 0.3s ease;
+}
+
+.article-img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.sub-news,
+.highlight-list {
+    list-style: none;
+    padding: 0;
+}
+
+.sub-news li,
+.highlight-list li {
+    margin-bottom: 12px;
+}
+
+.sub-news a,
+.highlight-list a {
+    color: #1e40af;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.sub-news a:hover,
+.highlight-list a:hover {
+    text-decoration: underline;
+    transform: translateX(2px);
+}
+
+.right-sidebar h3,
+.left-sidebar h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #1f2937;
+}
+
+.video-container {
+    margin-bottom: 30px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 992px) {
+    .zing-layout {
+        flex-direction: column;
+        padding: 20px 10px;
+    }
+
+    .left-sidebar,
+    .right-sidebar {
+        border: none;
+        padding: 0;
+        margin-top: 30px;
+    }
 }
 </style>
