@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-4 h-screen">
+  <div class="container mt-4 h-screen" v-if="ticketStore?.tickets.length > 0">
     <h4 class="text-custom fw-bold mt-4">LỊCH SỬ GIAO DỊCH</h4>
     <div class="table-responsive">
       <table class="table table-bordered">
@@ -58,6 +58,13 @@
         </tbody>
       </table>
     </div>
+  </div>
+
+  <div
+    class="d-flex align-content-center align-items-center justify-content-center min-vh-100"
+    v-else
+  >
+    <a-empty description="Không có dữ liệu"></a-empty>
   </div>
 </template>
 
