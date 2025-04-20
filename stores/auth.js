@@ -36,6 +36,7 @@ export const useAuthStore = defineStore(
     const router = useRouter();
     const isLoading = ref(false);
     const errors = reactive({});
+    const success = reactive({});
     const resetPasswordCookie = useCookie("reset_password_cookie", {
       maxAge: 300,
     });
@@ -102,11 +103,14 @@ export const useAuthStore = defineStore(
         //   user.value = response.data.user;
         //   isLogin.value = true;
         // }
-
+        success.register = 1;
+        console.log(success.register);
+        
         // toast.success("Đăng ký thành công");
         // router.push({ name: "index" });
       } catch (error) {
         toast.error("Đăng ký thất bại, vui lòng thử lại");
+        success.register = 0;
         errors.resgister = error;
         console.log(errors.resgister);
         // console.log(errors.resgister.errors.email[0]);
@@ -262,6 +266,7 @@ export const useAuthStore = defineStore(
       vat,
       token,
       errors,
+      success,
       isLogin,
       login,
       register,

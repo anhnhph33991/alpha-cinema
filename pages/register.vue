@@ -14,10 +14,10 @@ import { useAuthStore } from "~/stores/auth";
 
 const authStore = useAuthStore();
 
-const submited = (data) => {
+const submited = async (data) => {
 
   // authStore.register(data);
-  authStore.checkUserResgister(data);
+  // await authStore.checkUserResgister(data);
   // console.log(data);
 };
 </script>

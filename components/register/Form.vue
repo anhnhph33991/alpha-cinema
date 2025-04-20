@@ -237,6 +237,7 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as zod from "zod";
+import { useAuthStore } from "~/stores/auth";
 
 // Show password
 const showPassword = ref(false);
@@ -255,11 +256,17 @@ const validationSchema = toTypedSchema(
     email: zod
       .string()
       .min(1, { message: "Vui lòng nhập email" })
-      .email({ message: "Email không hợp lệ" }),
+      .regex(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        { message: "Email không hợp lệ" }
+      ), // Regex kiểm tra email
     password: zod
       .string()
       .min(8, { message: "Mật khẩu phải có ít nhất 8 ký tự" }),
-    phone: zod.string().min(1, { message: "Vui lòng nhập số điện thoại" }),
+    phone: zod
+      .string()
+      .min(1, { message: "Vui lòng nhập số điện thoại" })
+      .regex(/^0\d{9}$/, { message: "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số" }), // Kiểm tra số điện thoại bắt đầu bằng 0 và có 10 chữ số
     gender: zod
       .enum(["0", "1"], { message: "Giới tính phải là Nam hoặc Nữ" })
       .refine((val) => val !== "", { message: "Bắt buộc chọn giới tính" }),
@@ -287,6 +294,7 @@ const validationSchema = toTypedSchema(
   })
 );
 
+
 // Thông tin form
 const form = ref({
   name: "",
@@ -299,18 +307,24 @@ const form = ref({
 
 // Hàm xử lý thay đổi tab hoặc điều hướng
 onBeforeRouteLeave((to, from) => {
-  authStore.errors = null; // Xóa lỗi trong authStore
+  if(authStore.errors?.resgister)
+  authStore.errors.resgister = null; // Xóa lỗi trong authStore
 });
 
 const emit = defineEmits(["submit-form"]);
 
 const onSubmit = async (value) => {
   try {
-    emit("submit-form", value);
+    // await emit("submit-form", value);
+    await authStore.checkUserResgister(value); // Đợi hàm checkUserResgister hoàn tất
+    console.log(authStore.success.register);
    
-    setTimeout(() => {
-      openModalVerifyEmail.value = true;
-    }, 1000);
+    if(authStore.success?.register == 1){
+        setTimeout(() => {
+        openModalVerifyEmail.value = true;
+      }, 1000);
+    }
+   
   } catch (error) {
     console.error("Lỗi:", error);
   }
