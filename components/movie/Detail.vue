@@ -139,16 +139,37 @@
             :key="date"
             :tab="formatDate(date)"
           >
+            <!-- <div class="h-screen">
+            <div class="d-flex gap-1 flex-wrap">
+              <button
+                v-for="(showtime, index) in items"
+                :key="index"
+                class="btn btn-dark rounded-pill text-white px-4 py-2 font-weight-bold text-sm focus-ring focus-ring-light"
+                :disabled="!showtime.available"
+                @click="navigateShowTime(showtime)"
+              >
+                {{ formatTime(showtime.start_time) }}
+              </button>
+            </div>
+          </div> -->
             <div class="h-screen">
-              <div class="d-flex gap-1 flex-wrap">
-                <button
-                  v-for="(showtime, index) in items"
-                  :key="index"
-                  class="btn btn-primary"
-                  @click="navigateShowTime(showtime)"
+              <div class="mx-auto w-100 mw-1000px py-4 space-y-4 relative">
+                <div
+                  class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2 g-xl-4 px-4 px-xl-0"
                 >
-                  {{ formatTime(showtime.start_time) }}
-                </button>
+                  <div
+                    v-for="(showtime, index) in items"
+                    :key="index"
+                    class="col"
+                  >
+                    <button
+                      class="btn custom-btn-gray rounded-pill text-white w-100 px-4 py-2 fw-bold fs-6 focus-ring focus-ring-light"
+                      @click="navigateShowTime(showtime)"
+                    >
+                      {{ formatTime(showtime.start_time) }}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </a-tab-pane>
@@ -274,6 +295,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* Chiều cao cho wrapper */
 .custom-wrapper {
   height: 250px;
 }
@@ -289,6 +311,36 @@ onMounted(() => {
   }
 }
 
+/* Nút màu xám */
+.custom-btn-gray {
+  background-color: #6c757d; /* Màu xám đậm */
+  border-color: #6c757d;
+  color: white;
+}
+
+.custom-btn-gray:hover {
+  background-color: #adb5bd; /* Màu xám sáng hơn */
+  border-color: #adb5bd;
+}
+
+/* .custom-btn-gray:disabled {
+  background-color: #6c757d; 
+  border-color: #6c757d;
+  opacity: 0.5;
+} */
+
+/* Giới hạn chiều rộng và khoảng cách dọc */
+.mw-1000px {
+  max-width: 1000px;
+}
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+/* Hiệu ứng gradient phủ */
+.wrapper {
+  position: relative; /* Đảm bảo ::after định vị đúng */
+}
 .wrapper:after {
   position: absolute;
   top: 0;
@@ -299,11 +351,11 @@ onMounted(() => {
   background: linear-gradient(0deg, #10141b, rgba(16, 20, 27, 0));
 }
 
+/* Container chính */
 .custom-container {
   max-width: 56rem;
   height: 473px;
-  /* padding-top: 96px;
-  padding-bottom: 28px; */
+  display: flex;         /* Thêm để hỗ trợ gap */
   gap: 40px;
 }
 
@@ -315,78 +367,130 @@ a {
   color: white;
 }
 
+/* Một số tiện ích */
 .h-250 {
   height: 250px;
 }
-
 .inset-0 {
   inset: 0;
 }
-
 .z-10 {
   z-index: 10;
 }
-
 .z-20 {
   z-index: 20;
 }
-
 .bg-primary\/60 {
   background-color: rgba(16, 20, 27, 0.6);
 }
-
 .object-cover {
   object-fit: cover;
 }
-
-img,
-video {
+img, video {
   max-width: 100%;
   height: auto;
 }
-
-audio,
-canvas,
-embed,
-iframe,
-img,
-object,
-svg,
-video {
+audio, canvas, embed, iframe, img, object, svg, video {
   display: block;
 }
 
+/* Cắt chữ nhiều dòng */
 .text-truncate-multi {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4; /* Giới hạn số dòng */
-  line-clamp: 4; /* Thuộc tính tiêu chuẩn */
+  -webkit-line-clamp: 4;
   overflow: hidden;
 }
 
+/* Hiệu ứng hover scale cho nút */
 .btn-hover-scale {
   transition: transform 0.2s ease-in-out;
 }
-
 .btn-hover-scale:hover {
   transform: scale(1.05);
 }
 
+/* Header tiêu đề */
 h3 {
   margin-top: 0;
   margin-bottom: 0;
 }
 
+/* Tab phim */
 .movie-detail-section .ant-tabs-tab-btn {
   font-size: 1.4rem;
   font-weight: 600;
 }
 
-.movie-detail-section .btn {
+/* Tạo nút dạng sáng hơn riêng biệt */
+.btn-light {
   padding: 5px 25px;
-  --bs-btn-border-radius: 0px;
   color: black;
-  background-color: #cccccc;
-  --bs-btn-border-color: none;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 0;
+}
+
+/* Section suất chiếu */
+.showtime-section {
+  padding: 20px 0;
+}
+
+/* Container chính */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Tab ngày */
+.ant-tabs-tab {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  background-color: #ff4d4f;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin-right: 10px;
+  line-height: 1;
+}
+.ant-tabs-tab-active {
+  background-color: #ff7875;
+  color: white;
+}
+
+/* Nút giờ chiếu */
+.btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: white;
+  background-color: black;
+  border: 2px solid white;
+  border-radius: 20px;
+  transition: background-color 0.2s ease-in-out;
+}
+.btn:hover {
+  background-color: #2a3f5f;
+  color: white;
+  border: 2px solid white;
+}
+
+/* Lưu ý */
+.text-danger {
+  font-size: 0.875rem;
+  color: #ff6f61;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Flex tiện ích */
+.d-flex {
+  display: flex;
+}
+.gap-2 {
+  gap: 10px;
+}
+.flex-wrap {
+  flex-wrap: wrap;
 }
 </style>
