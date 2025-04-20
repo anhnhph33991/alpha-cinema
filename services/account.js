@@ -91,11 +91,23 @@ export async function fetchPointHistory() {
 
 export async function updateProfileService(id, data) {
   const { $axios } = useNuxtApp();
+
+  const formData = new FormData();
+
+  for (const key in data) {
+    if (data[key] !== null && data[key] !== undefined) {
+      formData.append(key, data[key]);
+    }
+  }
+
   try {
-    const response = await $axios.put(`/v1/${id}/update-profile`, data);
+    const response = await $axios.post(`/v1/${id}/update-profile`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response;
   } catch (error) {
-    console.error("Lỗi khi gọi API updateProfile:", error);
     throw error;
   }
 }

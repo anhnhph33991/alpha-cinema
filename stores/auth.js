@@ -5,6 +5,7 @@ import {
   loginService,
   logoutService,
   registerService,
+  checkUserResgisterService,
   resetPasswordService,
   sendOtpService,
   verifyEmailService,
@@ -35,6 +36,7 @@ export const useAuthStore = defineStore(
     const router = useRouter();
     const isLoading = ref(false);
     const errors = reactive({});
+    const success = reactive({});
     const resetPasswordCookie = useCookie("reset_password_cookie", {
       maxAge: 300,
     });
@@ -45,7 +47,7 @@ export const useAuthStore = defineStore(
      * Xử lý login
      */
     const login = async (data) => {
-      isLoading.value = true;
+
       try {
         const response = await loginService(data);
 
@@ -59,13 +61,16 @@ export const useAuthStore = defineStore(
         console.log(response);
 
         // return;
+        isLoading.value = true;
 
         toast.success("Đăng nhập thành công");
         router.push({ name: "index" });
       } catch (error) {
-        console.log(error);
+        errors.sigin = error;
+        console.log(errors);
         isLoading.value = false;
-        toast.error("Đăng nhập thất bại");
+        // toast.error("Đăng nhập thất bại");
+        return
       }
     };
 
@@ -83,7 +88,32 @@ export const useAuthStore = defineStore(
         router.push({ name: "index" });
       } catch (error) {
         toast.error("Đăng ký thất bại, vui lòng thử lại");
-        console.log(error);
+        errors.resgister = error;
+        console.log(errors.resgister);
+        console.log(errors.resgister.errors.email[0]);
+      }
+    };
+
+    const checkUserResgister = async (data) => {
+      try {
+        const response = await checkUserResgisterService(data);
+
+        // if (response.status) {
+        //   token.value = response.data.token;
+        //   user.value = response.data.user;
+        //   isLogin.value = true;
+        // }
+        success.register = 1;
+        console.log(success.register);
+        
+        // toast.success("Đăng ký thành công");
+        // router.push({ name: "index" });
+      } catch (error) {
+        toast.error("Đăng ký thất bại, vui lòng thử lại");
+        success.register = 0;
+        errors.resgister = error;
+        console.log(errors.resgister);
+        // console.log(errors.resgister.errors.email[0]);
       }
     };
 
@@ -188,7 +218,12 @@ export const useAuthStore = defineStore(
           return;
         }
 
-        return false;
+        if (error && error.errors) {
+          errors.password_old = error.errors.password_old;
+          errors.password = error.errors.password;
+          console.log(errors);
+          return;
+        }
       }
     };
 
@@ -205,7 +240,15 @@ export const useAuthStore = defineStore(
     const confirmEmail = async (data) => {
       try {
         const response = await confirmVerifyEmailService(data);
-        console.log(response);
+        // console.log(response);
+        if (response.status) {
+          token.value = response.data.token;
+          user.value = response.data.user;
+          isLogin.value = true;
+        }
+
+        toast.success("Đăng ký thành công");
+        router.push({ name: "index" });
       } catch (error) {
         console.log(error);
 
@@ -223,9 +266,11 @@ export const useAuthStore = defineStore(
       vat,
       token,
       errors,
+      success,
       isLogin,
       login,
       register,
+      checkUserResgister,
       logout,
       isLoading,
       sendOtp,

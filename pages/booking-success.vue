@@ -1,6 +1,8 @@
 <template>
   <div class="h-screen">
-    <div class="d-flex justify-content-center align-items-center">
+    <div
+      class="d-flex justify-content-center align-items-center align-content-center h-screen"
+    >
       <div>
         <ClientOnly>
           <a-result

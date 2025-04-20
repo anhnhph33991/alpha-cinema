@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import { fetchVoucher, updateProfileService } from "~/services/account";
 import { toast } from "vue-sonner";
 export const accountStore = defineStore("account", () => {
-
   const vouchers = ref([]);
+  const errors = reactive({});
   // const userProfile = ref({});
   // Hàm lấy lịch sử vé
   const loadVoucher = async () => {
@@ -16,7 +16,6 @@ export const accountStore = defineStore("account", () => {
       console.error("Lỗi khi tải voucher:", error);
     }
   };
-
 
   // const useUpdateProfile = async (id, data) => {
 
@@ -36,13 +35,30 @@ export const accountStore = defineStore("account", () => {
   const useUpdateProfile = async (id, data) => {
     try {
       const response = await updateProfileService(id, data);
+      console.log(response);
+
+      useAuthStore().user = response.data.user;
+
       toast.success("Thay đổi thông tin thành công");
     } catch (error) {
-      console.error("Lỗi trong store updateUserProfile:", error);
-      throw error;
+      console.log(error);
+      if (error && error.errors) {
+        console.log(error);
+        errors.name = error.errors.name;
+        errors.phone = error.errors.phone;
+        errors.birthday = error.errors.birthday;
+        errors.gender = error.errors.gender;
+        errors.address = error.errors.address;
+        errors.avatar = error.errors.avatar;
+      }
     }
   };
-  
-  return { vouchers, loadVoucher, useUpdateProfile };
-});
 
+  const clearFieldError = (filed) => {
+    if (errors[filed]) {
+      errors[filed] = null;
+    }
+  };
+
+  return { vouchers, errors, loadVoucher, useUpdateProfile, clearFieldError };
+});

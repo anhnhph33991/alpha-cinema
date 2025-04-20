@@ -1,22 +1,26 @@
 <template>
-  <div class="container mt-4 h-screen">
+  <div class="container mt-4 h-screen" v-if="ticketStore?.tickets.length > 0">
     <h4 class="text-custom fw-bold mt-4">LỊCH SỬ GIAO DỊCH</h4>
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead class="table-light">
           <tr>
-            <th>MÃ HÓA ĐƠN</th>
-            <th>PHIM</th>
-            <th>RẠP CHIẾU</th>
-            <th>SUẤT CHIẾU</th>
-            <th>GHẾ ĐÃ ĐẶT</th>
-            <th>NGÀY ĐẶT</th>
-            <th></th>
+            <th class="text-center">MÃ HÓA ĐƠN</th>
+            <th class="text-center">PHIM</th>
+            <th class="text-center">RẠP CHIẾU</th>
+            <th class="text-center">SUẤT CHIẾU</th>
+            <th class="text-center">GHẾ ĐÃ ĐẶT</th>
+            <th class="text-center">NGÀY ĐẶT</th>
+            <th class="text-center"></th>
           </tr>
         </thead>
 
         <tbody>
-          <tr v-for="ticket in ticketStore.tickets" :key="ticket.id">
+          <tr
+            v-for="ticket in ticketStore.tickets"
+            :key="ticket.id"
+            class="text-center"
+          >
             <td class="align-content-center">
               {{ ticket.code }}
             </td>
@@ -34,18 +38,6 @@
                   : "Chưa đặt"
               }}
             </td>
-            <!-- <td class="align-content-center">
-              {{
-                ticket.ticket_foods
-                  ? ticket.ticket_foods.map((food) => food.name).join(", ")
-                  : "Chưa đặt"
-              }},
-              {{
-                ticket.ticket_combos
-                  ? ticket.ticket_combos.map((combo) => combo.name).join(", ")
-                  : "Chưa đặt"
-              }}
-            </td> -->
 
             <td class="align-content-center">
               {{ formatVietnamTime(ticket.created_at) }}
@@ -66,6 +58,13 @@
         </tbody>
       </table>
     </div>
+  </div>
+
+  <div
+    class="d-flex align-content-center align-items-center justify-content-center min-vh-100"
+    v-else
+  >
+    <a-empty description="Không có dữ liệu"></a-empty>
   </div>
 </template>
 

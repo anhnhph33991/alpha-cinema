@@ -1,6 +1,6 @@
 <template>
   <div class="movie-section padding-top bg-two" v-if="movieStore.showtime.data">
-    <div class="showtime-choose-seat h-1000">
+    <div class="showtime-choose-seat min-vh-100">
       <div class="container">
         <div class="row">
           <div class="col-lg-9">
@@ -704,7 +704,7 @@
               </div>
             </div>
             <!-- Chân trang showtime -->
-            <div class="seat-row-footer bg-white seat-type-panel">
+            <div class="seat-row-footer bg-white seat-type-panel mb-5">
               <div>
                 <div>
                   <div class="row">
@@ -1849,16 +1849,7 @@ const onFinish = async () => {
   const userId = authStore.user.id;
   const showtimeId = movieStore.showtime.data.showTime.id;
 
-  // console.log("show time id");
-  // console.log(showtimeId);
-  // console.log("userId");
-  // console.log(userId);
-  // console.log("seatId");
-  // console.log(seatId);
-
-  // console.log(seatId);
-
-  // await movieStore.resetAndBuySeat(showtimeId, seatId, userId, statusDefault);
+  await movieStore.resetAndBuySeat(showtimeId, seatId, userId, statusDefault);
 
   navigateTo("/");
 };
@@ -1876,23 +1867,7 @@ const deadline = computed(() => {
   return countdownDeadline.value && countdownDeadline.value > now
     ? countdownDeadline.value
     : now + 1000 * 60 * 10;
-  // now + 1000 * 20;
 });
-
-// const countdownDeadline = useCookie(`countdownDeadline-${slug.value}`, {
-//   maxAge: 10, // Chỉ lưu cookie trong 20 giây
-//   default: () => null,
-// });
-
-// const now = computed(() => Date.now());
-
-// const deadline = computed(() => {
-//   if (!countdownDeadline.value) {
-//     // Nếu chưa có giá trị trong cookie, đặt deadline là 20 giây từ bây giờ
-//     countdownDeadline.value = now.value + 1000 * 10;
-//   }
-//   return countdownDeadline.value;
-// });
 
 watch(
   () => slug.value,
@@ -2033,6 +2008,12 @@ const handleApplyPoint = () => {
     return;
   }
 
+  if (applyPoints < 0) {
+    toast.error("Không được nhập âm");
+    useVoucher.point = 0;
+    return;
+  }
+
   console.log("giá vé");
   console.log(handleSeatTotalPrice.value);
 
@@ -2158,16 +2139,11 @@ onMounted(() => {
   if (!countdownDeadline.value) {
     countdownDeadline.value = now + 1000 * 60 * 10;
   }
-
-  // if (movieStore.seatSelected.length > 0) {
-  //   priceAll.value.totalAmount += priceAll.value.totalAmount * 0.08;
-  //   priceAll.value.payableAmount += priceAll.value.payableAmount * 0.08;
-  // }
 });
 
-// onUnmounted(() => {
-//   echo.leaveChannel("showtime");
-// });
+onUnmounted(() => {
+  echo.leaveChannel("showtime");
+});
 </script>
 
 <style scoped>

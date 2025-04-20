@@ -1,33 +1,26 @@
 <template>
-  <div class="slideshow-container w-100">
-    <Carousel
-      :items-to-show="1"
-      :wrap-around="true"
-      :transition="500"
-      :autoplay="5000"
-      class="carousel-full-width"
-    >
-      <Slide v-for="(slide, index) in slides" :key="index">
-        <img
-          :src="slide"
-          alt="Slide"
-          class="img-fluid w-100 al-slide-height-500"
-        />
-      </Slide>
+    <div class="slideshow-container w-100">
+        <Carousel :items-to-show="1" :wrap-around="true" :transition="500" :autoplay="5000" class="carousel-full-width">
+            <Slide v-for="(slide, index) in slides" :key="index">
+                <div class="slide-wrapper">
+                    <img :src="slide" alt="Slide" />
+                </div>
+            </Slide>
 
-      <template #addons>
-        <CarouselNavigation>
-          <template #prev>
-            <span class="al-slide-pagination">←</span>
-          </template>
-          <template #next>
-            <span class="al-slide-pagination">→</span>
-          </template>
-        </CarouselNavigation>
-        <Pagination />
-      </template>
-    </Carousel>
-  </div>
+
+            <template #addons>
+                <CarouselNavigation>
+                    <template #prev>
+                        <span class="al-slide-pagination">←</span>
+                    </template>
+                    <template #next>
+                        <span class="al-slide-pagination">→</span>
+                    </template>
+                </CarouselNavigation>
+                <Pagination />
+            </template>
+        </Carousel>
+    </div>
 </template>
 
 <script setup>
@@ -91,5 +84,42 @@ defineProps({
   transform: translateY(-50%);
   width: var(--vc-nav-width);
   color: white;
+}
+.al-slide-image {
+    width: 100%;
+    /* aspect-ratio: 16 / 9; */
+    /* Tỷ lệ 16:9 */
+    object-fit: cover;
+    display: block;
+}
+.slide-wrapper {
+    width: 100%;
+    /* height: 50%; */
+    /* aspect-ratio: 16 / 9; */
+    overflow: hidden;
+}
+
+.slide-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+@media (max-width: 768px) {
+    .al-slide-image {
+        aspect-ratio: 4 / 3;
+        /* Tỷ lệ khác cho thiết bị nhỏ hơn */
+    }
+}
+@media (min-width: 768px) {
+    .al-slide-image {
+        height: 60vh;
+    }
+}
+
+@media (min-width: 1024px) {
+    .al-slide-image {
+        height: 70vh;
+    }
 }
 </style>

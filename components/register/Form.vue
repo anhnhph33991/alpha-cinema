@@ -24,6 +24,7 @@
                   v-model="form.name"
                   autocomplete="off"
                 />
+               
                 <ErrorMessage name="name" v-slot="{ message }">
                   <div class="text-danger error-message">{{ message }}</div>
                 </ErrorMessage>
@@ -36,10 +37,15 @@
                   name="email"
                   type="email"
                   class="form-control"
-                  placeholder="luxchill@gmail.com"
+                  placeholder="Nhập email"
                   v-model="form.email"
                   autocomplete="off"
                 />
+                <!-- errors.resgister -->
+                <div v-if="authStore.errors?.resgister?.errors?.email?.[0]" class="text-danger error-message">
+                  {{ authStore.errors?.resgister?.errors?.email[0] }} 
+                </div>
+
                 <ErrorMessage name="email" v-slot="{ message }">
                   <div class="text-danger error-message">{{ message }}</div>
                 </ErrorMessage>
@@ -109,8 +115,8 @@
                     <option value="1">Nữ</option>
                   </select> -->
 
-                  <Field name="gender" v-slot="{ field, errors }">
-                    <select v-bind="field" class="form-control">
+                  <Field name="gender" v-model="form.gender" v-slot="{ field, errors }">
+                    <select v-bind="field" class="form-control" >
                       <option value="" disabled>Chọn giới tính</option>
                       <option value="0">Nam</option>
                       <option value="1">Nữ</option>
@@ -125,7 +131,7 @@
               <div class="col-md-6 mb-3">
                 <label class="form-label"> Ngày sinh</label>
                 <Field name="birthday" v-slot="{ field, errors }">
-                  <input type="date" class="form-control" v-bind="field" />
+                  <input type="date" class="form-control" v-bind="field"  v-model="form.birthday"/>
                   <div class="text-danger error-message">{{ errors[0] }}</div>
                 </Field>
               </div>
@@ -141,6 +147,11 @@
                   v-model="form.phone"
                   autocomplete="off"
                 />
+
+                <div v-if="authStore.errors?.resgister?.errors?.phone?.[0]" class="error-message">
+                  {{ authStore.errors?.resgister?.errors?.phone[0] }}
+                </div>
+
                 <ErrorMessage name="phone" v-slot="{ message }">
                   <div class="text-danger error-message">{{ message }}</div>
                 </ErrorMessage>
@@ -183,6 +194,42 @@
         </div>
       </div>
     </div>
+
+    <ClientOnly>
+        <a-modal
+          :open="openModalVerifyEmail"
+          width="1000px"
+          centered
+          @cancel="handleCancelVerifyEmail"
+          :footer="null"
+        >
+          <div class="d-flex justify-content-center align-items-center">
+            <a-card :bordered="false" style="width: 300px">
+              <div>
+                <div>
+                  <h6 class="text-center fw-bold">Vui lòng kiểm tra email</h6>
+                </div>
+                <div style="padding: 3rem 0">
+                  <ClientOnly>
+                    <PrimeInputOtp
+                      v-model="form.otp"
+                      :length="6"
+                      class="justify-content-center"
+                    />
+                  </ClientOnly>
+                </div>
+
+                <div class="text-center">
+                  <a-button type="primary" @click="handleSubmitVerifyEmail"
+                    >Gửi</a-button
+                  >
+                </div>
+              </div>
+            </a-card>
+          </div>
+        </a-modal>
+      </ClientOnly>
+
   </div>
 </template>
 
@@ -190,12 +237,17 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as zod from "zod";
+import { useAuthStore } from "~/stores/auth";
 
 // Show password
 const showPassword = ref(false);
 const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value;
 };
+
+const authStore = useAuthStore();
+
+const openModalVerifyEmail = ref(false);
 
 // Định nghĩa schema validation sử dụng Zod
 const validationSchema = toTypedSchema(
@@ -204,11 +256,17 @@ const validationSchema = toTypedSchema(
     email: zod
       .string()
       .min(1, { message: "Vui lòng nhập email" })
-      .email({ message: "Email không hợp lệ" }),
+      .regex(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        { message: "Email không hợp lệ" }
+      ), // Regex kiểm tra email
     password: zod
       .string()
-      .min(6, { message: "Mật khẩu phải có ít nhất 6 ký tự" }),
-    phone: zod.string().min(1, { message: "Vui lòng nhập số điện thoại" }),
+      .min(8, { message: "Mật khẩu phải có ít nhất 8 ký tự" }),
+    phone: zod
+      .string()
+      .min(1, { message: "Vui lòng nhập số điện thoại" })
+      .regex(/^0\d{9}$/, { message: "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số" }), // Kiểm tra số điện thoại bắt đầu bằng 0 và có 10 chữ số
     gender: zod
       .enum(["0", "1"], { message: "Giới tính phải là Nam hoặc Nữ" })
       .refine((val) => val !== "", { message: "Bắt buộc chọn giới tính" }),
@@ -236,6 +294,7 @@ const validationSchema = toTypedSchema(
   })
 );
 
+
 // Thông tin form
 const form = ref({
   name: "",
@@ -246,11 +305,42 @@ const form = ref({
   phone: "",
 });
 
+// Hàm xử lý thay đổi tab hoặc điều hướng
+onBeforeRouteLeave((to, from) => {
+  if(authStore.errors?.resgister)
+  authStore.errors.resgister = null; // Xóa lỗi trong authStore
+});
+
 const emit = defineEmits(["submit-form"]);
 
 const onSubmit = async (value) => {
-  // console.log(value);
-  emit("submit-form", value);
+  try {
+    // await emit("submit-form", value);
+    await authStore.checkUserResgister(value); // Đợi hàm checkUserResgister hoàn tất
+    console.log(authStore.success.register);
+   
+    if(authStore.success?.register == 1){
+        setTimeout(() => {
+        openModalVerifyEmail.value = true;
+      }, 1000);
+    }
+   
+  } catch (error) {
+    console.error("Lỗi:", error);
+  }
+};
+
+const handleCancelVerifyEmail = () => {
+  openModalVerifyEmail.value = false;
+};
+
+const handleSubmitVerifyEmail = async () => {
+  try {
+    console.log(form.value);
+    authStore.confirmEmail(form.value);
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>
 
