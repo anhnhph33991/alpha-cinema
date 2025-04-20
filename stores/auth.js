@@ -106,7 +106,7 @@ export const useAuthStore = defineStore(
         // toast.success("Đăng ký thành công");
         // router.push({ name: "index" });
       } catch (error) {
-        // toast.error("Đăng ký thất bại, vui lòng thử lại");
+        toast.error("Đăng ký thất bại, vui lòng thử lại");
         errors.resgister = error;
         console.log(errors.resgister);
         // console.log(errors.resgister.errors.email[0]);
