@@ -11,6 +11,7 @@ definePageMeta({
 
 import { LoginForm } from "#components";
 import { useAuthStore } from "~/stores/auth";
+import { ref, computed, watch } from 'vue'
 
 const authStore = useAuthStore();
 
