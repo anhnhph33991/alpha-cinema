@@ -137,20 +137,6 @@
                                   { 'double-seat': seat.type_seat_id == 3 },
                                 ]"
                               >
-                                <!-- :class="[
-                                  'seat',
-                                  movieStore.getSeatClass(seat),
-                                  {
-                                    selected: movieStore.isSeatSelected(seat),
-                                    hold: movieStore.isSeatHeldByOthers(seat),
-                                    'double-seat': seat.type_seat_id == 3,
-                                  },
-                                ]" -->
-
-                                <!-- <Sofa v-if="seat.type_seat_id == 3" />
-
-                                <Armchair v-else /> -->
-
                                 <template v-if="seat.type_seat_id == 1">
                                   <div
                                     class="seat-cell seat-used seat-test"
@@ -165,38 +151,8 @@
                                     {{ seat.coordinates_y
                                     }}{{ seat.coordinates_x }}
                                   </div>
-
-                                  <!-- <div
-                                    class="seat-cell seat-used seat-test"
-                                    :class="movieStore.mappingSeatNormal(seat)"
-                                  >
-                                    {{ seat.coordinates_y
-                                    }}{{ seat.coordinates_x }}
-                                  </div> -->
-
-                                  <!-- <SeatRegular
-                                    style="width: 32px; height: 32px"
-                                    :class="[
-                                      movieStore.getSeatClass(seat),
-                                      {
-                                        selected:
-                                          movieStore.isSeatSelected(seat),
-                                        hold: movieStore.isSeatHeldByOthers(
-                                          seat
-                                        ),
-                                      },
-                                    ]"
-                                  /> -->
                                 </template>
                                 <template v-if="seat.type_seat_id == 2">
-                                  <!-- <div
-                                    class="seat-cell seat-used seat-vip"
-                                    :class="movieStore.mappingSeatTwo(seat)"
-                                  >
-                                    {{ seat.coordinates_y
-                                    }}{{ seat.coordinates_x }}
-                                  </div> -->
-
                                   <div
                                     class="seat-cell seat-used seat-vip"
                                     :class="[movieStore.mappingSeatTwo(seat)]"
@@ -212,14 +168,6 @@
                                   </div>
                                 </template>
                                 <template v-if="seat.type_seat_id == 3">
-                                  <!-- <div
-                                    class="seat-cell seat-used seat-double"
-                                    :class="movieStore.mappingSeatDouble(seat)"
-                                  >
-                                    {{ seat.coordinates_y
-                                    }}{{ seat.coordinates_x }}
-                                  </div> -->
-
                                   <div
                                     class="seat-cell seat-used seat-double"
                                     :class="[

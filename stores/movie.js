@@ -107,6 +107,8 @@ export const useMovieStore = defineStore("movie", () => {
 
       console.log("ghế");
       console.log(showtime.value);
+      console.log("matrixColume");
+      console.log(matrixColume.value);
 
       // console.log(showtime.value);
       // console.log("hehe");
