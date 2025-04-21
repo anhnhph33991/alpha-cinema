@@ -36,4 +36,14 @@ const loadMovie = () => {
 };
 
 watch(slug, loadMovie, { immediate: true });
+
+watch(
+  selectCinemaBranch,
+  async (newData, oldData) => {
+    if (newData) {
+      movieStore.fetchMovie(slug.value, newData.branch_id, newData.cinema_id);
+    }
+  },
+  { deep: true }
+);
 </script>

@@ -68,9 +68,11 @@ export const useMovieStore = defineStore("movie", () => {
       console.log("showtime convert");
       console.log(groupedShowtimes.value);
     } catch (error) {
-      console.log(error);
-
-      toast.error("call api lỗi");
+      // console.log(error);
+      if (error?.code && error.code == 404) {
+        navigateTo("/");
+        console.log(error);
+      }
     }
   };
 
