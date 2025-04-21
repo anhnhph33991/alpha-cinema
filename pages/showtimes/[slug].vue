@@ -2132,6 +2132,27 @@ const payableWithTax = computed(() => {
 //**
 // Code new
 //  */
+
+/**
+ * Khi chọn chi nhánh mới trên header nếu đang trong màn hình chọn ghế chuyển qua chi nhánh không có xuất chiếu sẽ call lại api
+ */
+watch(
+  selectCinemaBranch,
+  async (newData, oldData) => {
+    if (newData) {
+      console.log("Chi nhánh mới chọn trong xuất chiếu");
+      console.log(newData);
+
+      movieStore.fetchShowTimeBySlug(
+        slug.value,
+        newData.branch_id,
+        newData.cinema_id
+      );
+    }
+  },
+  { deep: true }
+);
+
 onMounted(() => {
   promiseAllApi();
   callEcho();
