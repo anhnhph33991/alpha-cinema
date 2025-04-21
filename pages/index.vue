@@ -250,35 +250,11 @@ watch(
   selectCinemaBranch,
   async (newData, oldData) => {
     if (newData) {
-      console.log("new data");
       await movieStore.fetchMovies(newData.branch_id, newData.cinema_id);
     }
   },
   { deep: true }
 );
-
-// watch(
-//   () => authStore.user,
-//   (user) => {
-//     if (user && user.email_verified_at && user?.email_verified_at === null) {
-//       openModalVerifyEmail.value = true;
-//     }
-//   },
-//   { immediate: true, deep: true }
-// );
-
-// watch(
-//   () => authStore.user,
-//   (user) => {
-//     const isNeedVerify =
-//       user &&
-//       (!("email_verified_at" in user) || user.email_verified_at === null);
-//     if (isNeedVerify) {
-//       openModalVerifyEmail.value = true;
-//     }
-//   },
-//   { immediate: true, deep: true }
-// );
 
 watch(
   () => authStore.user,
@@ -371,12 +347,6 @@ onMounted(async () => {
     selectCinemaBranch.value?.cinema_id
   );
 
-  // authStore.verifyEmail(authStore.user.email);
-
-  // if (!dataSelectCity.value) {
-  //   openModal.value = true;
-  // }
-
   if (selectCinemaBranch.value) {
     openModal.value = false;
     console.log(selectCinemaBranch.value);
@@ -386,7 +356,6 @@ onMounted(async () => {
   openModal.value = true;
   await branchStore.listBranch();
   optionBranch.value = branchStore.convertOptionBranch();
-  // console.log("Auth Google:", authGoogle.value);
 });
 
 useSeoMeta({

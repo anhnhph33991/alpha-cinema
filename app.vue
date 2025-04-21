@@ -7,13 +7,26 @@
 </template>
 
 <script setup>
-import { Toaster } from "vue-sonner";
+import { toast, Toaster } from "vue-sonner";
 import { useRankStore } from "~/stores/rank";
 const auth = useCookie("auth");
+
+const echo = useEcho();
+
+const callEcho = () => {
+  const channel = echo.channel("voucher");
+
+  channel.listen("RealTimeVouCherEvent", (data) => {
+    if (data.user_id == useAuthStore().user.id) {
+      toast.success(`Bạn vừa nhận được voucher: ${data.title}`);
+    }
+  });
+};
 
 onMounted(() => {
   if (auth.value && auth.value.isLogin && auth.value.user) {
     useRankStore().getRank();
+    callEcho();
   }
 });
 </script>

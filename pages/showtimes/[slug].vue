@@ -2140,9 +2140,6 @@ watch(
   selectCinemaBranch,
   async (newData, oldData) => {
     if (newData) {
-      console.log("Chi nhánh mới chọn trong xuất chiếu");
-      console.log(newData);
-
       movieStore.fetchShowTimeBySlug(
         slug.value,
         newData.branch_id,
