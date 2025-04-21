@@ -47,7 +47,6 @@ export const useAuthStore = defineStore(
      * Xử lý login
      */
     const login = async (data) => {
-
       try {
         const response = await loginService(data);
 
@@ -70,7 +69,7 @@ export const useAuthStore = defineStore(
         console.log(errors);
         isLoading.value = false;
         // toast.error("Đăng nhập thất bại");
-        return
+        return;
       }
     };
 
@@ -105,7 +104,7 @@ export const useAuthStore = defineStore(
         // }
         success.register = 1;
         console.log(success.register);
-        
+
         // toast.success("Đăng ký thành công");
         // router.push({ name: "index" });
       } catch (error) {
@@ -126,6 +125,7 @@ export const useAuthStore = defineStore(
         isLogin.value = false;
         isLoading.value = false;
         rankByUser.value = {};
+        vat.value = {};
 
         toast.success("Đăng xuất thành công");
         router.push({ name: "index" });
