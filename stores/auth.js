@@ -157,7 +157,7 @@ export const useAuthStore = defineStore(
         }
 
         console.log(error);
-        toast.error("Có lỗi xảy ra");
+        // toast.error("Có lỗi xảy ra");
       }
     };
 
@@ -198,7 +198,11 @@ export const useAuthStore = defineStore(
         navigateTo("/login");
       } catch (error) {
         console.log(error);
-        // toast.error('Có lỗi xảy ra');
+
+        if (error && error.errors) {
+          errors.password = error.errors.password;
+          errors.password_confirm = error.errors.password_confirm;
+        }
       }
     };
 

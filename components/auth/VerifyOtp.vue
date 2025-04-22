@@ -25,24 +25,9 @@
                     class="justify-content-center"
                   />
                 </ClientOnly>
-
-                <!-- <input
-                  type="number"
-                  class="form-control"
-                  placeholder="123456"
-                  v-model="form.otp"
-                  autocomplete="off"
-                />
-
-                <small
-                  v-if="useAuthStore().errors && useAuthStore().errors.otp"
-                  class="text-danger"
-                >
-                  {{ useAuthStore().errors.otp }}
-                </small> -->
               </div>
 
-              <div class="col-md-12 mt-3">
+              <div class="col-md-12 mt-3 text-center">
                 <p>
                   Chưa nhận được otp
                   <a @click.prevent="handleResetOtp" class="al-btn-verify-otp"

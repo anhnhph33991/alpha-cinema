@@ -2,7 +2,8 @@
   <NuxtLayout>
     <NuxtLoadingIndicator :throttle="0" />
     <NuxtPage />
-    <Toaster :duration="2000" position="top-right" close-button richColors />
+    <!-- top-right -->
+    <Toaster :duration="2000" position="top-center" close-button richColors />
   </NuxtLayout>
 </template>
 

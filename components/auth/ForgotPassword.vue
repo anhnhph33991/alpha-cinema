@@ -27,6 +27,7 @@
                   placeholder="luxchill@gmail.com"
                   v-model="form.email"
                   autocomplete="off"
+                  @input="clearFieldError('email')"
                 />
 
                 <small
@@ -57,6 +58,12 @@ const form = ref({
 
 const handleSubmit = () => {
   emit("submit-form", form.value.email);
+};
+
+const clearFieldError = (filed) => {
+  if (useAuthStore().errors[filed]) {
+    useAuthStore().errors[filed] = null;
+  }
 };
 </script>
 

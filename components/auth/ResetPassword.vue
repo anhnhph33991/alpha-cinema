@@ -19,14 +19,16 @@
             <div class="row">
               <div class="col-md-12 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Mật khẩu mới</label
-                >
+                  <span class="text-danger">*</span>
+                  Mật khẩu mới
+                </label>
                 <input
                   type="password"
                   class="form-control"
                   placeholder="Nhập mật khẩu mới"
                   v-model="form.password"
                   autocomplete="off"
+                  @input="clearFieldError('password')"
                 />
 
                 <small
@@ -47,6 +49,7 @@
                   placeholder="Xác nhận mật khẩu"
                   v-model="form.password_confirm"
                   autocomplete="off"
+                  @input="clearFieldError('password_confirm')"
                 />
 
                 <small
@@ -66,12 +69,6 @@
                 Xác Nhận
               </button>
             </div>
-
-            <!-- <div class="form-footer">
-                  <button type="submit" class="btn btn-danger btn-3">
-                    Xác Nhận
-                  </button>
-                </div> -->
           </form>
         </div>
       </div>
@@ -89,6 +86,12 @@ const form = ref({
 
 const handleSubmit = () => {
   emit("submit-form-reset", form.value);
+};
+
+const clearFieldError = (filed) => {
+  if (useAuthStore().errors[filed]) {
+    useAuthStore().errors[filed] = null;
+  }
 };
 </script>
 

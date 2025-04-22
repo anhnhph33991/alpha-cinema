@@ -115,6 +115,7 @@ export const resetPasswordService = async (data) => {
       email: data.email,
       otp: data.otp,
       password: data.password,
+      password_confirm: data.password_confirm,
     });
 
     if (!response) {

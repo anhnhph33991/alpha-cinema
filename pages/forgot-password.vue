@@ -58,8 +58,8 @@ const submitOtp = (data) => {
 
 const submitReset = (data) => {
   if (
-    data.password === "" ||
-    data.password_confirm === "" ||
+    // data.password === "" ||
+    // data.password_confirm === "" ||
     !resetPasswordCookie.value ||
     !resetPasswordCookie.value.otp
   ) {
@@ -71,6 +71,7 @@ const submitReset = (data) => {
     email: resetPasswordCookie.value.email,
     otp: resetPasswordCookie.value.otp,
     password: data.password,
+    password_confirm: data.password_confirm,
   };
 
   console.log("data password new");
