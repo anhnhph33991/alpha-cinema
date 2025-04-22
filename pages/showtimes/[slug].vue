@@ -2317,9 +2317,63 @@ onUnmounted(() => {
   width: 84px !important;
   height: 40px !important;
 }
-
 .sidebar {
-  position: relative;
+  position: sticky;
+  top: 100px; /* Điều chỉnh khoảng cách từ đỉnh, lớn hơn chiều cao của menu (giả sử menu cao 80px) */
+  height: fit-content; /* Đảm bảo sidebar không vượt quá nội dung của nó */
+  z-index: 100; /* Đảm bảo sidebar không bị menu đè (menu thường có z-index cao) */
+  transition: all 0.3s ease-in-out; /* Hiệu ứng mượt mà khi cuộn hoặc hover */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Thêm bóng để trông nổi bật */
+  border-radius: 10px; /* Bo góc cho mềm mại */
+  background: #fff; /* Đảm bảo nền trắng */
+}
+
+/* Hiệu ứng khi hover vào sidebar */
+.sidebar:hover {
+  transform: translateY(-5px); /* Nhấc nhẹ sidebar lên khi hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Tăng bóng khi hover */
+}
+
+/* Làm mượt mà hơn cho các nút trong sidebar-footer */
+.sidebar-footer .btn {
+  transition: all 0.3s ease; /* Hiệu ứng mượt mà cho nút */
+}
+
+/* Hiệu ứng hover cho nút */
+.sidebar-footer .btn:hover {
+  transform: scale(1.05); /* Phóng to nhẹ khi hover */
+  background-color: #0056b3; /* Màu đậm hơn khi hover */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Thêm bóng cho nút */
+}
+
+/* Đảm bảo các phần tử bên trong sidebar trông hài hòa */
+.sidebar .bg-white {
+  border-radius: 10px; /* Bo góc phần nội dung */
+  overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
+}
+
+/* Tinh chỉnh các phần tử con để đồng bộ */
+.sidebar ul li {
+  transition: background 0.2s ease; /* Hiệu ứng mượt cho các mục trong danh sách */
+}
+
+.sidebar ul li:hover {
+  background-color: #f8f9fa; /* Màu nền nhẹ khi hover vào các mục */
+  border-radius: 5px; /* Bo góc nhẹ */
+}
+
+/* Làm đẹp hơn cho hình ảnh trong sidebar */
+.pi-img-wrapper img {
+  transition: transform 0.3s ease; /* Hiệu ứng mượt cho hình ảnh */
+}
+
+.pi-img-wrapper img:hover {
+  transform: scale(1.02); /* Phóng to nhẹ hình ảnh khi hover */
+}
+
+/* Đảm bảo menu không đè lên sidebar */
+.menu { /* Thay .menu bằng class thực tế của menu */
+  z-index: 50; /* Đặt z-index thấp hơn sidebar */
 }
 
 .h-1000 {
