@@ -132,11 +132,17 @@ export const useMovieStore = defineStore("movie", () => {
     }
   };
 
-  const chooseSeat = async (id, seatId, userId, status) => {
+  const chooseSeat = async (id, seatId, userId, status, holdExpiresAt) => {
     try {
       applyRealTimeSeatChange(seatId, status, userId);
 
-      const response = await chooseSeatService(id, seatId, userId, status);
+      const response = await chooseSeatService(
+        id,
+        seatId,
+        userId,
+        status,
+        holdExpiresAt
+      );
 
       // console.log(response);
 
@@ -174,6 +180,36 @@ export const useMovieStore = defineStore("movie", () => {
    * @param {null | string} status
    * @param {number | string} userId
    */
+  // const applyRealTimeSeatChange = (seatId, status, userId) => {
+  //   if (!showtime.value.data.seatMap) {
+  //     console.warn("⚠️ seatMap chưa được load!");
+  //     return;
+  //   }
+
+  //   const rows = Object.keys(showtime.value.data.seatMap);
+
+  //   for (const row of rows) {
+  //     const cols = Object.keys(showtime.value.data.seatMap[row]);
+  //     for (const col of cols) {
+  //       const seat = showtime.value.data.seatMap[row][col];
+  //       if (seat.id === seatId) {
+  //         seat.status = status;
+  //         seat.user_id = userId;
+
+  //         console.log("realtime ghế");
+  //         console.log(seat);
+  //         console.log("data cũ");
+  //         console.log(seatSelected.value);
+
+  //         getSeatClass(seat);
+  //         isSeatSelected(seat);
+  //         isSeatHeldByOthers(seat);
+  //         return; // Thoát ngay khi tìm thấy
+  //       }
+  //     }
+  //   }
+  // };
+
   const applyRealTimeSeatChange = (seatId, status, userId) => {
     if (!showtime.value.data.seatMap) {
       console.warn("⚠️ seatMap chưa được load!");
@@ -190,14 +226,28 @@ export const useMovieStore = defineStore("movie", () => {
           seat.status = status;
           seat.user_id = userId;
 
+          // Xử lý lại danh sách ghế đang chọn (seatSelected)
+          if (seatSelected.value) {
+            const index = seatSelected.value.findIndex((s) => s.id === seat.id);
+            const isValid =
+              seat.status === "hold" && seat.user_id === currentUserId;
+
+            if (index > -1 && !isValid) {
+              // Ghế này không còn là ghế "hold" của current user => xóa khỏi danh sách
+              seatSelected.value.splice(index, 1);
+            }
+          }
+
+          // Cập nhật lại style, v.v.
           getSeatClass(seat);
           isSeatSelected(seat);
           isSeatHeldByOthers(seat);
-          return; // Thoát ngay khi tìm thấy
+          return;
         }
       }
     }
   };
+
   /**
    * Mapping class từ database
    *
@@ -304,6 +354,26 @@ export const useMovieStore = defineStore("movie", () => {
     return now - timestamp < TEN_MINUTES;
   };
 
+  /**
+   * Định dạng thời gian để gửi hold_expires_at
+   */
+  const getCurrentTimeHHMM = () => {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
+  /**
+   * Hàm thời gian + 10p tránh ảnh hưởng function gốc
+   */
+  const getTimePlusMinutes = (minutes) => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + minutes);
+    const hours = now.getHours().toString().padStart(2, "0");
+    const mins = now.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${mins}`;
+  };
+
   return {
     movies,
     movie,
@@ -325,5 +395,7 @@ export const useMovieStore = defineStore("movie", () => {
     mappingSeatTwo,
     mappingSeatDouble,
     mappingSeatNormal,
+    getCurrentTimeHHMM,
+    getTimePlusMinutes,
   };
 });

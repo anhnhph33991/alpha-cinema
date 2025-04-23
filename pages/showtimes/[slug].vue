@@ -1283,6 +1283,10 @@ const handleChooseSeat = async (seat) => {
       ? "available"
       : "hold";
   const newUserId = seat.user_id == currentUserId ? null : currentUserId;
+  const holdExpiresAt =
+    seat.status === "hold" && seat.user_id == currentUserId
+      ? null
+      : movieStore.getTimePlusMinutes(10);
 
   cloneSeatRows();
   updateClonedSeat(seat.id, newStatus, newUserId);
@@ -1305,11 +1309,26 @@ const handleChooseSeat = async (seat) => {
 
   processingSeats.add(seat.id);
 
+  /**
+   * Data test
+   */
+  // const result = {
+  //   id: movieStore.showtime.data.showTime.id,
+  //   seat_id: seat.id,
+  //   user_id: newUserId,
+  //   status: newStatus,
+  //   hold_expires_at: holdExpiresAt,
+  // };
+
+  // console.log(result);
+  // return;
+
   movieStore.chooseSeat(
     movieStore.showtime.data.showTime.id,
     seat.id,
     newUserId,
-    newStatus
+    newStatus,
+    holdExpiresAt
   );
 
   processingSeats.delete(seat.id, newUserId, newStatus);
@@ -1794,7 +1813,7 @@ const onFinish = async () => {
 
   const seatId = movieStore.seatSelected.map((seat) => seat.id);
   const statusDefault = "available";
-  const userId = authStore.user.id;
+  const userId = null;
   const showtimeId = movieStore.showtime.data.showTime.id;
 
   await movieStore.resetAndBuySeat(showtimeId, seatId, userId, statusDefault);
@@ -2055,18 +2074,34 @@ const handleApplyPoint = () => {
 //   return amount > 0 ? amount + amount * 0.08 : 0;
 // });
 
+// const totalWithTax = computed(() => {
+//   const amount = Number(priceAll.value.totalAmount);
+//   const rate = Number(authStore.vat.rate / 100);
+//   return Math.ceil(amount > 0 ? amount + amount * rate : 0);
+// });
+
+// const payableWithTax = computed(() => {
+//   const amount = Number(priceAll.value.payableAmount);
+//   const rate = Number(authStore.vat.rate / 100);
+//   return Math.ceil(amount > 0 ? amount + amount * rate : 0);
+// });
+
 const totalWithTax = computed(() => {
   const amount = Number(priceAll.value.totalAmount);
-  const rate = Number(authStore.vat.rate / 100); // chuyển từ 8 thành 0.08
-  // return amount > 0 ? amount + amount * rate : 0;
-  return Math.ceil(amount > 0 ? amount + amount * rate : 0);
+  const rate = Number(authStore.vat.rate) / 100;
+
+  if (isNaN(amount) || isNaN(rate) || amount <= 0) return 0;
+
+  return Math.ceil(amount + amount * rate);
 });
 
 const payableWithTax = computed(() => {
   const amount = Number(priceAll.value.payableAmount);
-  const rate = Number(authStore.vat.rate / 100);
-  // return amount > 0 ? amount + amount * rate : 0;
-  return Math.ceil(amount > 0 ? amount + amount * rate : 0);
+  const rate = Number(authStore.vat.rate) / 100;
+
+  if (isNaN(amount) || isNaN(rate) || amount <= 0) return 0;
+
+  return Math.ceil(amount + amount * rate);
 });
 
 /**
