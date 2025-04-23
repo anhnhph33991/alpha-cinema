@@ -2324,8 +2324,8 @@ onUnmounted(() => {
   z-index: 100; /* Đảm bảo sidebar không bị menu đè (menu thường có z-index cao) */
   transition: all 0.3s ease-in-out; /* Hiệu ứng mượt mà khi cuộn hoặc hover */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Thêm bóng để trông nổi bật */
-  border-radius: 10px; /* Bo góc cho mềm mại */
-  background: #fff; /* Đảm bảo nền trắng */
+  /* border-radius: 10px;  */
+  background: #fff;
 }
 
 /* Hiệu ứng khi hover vào sidebar */
@@ -2372,7 +2372,8 @@ onUnmounted(() => {
 }
 
 /* Đảm bảo menu không đè lên sidebar */
-.menu { /* Thay .menu bằng class thực tế của menu */
+.menu {
+  /* Thay .menu bằng class thực tế của menu */
   z-index: 50; /* Đặt z-index thấp hơn sidebar */
 }
 
