@@ -1,22 +1,31 @@
 <template>
-  <div class="movie-section padding-top bg-two" v-if="movieStore.showtime.data">
-    <div class="showtime-choose-seat min-vh-100">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-9">
-            <div class="choose-seat-row mt-3" v-if="isChoosingScreen">
-              <div>
-                <div class="d-flex justify-content-center">
-                  <div class="row">
-                    <div class="blinking-box mb-3">
-                      <span class="blinking-text">
-                        Theo quy định của cục điện ảnh, phim này không dành cho
-                        khán giả dưới 16 tuổi.
-                      </span>
-                    </div>
+    <div class="movie-section padding-top bg-two" v-if="movieStore.showtime.data">
+        <div class="showtime-choose-seat min-vh-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="choose-seat-row mt-3" v-if="isChoosingScreen">
+                            <div>
+                                <div class="d-flex justify-content-center">
+                                    <div class="row">
+                                        <div class="blinking-box mb-3">
+                                            <span class="blinking-text">
+                                                Theo quy định của cục điện ảnh, phim này không dành cho
+                                                khán giả dưới 16 tuổi.
+                                            </span>
+                                        </div>
+                                        <div class="notenote-box mb-3">
+                                            <span class="notenote-title">💡 Mẹo nhỏ:</span><br>
+                                            <span class="notenote-text">
+                                                • Bạn <strong>không được bỏ trống ghế ngoài cùng</strong> của mỗi dãy.
+                                                <br>
+                                                • <strong>Không để dư 1 ghế trống giữa</strong> các ghế bạn đã chọn. <br>
+                                                • <strong>Tối đa chọn 10 ghế</strong> mỗi lần đặt.
+                                            </span>
+                                        </div>
 
-                    <div class="mb-4 mt-4">
-                      <!-- <div class="row">
+                                        <div class="mb-4 mt-4">
+                                            <!-- <div class="row">
                         <div
                           class="col-12 col-lg-3 col-md-6 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
                         >
@@ -63,602 +72,489 @@
                         </div>
                       </div> -->
 
-                      <div class="row align-items-center g-3">
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                          <div
-                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
-                          >
-                            <div class="seat-cell seat-used seat-test"></div>
-                            <span class="note-seat-status-lable"
-                              >Ghế trống</span
-                            >
-                          </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                          <div
-                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
-                          >
-                            <div
-                              class="seat-cell seat-used seat-select seat-test"
-                            ></div>
-                            <span class="note-seat-status-lable"
-                              >Ghế đang chọn</span
-                            >
-                          </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                          <div
-                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
-                          >
-                            <div
-                              class="seat-cell seat-used seat-hold seat-test"
-                            ></div>
-                            <span class="note-seat-status-lable"
-                              >Ghế đang giữ</span
-                            >
-                          </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                          <div
-                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
-                          >
-                            <div
-                              class="seat-cell seat-used seat-sold seat-test"
-                            ></div>
-                            <span class="note-seat-status-lable"
-                              >Ghế đã bán</span
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                                            <div class="row align-items-center g-3">
+                                                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                                                    <div
+                                                        class="bg-color d-flex justify-content-center align-items-center gap-2 h-100">
+                                                        <div class="seat-cell seat-used seat-test"></div>
+                                                        <span class="note-seat-status-lable">Ghế trống</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                                                    <div
+                                                        class="bg-color d-flex justify-content-center align-items-center gap-2 h-100">
+                                                        <div class="seat-cell seat-used seat-select seat-test"></div>
+                                                        <span class="note-seat-status-lable">Ghế đang chọn</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                                                    <div
+                                                        class="bg-color d-flex justify-content-center align-items-center gap-2 h-100">
+                                                        <div class="seat-cell seat-used seat-hold seat-test"></div>
+                                                        <span class="note-seat-status-lable">Ghế đang giữ</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                                                    <div
+                                                        class="bg-color d-flex justify-content-center align-items-center gap-2 h-100">
+                                                        <div class="seat-cell seat-used seat-sold seat-test"></div>
+                                                        <span class="note-seat-status-lable">Ghế đã bán</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                    <div class="col-lg-12">
-                      <img :src="screen" alt="luxchill" class="w-100" />
-                    </div>
+                                        <div class="col-lg-12">
+                                            <img :src="screen" alt="luxchill" class="w-100" />
+                                        </div>
 
-                    <div class="seat-template mt-5">
-                      <div class="screen-area">
-                        <div class="main-seat-layout">
-                          <div>
-                            <div
-                              class="seat-row"
-                              v-for="(row, rowName) in movieStore.showtime.data
-                                .seatMap"
-                              :key="rowName"
-                            >
-                              <!-- <span class="row-label">{{ rowName }}</span> -->
-                              <div
-                                v-for="seat in row"
-                                :key="seat.id"
-                                @click="handleChooseSeat(seat)"
-                                :class="[
+                                        <div class="seat-template mt-5">
+                                            <div class="screen-area">
+                                                <div class="main-seat-layout">
+                                                    <div>
+                                                        <div class="seat-row" v-for="(row, rowName) in movieStore.showtime.data
+                                .seatMap" :key="rowName">
+                                                            <!-- <span class="row-label">{{ rowName }}</span> -->
+                                                            <div v-for="seat in row" :key="seat.id"
+                                                                @click="handleChooseSeat(seat)" :class="[
                                   'seat',
                                   { 'double-seat': seat.type_seat_id == 3 },
-                                ]"
-                              >
-                                <template v-if="seat.type_seat_id == 1">
-                                  <div
-                                    class="seat-cell seat-used seat-test"
-                                    :class="movieStore.mappingSeatNormal(seat)"
-                                    :style="{
+                                ]">
+                                                                <template v-if="seat.type_seat_id == 1">
+                                                                    <div class="seat-cell seat-used seat-test"
+                                                                        :class="movieStore.mappingSeatNormal(seat)"
+                                                                        :style="{
                                       color:
                                         seat.status !== 'available'
                                           ? 'white !important'
                                           : '',
-                                    }"
-                                  >
-                                    {{ seat.coordinates_y
-                                    }}{{ seat.coordinates_x }}
-                                  </div>
-                                </template>
-                                <template v-if="seat.type_seat_id == 2">
-                                  <div
-                                    class="seat-cell seat-used seat-vip"
-                                    :class="[movieStore.mappingSeatTwo(seat)]"
-                                    :style="{
+                                    }">
+                                                                        {{ seat.coordinates_y
+                                                                        }}{{ seat.coordinates_x }}
+                                                                    </div>
+                                                                </template>
+                                                                <template v-if="seat.type_seat_id == 2">
+                                                                    <div class="seat-cell seat-used seat-vip"
+                                                                        :class="[movieStore.mappingSeatTwo(seat)]"
+                                                                        :style="{
                                       color:
                                         seat.status !== 'available'
                                           ? 'white !important'
                                           : '',
-                                    }"
-                                  >
-                                    {{ seat.coordinates_y
-                                    }}{{ seat.coordinates_x }}
-                                  </div>
-                                </template>
-                                <template v-if="seat.type_seat_id == 3">
-                                  <div
-                                    class="seat-cell seat-used seat-double"
-                                    :class="[
+                                    }">
+                                                                        {{ seat.coordinates_y
+                                                                        }}{{ seat.coordinates_x }}
+                                                                    </div>
+                                                                </template>
+                                                                <template v-if="seat.type_seat_id == 3">
+                                                                    <div class="seat-cell seat-used seat-double" :class="[
                                       movieStore.mappingSeatDouble(seat),
-                                    ]"
-                                    :style="{
+                                    ]" :style="{
                                       color:
                                         seat.status !== 'available'
                                           ? 'white !important'
                                           : '',
-                                    }"
-                                  >
-                                    {{ seat.coordinates_y
-                                    }}{{ seat.coordinates_x }}
-                                  </div>
-                                </template>
-                              </div>
+                                    }">
+                                                                        {{ seat.coordinates_y
+                                                                        }}{{ seat.coordinates_x }}
+                                                                    </div>
+                                                                </template>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div
-              class="choose-seat-row payment-form mt-3"
-              v-if="!isChoosingScreen"
-            >
-              <div>
-                <div>
-                  <div class="row">
-                    <div
-                      class="col-lg-12 payment-page-title"
-                      style="height: 35px; line-height: 35px"
-                    >
-                      <img
-                        style="height: 100%; float: left"
-                        src="https://betacinemas.vn/Assets/global/img/booking/ic-inforpayment.png"
-                      />
-                      <div class="page-title" id="scroll-top">
-                        THÔNG TIN THANH TOÁN
-                      </div>
-                    </div>
+                        <div class="choose-seat-row payment-form mt-3" v-if="!isChoosingScreen">
+                            <div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-lg-12 payment-page-title"
+                                            style="height: 35px; line-height: 35px">
+                                            <img style="height: 100%; float: left"
+                                                src="https://betacinemas.vn/Assets/global/img/booking/ic-inforpayment.png" />
+                                            <div class="page-title" id="scroll-top">
+                                                THÔNG TIN THANH TOÁN
+                                            </div>
+                                        </div>
 
-                    <div
-                      class="col-lg-4 col-md-4 payment-user-info"
-                      style="margin-top: 25px; margin-bottom: 0px"
-                    >
-                      <div class="col-md-5 user-info-item font-16">
-                        <span class="bold user-info-item-label"> Họ Tên: </span>
-                        <br />
-                        <span class="user-info-item-value">
-                          {{ authStore.user.name }}
-                        </span>
-                      </div>
-                    </div>
+                                        <div class="col-lg-4 col-md-4 payment-user-info"
+                                            style="margin-top: 25px; margin-bottom: 0px">
+                                            <div class="col-md-5 user-info-item font-16">
+                                                <span class="bold user-info-item-label"> Họ Tên: </span>
+                                                <br />
+                                                <span class="user-info-item-value">
+                                                    {{ authStore.user.name }}
+                                                </span>
+                                            </div>
+                                        </div>
 
-                    <div
-                      class="col-lg-4 col-md-4 payment-user-info"
-                      style="margin-top: 25px; margin-bottom: 0px"
-                    >
-                      <div class="col-md-5 user-info-item font-16">
-                        <span class="bold user-info-item-label">
-                          Số điện thoại:
-                        </span>
-                        <br />
-                        <span class="user-info-item-value">
-                          {{ authStore.user.phone }}
-                        </span>
-                      </div>
-                    </div>
+                                        <div class="col-lg-4 col-md-4 payment-user-info"
+                                            style="margin-top: 25px; margin-bottom: 0px">
+                                            <div class="col-md-5 user-info-item font-16">
+                                                <span class="bold user-info-item-label">
+                                                    Số điện thoại:
+                                                </span>
+                                                <br />
+                                                <span class="user-info-item-value">
+                                                    {{ authStore.user.phone }}
+                                                </span>
+                                            </div>
+                                        </div>
 
-                    <div
-                      class="col-lg-4 col-md-4 payment-user-info"
-                      style="margin-top: 25px; margin-bottom: 0px"
-                    >
-                      <div class="col-md-5 user-info-item font-16">
-                        <span class="bold user-info-item-label"> Email: </span>
-                        <br />
-                        <span class="user-info-item-value">
-                          {{ authStore.user.email }}
-                        </span>
-                      </div>
-                    </div>
-                    <br />
-                    <br />
-                    <div class="col-lg-12 ticket-selected mt-5">
-                      <div
-                        v-for="(data, index) in filteredSeatGroups"
-                        :key="index"
-                      >
-                        <div>
-                          <div class="row">
-                            <div class="col-md-6 item-seat-type">
-                              {{ data.name }}
-                            </div>
-                            <div class="col-md-3 item-seat-quantity">
-                              {{ data.seats.length }} x
-                              {{ data.seats[0]?.price.toLocaleString() }}
-                            </div>
-                            <div class="col-md-3 item-seat-money">
-                              = {{ data.totalPrice.toLocaleString() }}đ
-                            </div>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-                        <!-- <hr
+                                        <div class="col-lg-4 col-md-4 payment-user-info"
+                                            style="margin-top: 25px; margin-bottom: 0px">
+                                            <div class="col-md-5 user-info-item font-16">
+                                                <span class="bold user-info-item-label"> Email: </span>
+                                                <br />
+                                                <span class="user-info-item-value">
+                                                    {{ authStore.user.email }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="col-lg-12 ticket-selected mt-5">
+                                            <div v-for="(data, index) in filteredSeatGroups" :key="index">
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 item-seat-type">
+                                                            {{ data.name }}
+                                                        </div>
+                                                        <div class="col-md-3 item-seat-quantity">
+                                                            {{ data.seats.length }} x
+                                                            {{ data.seats[0]?.price.toLocaleString() }}
+                                                        </div>
+                                                        <div class="col-md-3 item-seat-money">
+                                                            = {{ data.totalPrice.toLocaleString() }}đ
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <!-- <hr
                           v-if="index < filteredSeatGroups.length - 1"
                           style="margin-top: 15px"
                         /> -->
 
-                        <hr style="margin-top: 15px" />
-                      </div>
-                    </div>
-                    <div class="col-lg-12">
-                      <!-- <hr style="margin-top: 15px" /> -->
+                                                <hr style="margin-top: 15px" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <!-- <hr style="margin-top: 15px" /> -->
 
-                      <a-tabs v-model="activeKey">
-                        <a-tab-pane key="1" tab="Combo">
-                          <div class="table-responsive">
-                            <table class="table">
-                              <thead>
-                                <tr>
-                                  <th scope="col"></th>
-                                  <th scope="col">Tên combo</th>
-                                  <th scope="col">Mô tả</th>
-                                  <th scope="col">Số lượng</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr
-                                  v-for="combo in foodStore.foodCombo"
-                                  :key="combo.id"
-                                >
-                                  <td scope="row">
-                                    <img
-                                      :src="formattedImage(combo.img_thumbnail)"
-                                      alt=""
-                                      class="combo-image"
-                                      width="100"
-                                      height="100"
-                                    />
-                                  </td>
-                                  <td class="combo-name">
-                                    {{ combo.name }}
-                                  </td>
-                                  <td class="combo-description">
-                                    {{ combo.description }}
-                                  </td>
-                                  <td>
-                                    <div class="d-flex justify-content-center">
-                                      <span class="mx-2">
-                                        {{ getQuantity(combo.id) }}
-                                      </span>
-                                      <span
-                                        class="mx-1 al-cursor-pointer"
-                                        @click="increaseQuantity(combo)"
-                                      >
-                                        <img :src="btnAdd" alt="" />
-                                        <!-- <button @click="increaseQuantity(combo)">
+                                            <a-tabs v-model="activeKey">
+                                                <a-tab-pane key="1" tab="Combo">
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col"></th>
+                                                                    <th scope="col">Tên combo</th>
+                                                                    <th scope="col">Mô tả</th>
+                                                                    <th scope="col">Số lượng</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="combo in foodStore.foodCombo"
+                                                                    :key="combo.id">
+                                                                    <td scope="row">
+                                                                        <img :src="formattedImage(combo.img_thumbnail)"
+                                                                            alt="" class="combo-image" width="100"
+                                                                            height="100" />
+                                                                    </td>
+                                                                    <td class="combo-name">
+                                                                        {{ combo.name }}
+                                                                    </td>
+                                                                    <td class="combo-description">
+                                                                        {{ combo.description }}
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex justify-content-center">
+                                                                            <span class="mx-2">
+                                                                                {{ getQuantity(combo.id) }}
+                                                                            </span>
+                                                                            <span class="mx-1 al-cursor-pointer"
+                                                                                @click="increaseQuantity(combo)">
+                                                                                <img :src="btnAdd" alt="" />
+                                                                                <!-- <button @click="increaseQuantity(combo)">
                                           +
                                         </button> -->
-                                      </span>
-                                      <span
-                                        class="al-cursor-pointer"
-                                        @click="decreaseQuantity(combo)"
-                                      >
-                                        <!-- <button @click="decreaseQuantity(combo)">
+                                                                            </span>
+                                                                            <span class="al-cursor-pointer"
+                                                                                @click="decreaseQuantity(combo)">
+                                                                                <!-- <button @click="decreaseQuantity(combo)">
                                           -
                                         </button> -->
 
-                                        <img :src="btnRemove" alt="" />
-                                      </span>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </a-tab-pane>
-                        <a-tab-pane key="2" tab="Đồ lẻ">
-                          <div class="table-responsive">
-                            <table class="table">
-                              <thead>
-                                <tr>
-                                  <th scope="col"></th>
-                                  <th scope="col">Tên đồ ăn</th>
-                                  <th scope="col">Mô tả</th>
-                                  <th scope="col">Số lượng</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr
-                                  v-for="combo in foodStore.foods"
-                                  :key="combo.id"
-                                >
-                                  <td scope="row">
-                                    <img
-                                      :src="formattedImage(combo.img_thumbnail)"
-                                      alt=""
-                                      class="combo-image"
-                                      width="100"
-                                      height="100"
-                                    />
-                                  </td>
-                                  <td class="combo-name">
-                                    {{ combo.name }}
-                                  </td>
-                                  <td class="combo-description">
-                                    {{ combo.description }}
-                                  </td>
-                                  <td>
-                                    <div class="d-flex justify-content-center">
-                                      <span class="mx-2">
-                                        {{ getQuantityFood(combo.id) }}
-                                      </span>
-                                      <span
-                                        class="mx-1 al-cursor-pointer"
-                                        @click="handleIncreaseFood(combo)"
-                                      >
-                                        <img :src="btnAdd" alt="" />
+                                                                                <img :src="btnRemove" alt="" />
+                                                                            </span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </a-tab-pane>
+                                                <a-tab-pane key="2" tab="Đồ lẻ">
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col"></th>
+                                                                    <th scope="col">Tên đồ ăn</th>
+                                                                    <th scope="col">Mô tả</th>
+                                                                    <th scope="col">Số lượng</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="combo in foodStore.foods" :key="combo.id">
+                                                                    <td scope="row">
+                                                                        <img :src="formattedImage(combo.img_thumbnail)"
+                                                                            alt="" class="combo-image" width="100"
+                                                                            height="100" />
+                                                                    </td>
+                                                                    <td class="combo-name">
+                                                                        {{ combo.name }}
+                                                                    </td>
+                                                                    <td class="combo-description">
+                                                                        {{ combo.description }}
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex justify-content-center">
+                                                                            <span class="mx-2">
+                                                                                {{ getQuantityFood(combo.id) }}
+                                                                            </span>
+                                                                            <span class="mx-1 al-cursor-pointer"
+                                                                                @click="handleIncreaseFood(combo)">
+                                                                                <img :src="btnAdd" alt="" />
 
-                                        <!-- <button
+                                                                                <!-- <button
                                         @click="handleIncreaseFood(combo)"
                                       >
                                         <img :src="btnAdd" alt="" />
                                       </button> -->
-                                      </span>
-                                      <span
-                                        class="al-cursor-pointer"
-                                        @click="handleDecreaseFood(combo)"
-                                      >
-                                        <!-- <button
+                                                                            </span>
+                                                                            <span class="al-cursor-pointer"
+                                                                                @click="handleDecreaseFood(combo)">
+                                                                                <!-- <button
                                         @click="handleDecreaseFood(combo)"
                                       >
                                         <img :src="btnRemove" alt="" />
                                       </button> -->
 
-                                        <img :src="btnRemove" alt="" />
-                                      </span>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </a-tab-pane>
-                      </a-tabs>
+                                                                                <img :src="btnRemove" alt="" />
+                                                                            </span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </a-tab-pane>
+                                            </a-tabs>
 
-                      <hr style="margin-top: 15px" />
-                      <div class="voucher">
-                        <div
-                          class="col-lg-12 payment-page-title"
-                          style="height: 35px; line-height: 35px"
-                        >
-                          <img
-                            style="height: 100%; float: left"
-                            src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png"
-                          />
-                          <div class="page-title" id="scroll-top">GIẢM GIÁ</div>
-                        </div>
-                        <div class="discount-section">
-                          <div
-                            class="beta-voucher"
-                            @click.prevent="
+                                            <hr style="margin-top: 15px" />
+                                            <div class="voucher">
+                                                <div class="col-lg-12 payment-page-title"
+                                                    style="height: 35px; line-height: 35px">
+                                                    <img style="height: 100%; float: left"
+                                                        src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png" />
+                                                    <div class="page-title" id="scroll-top">GIẢM GIÁ</div>
+                                                </div>
+                                                <div class="discount-section">
+                                                    <div class="beta-voucher" @click.prevent="
                               isAlphaVoucherOpen = !isAlphaVoucherOpen
-                            "
-                          >
-                            <span>Alpha Voucher</span>
-                            <a href="#">
-                              (Nhấn vào đây để xem danh sách voucher của bạn)
-                            </a>
-                          </div>
+                            ">
+                                                        <span>Alpha Voucher</span>
+                                                        <a href="#">
+                                                            (Nhấn vào đây để xem danh sách voucher của bạn)
+                                                        </a>
+                                                    </div>
 
-                          <div v-if="isAlphaVoucherOpen">
-                            <hr class="discount-divider" />
+                                                    <div v-if="isAlphaVoucherOpen">
+                                                        <hr class="discount-divider" />
 
-                            <div class="voucher-form">
-                              <div class="input-group">
-                                <label>Mã Voucher</label>
-                                <input
-                                  type="text"
-                                  placeholder="Nhập mã voucher vào đây"
-                                  v-model.trim="useVoucher.code"
-                                />
-                              </div>
+                                                        <div class="voucher-form">
+                                                            <div class="input-group">
+                                                                <label>Mã Voucher</label>
+                                                                <input type="text" placeholder="Nhập mã voucher vào đây"
+                                                                    v-model.trim="useVoucher.code" />
+                                                            </div>
 
-                              <div class="input-group">
-                                <label>Mã PIN</label>
-                                <input type="text" placeholder="" />
-                              </div>
+                                                            <div class="input-group">
+                                                                <label>Mã PIN</label>
+                                                                <input type="text" placeholder="" />
+                                                            </div>
 
-                              <button
-                                class="apply-btn mt-4"
-                                @click.prevent="handleApplyVoucher"
-                              >
-                                ĐĂNG KÝ
-                              </button>
-                            </div>
+                                                            <button class="apply-btn mt-4"
+                                                                @click.prevent="handleApplyVoucher">
+                                                                ĐĂNG KÝ
+                                                            </button>
+                                                        </div>
 
-                            <div class="voucher-list">
-                              <h4>VOUCHER CỦA BẠN</h4>
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <th>Mã voucher</th>
-                                    <th>Nội dung voucher</th>
-                                    <th>Ngày hết hạn</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr
-                                    v-for="voucher in voucherStore.vouchers"
-                                    :key="voucher.voucher_id"
-                                  >
-                                    <template v-if="voucher.usage_count > 0">
-                                      <td>
-                                        {{ voucher.code }}
-                                        (X{{ voucher.usage_count }})
-                                      </td>
-                                      <td>{{ voucher.title }}</td>
-                                      <td>{{ voucher.end_date_time }}</td>
-                                    </template>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
+                                                        <div class="voucher-list">
+                                                            <h4>VOUCHER CỦA BẠN</h4>
+                                                            <table>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Mã voucher</th>
+                                                                        <th>Nội dung voucher</th>
+                                                                        <th>Ngày hết hạn</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr v-for="voucher in voucherStore.vouchers"
+                                                                        :key="voucher.voucher_id">
+                                                                        <template v-if="voucher.usage_count > 0">
+                                                                            <td>
+                                                                                {{ voucher.code }}
+                                                                                (X{{ voucher.usage_count }})
+                                                                            </td>
+                                                                            <td>{{ voucher.title }}</td>
+                                                                            <td>{{ voucher.end_date_time }}</td>
+                                                                        </template>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                        <div class="point-exchange-section">
-                          <div
-                            class="point-title"
-                            @click.prevent="
+                                                <div class="point-exchange-section">
+                                                    <div class="point-title" @click.prevent="
                               isAlphaPointOpen = !isAlphaPointOpen
-                            "
-                          >
-                            Điểm Alpha
-                            <a href="#"
-                              >(Nhấn vào đây để xem điểm tích lũy của bạn)</a
-                            >
-                          </div>
-                          <div v-if="isAlphaPointOpen">
-                            <hr class="point-divider" />
+                            ">
+                                                        Điểm Alpha
+                                                        <a href="#">(Nhấn vào đây để xem điểm tích lũy của bạn)</a>
+                                                    </div>
+                                                    <div v-if="isAlphaPointOpen">
+                                                        <hr class="point-divider" />
 
-                            <div class="point-form">
-                              <div class="point-info">
-                                <span class="label">Điểm hiện có</span><br />
-                                <span class="point-value">
-                                  {{
-                                    Number(authStore.user.point).toLocaleString(
-                                      "vi-VN"
-                                    )
-                                  }}
-                                </span>
-                              </div>
+                                                        <div class="point-form">
+                                                            <div class="point-info">
+                                                                <span class="label">Điểm hiện có</span><br />
+                                                                <span class="point-value">
+                                                                    {{
+                                                                    Number(authStore.user.point).toLocaleString(
+                                                                    "vi-VN"
+                                                                    )
+                                                                    }}
+                                                                </span>
+                                                            </div>
 
-                              <div class="input-group">
-                                <label>Nhập điểm</label>
-                                <input
-                                  type="number"
-                                  placeholder=""
-                                  v-model.trim="useVoucher.point"
-                                  :max="authStore.user.point"
-                                />
-                              </div>
+                                                            <div class="input-group">
+                                                                <label>Nhập điểm</label>
+                                                                <input type="number" placeholder=""
+                                                                    v-model.trim="useVoucher.point"
+                                                                    :max="authStore.user.point" />
+                                                            </div>
 
-                              <div class="discount-info">
-                                <span class="label">Số tiền được giảm</span>
-                                <span class="discount-value bold"
-                                  >=
-                                  {{
-                                    Number(useVoucher.point).toLocaleString(
-                                      "vi-VN"
-                                    )
-                                  }}
-                                  vnđ</span
-                                >
-                              </div>
+                                                            <div class="discount-info">
+                                                                <span class="label">Số tiền được giảm</span>
+                                                                <span class="discount-value bold">=
+                                                                    {{
+                                                                    Number(useVoucher.point).toLocaleString(
+                                                                    "vi-VN"
+                                                                    )
+                                                                    }}
+                                                                    vnđ</span>
+                                                            </div>
 
-                              <button
-                                type="button"
-                                class="exchange-btn mt-4"
-                                @click="handleApplyPoint"
-                              >
-                                ĐỔI ĐIỂM
-                              </button>
+                                                            <button type="button" class="exchange-btn mt-4"
+                                                                @click="handleApplyPoint">
+                                                                ĐỔI ĐIỂM
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="col-md-6"></div>
+                                                <div class="col-md-3 item-seat-quantity">
+                                                    Tổng tiền:
+                                                </div>
+                                                <div
+                                                    class="col-md-3 item-seat-money item-seat-total-money total-money-name">
+                                                    <!-- {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ -->
+                                                    {{ totalWithTax.toLocaleString("vi-VN") }}đ
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6"></div>
+                                                <div class="col-md-3 item-seat-quantity">
+                                                    Tiền được giảm:
+                                                </div>
+                                                <div
+                                                    class="col-md-3 item-seat-money item-seat-total-money total-money-name">
+                                                    {{ priceAll.discountAmount.toLocaleString("vi-VN") }}đ
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6"></div>
+                                                <div class="col-md-3 item-seat-quantity">
+                                                    Tiền cần thanh toán:
+                                                </div>
+                                                <div
+                                                    class="col-md-3 item-seat-money item-seat-total-money total-money-name">
+                                                    <!-- {{ priceAll.payableAmount.toLocaleString("vi-VN") }}đ -->
+                                                    {{ payableWithTax.toLocaleString("vi-VN") }}đ
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="payment-method-section">
+                                            <div class="col-lg-12 payment-page-title"
+                                                style="height: 35px; line-height: 35px">
+                                                <img style="height: 100%; float: left"
+                                                    src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png" />
+
+                                                <div class="page-title" id="scroll-top">
+                                                    PHƯƠNG THỨC THANH TOÁN
+                                                </div>
+                                            </div>
+                                            <p class="mt-3 bold">Chọn thẻ thanh toán</p>
+                                            <hr class="payment-divider" />
+
+                                            <div class="payment-options">
+                                                <label class="payment-option">
+                                                    <input type="radio" name="payment" value="momo"
+                                                        v-model="selectedPayment" />
+
+                                                    <span class="custom-radio"></span>
+                                                    <img src="/assets/icon-momo.png" alt="Ví MoMo" />
+                                                    <span>Ví MoMo</span>
+                                                </label>
+
+                                                <label class="payment-option">
+                                                    <input type="radio" name="payment" value="vnpay"
+                                                        v-model="selectedPayment" />
+
+                                                    <span class="custom-radio"></span>
+                                                    <img src="/assets/icon-vnpay.png" alt="Ví VNpay" />
+                                                    <span>Ví VNpay</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
                         </div>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-12">
-                      <div class="row">
-                        <div class="col-md-6"></div>
-                        <div class="col-md-3 item-seat-quantity">
-                          Tổng tiền:
-                        </div>
-                        <div
-                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
-                        >
-                          <!-- {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ -->
-                          {{ totalWithTax.toLocaleString("vi-VN") }}đ
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6"></div>
-                        <div class="col-md-3 item-seat-quantity">
-                          Tiền được giảm:
-                        </div>
-                        <div
-                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
-                        >
-                          {{ priceAll.discountAmount.toLocaleString("vi-VN") }}đ
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6"></div>
-                        <div class="col-md-3 item-seat-quantity">
-                          Tiền cần thanh toán:
-                        </div>
-                        <div
-                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
-                        >
-                          <!-- {{ priceAll.payableAmount.toLocaleString("vi-VN") }}đ -->
-                          {{ payableWithTax.toLocaleString("vi-VN") }}đ
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="payment-method-section">
-                      <div
-                        class="col-lg-12 payment-page-title"
-                        style="height: 35px; line-height: 35px"
-                      >
-                        <img
-                          style="height: 100%; float: left"
-                          src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png"
-                        />
-
-                        <div class="page-title" id="scroll-top">
-                          PHƯƠNG THỨC THANH TOÁN
-                        </div>
-                      </div>
-                      <p class="mt-3 bold">Chọn thẻ thanh toán</p>
-                      <hr class="payment-divider" />
-
-                      <div class="payment-options">
-                        <label class="payment-option">
-                          <input
-                            type="radio"
-                            name="payment"
-                            value="momo"
-                            v-model="selectedPayment"
-                          />
-
-                          <span class="custom-radio"></span>
-                          <img src="/assets/icon-momo.png" alt="Ví MoMo" />
-                          <span>Ví MoMo</span>
-                        </label>
-
-                        <label class="payment-option">
-                          <input
-                            type="radio"
-                            name="payment"
-                            value="vnpay"
-                            v-model="selectedPayment"
-                          />
-
-                          <span class="custom-radio"></span>
-                          <img src="/assets/icon-vnpay.png" alt="Ví VNpay" />
-                          <span>Ví VNpay</span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Chân trang showtime -->
-            <div class="seat-row-footer bg-white seat-type-panel mb-5">
-              <div>
-                <div>
-                  <div class="row">
-                    <template v-if="isChoosingScreen">
-                      <div class="col-lg-8">
-                        <!-- <div class="row">
+                        <!-- Chân trang showtime -->
+                        <div class="seat-row-footer bg-white seat-type-panel mb-5">
+                            <div>
+                                <div>
+                                    <div class="row">
+                                        <template v-if="isChoosingScreen">
+                                            <div class="col-lg-8">
+                                                <div class="row">
                           <div
                             class="col-lg-3 col-md-2 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
                           >
@@ -685,405 +581,366 @@
                               Ghế Đôi
                             </span>
                           </div>
-                        </div> -->
-                      </div>
+                        </div>
+                                            </div>
 
-                      <div class="col-lg-2">
-                        <div class="total-price-label text-start">
-                          Tổng tiền
-                        </div>
-                        <div class="total-price-value text-center">
-                          <!-- {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ -->
-                          {{ payableWithTax.toLocaleString("vi-VN") }}đ
-                        </div>
-                      </div>
-                    </template>
+                                            <div class="col-lg-2">
+                                                <div class="total-price-label text-start">
+                                                    Tổng tiền
+                                                </div>
+                                                <div class="total-price-value text-center">
+                                                    <!-- {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ -->
+                                                    {{ payableWithTax.toLocaleString("vi-VN") }}đ
+                                                </div>
+                                            </div>
+                                        </template>
 
-                    <template v-else>
-                      <div class="col-lg-10">
-                        <div class="note-before-next">
-                          Vui lòng kiểm tra thông tin đầy đủ trước khi qua bước
-                          tiếp theo.
-                        </div>
-                        <div class="note-refund">
-                          <span style="color: red">*</span>
-                          Vé mua rồi không hoàn trả lại dưới mọi hình thức.
-                        </div>
-                      </div>
-                    </template>
+                                        <template v-else>
+                                            <div class="col-lg-10">
+                                                <div class="note-before-next">
+                                                    Vui lòng kiểm tra thông tin đầy đủ trước khi qua bước
+                                                    tiếp theo.
+                                                </div>
+                                                <div class="note-refund">
+                                                    <span style="color: red">*</span>
+                                                    Vé mua rồi không hoàn trả lại dưới mọi hình thức.
+                                                </div>
+                                            </div>
+                                        </template>
 
-                    <div class="col-lg-2">
-                      <div class="time-to-label text-start">
-                        Thời gian còn lại
-                      </div>
-                      <div class="time-to-value text-end">
-                        <a-statistic-countdown
-                          :value="deadline"
-                          @finish="onFinish"
-                          format="mm:ss"
-                        >
-                        </a-statistic-countdown>
-                      </div>
+                                        <div class="col-lg-2">
+                                            <div class="time-to-label text-start">
+                                                Thời gian còn lại
+                                            </div>
+                                            <div class="time-to-value text-end">
+                                                <a-statistic-countdown :value="deadline" @finish="onFinish"
+                                                    format="mm:ss">
+                                                </a-statistic-countdown>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="col-lg-3 sidebar">
-            <div class="bg-white">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="pi-img-wrapper">
-                    <img
-                      class=""
-                      style="width: 100%"
-                      alt=""
-                      v-if="
+                    <div class="col-lg-3 sidebar">
+                        <div class="bg-white">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="pi-img-wrapper">
+                                        <img class="" style="width: 100%" alt="" v-if="
                         movieStore.showtime.data &&
                         movieStore.showtime.data.showTime.movie.img_thumbnail
-                      "
-                      :src="
+                      " :src="
                         formattedImage(
                           movieStore.showtime.data.showTime.movie.img_thumbnail
                         )
-                      "
-                    />
-                  </div>
-                </div>
+                      " />
+                                    </div>
+                                </div>
 
-                <div class="col-lg-6">
-                  <h3 class="bold color1">
-                    {{ showtime.movie.name }}
-                  </h3>
-                  <h4>2D Phụ đề</h4>
-                </div>
+                                <div class="col-lg-6">
+                                    <h3 class="bold color1">
+                                        {{ showtime.movie.name }}
+                                    </h3>
+                                    <h4>2D Phụ đề</h4>
+                                </div>
 
-                <div class="col-lg-12">
-                  <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
-                  >
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6">
-                          <Tag :size="18" />
-                          Thể loại
-                        </div>
-                        <div class="col-lg-6">
-                          <span class="bold fz-md">
-                            <!-- {{ showtime.movie.category }} -->
+                                <div class="col-lg-12">
+                                    <ul
+                                        class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <Tag :size="18" />
+                                                    Thể loại
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <span class="bold fz-md">
+                                                        <!-- {{ showtime.movie.category }} -->
 
-                            {{
-                              showtime.movie.movie_genres
-                                ? showtime.movie.movie_genres
-                                    .map((item) => item)
-                                    .join(", ")
-                                : "Chưa đặt"
-                            }}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6">
-                          <Clock :size="18" />
-                          Thời lượng
-                        </div>
-                        <div class="col-lg-6">
-                          <span class="bold fz-md">
-                            {{ showtime.movie.duration }} phút
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                                                        {{
+                                                        showtime.movie.movie_genres
+                                                        ? showtime.movie.movie_genres
+                                                        .map((item) => item)
+                                                        .join(", ")
+                                                        : "Chưa đặt"
+                                                        }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <Clock :size="18" />
+                                                    Thời lượng
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <span class="bold fz-md">
+                                                        {{ showtime.movie.duration }} phút
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
 
-                <div class="col-lg-12">
-                  <hr
-                    class="border-dashed border-top-2"
-                    style="margin-top: 5px; margin-bottom: 5px"
-                  />
+                                <div class="col-lg-12">
+                                    <hr class="border-dashed border-top-2"
+                                        style="margin-top: 5px; margin-bottom: 5px" />
 
-                  <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
-                  >
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <Hotel :size="18" />
-                          Rạp chiếu
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span class="bold fz-md">
-                            {{ showtime.cinema.name }}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <CalendarDays :size="18" />
-                          Ngày chiếu
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span class="bold fz-md">
-                            {{ formattedStartTime(showtime.date) }}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <Clock :size="18" />
-                          Giờ chiếu
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span class="bold fz-md">
-                            {{ formatTime(showtime.start_time) }}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <TvMinimal :size="18" />
-                          Phòng chiếu
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span class="bold fz-md">
-                            {{ showtime.room.name }}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <Armchair :size="18" />
-                          Ghế ngồi:
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span class="bold fz-md">
-                            <p>{{ seatNames.join(", ") }}</p>
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                                    <ul
+                                        class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <Hotel :size="18" />
+                                                    Rạp chiếu
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <span class="bold fz-md">
+                                                        {{ showtime.cinema.name }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <CalendarDays :size="18" />
+                                                    Ngày chiếu
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <span class="bold fz-md">
+                                                        {{ formattedStartTime(showtime.date) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <Clock :size="18" />
+                                                    Giờ chiếu
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <span class="bold fz-md">
+                                                        {{ formatTime(showtime.start_time) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <TvMinimal :size="18" />
+                                                    Phòng chiếu
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <span class="bold fz-md">
+                                                        {{ showtime.room.name }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <Armchair :size="18" />
+                                                    Ghế ngồi:
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <span class="bold fz-md">
+                                                        <p>{{ seatNames.join(", ") }}</p>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
 
-                <div
-                  class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center"
-                >
-                  <template v-if="!isChoosingScreen">
-                    <button
-                      class="btn btn-primary"
-                      @click="isChoosingScreen = true"
-                      v-if="!isChoosingScreen"
-                    >
-                      Quay Lại
-                    </button>
+                                <div
+                                    class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center">
+                                    <template v-if="!isChoosingScreen">
+                                        <button class="btn btn-primary" @click="isChoosingScreen = true"
+                                            v-if="!isChoosingScreen">
+                                            Quay Lại
+                                        </button>
 
-                    <button class="btn btn-primary" @click="handleNextOrder">
-                      Mua hàng
-                    </button>
-                  </template>
+                                        <button class="btn btn-primary" @click="handleNextOrder">
+                                            Mua hàng
+                                        </button>
+                                    </template>
 
-                  <button
-                    class="btn btn-primary"
-                    @click="handleNextOrderOne"
-                    v-if="isChoosingScreen"
-                  >
-                    Tiếp theo
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+                                    <button class="btn btn-primary" @click="handleNextOrderOne" v-if="isChoosingScreen">
+                                        Tiếp theo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-          <div class="col-lg-3 sidebar-md" :style="{ top: sidebarTop + 'px' }">
-            <div class="bg-white">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="pi-img-wrapper">
-                    <img
-                      class=""
-                      style="width: 100%"
-                      alt=""
-                      v-if="
+                    <div class="col-lg-3 sidebar-md" :style="{ top: sidebarTop + 'px' }">
+                        <div class="bg-white">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="pi-img-wrapper">
+                                        <img class="" style="width: 100%" alt="" v-if="
                         movieStore.showtime.data &&
                         movieStore.showtime.data.showTime.movie.img_thumbnail
-                      "
-                      :src="
+                      " :src="
                         formattedImage(
                           movieStore.showtime.data.showTime.movie.img_thumbnail
                         )
-                      "
-                    />
-                  </div>
+                      " />
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <h3 class="bold color1">
+                                        {{ showtime.movie.name }}
+                                    </h3>
+                                    <h4>2D Phụ đề</h4>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <ul
+                                        class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <Tag :size="18" />
+                                                    Thể loại
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <span class="bold fz-md">
+                                                        {{ showtime.movie.category }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <Clock :size="18" />
+                                                    Thời lượng
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <span class="bold fz-md">
+                                                        {{ showtime.movie.duration }} phút
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <hr class="border-dashed border-top-2"
+                                        style="margin-top: 5px; margin-bottom: 5px" />
+
+                                    <ul
+                                        class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san">
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <Hotel :size="18" />
+                                                    Rạp chiếu
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <span class="bold fz-md">
+                                                        {{ showtime.cinema.name }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <CalendarDays :size="18" />
+                                                    Ngày chiếu
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <span class="bold fz-md">
+                                                        {{ formattedStartTime(showtime.date) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <Clock :size="18" />
+                                                    Giờ chiếu
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <span class="bold fz-md">
+                                                        {{ formatTime(showtime.start_time) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <TvMinimal :size="18" />
+                                                    Phòng chiếu
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <span class="bold fz-md">
+                                                        {{ showtime.room.name }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="padding-bottom-10 padding-top-10">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <TvMinimal :size="18" />
+                                                    Ghê ngồi:
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                    <span class="bold fz-md">
+                                                        {{ showtime.room.name }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div
+                                    class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center">
+                                    <template v-if="!isChoosingScreen">
+                                        <button class="btn btn-primary" @click="isChoosingScreen = true"
+                                            v-if="!isChoosingScreen">
+                                            Quay Lại
+                                        </button>
+
+                                        <button class="btn btn-primary" @click="handleNextOrder">
+                                            Mua hàng
+                                        </button>
+                                    </template>
+
+                                    <button class="btn btn-primary" @click="handleNextOrderOne" v-if="isChoosingScreen">
+                                        Tiếp theo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="col-lg-6">
-                  <h3 class="bold color1">
-                    {{ showtime.movie.name }}
-                  </h3>
-                  <h4>2D Phụ đề</h4>
-                </div>
-
-                <div class="col-lg-12">
-                  <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
-                  >
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6">
-                          <Tag :size="18" />
-                          Thể loại
-                        </div>
-                        <div class="col-lg-6">
-                          <span class="bold fz-md">
-                            {{ showtime.movie.category }}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6">
-                          <Clock :size="18" />
-                          Thời lượng
-                        </div>
-                        <div class="col-lg-6">
-                          <span class="bold fz-md">
-                            {{ showtime.movie.duration }} phút
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-
-                <div class="col-lg-12">
-                  <hr
-                    class="border-dashed border-top-2"
-                    style="margin-top: 5px; margin-bottom: 5px"
-                  />
-
-                  <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
-                  >
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <Hotel :size="18" />
-                          Rạp chiếu
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span class="bold fz-md">
-                            {{ showtime.cinema.name }}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <CalendarDays :size="18" />
-                          Ngày chiếu
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span class="bold fz-md">
-                            {{ formattedStartTime(showtime.date) }}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <Clock :size="18" />
-                          Giờ chiếu
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span class="bold fz-md">
-                            {{ formatTime(showtime.start_time) }}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <TvMinimal :size="18" />
-                          Phòng chiếu
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span class="bold fz-md">
-                            {{ showtime.room.name }}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="padding-bottom-10 padding-top-10">
-                      <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <TvMinimal :size="18" />
-                          Ghê ngồi:
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <span class="bold fz-md">
-                            {{ showtime.room.name }}
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-
-                <div
-                  class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center"
-                >
-                  <template v-if="!isChoosingScreen">
-                    <button
-                      class="btn btn-primary"
-                      @click="isChoosingScreen = true"
-                      v-if="!isChoosingScreen"
-                    >
-                      Quay Lại
-                    </button>
-
-                    <button class="btn btn-primary" @click="handleNextOrder">
-                      Mua hàng
-                    </button>
-                  </template>
-
-                  <button
-                    class="btn btn-primary"
-                    @click="handleNextOrderOne"
-                    v-if="isChoosingScreen"
-                  >
-                    Tiếp theo
-                  </button>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <div v-else class="h-screen d-flex justify-content-center align-items-center">
-    <div>
-      <a-spin></a-spin>
+    <div v-else class="h-screen d-flex justify-content-center align-items-center">
+        <div>
+            <a-spin></a-spin>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -2255,6 +2112,28 @@ onUnmounted(() => {
 .blinking-text {
   font-weight: bold;
   color: red;
+}
+.notenote-box {
+    background-color: #d4caa854;
+    border-left: 6px solid #ffc107;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    color: #08ae2f;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.notenote-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #08ae2f;
+}
+
+.notenote-text {
+    display: block;
+    margin-top: 8px;
+    line-height: 1.6;
 }
 
 .seat-row {
