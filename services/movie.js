@@ -58,7 +58,13 @@ export const fetchShowTimeBySlugService = async (
   }
 };
 
-export const chooseSeatService = async (id, seatId, userId, status) => {
+export const chooseSeatService = async (
+  id,
+  seatId,
+  userId,
+  status,
+  holdExpiresAt
+) => {
   const { $axios } = useNuxtApp();
 
   try {
@@ -66,6 +72,7 @@ export const chooseSeatService = async (id, seatId, userId, status) => {
       seat_id: seatId,
       user_id: userId,
       status: status,
+      hold_expires_at: holdExpiresAt,
     });
 
     if (!response) {
