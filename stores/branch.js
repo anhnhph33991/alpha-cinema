@@ -14,13 +14,6 @@ export const useBranchStore = defineStore("branch", () => {
     }
   };
 
-  // const convertOptionBranch = () => {
-  //   return branchs.value.map((branch) => ({
-  //     value: branch.id,
-  //     label: branch.name,
-  //   }));
-  // };
-
   const convertOptionBranch = () => {
     return branchs.value
       .filter(
