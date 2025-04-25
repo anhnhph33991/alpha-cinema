@@ -1750,20 +1750,15 @@ const getQuantityFood = (id) => {
  */
 watch(
   () => movieStore.seatSelected,
-  () => {
+  (newVal) => {
+    if (!newVal || newVal.length === 0) {
+      isChoosingScreen.value = true;
+      return;
+    }
+
     priceAll.value.totalAmount = handleTotalPrice.value;
     priceAll.value.payableAmount =
       handleTotalPrice.value - priceAll.value.discountAmount;
-
-    // if (movieStore.seatSelected.length > 0) {
-    //   priceAll.value.totalAmount = priceAll.value.totalAmount;
-    //   priceAll.value.payableAmount = priceAll.value.payableAmount;
-    // }
-
-    // if (movieStore.seatSelected.length > 0) {
-    //   priceAll.value.totalAmount += priceAll.value.totalAmount * 0.08;
-    //   priceAll.value.payableAmount += priceAll.value.payableAmount * 0.08;
-    // }
   },
   { deep: true, immediate: true }
 );
