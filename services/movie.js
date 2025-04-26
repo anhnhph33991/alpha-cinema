@@ -34,6 +34,77 @@ export const fetchMovieService = async (slug, branchId = "", cinemId = "") => {
   }
 };
 
+/**
+ * Lấy danh sách phim sắp chiếu (Chưa có xuất chiếu)
+ */
+export const fetchMoviesComingSoonService = async (
+  branchId = "",
+  cinemId = ""
+) => {
+  const { $axios } = useNuxtApp();
+
+  try {
+    const response = await $axios.get("/v1/movies-coming-soon", {
+      params: { branchId: `${branchId}`, cinemId: `${cinemId}` },
+    });
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Lấy danh sách phim đang chiếu (Có cả xuất chiếu đặc biệt)
+ */
+export const fetchMoviesNowShowingService = async (
+  branchId = "",
+  cinemId = ""
+) => {
+  const { $axios } = useNuxtApp();
+
+  try {
+    const response = await $axios.get("/v1/movies-now-showing", {
+      params: { branchId: `${branchId}`, cinemId: `${cinemId}` },
+    });
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+/**
+ * Lấy danh sách phim đặc biệt
+ */
+export const fetchMoviesSpecialService = async (
+  branchId = "",
+  cinemId = ""
+) => {
+  const { $axios } = useNuxtApp();
+
+  try {
+    const response = await $axios.get("/v1/movies-special", {
+      params: { branchId: `${branchId}`, cinemId: `${cinemId}` },
+    });
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // lấy show time bằng slug
 
 export const fetchShowTimeBySlugService = async (
@@ -45,6 +116,29 @@ export const fetchShowTimeBySlugService = async (
 
   try {
     const response = await $axios.get(`/v1/${slug}/showtimeDetail`, {
+      params: { branchId: `${branchId}`, cinemId: `${cinemId}` },
+    });
+
+    if (!response) {
+      throw new Error("Invalid response");
+    }
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/** Chi tiết phim có xuất chiếu đặc biệt */
+export const fetchmovieSpecialService = async (
+  slug,
+  branchId = "",
+  cinemId = ""
+) => {
+  const { $axios } = useNuxtApp();
+
+  try {
+    const response = await $axios.get(`/v1/${slug}/moviesSpecialShowtimes`, {
       params: { branchId: `${branchId}`, cinemId: `${cinemId}` },
     });
 

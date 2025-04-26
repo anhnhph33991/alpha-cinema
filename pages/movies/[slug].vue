@@ -1,10 +1,11 @@
 <template>
   <div v-if="movieStore.movie?.data" class="h-screen">
-    <MovieDetail
+    <!-- <MovieDetail
       :slug="slug"
       :movie="movieStore.movie?.data.movie"
       :showtime="movieStore.movie?.data.showtimes"
-    />
+    /> -->
+    <MovieDetail :slug="slug" :movie="movieStore.movie?.data.movie" />
   </div>
   <div v-else class="d-flex justify-content-center align-items-center h-screen">
     <div>

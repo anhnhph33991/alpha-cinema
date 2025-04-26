@@ -1,20 +1,28 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { fetchSettingService } from "@/services/setting";
-import { listBranchService } from "@/services/branch";
+import { useBranchStore } from "@/stores/branch";
+
+const branchStore = useBranchStore();
 
 const settings = ref(null);
 const branchs = ref([]);
 
+watch(
+  () => branchStore.branchs,
+  (newVal) => {
+    if (Array.isArray(newVal) && newVal.length > 0) {
+      branchs.value = newVal;
+    }
+  },
+  { immediate: true, deep: true }
+);
+
 onMounted(async () => {
   try {
-    const [settingsData, branchsData] = await Promise.all([
-      fetchSettingService(),
-      listBranchService(),
-    ]);
+    const [settingsData] = await Promise.all([fetchSettingService()]);
 
     settings.value = settingsData;
-    branchs.value = branchsData?.data || [];
   } catch (error) {
     console.error("Lỗi khi gọi API:", error);
   }
@@ -30,7 +38,8 @@ const combinedData = computed(() => {
 });
 
 const formattedImage = (image) => {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://alphacinema.me/";
+  const baseUrl =
+    import.meta.env.VITE_API_BASE_URL || "https://alphacinema.me/";
   return image ? `${baseUrl}${image}` : "";
 };
 </script>
@@ -42,20 +51,31 @@ const formattedImage = (image) => {
         <div class="container bottom_border">
           <div class="row footer-top">
             <div class="logo">
-              <img v-if="settings.website_logo" width="150" class="logo-img" :alt="settings.site_name"
-                :src="formattedImage(settings.website_logo)" />
+              <img
+                v-if="settings.website_logo"
+                width="150"
+                class="logo-img"
+                :alt="settings.site_name"
+                :src="formattedImage(settings.website_logo)"
+              />
               <ul class="footer_ul_amrc">
                 <li>
                   <i class="bi bi-caret-right-fill"></i>
-                  <NuxtLink to="/site-setting/gioi-thieu"> Giới thiệu </NuxtLink>
+                  <NuxtLink to="/site-setting/gioi-thieu">
+                    Giới thiệu
+                  </NuxtLink>
                 </li>
                 <li>
                   <i class="bi bi-caret-right-fill"></i>
-                  <NuxtLink to="/site-setting/dieu-khoan-dich-vu"> Điều khoản dịch vụ </NuxtLink>
+                  <NuxtLink to="/site-setting/dieu-khoan-dich-vu">
+                    Điều khoản dịch vụ
+                  </NuxtLink>
                 </li>
                 <li>
                   <i class="bi bi-caret-right-fill"></i>
-                  <NuxtLink to="/site-setting/policy"> Chính sách bảo mật </NuxtLink>
+                  <NuxtLink to="/site-setting/policy">
+                    Chính sách bảo mật
+                  </NuxtLink>
                 </li>
                 <li>
                   <i class="bi bi-caret-right-fill"></i>
@@ -67,7 +87,9 @@ const formattedImage = (image) => {
             <div>
               <h5 class="headin5_amrc">Liên Hệ</h5>
               <p class="mb10">{{ settings.slogan }}</p>
-              <p><i class="bi bi-geo-alt-fill"></i> {{ settings.headquarters }}</p>
+              <p>
+                <i class="bi bi-geo-alt-fill"></i> {{ settings.headquarters }}
+              </p>
               <p><i class="bi bi-telephone-fill"></i> {{ settings.phone }}</p>
               <p><i class="bi bi-envelope-at-fill"></i> {{ settings.email }}</p>
             </div>
@@ -86,15 +108,21 @@ const formattedImage = (image) => {
               <ul class="footer_ul2_amrc">
                 <li>
                   <a href="#"><i class="bi bi-facebook"></i></a>
-                  <p><a href="#">{{ settings.facebook_link }}</a></p>
+                  <p>
+                    <a href="#">{{ settings.facebook_link }}</a>
+                  </p>
                 </li>
                 <li>
                   <a href="#"><i class="bi bi-youtube"></i></a>
-                  <p><a href="#">{{ settings.youtube_link }}</a></p>
+                  <p>
+                    <a href="#">{{ settings.youtube_link }}</a>
+                  </p>
                 </li>
                 <li>
                   <a href="#"><i class="bi bi-instagram"></i></a>
-                  <p><a href="#">{{ settings.instagram_link }}</a></p>
+                  <p>
+                    <a href="#">{{ settings.instagram_link }}</a>
+                  </p>
                 </li>
               </ul>
             </div>
@@ -127,13 +155,12 @@ const formattedImage = (image) => {
 </template>
 
 <style scoped>
-
 .footer-section {
   background-color: #121212;
 }
 
 .footer {
-  background-color:#121212;
+  background-color: #121212;
   color: #dfe4ea;
   padding: 50px 0 20px;
   font-size: 14px;
@@ -149,7 +176,7 @@ const formattedImage = (image) => {
   margin-bottom: 30px;
 }
 
-.footer-top>div {
+.footer-top > div {
   flex: 1 1 240px;
   min-width: 220px;
 }

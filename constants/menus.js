@@ -11,10 +11,10 @@ export const navMenu = [
     title: "Chính Sách",
     link: "/site-setting/policy",
   },
-  {
-    title: "Giá Vé",
-    link: "/ticket-price",
-  },
+  // {
+  //   title: "Giá Vé",
+  //   link: "/ticket-price",
+  // },
   {
     title: "Tin Tức",
     link: "/site-setting/posts",

@@ -1,8 +1,12 @@
 import { toast } from "vue-sonner";
 import {
   chooseSeatService,
+  fetchMoviesComingSoonService,
   fetchMovieService,
+  fetchMoviesNowShowingService,
+  fetchmovieSpecialService,
   fetchMoviesService,
+  fetchMoviesSpecialService,
   fetchShowTimeBySlugService,
   resetAndBuySeatService,
 } from "~/services/movie";
@@ -18,12 +22,77 @@ export const useMovieStore = defineStore("movie", () => {
   const currentUserId = useAuthStore().user.id || null;
   const seatSelected = ref([]);
 
+  ////////////
+  /**
+   * Phim sắp chiếu
+   */
+  const moviesComingSoon = ref([]);
+  /**
+   * Phim đang chiếu bao gồm cả xuất chiếu đặc biệt
+   */
+  const moviesNowShowing = ref([]);
+  /**
+   * Xuất chiếu đặc biệt
+   */
+  const moviesSpecial = ref([]);
+
+  /**
+   * Chi tiết phim có xuất chiếu đặc biệt
+   */
+  const movieSpecial = ref({});
+
   const fetchMovies = async (branchId = "", cinemId = "") => {
     try {
       movies.value = await fetchMoviesService(branchId, cinemId);
       console.log(movies.value);
     } catch (error) {
       toast.error("call api lỗi");
+    }
+  };
+
+  /**
+   * Lấy danh sách phim sắp chiếu(Chưa có xuất chiếu)
+   */
+  const fetchMoviesComingSoon = async (branchId = "", cinemId = "") => {
+    try {
+      moviesComingSoon.value = await fetchMoviesComingSoonService(
+        branchId,
+        cinemId
+      );
+
+      console.log("Phim sắp chiếu");
+      console.log(moviesComingSoon.value);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  /**
+   * Lấy danh sách phim đang chiếu (có cả xuất chiếu đặc biệt)
+   */
+  const fetchMoviesNowShowing = async (branchId = "", cinemId = "") => {
+    try {
+      moviesNowShowing.value = await fetchMoviesNowShowingService(
+        branchId,
+        cinemId
+      );
+
+      console.log("Phim đang chiếu");
+      console.log(moviesNowShowing.value);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  /**
+   * Lấy danh sách phim có xuất chiếu đặc biệt
+   */
+  const fetchMoviesSpecial = async (branchId = "", cinemId = "") => {
+    try {
+      moviesSpecial.value = await fetchMoviesSpecialService(branchId, cinemId);
+
+      console.log("Phim có xuất chiếu đặc biệt");
+      console.log(moviesSpecial.value);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -95,6 +164,53 @@ export const useMovieStore = defineStore("movie", () => {
     );
     return grouped;
   });
+
+  const groupedShowtimesSpecial = computed(() => {
+    if (
+      !movieSpecial.value ||
+      !movieSpecial.value.data ||
+      !movieSpecial.value.data.showtimes
+    ) {
+      return {}; // Trả về object rỗng nếu dữ liệu chưa sẵn sàng
+    }
+
+    const grouped = {};
+    Object.entries(movieSpecial.value.data.showtimes).forEach(
+      ([date, showtimeList]) => {
+        grouped[date] = showtimeList.reduce((acc, showtime) => {
+          if (!acc[showtime.name_room]) {
+            acc[showtime.name_room] = [];
+          }
+          acc[showtime.name_room].push(showtime);
+          return acc;
+        }, {});
+      }
+    );
+    return grouped;
+  });
+
+  /**
+   * lấy chi tiết phim có xuất chiếu đặc biệt
+   */
+  const fetchmovieSpecial = async (slug, branchId = "", cinemaId = "") => {
+    try {
+      movieSpecial.value = await fetchmovieSpecialService(
+        slug,
+        branchId,
+        cinemaId
+      );
+
+      console.log("chọn showtime mới");
+
+      console.log(movieSpecial.value);
+    } catch (error) {
+      // console.log(error);
+      if (error?.code && error.code == 404) {
+        navigateTo("/");
+        console.log(error);
+      }
+    }
+  };
 
   const fetchShowTimeBySlug = async (slug, branchId = "", cinemId = "") => {
     try {
@@ -375,8 +491,12 @@ export const useMovieStore = defineStore("movie", () => {
   };
 
   return {
+    moviesComingSoon,
+    moviesNowShowing,
+    moviesSpecial,
     movies,
     movie,
+    movieSpecial,
     matrixColume,
     seatSelected,
     currentUserId,
@@ -391,11 +511,16 @@ export const useMovieStore = defineStore("movie", () => {
     isSeatSelected,
     isSeatHeldByOthers,
     groupedShowtimes,
+    groupedShowtimesSpecial,
     checkSeatClass,
     mappingSeatTwo,
     mappingSeatDouble,
     mappingSeatNormal,
     getCurrentTimeHHMM,
     getTimePlusMinutes,
+    fetchMoviesComingSoon,
+    fetchMoviesNowShowing,
+    fetchMoviesSpecial,
+    fetchmovieSpecial,
   };
 });
