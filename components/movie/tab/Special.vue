@@ -81,12 +81,12 @@
       </div>
     </div>
 
-    <template v-if="movieStore.movie.data">
+    <template v-if="movieStore.movieSpecial.data">
       <a-modal
         :open="open"
         width="1000px"
         centered
-        :title="movieStore.movie.data.movie.name"
+        :title="movieStore.movieSpecial.data.movie.name"
         @cancel="handleCancel"
         :footer="null"
       >
@@ -98,9 +98,11 @@
               :style="{ height: 'auto' }"
               @tabScroll="callback"
             >
-              <template v-if="Object.keys(movieStore.groupedShowtimes).length">
+              <template
+                v-if="Object.keys(movieStore.groupedShowtimesSpecial).length"
+              >
                 <a-tab-pane
-                  v-for="(rooms, date) in movieStore.groupedShowtimes"
+                  v-for="(rooms, date) in movieStore.groupedShowtimesSpecial"
                   :key="date"
                   :tab="formatDate(date)"
                 >
@@ -191,7 +193,9 @@ const handleCancel = () => {
 // Lắng nghe movieSelected thay đổi để fetch movie details
 watchEffect(async () => {
   if (movieSelected.value) {
-    await movieStore.fetchMovie(
+    console.log("call api xuất chiếu riêng lẻ");
+
+    await movieStore.fetchmovieSpecial(
       movieSelected.value.slug,
       selectCinemaBranch.value?.branch_id,
       selectCinemaBranch.value?.cinema_id

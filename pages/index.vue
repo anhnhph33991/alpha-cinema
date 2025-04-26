@@ -51,69 +51,31 @@
         </a-modal>
       </ClientOnly>
 
-      <!-- <ClientOnly>
-        <a-modal
-          :open="openModalVerifyEmail"
-          width="1000px"
-          centered
-          @cancel="handleCancelVerifyEmail"
-          :footer="null"
-        >
-          <div class="d-flex justify-content-center align-items-center">
-            <a-card :bordered="false" style="width: 300px">
-              <div>
-                <div>
-                  <h6 class="text-center fw-bold">Vui lòng kiểm tra email</h6>
-                </div>
-                <div style="padding: 3rem 0">
-                  <ClientOnly>
-                    <PrimeInputOtp
-                      v-model="form.otp"
-                      :length="6"
-                      class="justify-content-center"
-                    />
-                  </ClientOnly>
-                </div>
-
-                <div class="text-center">
-                  <a-button type="primary" @click="handleSubmitVerifyEmail"
-                    >Gửi</a-button
-                  >
-                </div>
-              </div>
-            </a-card>
-          </div>
-        </a-modal>
-      </ClientOnly> -->
-
       <div class="container">
         <ClientOnly>
           <a-tabs v-model="tabActive" :default-active-key="'2'">
             <a-tab-pane key="1" tab="Phim Sắp Chiếu">
-              <!-- <MovieList :movies="[]" /> -->
-              <MovieList :movies="movieIsUpcoming" :btnBuy="false" />
+              <MovieList
+                :movies="movieStore.moviesComingSoon?.data || []"
+                :btnBuy="false"
+              />
             </a-tab-pane>
             <a-tab-pane key="2" tab="Phim Đang Chiếu">
-              <!-- <MovieList :movies="movieStore.movies?.data || []" /> -->
-              <MovieList :movies="movieIsShowing || []" :btnBuy="true" />
+              <MovieList
+                :movies="movieStore.moviesNowShowing?.data || []"
+                :btnBuy="true"
+              />
             </a-tab-pane>
             <a-tab-pane key="3" tab="Suất Chiếu Đặc Biệt">
-              <MovieList :movies="movieIsSpecial" :btnBuy="true" />
-              <!-- <MovieList :movies="[]" /> -->
+              <MovieTabSpecial
+                :movies="movieStore.moviesSpecial?.data || []"
+                :btnBuy="true"
+              />
             </a-tab-pane>
           </a-tabs>
         </ClientOnly>
       </div>
-
-      <!-- <div class="container">
-        <div
-          class="d-flex justify-content-center align-content-center align-items-center h-screen"
-        >
-          <a-spin />
-        </div>
-      </div> -->
     </div>
-    <!-- ==========Movie-Section========== -->
   </div>
 </template>
 
@@ -121,42 +83,6 @@
 definePageMeta({
   middleware: "admin",
 });
-
-const form = ref({
-  otp: "",
-});
-
-const handleSubmitVerifyEmail = async () => {
-  try {
-    console.log(form.value.otp);
-    const data = {
-      email: authStore.user.email,
-      otp: form.value.otp,
-    };
-    authStore.confirmEmail(data);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-watch(
-  () => form.otp,
-  (val) => {
-    if (val.length == 6) {
-      // verifyEmailService();
-
-      console.log("1111");
-    }
-  }
-);
-
-const handleVerifyOtp = async () => {
-  try {
-    const response = await authStore.verifyOtp(form.otp);
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 import { LayoutBanner, MovieList } from "#components";
 import { useMovieStore } from "~/stores/movie";
@@ -243,35 +169,15 @@ const handleCancel = () => {
   }
 };
 
-const handleCancelVerifyEmail = () => {};
-
-// watch(selectCinemaBranch, fetchMovies, { deep: true });
 watch(
   selectCinemaBranch,
   async (newData, oldData) => {
     if (newData) {
-      await movieStore.fetchMovies(newData.branch_id, newData.cinema_id);
+      fetchAllMovies(newData.branch_id, newData.cinema_id);
     }
   },
   { deep: true }
 );
-
-watch(
-  () => authStore.user,
-  (user) => {
-    const hasUserData = user && Object.keys(user).length > 0;
-    const isEmailUnverified = user?.email_verified_at == null;
-
-    if (hasUserData && isEmailUnverified) {
-      openModalVerifyEmail.value = true;
-    }
-  },
-  { immediate: true, deep: true }
-);
-
-/**
- * Data 3 tab
- */
 
 const nowVN = new Date(
   new Intl.DateTimeFormat("en-US", {
@@ -286,63 +192,16 @@ const nowVN = new Date(
   }).format(new Date())
 );
 
-/**
- * phim sắp chiếu
- */
-const movieIsUpcoming = computed(() => {
-  return (
-    movieStore.movies?.data?.filter((movie) => {
-      const releaseDate = new Date(movie.release_date);
-      const createdAt = new Date(movie.created_at);
-      // return releaseDate > nowVN && createdAt < nowVN;
-      return releaseDate > nowVN && createdAt <= nowVN && movie.is_special != 1;
-    }) || []
-  );
-});
-
-/**
- * Phim đang chiếu
- */
-const movieIsShowing = computed(() => {
-  return (
-    movieStore.movies?.data?.filter((movie) => {
-      const releaseDate = new Date(movie.release_date);
-      const endDate = new Date(movie.end_date);
-
-      return releaseDate <= nowVN && nowVN <= endDate;
-      // return nowVN <= endDate;
-    }) || []
-  );
-});
-
-/**
- * Xuất chiếu đặc biệt
- */
-const movieIsSpecial = computed(() => {
-  return (
-    movieStore.movies?.data?.filter((movie) => {
-      const createdAt = new Date(movie.created_at);
-      const releaseDate = new Date(movie.release_date);
-
-      // Nếu check xuất chiếu theo cách ban đầu
-      // return createdAt <= nowVN && nowVN <= releaseDate;
-
-      // Nếu check xuất chiếu đặc biệt bằng is_special
-      // return movie.is_special == 1;
-
-      // trường hợp thứ 3
-      return (
-        nowVN < releaseDate &&
-        createdAt <= nowVN &&
-        createdAt < releaseDate &&
-        movie.is_special == 1
-      );
-    }) || []
-  );
-});
+function fetchAllMovies(branchId = null, cinemaId = null) {
+  return Promise.all([
+    movieStore.fetchMoviesComingSoon(branchId, cinemaId),
+    movieStore.fetchMoviesNowShowing(branchId, cinemaId),
+    movieStore.fetchMoviesSpecial(branchId, cinemaId),
+  ]);
+}
 
 onMounted(async () => {
-  movieStore.fetchMovies(
+  fetchAllMovies(
     selectCinemaBranch.value?.branch_id,
     selectCinemaBranch.value?.cinema_id
   );
@@ -354,7 +213,7 @@ onMounted(async () => {
   }
 
   openModal.value = true;
-  await branchStore.listBranch();
+  branchStore.listBranch();
   optionBranch.value = branchStore.convertOptionBranch();
 });
 

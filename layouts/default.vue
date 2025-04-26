@@ -1,16 +1,5 @@
 <template>
   <div>
-    <!-- ==========Preloader========== -->
-    <!-- <CommonPreLoader /> -->
-    <!-- ==========Preloader========== -->
-
-    <!-- ==========Overlay========== -->
-    <!-- <div class="overlay"></div> -->
-
-    <!-- <a-back-top>
-      <template #icon><PlusOutlined /></template>
-    </a-back-top> -->
-
     <a-back-top />
     <!-- ==========Overlay========== -->
 
