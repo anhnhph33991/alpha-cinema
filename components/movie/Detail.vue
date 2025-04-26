@@ -95,20 +95,20 @@
                 Chi tiết nội dung
               </a> -->
 
-              <button
+              <!-- <button
                 class="border border-warning rounded-pill py-2 px-4 text-warning bg-transparent btn-hover-scale"
                 type="button"
                 @click="handleShowTrailer"
               >
                 Xem trailer
-              </button>
+              </button> -->
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <a-modal
+    <!-- <a-modal
       :open="openTrailer"
       width="1000px"
       :title="movie.name"
@@ -124,22 +124,22 @@
         frameborder="0"
         allowfullscreen
       ></iframe>
-    </a-modal>
+    </a-modal> -->
 
-    <div class="w-100 h-screen" v-if="!isUpcomingMovie">
+    <div class="w-100 h-screen">
       <div class="container">
-        <a-tabs
+        <!-- <a-tabs
           v-model="activeKey"
           :default-active-key="'1'"
           :style="{ height: '200px' }"
           @tabScroll="callback"
-        >
-          <a-tab-pane
+        > -->
+        <!-- <a-tab-pane
             v-for="(items, date) in showtime"
             :key="date"
             :tab="formatDate(date)"
-          >
-            <!-- <div class="h-screen">
+          > -->
+        <!-- <div class="h-screen">
             <div class="d-flex gap-1 flex-wrap">
               <button
                 v-for="(showtime, index) in items"
@@ -152,7 +152,7 @@
               </button>
             </div>
           </div> -->
-            <div class="h-screen">
+        <!-- <div class="h-screen">
               <div class="mx-auto w-100 mw-1000px py-4 space-y-4 relative">
                 <div
                   class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2 g-xl-4 px-4 px-xl-0"
@@ -172,12 +172,33 @@
                 </div>
               </div>
             </div>
-          </a-tab-pane>
-        </a-tabs>
+          </a-tab-pane> -->
+        <!-- </a-tabs> -->
+
+        <div class="text-center">
+          <ul class="d-inline-block mt-5 tab-films nav-tab-movie">
+            <li class="active">
+              <a class="no-padding">
+                <h1 style="color: #272727" class="bold">TRAILER</h1>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="align-content-center align-items-center">
+          <div>
+            <iframe
+              v-if="embedUrl"
+              :src="embedUrl"
+              width="100%"
+              frameborder="0"
+              allowfullscreen
+              style="height: 60vh"
+            ></iframe>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="w-100 h-screen" v-else></div>
   </div>
 </template>
 
@@ -190,9 +211,9 @@ const props = defineProps({
   movie: {
     required: true,
   },
-  showtime: {
-    required: true,
-  },
+  // showtime: {
+  //   required: true,
+  // },
 });
 
 const activeKey = ref("1");
@@ -355,7 +376,7 @@ onMounted(() => {
 .custom-container {
   max-width: 56rem;
   height: 473px;
-  display: flex;         /* Thêm để hỗ trợ gap */
+  display: flex; /* Thêm để hỗ trợ gap */
   gap: 40px;
 }
 
@@ -386,11 +407,19 @@ a {
 .object-cover {
   object-fit: cover;
 }
-img, video {
+img,
+video {
   max-width: 100%;
   height: auto;
 }
-audio, canvas, embed, iframe, img, object, svg, video {
+audio,
+canvas,
+embed,
+iframe,
+img,
+object,
+svg,
+video {
   display: block;
 }
 
@@ -492,5 +521,28 @@ h3 {
 }
 .flex-wrap {
   flex-wrap: wrap;
+}
+
+.nav-tab-movie::after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+.tab-films > li.active {
+  border-bottom: 4px solid transparent;
+  border-image: linear-gradient(to right, #39adf0 0%, #075fa3 100%);
+  border-image-slice: 1;
+  border-width: 0px 0px 4px 0px;
+}
+.tab-films li {
+  position: relative;
+  display: block;
+}
+
+.tab-films > li.active > a {
+  background-color: transparent !important;
+  color: #03599d !important;
+  text-decoration: none;
 }
 </style>
