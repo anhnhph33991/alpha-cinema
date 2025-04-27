@@ -297,6 +297,7 @@
                                   <th scope="col"></th>
                                   <th scope="col">Tên combo</th>
                                   <th scope="col">Mô tả</th>
+                                  <th scope="col">Giá bán</th>
                                   <th scope="col">Số lượng</th>
                                 </tr>
                               </thead>
@@ -319,6 +320,16 @@
                                   </td>
                                   <td class="combo-description">
                                     {{ combo.description }}
+                                  </td>
+                                  <td>
+                                    {{
+                                      convertPrice(
+                                        combo.price_sale > 0
+                                          ? combo.price_sale
+                                          : combo.price
+                                      )
+                                    }}
+                                    đ
                                   </td>
                                   <td>
                                     <div class="d-flex justify-content-center">
@@ -359,6 +370,7 @@
                                   <th scope="col"></th>
                                   <th scope="col">Tên đồ ăn</th>
                                   <th scope="col">Mô tả</th>
+                                  <th scope="col">Giá bán</th>
                                   <th scope="col">Số lượng</th>
                                 </tr>
                               </thead>
@@ -381,6 +393,10 @@
                                   </td>
                                   <td class="combo-description">
                                     {{ combo.description }}
+                                  </td>
+                                  <td>
+                                    {{ convertPrice(combo.price) }}
+                                    đ
                                   </td>
                                   <td>
                                     <div class="d-flex justify-content-center">
@@ -2163,6 +2179,17 @@ watch(
   },
   { deep: true }
 );
+
+/**
+ * format giá tiền
+ */
+const convertPrice = (price) => {
+  const num = Number(price);
+  if (!isNaN(num)) {
+    return num.toLocaleString("vi-VN");
+  }
+  return "0";
+};
 
 onMounted(() => {
   promiseAllApi();
