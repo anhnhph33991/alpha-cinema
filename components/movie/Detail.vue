@@ -311,7 +311,6 @@ const isUpcomingMovie = computed(() => {
 onMounted(() => {
   console.log(props.slug);
   console.log(props.movie);
-  console.log(props.showtime);
 });
 </script>
 
