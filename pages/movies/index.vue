@@ -1,32 +1,38 @@
 <template>
   <div class="movie-index-section">
     <div>
-      <div class="container" v-if="movieStore.movies.data">
+      <div class="container">
         <ClientOnly>
           <a-tabs v-model="tabActive" :default-active-key="'2'">
             <a-tab-pane key="1" tab="Phim Sắp Chiếu">
-              <!-- <MovieList :movies="[]" /> -->
-              <MovieList :movies="movieIsUpcoming" :btnBuy="false" />
+              <MovieList
+                :movies="movieStore.moviesComingSoon?.data || []"
+                :btnBuy="false"
+              />
             </a-tab-pane>
             <a-tab-pane key="2" tab="Phim Đang Chiếu">
-              <!-- <MovieList :movies="movieStore.movies?.data || []" /> -->
-              <MovieList :movies="movieIsShowing || []" :btnBuy="true" />
+              <MovieList
+                :movies="movieStore.moviesNowShowing?.data || []"
+                :btnBuy="true"
+              />
             </a-tab-pane>
             <a-tab-pane key="3" tab="Suất Chiếu Đặc Biệt">
-              <MovieList :movies="movieIsSpecial" :btnBuy="true" />
-              <!-- <MovieList :movies="[]" /> -->
+              <MovieTabSpecial
+                :movies="movieStore.moviesSpecial?.data || []"
+                :btnBuy="true"
+              />
             </a-tab-pane>
           </a-tabs>
         </ClientOnly>
       </div>
 
-      <div class="container" v-else>
+      <!-- <div class="container" v-else>
         <div
           class="h-screen d-flex justify-content-center align-content-center align-items-center"
         >
           <a-spin />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -44,7 +50,11 @@ watch(
   async (newData, oldData) => {
     if (newData) {
       console.log("new data");
-      await movieStore.fetchMovies(newData.branch_id, newData.cinema_id);
+      // await movieStore.fetchMovies(newData.branch_id, newData.cinema_id);
+      fetchAllMovies(
+        selectCinemaBranch.value?.branch_id,
+        selectCinemaBranch.value?.cinema_id
+      );
     }
   },
   { deep: true }
@@ -118,11 +128,31 @@ const movieIsSpecial = computed(() => {
     }) || []
   );
 });
+
+/**
+ * Lấy danh sách phim theo branch_id và cinema_id
+ *
+ * @param branchId - id của chi nhánh
+ * @param cinemaId - id của rạp chiếu
+ */
+function fetchAllMovies(branchId = null, cinemaId = null) {
+  return Promise.all([
+    movieStore.fetchMoviesComingSoon(branchId, cinemaId),
+    movieStore.fetchMoviesNowShowing(branchId, cinemaId),
+    movieStore.fetchMoviesSpecial(branchId, cinemaId),
+  ]);
+}
+
 onMounted(async () => {
-  movieStore.fetchMovies(
+  fetchAllMovies(
     selectCinemaBranch.value?.branch_id,
     selectCinemaBranch.value?.cinema_id
   );
+
+  // movieStore.fetchMovies(
+  //   selectCinemaBranch.value?.branch_id,
+  //   selectCinemaBranch.value?.cinema_id
+  // );
 });
 </script>
 
