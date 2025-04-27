@@ -482,19 +482,34 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr
-                                    v-for="voucher in voucherStore.vouchers"
-                                    :key="voucher.voucher_id"
+                                  <template
+                                    v-if="voucherStore.vouchers.length > 0"
                                   >
-                                    <template v-if="voucher.usage_count > 0">
-                                      <td>
-                                        {{ voucher.code }}
-                                        (X{{ voucher.usage_count }})
+                                    <tr
+                                      v-for="voucher in voucherStore.vouchers"
+                                      :key="voucher.voucher_id"
+                                    >
+                                      <template v-if="voucher.usage_count > 0">
+                                        <td>
+                                          {{ voucher.code }}
+                                          (X{{ voucher.usage_count }})
+                                        </td>
+                                        <td>{{ voucher.title }}</td>
+                                        <td>{{ voucher.end_date_time }}</td>
+                                      </template>
+                                    </tr>
+                                  </template>
+
+                                  <template v-else>
+                                    <tr>
+                                      <td
+                                        class="text-center text-danger"
+                                        colspan="3"
+                                      >
+                                        Chưa có voucher nào
                                       </td>
-                                      <td>{{ voucher.title }}</td>
-                                      <td>{{ voucher.end_date_time }}</td>
-                                    </template>
-                                  </tr>
+                                    </tr>
+                                  </template>
                                 </tbody>
                               </table>
                             </div>
@@ -535,6 +550,7 @@
                                   placeholder=""
                                   v-model.trim="useVoucher.point"
                                   :max="authStore.user.point"
+                                  @input="validateMaxValuePoint"
                                 />
                               </div>
 
@@ -2053,6 +2069,26 @@ const handleApplyPoint = () => {
   // console.log(priceAll.value.discountSeatAfter);
 
   // priceAll.value.discountAmount = discountAmount.value
+};
+
+/**
+ * Chỉ cho nhập tối đa 100.000đ
+ */
+const validateMaxValuePoint = () => {
+  const applyPoints = Number(useVoucher.point) || 0;
+
+  if (applyPoints < 0) {
+    toast.error("Không được nhập âm");
+    useVoucher.point = 0;
+    return;
+  }
+
+  if (applyPoints > 999999999) {
+    useVoucher.point = 0;
+    return;
+  }
+
+  // if(useVoucher.point > )
 };
 
 /**
