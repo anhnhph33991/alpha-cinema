@@ -8,7 +8,7 @@
           <a-result
             status="success"
             title="Cảm ơn bạn đã mua hàng"
-            sub-title="Chúc bạn có một trả nghiệm đáng nhớ"
+            sub-title="Chúc bạn có một trải nghiệm đáng nhớ"
           >
             <template #extra>
               <a
