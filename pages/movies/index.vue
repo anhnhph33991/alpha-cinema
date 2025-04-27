@@ -51,10 +51,7 @@ watch(
     if (newData) {
       console.log("new data");
       // await movieStore.fetchMovies(newData.branch_id, newData.cinema_id);
-      fetchAllMovies(
-        selectCinemaBranch.value?.branch_id,
-        selectCinemaBranch.value?.cinema_id
-      );
+      fetchAllMovies(newData.branch_id, newData.cinema_id);
     }
   },
   { deep: true }
