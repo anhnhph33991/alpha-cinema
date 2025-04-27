@@ -206,6 +206,19 @@ onMounted(async () => {
     selectCinemaBranch.value?.cinema_id
   );
 
+  // movieStore.fetchMoviesComingSoon(
+  //   selectCinemaBranch.value?.branch_id,
+  //   selectCinemaBranch.value?.cinema_id
+  // );
+  // movieStore.fetchMoviesNowShowing(
+  //   selectCinemaBranch.value?.branch_id,
+  //   selectCinemaBranch.value?.cinema_id
+  // );
+  // movieStore.fetchMoviesSpecial(
+  //   selectCinemaBranch.value?.branch_id,
+  //   selectCinemaBranch.value?.cinema_id
+  // );
+
   if (selectCinemaBranch.value) {
     openModal.value = false;
     console.log(selectCinemaBranch.value);
@@ -213,7 +226,7 @@ onMounted(async () => {
   }
 
   openModal.value = true;
-  branchStore.listBranch();
+  await branchStore.listBranch();
   optionBranch.value = branchStore.convertOptionBranch();
 });
 
