@@ -1,12 +1,27 @@
-@import url('https://rsms.me/inter/inter.css');
+/* @import url('https://rsms.me/inter/inter.css'); */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Sawarabi+Mincho&family=Shippori+Mincho&display=swap');
 
 :root {
-    font-family: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+    /* font-family: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; */
+    font-family: 'Oswald', 'Sawarabi Mincho', 'Shippori Mincho', sans-serif;
+}
+
+.fst-oswald {
+    font-family: 'Oswald', sans-serif;
+}
+
+.fst-sawarabi {
+    font-family: 'Sawarabi Mincho', sans-serif;
+}
+
+.fst-shippori {
+    font-family: 'Shippori Mincho', sans-serif;
 }
 
 body {
     font-feature-settings: "cv03", "cv04", "cv11";
-    font-family: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+    /* font-family: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; */
+    font-family: 'Oswald', 'Sawarabi Mincho', 'Shippori Mincho', sans-serif;
 }
 
 .main-section {

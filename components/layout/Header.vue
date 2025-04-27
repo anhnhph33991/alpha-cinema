@@ -7,7 +7,11 @@
             <ul class="al-pull-right al-list-inline">
               <template v-if="authStore.isLogin">
                 <li>
-                  <NuxtLink :to="{ name: 'account' }">
+                  <NuxtLink
+                    :to="{ name: 'account' }"
+                    class="fst-oswald"
+                    style="font-size: 14px"
+                  >
                     Xin chào: {{ authStore.user.name }}
                   </NuxtLink>
                 </li>
@@ -78,7 +82,10 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="navbar-collapse" :class="{ show: isMenuOpen }">
+        <div
+          class="navbar-collapse justify-content-end"
+          :class="{ show: isMenuOpen }"
+        >
           <div>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 al-pull-right">
               <li
@@ -237,7 +244,8 @@ onMounted(async () => {
   padding: 0 10px;
   font-weight: bold;
   text-transform: uppercase;
-  font-family: "PT Sans Narrow", Arial, sans-serif;
+  /* font-family: "PT Sans Narrow", Arial, sans-serif; */
+  font-family: "Oswald", sans-serif;
   font-size: large;
 }
 
@@ -354,8 +362,9 @@ onMounted(async () => {
 .navbar-nav .nav-link {
   font-weight: bold;
   text-transform: uppercase;
-  font-family: "PT Sans Narrow", Arial, sans-serif;
-  margin: 0 10px;
+  /* font-family: "PT Sans Narrow", Arial, sans-serif; */
+  font-family: "Oswald", sans-serif;
+  /* margin: 0 10px; */
 }
 
 /* Responsive */

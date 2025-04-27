@@ -38,35 +38,37 @@
           <div class="col-lg-12 col-md-12 col-sm-8 col-xs-8">
             <div class="film-info film-xs-info">
               <h3
-                class="text-sm-left text-xs-left bold margin-top-5 font-sm-18 font-xs-14"
+                class="text-sm-left text-xs-left bold margin-top-5 font-sm-18 font-xs-14 fst-oswald"
                 style="max-height: 30px; min-height: 30px"
               >
                 <NuxtLink
                   :to="{ name: 'movies-slug', params: { slug: movie.slug } }"
                 >
-                  {{ limitText(movie.name, 20) }}
+                  {{ limitText(movie.name, 30) }}
                 </NuxtLink>
               </h3>
               <ul
                 class="list-unstyled font-lg font-family-san font-sm-15 font-xs-14"
               >
                 <li style="max-height: 50px">
-                  <span class="bold opacity-08"> Thể loại:</span>
-                  <!-- {{ movie.category }} -->
+                  <span class="bold opacity-08 fst-oswald"> Thể loại:</span>
                   {{
                     movie.movie_genres
                       ? movie.movie_genres.map((item) => item).join(", ")
-                      : "Chưa đặt"
+                      : "Chưa có"
                   }}
                 </li>
                 <li>
-                  <span class="bold opacity-08"> Thời lượng:</span>
+                  <span class="bold opacity-08 fst-oswald"> Thời lượng:</span>
                   {{ movie.duration }} phút
                 </li>
               </ul>
             </div>
 
-            <div class="text-center padding-bottom-30" style="min-height: 85px">
+            <div
+              class="text-center padding-bottom-30 fst-oswald"
+              style="min-height: 85px"
+            >
               <a
                 style="display: block"
                 class="btn btn-2 btn-mua-ve2 fancybox-fast-view"
@@ -112,14 +114,24 @@
                     >
                       <h6 class="room-title">{{ roomName }}</h6>
                       <div class="d-flex gap-1 al-tab-list flex-wrap">
-                        <a-button
+                        <!-- <a-button
                           type="primary"
                           v-for="(showtime, index) in items"
                           :key="index"
                           @click="navigateShowTime(showtime)"
                         >
                           {{ formatTime(showtime.start_time) }}
-                        </a-button>
+                        </a-button> -->
+
+                        <a
+                          style="display: block"
+                          class="al-btn btn-2 btn-mua-ve2 fancybox-fast-view"
+                          v-for="(showtime, index) in items"
+                          :key="index"
+                          @click="navigateShowTime(showtime)"
+                        >
+                          {{ formatTime(showtime.start_time) }}
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -271,6 +283,17 @@ const formattedImage = (image) => {
   color: black;
   background-color: lightgray;
   --bs-btn-border-color: none;
+}
+
+.tab-content .al-btn {
+  padding: 5px 25px;
+  --bs-btn-border-radius: 0px;
+  color: white;
+  background-color: lightgray;
+  --bs-btn-border-color: none;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 .opacity-08 {
