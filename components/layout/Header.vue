@@ -93,11 +93,15 @@
                 :key="index"
                 class="nav-item"
               >
-                <NuxtLink
+                <!-- <NuxtLink
                   :to="item.link"
                   exact-active-class="active"
                   class="nav-link al-nav-link"
                 >
+                  {{ item.title }}
+                </NuxtLink> -->
+
+                <NuxtLink :to="item.link" class="nav-link al-nav-link">
                   {{ item.title }}
                 </NuxtLink>
               </li>

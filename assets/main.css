@@ -72,6 +72,12 @@ body {
     color: #333;
 }
 
+.al-nav-link:hover {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: #337ab7;
+}
+
 :where(.css-dev-only-do-not-override-1p3hq3p).ant-row {
     justify-content: center;
 }
