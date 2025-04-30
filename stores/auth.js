@@ -65,6 +65,11 @@ export const useAuthStore = defineStore(
         toast.success("Đăng nhập thành công");
         router.push({ name: "index" });
       } catch (error) {
+        if (error && error.code == 401) {
+          toast.warning(`${error.message}`);
+          return;
+        }
+
         errors.sigin = error;
         console.log(errors);
         isLoading.value = false;

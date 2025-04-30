@@ -56,9 +56,15 @@
                 <label class="form-label">
                   <span class="text-danger">*</span> Email</label
                 >
-                <input type="email" v-model="form.email" placeholder="Nhập email"  class="form-control" />
-                <div v-if="emailError" class="text-danger fw-semibold">{{ emailError }}</div>
-                
+                <input
+                  type="email"
+                  v-model="form.email"
+                  placeholder="Nhập email"
+                  class="form-control"
+                />
+                <small v-if="emailError" class="text-danger">
+                  {{ emailError }}
+                </small>
               </div>
 
               <div class="col-md-12 mb-3">
@@ -67,7 +73,7 @@
                 >
                 <div class="input-group input-group-flat">
                   <input
-                    :type="showPassword ? 'text' : 'password'" 
+                    :type="showPassword ? 'text' : 'password'"
                     class="form-control"
                     placeholder="Mật khẩu"
                     v-model="form.password"
@@ -107,7 +113,9 @@
                 </div>
               </div>
 
-              <div v-if="passwordError" class="text-danger fw-semibold">{{ passwordError }}</div>
+              <small v-if="passwordError" class="text-danger">
+                {{ passwordError }}
+              </small>
             </div>
 
             <div class="form-footer">
@@ -164,44 +172,44 @@ const form = ref({
 
 const errors = ref({
   email: "",
-  password: ""
-})
+  password: "",
+});
 
 const showPassword = ref(false);
 
-const showPwd = () =>{
+const showPwd = () => {
   showPassword.value = !showPassword.value;
-}
+};
 
-const isValidEmail = (email)=>{
+const isValidEmail = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email)
-}
+  return regex.test(email);
+};
 
 const validateForm = () => {
-  errors.value.email = ""
-  errors.value.password = ""
+  errors.value.email = "";
+  errors.value.password = "";
 
-  let isValid = true
+  let isValid = true;
 
   if (!form.value.email) {
-    errors.value.email = "Vui lòng nhập email."
-    isValid = false
+    errors.value.email = "Vui lòng nhập email.";
+    isValid = false;
   } else if (!isValidEmail(form.value.email)) {
-    errors.value.email = "Email không hợp lệ."
-    isValid = false
+    errors.value.email = "Email không hợp lệ.";
+    isValid = false;
   }
 
   if (!form.value.password) {
-    errors.value.password = "Vui lòng nhập mật khẩu."
-    isValid = false
+    errors.value.password = "Vui lòng nhập mật khẩu.";
+    isValid = false;
   } else if (form.value.password.length < 8) {
-    errors.value.password = "Mật khẩu phải có ít nhất 8 ký tự."
-    isValid = false
+    errors.value.password = "Mật khẩu phải có ít nhất 8 ký tự.";
+    isValid = false;
   }
 
-  return isValid
-}
+  return isValid;
+};
 
 const emailError = computed(() => {
   return errors.value.email || authStore.errors?.sigin?.email || "";
@@ -212,17 +220,23 @@ const passwordError = computed(() => {
 });
 
 // Xóa lỗi server khi người dùng thay đổi input
-watch(() => form.value.email, () => {
-  if (authStore.errors?.sigin?.email) {
-    authStore.errors.sigin.email = "";
+watch(
+  () => form.value.email,
+  () => {
+    if (authStore.errors?.sigin?.email) {
+      authStore.errors.sigin.email = "";
+    }
   }
-});
+);
 
-watch(() => form.value.password, () => {
-  if (authStore.errors?.sigin?.password) {
-    authStore.errors.sigin.password = "";
+watch(
+  () => form.value.password,
+  () => {
+    if (authStore.errors?.sigin?.password) {
+      authStore.errors.sigin.password = "";
+    }
   }
-});
+);
 
 // watch(
 //   () => authStore.user,
@@ -250,8 +264,7 @@ const handleCancelVerifyEmail = () => {
   openModalVerifyEmail.value = false;
 };
 
-const handleSubmitVerifyEmail = () =>{
-}
+const handleSubmitVerifyEmail = () => {};
 </script>
 
 <style scoped>
