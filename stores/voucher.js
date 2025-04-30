@@ -1,3 +1,4 @@
+import { toast } from "vue-sonner";
 import { fetchVouchersService } from "~/services/voucher";
 
 export const useVoucherStore = defineStore("voucher", () => {
@@ -31,5 +32,23 @@ export const useVoucherStore = defineStore("voucher", () => {
     }
   };
 
-  return { vouchers, fetchVouchers };
+  const listenToVoucherBroadcast = (userId) => {
+    const echo = useEcho();
+    const channel = echo.channel("voucher");
+
+    channel.listen("RealTimeVouCherEvent", (data) => {
+      if (data.user_id == userId) {
+        if (process.client) {
+          const audio = new Audio("/audio/tingting.mp3");
+          audio.play().catch((error) => {
+            console.error("Error playing sound:", error);
+          });
+        }
+
+        toast.success(`Bạn vừa nhận được voucher: ${data.title}`);
+      }
+    });
+  };
+
+  return { vouchers, fetchVouchers, listenToVoucherBroadcast };
 });
