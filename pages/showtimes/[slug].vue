@@ -1490,25 +1490,43 @@ const handleNextOrder = async () => {
     // console.log("voucher");
     // console.log(useVoucher.code);
 
-    if (useVoucher.point <= 0 || useVoucher.point == "") {
-      // console.log("change point after buy");
+    // if (useVoucher.point <= 0 || useVoucher.point == "") {
+    //   // console.log("change point after buy");
 
-      // useVoucher.point_after = authStore?.user.point;
+    //   // useVoucher.point_after = authStore?.user.point;
 
-      useVoucher.point_after =
-        Number(authStore.user.point) - Number(useVoucher.point);
+    //   useVoucher.point_after =
+    //     Number(authStore.user.point) - Number(useVoucher.point);
 
-      const feedbackPercentage =
-        Number(rankStore.rankByUser.feedback_percentage) || 0;
-      const payableAmount = Number(priceAll.value.payableAmount);
+    //   const feedbackPercentage =
+    //     Number(rankStore.rankByUser.feedback_percentage) || 0;
+    //   // const payableAmount = Number(priceAll.value.payableAmount);
+    //   const payableAmount = Number(payableWithTax.value);
 
-      // Đảm bảo các giá trị là số trước khi nhân chia
-      const pointsToAdd = Math.floor(
-        (feedbackPercentage / 100) * payableAmount
-      );
+    //   // Đảm bảo các giá trị là số trước khi nhân chia
+    //   const pointsToAdd = Math.floor(
+    //     (feedbackPercentage / 100) * payableAmount
+    //   );
 
-      useVoucher.point_after += pointsToAdd;
-    }
+    //   useVoucher.point_after += pointsToAdd;
+    // }
+
+    useVoucher.point_after =
+      Number(authStore.user.point) - Number(useVoucher.point);
+
+    const feedbackPercentage =
+      Number(rankStore.rankByUser.feedback_percentage) || 0;
+    // const payableAmount = Number(priceAll.value.payableAmount);
+    const payableAmount = Number(payableWithTax.value);
+
+    // Đảm bảo các giá trị là số trước khi nhân chia
+    const pointsToAdd = Math.floor((feedbackPercentage / 100) * payableAmount);
+
+    useVoucher.point_after += pointsToAdd;
+
+    // console.log("point ở nút mua");
+    // console.log(useVoucher.point_after);
+    // return;
 
     paymentStore.paymentMomo(
       selectedPayment.value,
@@ -2063,17 +2081,19 @@ const handleApplyPoint = () => {
   //   (feedbackPercentage / 100) * priceAll.value.payableAmount
   // );
 
-  useVoucher.point_after =
-    Number(authStore.user.point) - Number(useVoucher.point);
+  // useVoucher.point_after =
+  //   Number(authStore.user.point) - Number(useVoucher.point);
 
-  const feedbackPercentage =
-    Number(rankStore.rankByUser.feedback_percentage) || 0;
-  const payableAmount = Number(priceAll.value.payableAmount);
+  // const feedbackPercentage =
+  //   Number(rankStore.rankByUser.feedback_percentage) || 0;
+  // const payableAmount = Number(payableWithTax.value);
 
-  // Đảm bảo các giá trị là số trước khi nhân chia
-  const pointsToAdd = Math.floor((feedbackPercentage / 100) * payableAmount);
+  // const pointsToAdd = Math.floor((feedbackPercentage / 100) * payableAmount);
 
-  useVoucher.point_after += pointsToAdd;
+  // useVoucher.point_after += pointsToAdd;
+
+  // console.log("point ở đăng ký");
+  // console.log(useVoucher.point_after);
 
   // console.log(feedbackPercentage);
 
