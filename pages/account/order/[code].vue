@@ -47,8 +47,7 @@
                 <img
                   :src="formatImage(ticketStore.ticket?.movie?.img_thumbnail)"
                   alt="phim hay"
-                  style="width: 100%; height: 100%"
-                  class="mb-3"
+                  class="mb-3 w-100 h-75"
                 />
               </div>
               <div class="col-lg-8">
@@ -57,7 +56,7 @@
                     <div class="col-lg-12">
                       <div class="ticket-info-title text-center">
                         <h6
-                          class="mb-4 fs-4 fw-bold"
+                          class="mb-4 fs-4 fw-bold text-start"
                           style="color: rgb(81, 86, 190)"
                         >
                           {{ ticketStore.ticket?.movie?.name }}
@@ -65,30 +64,29 @@
                       </div>
                     </div>
                     <div class="col-3 text-16">Lịch chiếu</div>
-                    <div class="col-9 text-start text-16 fw-medium">
+                    <div class="col-9 text-start text-16 fw-medium mb-2">
                       {{ ticketStore.ticket?.showtime?.start_time }} -
                       {{ ticketStore.ticket?.showtime?.end_time }} ({{
                         ticketStore.ticket?.showtime?.date
                       }})
                     </div>
-
                     <div class="col-3 text-16">Thời lượng</div>
-                    <div class="col-9 text-start text-16 fw-medium">
+                    <div class="col-9 text-start text-16 fw-medium mb-2">
                       {{ ticketStore.ticket?.movie?.duration }} phút
                     </div>
 
                     <div class="col-3 text-16">Định dạng</div>
-                    <div class="col-9 text-start text-16 fw-medium">
+                    <div class="col-9 text-start text-16 fw-medium mb-2">
                       {{ ticketStore.ticket?.movie?.movie_versions[0] }}
                     </div>
 
                     <div class="col-3 text-16">Phòng chiếu</div>
-                    <div class="col-9 text-start text-16 fw-medium">
+                    <div class="col-9 text-start text-16 fw-medium mb-2">
                       {{ ticketStore.ticket?.room?.name }}
                     </div>
 
                     <div class="col-3 text-16">Thể loại</div>
-                    <div class="col-9 text-start text-16 fw-medium">
+                    <div class="col-9 text-start text-16 fw-medium mb-2">
                       <span
                         v-for="(genres, index) in ticketStore.ticket?.movie
                           ?.movie_genres"
@@ -114,7 +112,7 @@
                     </div>
 
                     <div class="col-3 text-16">Ghế ngồi</div>
-                    <div class="col-9 text-start text-16 fw-medium">
+                    <div class="col-9 text-start text-16 fw-medium mb-2">
                       <div class="row">
                         <span
                           class="col-2 border border-secondary-subtle rouder-3 mx-1 mb-2 text-center"
@@ -128,7 +126,7 @@
                   </div>
                 </div>
               </div>
-              <hr class="mt-4" v-if="isHasComboOrFood" />
+              <!-- <hr class="mt-4" v-if="isHasComboOrFood" /> -->
               <div class="col-xl-12" v-if="isHasComboOrFood">
                 <div class="fs-5 fw-semibold mb-2">Đồ ăn</div>
 

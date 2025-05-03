@@ -5,6 +5,7 @@
       <table class="table table-bordered">
         <thead class="table-light">
           <tr>
+            <th class="text-center">Ảnh Phim</th>
             <th class="text-center">MÃ HÓA ĐƠN</th>
             <th class="text-center">PHIM</th>
             <th class="text-center">RẠP CHIẾU</th>
@@ -21,6 +22,18 @@
             :key="ticket.id"
             class="text-center"
           >
+            <td class="align-content-center">
+              <img
+                :src="
+                  ticket.movie?.img_thumbnail
+                    ? formatImage(ticket.movie?.img_thumbnail)
+                    : 'https://static.thenounproject.com/png/4595376-200.png'
+                "
+                alt="Ảnh phim"
+                width="50"
+                height="50"
+              />
+            </td>
             <td class="align-content-center">
               {{ ticket.code }}
             </td>
@@ -79,6 +92,8 @@ import { onMounted } from "vue";
 import { useTicketStore } from "@/stores/ticket";
 import { useAuthStore } from "@/stores/auth";
 
+const config = useRuntimeConfig();
+
 function formatVietnamTime(utcString) {
   const date = new Date(utcString);
 
@@ -97,6 +112,10 @@ function formatVietnamTime(utcString) {
 
 const ticketStore = useTicketStore();
 const authStore = useAuthStore();
+
+const formatImage = (image) => {
+  return `${config.public.BackEndUrl}/storage/${image}`;
+};
 
 onMounted(() => {
   if (authStore.isLogin) {
