@@ -3107,4 +3107,11 @@ h3,
     display: block;
   }
 }
+
+.notenote-text {
+  display: block;
+  margin-top: 8px;
+  line-height: 1.6;
+  color: #000;
+}
 </style>
