@@ -857,7 +857,7 @@
                   />
 
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san"
                   >
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
@@ -911,7 +911,7 @@
                         </div>
                       </div>
                     </li>
-                    <li class="padding-bottom-10 padding-top-10">
+                    <li class="padding-top-10">
                       <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                           <Armchair :size="18" />
@@ -928,7 +928,7 @@
                 </div>
 
                 <div
-                  class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center"
+                  class="col-lg-12 sidebar-footer mb-3 text-center gap-2 d-flex justify-content-center"
                 >
                   <template v-if="!isChoosingScreen">
                     <button
@@ -987,7 +987,7 @@
 
                 <div class="col-lg-12">
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san"
                   >
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
@@ -1025,7 +1025,7 @@
                   />
 
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san"
                   >
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
