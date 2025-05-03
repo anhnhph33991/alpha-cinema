@@ -15,17 +15,15 @@
                             >💡 Mẹo nhỏ:</span
                           ><br />
                           <span class="notenote-text text-start">
-                            • Bạn
-                            <strong>
-                              không được bỏ trống ghế ngoài cùng
-                            </strong>
+                            - Bạn
+                            <span> không được bỏ trống ghế ngoài cùng </span>
                             của mỗi dãy.
                             <br />
-                            •
-                            <strong>Không để dư 1 ghế trống giữa</strong>
+                            -
+                            <span>Không để dư 1 ghế trống giữa</span>
                             các ghế bạn đã chọn. <br />
-                            •
-                            <strong>Tối đa chọn 10 ghế</strong>
+                            -
+                            <span>Tối đa chọn 10 ghế</span>
                             mỗi lần đặt.
                           </span>
                         </div>
@@ -2377,7 +2375,7 @@ onUnmounted(() => {
 }
 
 .blinking-text {
-  font-weight: bold;
+  /* font-weight: bold; */
   color: red;
 }
 
