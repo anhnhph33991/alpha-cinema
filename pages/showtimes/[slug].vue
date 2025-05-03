@@ -10,8 +10,25 @@
                   <div class="row">
                     <div class="blinking-box mb-3">
                       <span class="blinking-text">
-                        Theo quy định của cục điện ảnh, phim này không dành cho
-                        khán giả dưới 16 tuổi.
+                        <div class="notenote-box text-center">
+                          <span class="notenote-title text-start"
+                            >💡 Mẹo nhỏ:</span
+                          ><br />
+                          <span class="notenote-text text-start">
+                            • Bạn
+                            <strong>
+                              không được bỏ trống ghế ngoài cùng
+                            </strong>
+                            của mỗi dãy.
+                            <br />
+                            •
+                            <strong>Không để dư 1 ghế trống giữa</strong>
+                            các ghế bạn đã chọn. <br />
+                            •
+                            <strong>Tối đa chọn 10 ghế</strong>
+                            mỗi lần đặt.
+                          </span>
+                        </div>
                       </span>
                     </div>
 
@@ -794,7 +811,7 @@
 
                 <div class="col-lg-12">
                   <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 padding-bottom-10 font-md font-family-san"
+                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san"
                   >
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
@@ -2316,13 +2333,7 @@ onUnmounted(() => {
 }
 
 /* code css new */
-.blinking-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60px;
-  width: 100%;
-}
+
 .count-mix {
   margin-top: 10px;
 }
@@ -2341,7 +2352,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60px;
+  height: 120px;
   width: 100%;
 
   animation: blink-bg 2s infinite;
@@ -2432,7 +2443,7 @@ onUnmounted(() => {
 }
 .sidebar {
   position: sticky;
-  top: 100px; /* Điều chỉnh khoảng cách từ đỉnh, lớn hơn chiều cao của menu (giả sử menu cao 80px) */
+  top: 65px; /* Điều chỉnh khoảng cách từ đỉnh, lớn hơn chiều cao của menu (giả sử menu cao 80px) */
   height: fit-content; /* Đảm bảo sidebar không vượt quá nội dung của nó */
   z-index: 100; /* Đảm bảo sidebar không bị menu đè (menu thường có z-index cao) */
   transition: all 0.3s ease-in-out; /* Hiệu ứng mượt mà khi cuộn hoặc hover */

@@ -316,7 +316,7 @@ onMounted(async () => {
 }
 .al-pre-header {
   background-color: #f8f9fa;
-  padding: 5px 0;
+  /* padding: 5px 0; */
   font-size: 14px;
 }
 
@@ -346,7 +346,7 @@ onMounted(async () => {
 
 .al-header-section {
   background: #fff;
-  padding: 10px 0;
+  padding: 0px 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
