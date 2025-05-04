@@ -10,7 +10,7 @@
             <h2 class="title">Đăng Ký</h2>
           </div>
           <!-- Form bắt đầu -->
-          <Form :validation-schema="validationSchema" @submit="onSubmit">
+          <!-- <Form :validation-schema="validationSchema" @submit="onSubmit">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label">
@@ -41,7 +41,7 @@
                   v-model="form.email"
                   autocomplete="off"
                 />
-                <!-- errors.resgister -->
+
                 <div v-if="authStore.errors?.resgister?.errors?.email?.[0]" class="text-danger error-message">
                   {{ authStore.errors?.resgister?.errors?.email[0] }} 
                 </div>
@@ -109,11 +109,6 @@
               <div class="col-md-6 mb-3">
                 <label class="form-label"> Giới tính</label>
                 <div class="input-group input-group-flat">
-                  <!-- <select class="form-control" v-model="form.gender">
-                    <option value="" disabled selected>Chọn giới tính</option>
-                    <option value="0">Nam</option>
-                    <option value="1">Nữ</option>
-                  </select> -->
 
                   <Field name="gender" v-model="form.gender" v-slot="{ field, errors }">
                     <select v-bind="field" class="form-control" >
@@ -163,7 +158,168 @@
                 Đăng Ký
               </button>
             </div>
-          </Form>
+          </Form> -->
+
+          <form @submit.prevent="onSubmit">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">
+                  <span class="text-danger">*</span> Họ tên
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Họ và tên"
+                  v-model="form.name"
+                  @input="clearFieldError('name')"
+                />
+                <div
+                  v-if="authStore.errors?.resgister?.errors?.name?.[0]"
+                  class="text-danger error-message"
+                >
+                  {{ authStore.errors.resgister.errors.name[0] }}
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">
+                  <span class="text-danger">*</span> Email
+                </label>
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Nhập email"
+                  v-model="form.email"
+                  @input="clearFieldError('email')"
+                />
+                <div
+                  v-if="authStore.errors?.resgister?.errors?.email?.[0]"
+                  class="text-danger error-message"
+                >
+                  {{ authStore.errors.resgister.errors.email[0] }}
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">
+                  <span class="text-danger">*</span> Mật khẩu
+                </label>
+                <div class="input-group input-group-flat">
+                  <input
+                    :type="showPassword ? 'text' : 'password'"
+                    class="form-control"
+                    placeholder="Mật khẩu"
+                    v-model="form.password"
+                    @input="clearFieldError('password')"
+                  />
+                  <span
+                    class="input-group-text"
+                    @click="togglePasswordVisibility"
+                  >
+                    <a
+                      class="link-secondary"
+                      data-bs-toggle="tooltip"
+                      aria-label="Show password"
+                    >
+                      <!-- Eye icon -->
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path
+                          stroke="none"
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        ></path>
+                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                        <path
+                          d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"
+                        ></path>
+                      </svg>
+                    </a>
+                  </span>
+                </div>
+                <div
+                  v-if="authStore.errors?.resgister?.errors?.password?.[0]"
+                  class="text-danger error-message"
+                >
+                  {{ authStore.errors.resgister.errors.password[0] }}
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label"> Giới tính </label>
+                <select
+                  class="form-control"
+                  v-model="form.gender"
+                  @change="clearFieldError('gender')"
+                >
+                  <option value="" disabled>Chọn giới tính</option>
+                  <option value="0">Nam</option>
+                  <option value="1">Nữ</option>
+                </select>
+                <div
+                  v-if="authStore.errors?.resgister?.errors?.gender?.[0]"
+                  class="text-danger error-message"
+                >
+                  {{ authStore.errors.resgister.errors.gender[0] }}
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label"> Ngày sinh </label>
+                <input
+                  type="date"
+                  class="form-control"
+                  v-model="form.birthday"
+                  @change="clearFieldError('birthday')"
+                />
+                <div
+                  v-if="authStore.errors?.resgister?.errors?.birthday?.[0]"
+                  class="text-danger error-message"
+                >
+                  {{ authStore.errors.resgister.errors.birthday[0] }}
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">
+                  <span class="text-danger">*</span> Số điện thoại
+                </label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  placeholder="Số điện thoại"
+                  v-model="form.phone"
+                  @input="clearFieldError('phone')"
+                />
+                <div
+                  v-if="authStore.errors?.resgister?.errors?.phone?.[0]"
+                  class="text-danger error-message"
+                >
+                  {{ authStore.errors.resgister.errors.phone[0] }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-footer">
+              <button type="submit" class="btn btn-danger btn-3">
+                Đăng Ký
+              </button>
+            </div>
+          </form>
 
           <!-- Form kết thúc -->
         </div>
@@ -196,40 +352,39 @@
     </div>
 
     <ClientOnly>
-        <a-modal
-          :open="openModalVerifyEmail"
-          width="1000px"
-          centered
-          @cancel="handleCancelVerifyEmail"
-          :footer="null"
-        >
-          <div class="d-flex justify-content-center align-items-center">
-            <a-card :bordered="false" style="width: 300px">
+      <a-modal
+        :open="openModalVerifyEmail"
+        width="1000px"
+        centered
+        @cancel="handleCancelVerifyEmail"
+        :footer="null"
+      >
+        <div class="d-flex justify-content-center align-items-center">
+          <a-card :bordered="false" style="width: 300px">
+            <div>
               <div>
-                <div>
-                  <h6 class="text-center fw-bold">Vui lòng kiểm tra email</h6>
-                </div>
-                <div style="padding: 3rem 0">
-                  <ClientOnly>
-                    <PrimeInputOtp
-                      v-model="form.otp"
-                      :length="6"
-                      class="justify-content-center"
-                    />
-                  </ClientOnly>
-                </div>
-
-                <div class="text-center">
-                  <a-button type="primary" @click="handleSubmitVerifyEmail"
-                    >Gửi</a-button
-                  >
-                </div>
+                <h6 class="text-center fw-bold">Vui lòng kiểm tra email</h6>
               </div>
-            </a-card>
-          </div>
-        </a-modal>
-      </ClientOnly>
+              <div style="padding: 3rem 0">
+                <ClientOnly>
+                  <PrimeInputOtp
+                    v-model="form.otp"
+                    :length="6"
+                    class="justify-content-center"
+                  />
+                </ClientOnly>
+              </div>
 
+              <div class="text-center">
+                <a-button type="primary" @click="handleSubmitVerifyEmail"
+                  >Gửi</a-button
+                >
+              </div>
+            </div>
+          </a-card>
+        </div>
+      </a-modal>
+    </ClientOnly>
   </div>
 </template>
 
@@ -256,17 +411,18 @@ const validationSchema = toTypedSchema(
     email: zod
       .string()
       .min(1, { message: "Vui lòng nhập email" })
-      .regex(
-        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        { message: "Email không hợp lệ" }
-      ), // Regex kiểm tra email
+      .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
+        message: "Email không hợp lệ",
+      }), // Regex kiểm tra email
     password: zod
       .string()
       .min(8, { message: "Mật khẩu phải có ít nhất 8 ký tự" }),
     phone: zod
       .string()
       .min(1, { message: "Vui lòng nhập số điện thoại" })
-      .regex(/^0\d{9}$/, { message: "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số" }), // Kiểm tra số điện thoại bắt đầu bằng 0 và có 10 chữ số
+      .regex(/^0\d{9}$/, {
+        message: "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số",
+      }), // Kiểm tra số điện thoại bắt đầu bằng 0 và có 10 chữ số
     gender: zod
       .enum(["0", "1"], { message: "Giới tính phải là Nam hoặc Nữ" })
       .refine((val) => val !== "", { message: "Bắt buộc chọn giới tính" }),
@@ -294,7 +450,6 @@ const validationSchema = toTypedSchema(
   })
 );
 
-
 // Thông tin form
 const form = ref({
   name: "",
@@ -307,24 +462,22 @@ const form = ref({
 
 // Hàm xử lý thay đổi tab hoặc điều hướng
 onBeforeRouteLeave((to, from) => {
-  if(authStore.errors?.resgister)
-  authStore.errors.resgister = null; // Xóa lỗi trong authStore
+  if (authStore.errors?.resgister) authStore.errors.resgister = null; // Xóa lỗi trong authStore
 });
 
 const emit = defineEmits(["submit-form"]);
 
-const onSubmit = async (value) => {
+const onSubmit = async () => {
   try {
     // await emit("submit-form", value);
-    await authStore.checkUserResgister(value); // Đợi hàm checkUserResgister hoàn tất
+    await authStore.checkUserResgister(form.value); // Đợi hàm checkUserResgister hoàn tất
     console.log(authStore.success.register);
-   
-    if(authStore.success?.register == 1){
-        setTimeout(() => {
+
+    if (authStore.success?.register == 1) {
+      setTimeout(() => {
         openModalVerifyEmail.value = true;
       }, 1000);
     }
-   
   } catch (error) {
     console.error("Lỗi:", error);
   }
@@ -340,6 +493,12 @@ const handleSubmitVerifyEmail = async () => {
     authStore.confirmEmail(form.value);
   } catch (error) {
     console.log(error);
+  }
+};
+
+const clearFieldError = (field) => {
+  if (authStore.errors?.resgister?.errors?.[field]) {
+    authStore.errors.resgister.errors[field] = null;
   }
 };
 </script>
