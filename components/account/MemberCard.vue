@@ -108,9 +108,9 @@ onMounted(() => {
             <td>{{ account.rank.name }}</td>
             <td>{{ new Date(account.user.created_at).toLocaleString("vi-VN") }}</td>
             <td>{{ account.user.total_amount.toLocaleString() }} VNĐ</td>
-            <td>{{ totalPointsUsed + account.user.point }} Điểm</td>
-            <td>{{ totalPointsUsed }} Điểm</td>
-            <td>{{ account.user.point }} Điểm</td>
+            <td>{{ (totalPointsUsed + account.user.point).toLocaleString() }} Điểm</td>
+            <td>{{ totalPointsUsed.toLocaleString() }} Điểm</td>
+            <td>{{ account.user.point.toLocaleString() }} Điểm</td>
           </tr>
         </tbody>
       </table>
