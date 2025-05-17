@@ -5,45 +5,23 @@
 
     <div class="mt-5 home-section">
       <ClientOnly>
-        <a-modal
-          :open="openModal"
-          width="1000px"
-          centered
-          @cancel="handleCancel"
-          :footer="null"
-        >
+        <a-modal :open="openModal" width="1000px" centered @cancel="handleCancel" :footer="null">
           <div>
             <div class="row p-3">
               <div class="col-lg-6 col-md-6">
                 <div class="mb-3 text-center">
                   <label class="form-label">Tỉnh/Thành Phố</label>
-                  <a-select
-                    :value="valueBranch"
-                    show-search
-                    placeholder="Chọn Tỉnh/Thành phố"
-                    style="width: 100%"
-                    :options="optionBranch"
-                    :filter-option="filterOptionBranch"
-                    @focus="handleFocus"
-                    @blur="handleBlur"
-                    @change="handleChangeBranch"
-                  ></a-select>
+                  <a-select :value="valueBranch" show-search placeholder="Chọn Tỉnh/Thành phố" style="width: 100%"
+                    :options="optionBranch" :filter-option="filterOptionBranch" @focus="handleFocus" @blur="handleBlur"
+                    @change="handleChangeBranch"></a-select>
                 </div>
               </div>
               <div class="col-lg-6 col-md-6">
                 <div class="mb-3 text-center">
                   <label class="form-label">Tên rạp</label>
-                  <a-select
-                    :value="valueCinema"
-                    show-search
-                    placeholder="Chọn rạp chiếu"
-                    style="width: 100%"
-                    :options="optionCinema"
-                    :filter-option="filterOptionCinema"
-                    @focus="handleFocus"
-                    @blur="handleBlur"
-                    @change="handleChangeCinema"
-                  ></a-select>
+                  <a-select :value="valueCinema" show-search placeholder="Chọn rạp chiếu" style="width: 100%"
+                    :options="optionCinema" :filter-option="filterOptionCinema" @focus="handleFocus" @blur="handleBlur"
+                    @change="handleChangeCinema"></a-select>
                 </div>
               </div>
             </div>
@@ -55,22 +33,13 @@
         <ClientOnly>
           <a-tabs v-model="tabActive" :default-active-key="'2'">
             <a-tab-pane key="1" tab="Phim Sắp Chiếu">
-              <MovieList
-                :movies="movieStore.moviesComingSoon?.data || []"
-                :btnBuy="false"
-              />
+              <MovieList :movies="movieStore.moviesComingSoon?.data || []" :btnBuy="false" />
             </a-tab-pane>
             <a-tab-pane key="2" tab="Phim Đang Chiếu">
-              <MovieList
-                :movies="movieStore.moviesNowShowing?.data || []"
-                :btnBuy="true"
-              />
+              <MovieList :movies="movieStore.moviesNowShowing?.data || []" :btnBuy="true" />
             </a-tab-pane>
             <a-tab-pane key="3" tab="Suất Chiếu Đặc Biệt">
-              <MovieTabSpecial
-                :movies="movieStore.moviesSpecial?.data || []"
-                :btnBuy="true"
-              />
+              <MovieTabSpecial :movies="movieStore.moviesSpecial?.data || []" :btnBuy="true" />
             </a-tab-pane>
           </a-tabs>
         </ClientOnly>
@@ -80,10 +49,6 @@
 </template>
 
 <script setup>
-definePageMeta({
-  middleware: "admin",
-});
-
 import { LayoutBanner, MovieList } from "#components";
 import { useMovieStore } from "~/stores/movie";
 import { useBranchStore } from "~/stores/branch";
@@ -102,7 +67,6 @@ const selectCinemaBranch = useCookie("selectCinemaBranch", {
 });
 
 /** data select city*/
-
 const optionBranch = ref([]);
 const optionCinema = ref([]);
 
@@ -148,10 +112,7 @@ const filterOption = (input, option) => {
 };
 
 const filterOptionBranch = (input, option) => {
-  // console.log(input);
   console.log(option.label);
-
-  // return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 };
 
 const filterOptionCinema = (input, option) => {
@@ -205,19 +166,6 @@ onMounted(async () => {
     selectCinemaBranch.value?.branch_id,
     selectCinemaBranch.value?.cinema_id
   );
-
-  // movieStore.fetchMoviesComingSoon(
-  //   selectCinemaBranch.value?.branch_id,
-  //   selectCinemaBranch.value?.cinema_id
-  // );
-  // movieStore.fetchMoviesNowShowing(
-  //   selectCinemaBranch.value?.branch_id,
-  //   selectCinemaBranch.value?.cinema_id
-  // );
-  // movieStore.fetchMoviesSpecial(
-  //   selectCinemaBranch.value?.branch_id,
-  //   selectCinemaBranch.value?.cinema_id
-  // );
 
   if (selectCinemaBranch.value) {
     openModal.value = false;

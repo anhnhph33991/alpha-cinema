@@ -17,6 +17,10 @@ const rankStore = useRankStore();
 const authStore = useAuthStore();
 const voucherStore = useVoucherStore();
 
+/**
+ * If the user is logged in, fetch their rank
+ * Listening for voucher broadcast events using the user's ID
+ */
 onMounted(() => {
   if (auth.value?.isLogin && auth.value.user) {
     rankStore.getRank();

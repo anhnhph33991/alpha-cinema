@@ -28,7 +28,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       authGoogle.value = null;
 
       await nextTick();
-      console.log("Redirecting to home...");
 
       return router.replace("/", { replace: true });
     } catch (error) {
