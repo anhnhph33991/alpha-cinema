@@ -17,10 +17,7 @@
       </a-page-header>
     </ClientOnly>
 
-    <div
-      v-if="ticketStore.isLoading"
-      class="min-vh-100 d-flex justify-content-center align-items-center"
-    >
+    <div v-if="ticketStore.isLoading" class="min-vh-100 d-flex justify-content-center align-items-center">
       <a-spin />
     </div>
 
@@ -31,10 +28,7 @@
             <div class="d-flex justify-content-between p-2">
               <div class="fst-normal fw-bold">Thông tin vé</div>
               <div>
-                <span
-                  class="badge"
-                  :class="mappingStatus[ticketStore.ticket?.status]?.class"
-                >
+                <span class="badge" :class="mappingStatus[ticketStore.ticket?.status]?.class">
                   {{ mappingStatus[ticketStore.ticket?.status]?.label || "" }}
                 </span>
               </div>
@@ -44,21 +38,15 @@
           <div class="card-body">
             <div class="row">
               <div class="col-lg-4">
-                <img
-                  :src="formatImage(ticketStore.ticket?.movie?.img_thumbnail)"
-                  alt="phim hay"
-                  class="mb-3 w-100 h-75"
-                />
+                <img :src="formatImage(ticketStore.ticket?.movie?.img_thumbnail)" alt="phim hay"
+                  class="mb-3 w-100 h-75" />
               </div>
               <div class="col-lg-8">
                 <div>
                   <div class="row">
                     <div class="col-lg-12">
                       <div class="ticket-info-title text-center">
-                        <h6
-                          class="mb-4 fs-4 fw-bold text-start"
-                          style="color: rgb(81, 86, 190)"
-                        >
+                        <h6 class="mb-4 fs-4 fw-bold text-start" style="color: rgb(81, 86, 190)">
                           {{ ticketStore.ticket?.movie?.name }}
                         </h6>
                       </div>
@@ -87,26 +75,21 @@
 
                     <div class="col-3 text-16">Thể loại</div>
                     <div class="col-9 text-start text-16 fw-medium mb-2">
-                      <span
-                        v-for="(genres, index) in ticketStore.ticket?.movie
-                          ?.movie_genres"
-                        :key="index"
-                      >
+                      <span v-for="(genres, index) in ticketStore.ticket?.movie
+                        ?.movie_genres" :key="index">
                         {{
                           genres === "Horror"
                             ? "Kinh dị"
                             : genres === "Action"
-                            ? "Hành động"
-                            : genres === "Comedy"
-                            ? "Hài"
-                            : genres
+                              ? "Hành động"
+                              : genres === "Comedy"
+                                ? "Hài"
+                                : genres
                         }}
-                        <span
-                          v-if="
-                            index <
-                            ticketStore.ticket?.movie?.movie_genres.length - 1
-                          "
-                          >,
+                        <span v-if="
+                          index <
+                          ticketStore.ticket?.movie?.movie_genres.length - 1
+                        ">,
                         </span>
                       </span>
                     </div>
@@ -114,11 +97,8 @@
                     <div class="col-3 text-16">Ghế ngồi</div>
                     <div class="col-9 text-start text-16 fw-medium mb-2">
                       <div class="row">
-                        <span
-                          class="col-2 border border-secondary-subtle rouder-3 mx-1 mb-2 text-center"
-                          v-for="seat in ticketStore.ticket?.ticket_seats"
-                          :key="seat.id"
-                        >
+                        <span class="col-2 border border-secondary-subtle rouder-3 mx-1 mb-2 text-center"
+                          v-for="seat in ticketStore.ticket?.ticket_seats" :key="seat.id">
                           {{ seat.seat_name }}
                         </span>
                       </div>
@@ -131,23 +111,12 @@
                 <div class="fs-5 fw-semibold mb-2">Đồ ăn</div>
 
                 <!-- combo -->
-                <div
-                  class="row"
-                  v-if="ticketStore.ticket?.ticket_combos?.length > 0"
-                >
-                  <div
-                    class="col-md-6 mb-3"
-                    v-for="combo in ticketStore.ticket?.ticket_combos"
-                    :key="combo.id"
-                  >
+                <div class="row" v-if="ticketStore.ticket?.ticket_combos?.length > 0">
+                  <div class="col-md-6 mb-3" v-for="combo in ticketStore.ticket?.ticket_combos" :key="combo.id">
                     <div class="card h-100">
                       <div class="card-body row">
                         <div class="col-4">
-                          <img
-                            class="w-100"
-                            :src="formatImage(combo?.img_thumbnail)"
-                            :alt="combo.name"
-                          />
+                          <img class="w-100" :src="formatImage(combo?.img_thumbnail)" :alt="combo.name" />
                         </div>
                         <div class="col-8">
                           <h6 class="card-title">
@@ -171,23 +140,12 @@
                   </div>
                 </div>
                 <!-- Food -->
-                <div
-                  class="row"
-                  v-if="ticketStore.ticket?.ticket_foods?.length > 0"
-                >
-                  <div
-                    class="col-md-6 mb-3"
-                    v-for="food in ticketStore.ticket?.ticket_foods"
-                    :key="food.id"
-                  >
+                <div class="row" v-if="ticketStore.ticket?.ticket_foods?.length > 0">
+                  <div class="col-md-6 mb-3" v-for="food in ticketStore.ticket?.ticket_foods" :key="food.id">
                     <div class="card h-100">
                       <div class="card-body row">
                         <div class="col-4">
-                          <img
-                            class="w-100 h-75"
-                            :src="formatImage(food?.img_thumbnail)"
-                            alt="Sinh tố bơ"
-                          />
+                          <img class="w-100 h-75" :src="formatImage(food?.img_thumbnail)" alt="Sinh tố bơ" />
                         </div>
                         <div class="col-8">
                           <h6 class="card-title">
@@ -236,10 +194,7 @@
               </div>
               <div class="mb-1">
                 <span class="text-body-secondary"> Sđt: </span>
-                <small
-                  class="fw-medium"
-                  :class="{ 'text-danger': !authStore?.user?.phone }"
-                >
+                <small class="fw-medium" :class="{ 'text-danger': !authStore?.user?.phone }">
                   {{ authStore?.user?.phone || "Chưa cập nhật" }}
                 </small>
               </div>
@@ -269,12 +224,9 @@
                   {{ ticketStore.ticket?.payment_name?.toUpperCase() }}
                 </small>
               </div>
-              <div
-                class="mb-1"
-                v-if="
-                  ticketStore.ticket?.price_percentage?.price_ticket_percentage
-                "
-              >
+              <div class="mb-1" v-if="
+                ticketStore.ticket?.price_percentage?.price_ticket_percentage
+              ">
                 <span class="text-body-secondary">Tiền vé: </span>
                 <small class="fw-medium text-danger">
                   {{
@@ -285,18 +237,15 @@
                           ? ticketStore.ticket?.voucher_discount
                           : 0) -
                         ticketStore.ticket?.point_discount) *
-                        (1 + ticketStore.ticket?.vat / 100)
+                      (1 + ticketStore.ticket?.vat / 100)
                     )
                   }}đ
                 </small>
               </div>
 
-              <div
-                class="mb-1"
-                v-if="
-                  ticketStore.ticket?.price_percentage?.price_food_percentage
-                "
-              >
+              <div class="mb-1" v-if="
+                ticketStore.ticket?.price_percentage?.price_food_percentage
+              ">
                 <span class="text-body-secondary"> Tiền đồ ăn: </span>
                 <small class="fw-medium text-danger">
                   {{
@@ -306,7 +255,7 @@
                         (ticketStore.ticket?.voucher_type == 0
                           ? ticketStore.ticket?.voucher_discount
                           : 0)) *
-                        (1 + ticketStore.ticket?.vat / 100)
+                      (1 + ticketStore.ticket?.vat / 100)
                     )
                   }}
                 </small>
@@ -423,37 +372,29 @@ const isHasComboOrFood = computed(() => {
   );
 });
 
-// const isHasComboOrFood = computed(() => {
-//   return (
-//     (ticketStore.ticket?.ticket_combos?.length || 0) > 0 ||
-//     (ticketStore.ticket?.ticket_foods?.length || 0) > 0
-//   );
-// });
-
 onMounted(() => {
-  // console.log(code);
-
   ticketStore.findByCode(code);
 });
 </script>
 
 <style>
-:where(
-    .css-dev-only-do-not-override-1p3hq3p
-  ).ant-page-header.ant-page-header-ghost {
+:where(.css-dev-only-do-not-override-1p3hq3p).ant-page-header.ant-page-header-ghost {
   background-color: white;
 }
 
 @media (max-width: 720px) {
+
   /* Your CSS rules here */
-  .row > .col-lg-4 {
+  .row>.col-lg-4 {
     display: flex;
     justify-content: center;
   }
-  .row > .col-lg-4 > img {
+
+  .row>.col-lg-4>img {
     max-width: 64%;
     max-height: 80%;
   }
+
   .text-16 {
     font-size: 14px !important;
   }

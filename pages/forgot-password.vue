@@ -1,10 +1,7 @@
 <template>
   <div class="page page-center al-bg-light">
     <AuthForgotPassword v-if="!hasEmailCookie" @submit-form="submited" />
-    <AuthVerifyOtp
-      v-if="hasEmailCookie && !isOtpVerified"
-      @submit-form-otp="submitOtp"
-    />
+    <AuthVerifyOtp v-if="hasEmailCookie && !isOtpVerified" @submit-form-otp="submitOtp" />
     <AuthResetPassword v-if="isOtpVerified" @submit-form-reset="submitReset" />
   </div>
 </template>
@@ -33,14 +30,10 @@ definePageMeta({
 });
 
 const submited = (data) => {
-  // console.log(data);
   authStore.sendOtp(data);
 };
 
 const submitOtp = (data) => {
-  // console.log("data otp");
-  // console.log(data);
-
   if (data === "" || !resetPasswordCookie.value) {
     toast.error("Vui lòng nhập mã OTP");
     return;
@@ -58,8 +51,6 @@ const submitOtp = (data) => {
 
 const submitReset = (data) => {
   if (
-    // data.password === "" ||
-    // data.password_confirm === "" ||
     !resetPasswordCookie.value ||
     !resetPasswordCookie.value.otp
   ) {

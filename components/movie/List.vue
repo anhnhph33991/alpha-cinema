@@ -1,29 +1,18 @@
 <template>
   <div v-if="movies.length > 0" class="container h-screen">
     <div class="row">
-      <div
-        class="col-lg-3 col-md-6 col-sm-12 padding-bottom-30 padding-right-30 padding-left-30"
-        v-for="movie in movies"
-        :key="movie.id"
-      >
+      <div class="col-lg-3 col-md-6 col-sm-12 padding-bottom-30 padding-right-30 padding-left-30"
+        v-for="movie in movies" :key="movie.id">
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-8 col-xs-8">
             <div class="product-item no-padding">
               <div class="pi-img-wrapper">
-                <NuxtLink
-                  :to="{ name: 'movies-slug', params: { slug: movie.slug } }"
-                >
-                  <img
-                    class="img-responsive border-radius-20 img-movie-response"
-                    :alt="movie.name"
-                    :src="formattedImage(movie.img_thumbnail)"
-                  />
+                <NuxtLink :to="{ name: 'movies-slug', params: { slug: movie.slug } }">
+                  <img class="img-responsive border-radius-20 img-movie-response" :alt="movie.name"
+                    :src="formattedImage(movie.img_thumbnail)" />
                 </NuxtLink>
                 <span style="position: absolute; top: 10px; left: 10px">
-                  <img
-                    src="https://www.betacinemas.vn/Assets/Common/icons/films/c-18.png"
-                    class="img-responsive"
-                  />
+                  <img src="https://www.betacinemas.vn/Assets/Common/icons/films/c-18.png" class="img-responsive" />
                 </span>
                 <div class="border-radius-20">
                   <a href="#" class="fancybox-fast-view">
@@ -37,19 +26,13 @@
 
           <div class="col-lg-12 col-md-12 col-sm-8 col-xs-8">
             <div class="film-info film-xs-info">
-              <h3
-                class="text-sm-left text-xs-left bold margin-top-5 font-sm-18 font-xs-14 fst-oswald"
-                style="max-height: 30px; min-height: 30px"
-              >
-                <NuxtLink
-                  :to="{ name: 'movies-slug', params: { slug: movie.slug } }"
-                >
+              <h3 class="text-sm-left text-xs-left bold margin-top-5 font-sm-18 font-xs-14 fst-oswald"
+                style="max-height: 30px; min-height: 30px">
+                <NuxtLink :to="{ name: 'movies-slug', params: { slug: movie.slug } }">
                   {{ limitText(movie.name, 30) }}
                 </NuxtLink>
               </h3>
-              <ul
-                class="list-unstyled font-lg font-family-san font-sm-15 font-xs-14"
-              >
+              <ul class="list-unstyled font-lg font-family-san font-sm-15 font-xs-14">
                 <li style="max-height: 50px">
                   <span class="bold opacity-08 fst-oswald"> Thể loại:</span>
                   {{
@@ -65,16 +48,9 @@
               </ul>
             </div>
 
-            <div
-              class="text-center padding-bottom-30 fst-oswald"
-              style="min-height: 85px"
-            >
-              <a
-                style="display: block"
-                class="btn btn-2 btn-mua-ve2 fancybox-fast-view"
-                @click.prevent="showModal(movie)"
-                v-if="btnBuy"
-              >
+            <div class="text-center padding-bottom-30 fst-oswald" style="min-height: 85px">
+              <a style="display: block" class="btn btn-2 btn-mua-ve2 fancybox-fast-view"
+                @click.prevent="showModal(movie)" v-if="btnBuy">
                 MUA VÉ
               </a>
             </div>
@@ -84,52 +60,19 @@
     </div>
 
     <template v-if="movieStore.movie.data">
-      <a-modal
-        :open="open"
-        width="1000px"
-        centered
-        :title="movieStore.movie.data.movie.name"
-        @cancel="handleCancel"
-        :footer="null"
-      >
+      <a-modal :open="open" width="1000px" centered :title="movieStore.movie.data.movie.name" @cancel="handleCancel"
+        :footer="null">
         <div>
           <div>
-            <a-tabs
-              v-model="activeKey"
-              :tab-position="mode"
-              :style="{ height: 'auto' }"
-              @tabScroll="callback"
-            >
+            <a-tabs v-model="activeKey" :tab-position="mode" :style="{ height: 'auto' }" @tabScroll="callback">
               <template v-if="Object.keys(movieStore.groupedShowtimes).length">
-                <a-tab-pane
-                  v-for="(rooms, date) in movieStore.groupedShowtimes"
-                  :key="date"
-                  :tab="formatDate(date)"
-                >
+                <a-tab-pane v-for="(rooms, date) in movieStore.groupedShowtimes" :key="date" :tab="formatDate(date)">
                   <div class="tab-content">
-                    <div
-                      v-for="(items, roomName) in rooms"
-                      :key="roomName"
-                      class="mb-3"
-                    >
+                    <div v-for="(items, roomName) in rooms" :key="roomName" class="mb-3">
                       <h6 class="room-title">{{ roomName }}</h6>
                       <div class="d-flex gap-1 al-tab-list flex-wrap">
-                        <!-- <a-button
-                          type="primary"
-                          v-for="(showtime, index) in items"
-                          :key="index"
-                          @click="navigateShowTime(showtime)"
-                        >
-                          {{ formatTime(showtime.start_time) }}
-                        </a-button> -->
-
-                        <a
-                          style="display: block"
-                          class="al-btn btn-2 btn-mua-ve2 fancybox-fast-view"
-                          v-for="(showtime, index) in items"
-                          :key="index"
-                          @click="navigateShowTime(showtime)"
-                        >
+                        <a style="display: block" class="al-btn btn-2 btn-mua-ve2 fancybox-fast-view"
+                          v-for="(showtime, index) in items" :key="index" @click="navigateShowTime(showtime)">
                           {{ formatTime(showtime.start_time) }}
                         </a>
                       </div>
@@ -148,10 +91,7 @@
     </template>
   </div>
 
-  <div
-    class="mt-5 h-screen d-flex justify-content-center align-items-center"
-    v-else
-  >
+  <div class="mt-5 h-screen d-flex justify-content-center align-items-center" v-else>
     <a-empty description="Không có dữ liệu" />
   </div>
 </template>

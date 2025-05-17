@@ -8,41 +8,6 @@
       <a-spin />
     </div>
 
-    <!-- <ClientOnly>
-        <a-modal
-          :open="openModalVerifyEmail"
-          width="1000px"
-          centered
-          @cancel="handleCancelVerifyEmail"
-          :footer="null"
-        >
-          <div class="d-flex justify-content-center align-items-center">
-            <a-card :bordered="false" style="width: 300px">
-              <div>
-                <div>
-                  <h6 class="text-center fw-bold">Vui lòng kiểm tra email</h6>
-                </div>
-                <div style="padding: 3rem 0">
-                  <ClientOnly>
-                    <PrimeInputOtp
-                      v-model="form.otp"
-                      :length="6"
-                      class="justify-content-center"
-                    />
-                  </ClientOnly>
-                </div>
-
-                <div class="text-center">
-                  <a-button type="primary" @click="handleSubmitVerifyEmail"
-                    >Gửi</a-button
-                  >
-                </div>
-              </div>
-            </a-card>
-          </div>
-        </a-modal>
-      </ClientOnly> -->
-
     <div class="container container-tight py-4 mt-5 card-md">
       <div class="card">
         <div class="card-body">
@@ -54,14 +19,8 @@
             <div class="row">
               <div class="col-md-12 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Email</label
-                >
-                <input
-                  type="email"
-                  v-model="form.email"
-                  placeholder="Nhập email"
-                  class="form-control"
-                />
+                  <span class="text-danger">*</span> Email</label>
+                <input type="email" v-model="form.email" placeholder="Nhập email" class="form-control" />
                 <small v-if="emailError" class="text-danger">
                   {{ emailError }}
                 </small>
@@ -69,44 +28,20 @@
 
               <div class="col-md-12 mb-3">
                 <label class="form-label">
-                  <span class="text-danger">*</span> Mật khẩu</label
-                >
+                  <span class="text-danger">*</span> Mật khẩu</label>
                 <div class="input-group input-group-flat">
-                  <input
-                    :type="showPassword ? 'text' : 'password'"
-                    class="form-control"
-                    placeholder="Mật khẩu"
-                    v-model="form.password"
-                    autocomplete="off"
-                  />
+                  <input :type="showPassword ? 'text' : 'password'" class="form-control" placeholder="Mật khẩu"
+                    v-model="form.password" autocomplete="off" />
                   <span class="input-group-text" @click="showPwd">
-                    <a
-                      class="link-secondary"
-                      data-bs-toggle="tooltip"
-                      aria-label="Show password"
-                      data-bs-original-title="Show password"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path
-                          stroke="none"
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        ></path>
+                    <a class="link-secondary" data-bs-toggle="tooltip" aria-label="Show password"
+                      data-bs-original-title="Show password">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                         <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
-                        <path
-                          d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"
-                        ></path>
+                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6">
+                        </path>
                       </svg>
                     </a>
                   </span>
@@ -127,22 +62,11 @@
         </div>
 
         <div class="col">
-          <a
-            href="https://alphacinema.me/auth/google/redirect"
-            class="btn btn-google btn-2"
-            rel="noopener noreferrer"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-google"
-              viewBox="0 0 16 16"
-            >
+          <a href="https://alphacinema.me/auth/google/redirect" class="btn btn-google btn-2" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google"
+              viewBox="0 0 16 16">
               <path
-                d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"
-              />
+                d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z" />
             </svg>
             Tiếp tục với Google
           </a>
@@ -238,19 +162,6 @@ watch(
   }
 );
 
-// watch(
-//   () => authStore.user,
-//   (user) => {
-//     const hasUserData = user && Object.keys(user).length > 0;
-//     const isEmailUnverified = user?.email_verified_at == null;
-
-//     if (hasUserData && isEmailUnverified) {
-//       openModalVerifyEmail.value = true;
-//     }
-//   },
-//   { immediate: true, deep: true }
-// );
-
 const handleSubmit = () => {
   const isValid = validateForm();
 
@@ -264,7 +175,7 @@ const handleCancelVerifyEmail = () => {
   openModalVerifyEmail.value = false;
 };
 
-const handleSubmitVerifyEmail = () => {};
+const handleSubmitVerifyEmail = () => { };
 </script>
 
 <style scoped>
@@ -272,7 +183,8 @@ const handleSubmitVerifyEmail = () => {};
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.7); /* Màu nền mờ */
+  background: rgba(255, 255, 255, 0.7);
+  /* Màu nền mờ */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -337,12 +249,10 @@ const handleSubmitVerifyEmail = () => {};
 
 .btn-3 {
   width: 30%;
-  background-image: linear-gradient(
-    to right,
-    #fc3606 0%,
-    #fda085 51%,
-    #fc7704 100%
-  ) !important;
+  background-image: linear-gradient(to right,
+      #fc3606 0%,
+      #fda085 51%,
+      #fc7704 100%) !important;
   background-size: 200% 100%;
   transition: background-position 0.5s ease;
 }
@@ -353,12 +263,10 @@ const handleSubmitVerifyEmail = () => {};
 
 .btn-google {
   width: 50%;
-  background-color: linear-gradient(
-    to right,
-    #0a64a7 0%,
-    #258dcf 51%,
-    #3db1f3 100%
-  ) !important;
+  background-color: linear-gradient(to right,
+      #0a64a7 0%,
+      #258dcf 51%,
+      #3db1f3 100%) !important;
   border: 1px solid #1877f2;
   color: #fff;
   transition: background-color 0.5s ease, background-position 0.5s ease;

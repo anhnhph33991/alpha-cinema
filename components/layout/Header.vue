@@ -7,19 +7,12 @@
             <ul class="al-pull-right al-list-inline">
               <template v-if="authStore.isLogin">
                 <li>
-                  <NuxtLink
-                    :to="{ name: 'account' }"
-                    class="fst-oswald"
-                    style="font-size: 14px"
-                  >
+                  <NuxtLink :to="{ name: 'account' }" class="fst-oswald" style="font-size: 14px">
                     Xin chào: {{ authStore.user.name }}
                   </NuxtLink>
                 </li>
                 <li>
-                  <a
-                    @click.prevent="logout"
-                    class="al-register-border al-cursor-pointer"
-                  >
+                  <a @click.prevent="logout" class="al-register-border al-cursor-pointer">
                     <LogOut :size="16" />
                   </a>
                 </li>
@@ -30,10 +23,7 @@
                   <NuxtLink :to="{ name: 'login' }"> Đăng Nhập </NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink
-                    :to="{ name: 'register' }"
-                    class="al-register-border"
-                  >
+                  <NuxtLink :to="{ name: 'register' }" class="al-register-border">
                     Đăng Ký
                   </NuxtLink>
                 </li>
@@ -44,37 +34,21 @@
       </div>
     </div>
 
-    <nav
-      class="navbar navbar-expand-lg al-header-section bg-white"
-      :class="[{ 'al-header-active': isActive }]"
-    >
+    <nav class="navbar navbar-expand-lg al-header-section bg-white" :class="[{ 'al-header-active': isActive }]">
       <div class="container al-padding-header al-with-header">
         <NuxtLink :to="{ name: 'index' }" class="navbar-brand text-center">
-          <img
-            src="/public/logo.png"
-            alt="logo-img border-radius-20"
-            style="width: 55%; height: 55%"
-          />
+          <img src="/public/logo.png" alt="logo-img border-radius-20" style="width: 55%; height: 55%" />
         </NuxtLink>
         <div class="branch-dropdown d-none d-xl-block">
           <ClientOnly>
-            <a-cascader
-              v-if="branchOptions.length > 0"
-              :value="value"
-              :options="branchOptions"
-              expand-trigger="hover"
-              placeholder="Vui lòng chọn"
-              popupClassName="custom-dropdown"
-              :dropdownStyle="{
+            <a-cascader v-if="branchOptions.length > 0" :value="value" :options="branchOptions" expand-trigger="hover"
+              placeholder="Vui lòng chọn" popupClassName="custom-dropdown" :dropdownStyle="{
                 maxHeight: 'unset',
                 overflow: 'visible',
                 height: 'auto',
                 minWidth: '200px',
-              }"
-              :displayRender="(labels) => labels.labels?.at(-1) || 'no data'"
-              @change="handleChangeCinema"
-              :allowClear="false"
-            />
+              }" :displayRender="(labels) => labels.labels?.at(-1) || 'no data'" @change="handleChangeCinema"
+              :allowClear="false" />
           </ClientOnly>
         </div>
 
@@ -82,25 +56,10 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div
-          class="navbar-collapse justify-content-end"
-          :class="{ show: isMenuOpen }"
-        >
+        <div class="navbar-collapse justify-content-end" :class="{ show: isMenuOpen }">
           <div>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 al-pull-right">
-              <li
-                v-for="(item, index) in navMenu"
-                :key="index"
-                class="nav-item"
-              >
-                <!-- <NuxtLink
-                  :to="item.link"
-                  exact-active-class="active"
-                  class="nav-link al-nav-link"
-                >
-                  {{ item.title }}
-                </NuxtLink> -->
-
+              <li v-for="(item, index) in navMenu" :key="index" class="nav-item">
                 <NuxtLink :to="item.link" class="nav-link al-nav-link">
                   {{ item.title }}
                 </NuxtLink>
@@ -199,9 +158,6 @@ watch(
   selectCinemaBranch,
   (newValue) => {
     if (newValue) {
-      // console.log("data select moi");
-      // console.log(newValue);
-
       value.value = [newValue.branch_id, newValue.cinema_id];
 
       selectedBranchId.value = newValue.branch_id;
@@ -214,7 +170,6 @@ watch(
 onMounted(async () => {
   try {
     await branchStore.listBranch();
-    // const settingsData = await Promise.all([fetchSettingService()]);
   } catch (error) {
     console.error("Lỗi khi lấy danh sách chi nhánh:", error);
   }
@@ -222,8 +177,6 @@ onMounted(async () => {
 </script>
 
 <style>
-/* :where(.css-dev-only-do-not-override-1p3hq3p).ant-select .ant-select-clear */
-
 .al-header-section {
   display: flex;
   justify-content: center;
@@ -314,6 +267,7 @@ onMounted(async () => {
   top: 0;
   left: 0;
 }
+
 .al-pre-header {
   background-color: #f8f9fa;
   /* padding: 5px 0; */

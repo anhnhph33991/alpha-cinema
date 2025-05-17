@@ -51,13 +51,8 @@ const formattedImage = (image) => {
         <div class="container bottom_border">
           <div class="row footer-top">
             <div class="logo">
-              <img
-                v-if="settings.website_logo"
-                width="150"
-                class="logo-img"
-                :alt="settings.site_name"
-                :src="formattedImage(settings.website_logo)"
-              />
+              <img v-if="settings.website_logo" width="150" class="logo-img" :alt="settings.site_name"
+                :src="formattedImage(settings.website_logo)" />
               <ul class="footer_ul_amrc">
                 <li>
                   <i class="bi bi-caret-right-fill"></i>
@@ -130,24 +125,10 @@ const formattedImage = (image) => {
         </div>
 
         <div class="container">
-          <!-- <ul class="foote_bottom_ul_amrc">
-            <li><a href="">Home</a></li>
-            <li><a href="">About</a></li>
-            <li><a href="">Services</a></li>
-            <li><a href="">Pricing</a></li>
-            <li><a href="">Blog</a></li>
-            <li><a href="">Contact</a></li>
-          </ul> -->
           <p class="text-center">
             Copyright @2025 | Designed With by
             <a href="#">AphaCinema</a>
           </p>
-          <!-- <ul class="social_footer_ul">
-            <li><a href=""><i class="bi bi-facebook"></i></a></li>
-            <li><a href=""><i class="bi bi-youtube"></i></a></li>
-            <li><a href=""><i class="bi bi-linkedin"></i></a></li>
-            <li><a href=""><i class="bi bi-instagram"></i></a></li>
-          </ul> -->
         </div>
       </footer>
     </footer>
@@ -176,7 +157,7 @@ const formattedImage = (image) => {
   margin-bottom: 30px;
 }
 
-.footer-top > div {
+.footer-top>div {
   flex: 1 1 240px;
   min-width: 220px;
 }

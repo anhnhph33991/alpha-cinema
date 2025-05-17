@@ -2,52 +2,27 @@
   <div class="movie-detail-section">
     <div class="w-100 custom-wrapper position-relative wrapper">
       <div class="w-100 h-100 inset-0 position-absolute">
-        <img
-          alt="CAPTAIN AMERICA: THẾ GIỚI MỚI-T13- 2D"
-          loading="lazy"
-          decoding="async"
-          data-nimg="fill"
-          class="object-cover"
-          sizes="100vw"
-          :src="formattedImage"
-          style="
+        <img alt="CAPTAIN AMERICA: THẾ GIỚI MỚI-T13- 2D" loading="lazy" decoding="async" data-nimg="fill"
+          class="object-cover" sizes="100vw" :src="formattedImage" style="
             position: absolute;
             height: 100%;
             width: 100%;
             inset: 0px;
             color: transparent;
-          "
-        />
+          " />
       </div>
-      <div
-        class="w-100 h-100 position-absolute z-10 inset-0 bg-primary/60"
-      ></div>
-      <div
-        class="d-none d-xl-block position-absolute w-100 top-0 bottom-0 start-0 end-0 m-auto z-20"
-      >
-        <div
-          class="w-100 mx-auto d-flex justify-content-center align-items-center custom-container"
-        >
-          <div
-            class="position-relative shadow-lg"
-            style="height: 333px; min-width: 238px"
-          >
-            <img
-              alt="CAPTAIN AMERICA: THẾ GIỚI MỚI-T13- 2D"
-              loading="lazy"
-              decoding="async"
-              data-nimg="fill"
-              class="object-cover rounded-xl"
-              sizes="238px"
-              :src="formattedImage"
-              style="
+      <div class="w-100 h-100 position-absolute z-10 inset-0 bg-primary/60"></div>
+      <div class="d-none d-xl-block position-absolute w-100 top-0 bottom-0 start-0 end-0 m-auto z-20">
+        <div class="w-100 mx-auto d-flex justify-content-center align-items-center custom-container">
+          <div class="position-relative shadow-lg" style="height: 333px; min-width: 238px">
+            <img alt="CAPTAIN AMERICA: THẾ GIỚI MỚI-T13- 2D" loading="lazy" decoding="async" data-nimg="fill"
+              class="object-cover rounded-xl" sizes="238px" :src="formattedImage" style="
                 position: absolute;
                 height: 100%;
                 width: 100%;
                 inset: 0px;
                 color: transparent;
-              "
-            />
+              " />
           </div>
 
           <div class="d-flex flex-column" style="font-size: 0.875rem">
@@ -91,89 +66,14 @@
             </div>
 
             <div class="mt-2 d-flex align-items-center gap-4 flex-grow-1">
-              <!-- <a class="fs-6 text-decoration-underline al-cursor-pointer">
-                Chi tiết nội dung
-              </a> -->
 
-              <!-- <button
-                class="border border-warning rounded-pill py-2 px-4 text-warning bg-transparent btn-hover-scale"
-                type="button"
-                @click="handleShowTrailer"
-              >
-                Xem trailer
-              </button> -->
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- <a-modal
-      :open="openTrailer"
-      width="1000px"
-      :title="movie.name"
-      :footer="null"
-      centered
-      @cancel="openTrailer = false"
-    >
-      <iframe
-        v-if="embedUrl"
-        :src="embedUrl"
-        width="100%"
-        height="450"
-        frameborder="0"
-        allowfullscreen
-      ></iframe>
-    </a-modal> -->
-
     <div class="w-100 h-screen">
       <div class="container">
-        <!-- <a-tabs
-          v-model="activeKey"
-          :default-active-key="'1'"
-          :style="{ height: '200px' }"
-          @tabScroll="callback"
-        > -->
-        <!-- <a-tab-pane
-            v-for="(items, date) in showtime"
-            :key="date"
-            :tab="formatDate(date)"
-          > -->
-        <!-- <div class="h-screen">
-            <div class="d-flex gap-1 flex-wrap">
-              <button
-                v-for="(showtime, index) in items"
-                :key="index"
-                class="btn btn-dark rounded-pill text-white px-4 py-2 font-weight-bold text-sm focus-ring focus-ring-light"
-                :disabled="!showtime.available"
-                @click="navigateShowTime(showtime)"
-              >
-                {{ formatTime(showtime.start_time) }}
-              </button>
-            </div>
-          </div> -->
-        <!-- <div class="h-screen">
-              <div class="mx-auto w-100 mw-1000px py-4 space-y-4 relative">
-                <div
-                  class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2 g-xl-4 px-4 px-xl-0"
-                >
-                  <div
-                    v-for="(showtime, index) in items"
-                    :key="index"
-                    class="col"
-                  >
-                    <button
-                      class="btn custom-btn-gray rounded-pill text-white w-100 px-4 py-2 fw-bold fs-6 focus-ring focus-ring-light"
-                      @click="navigateShowTime(showtime)"
-                    >
-                      {{ formatTime(showtime.start_time) }}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a-tab-pane> -->
-        <!-- </a-tabs> -->
 
         <div class="text-center">
           <ul class="d-inline-block mt-5 tab-films nav-tab-movie">
@@ -187,14 +87,8 @@
 
         <div class="align-content-center align-items-center">
           <div>
-            <iframe
-              v-if="embedUrl"
-              :src="embedUrl"
-              width="100%"
-              frameborder="0"
-              allowfullscreen
-              style="height: 60vh"
-            ></iframe>
+            <iframe v-if="embedUrl" :src="embedUrl" width="100%" frameborder="0" allowfullscreen
+              style="height: 60vh"></iframe>
           </div>
         </div>
       </div>
@@ -211,9 +105,6 @@ const props = defineProps({
   movie: {
     required: true,
   },
-  // showtime: {
-  //   required: true,
-  // },
 });
 
 const activeKey = ref("1");
@@ -222,7 +113,6 @@ const config = useRuntimeConfig();
 /**
  * Modal Show Trailer
  */
-
 const openTrailer = ref(false);
 
 const handleShowTrailer = () => {
@@ -325,6 +215,7 @@ onMounted(() => {
     height: 300px;
   }
 }
+
 @media (min-width: 1280px) {
   .custom-wrapper {
     height: 473px;
@@ -333,13 +224,15 @@ onMounted(() => {
 
 /* Nút màu xám */
 .custom-btn-gray {
-  background-color: #6c757d; /* Màu xám đậm */
+  background-color: #6c757d;
+  /* Màu xám đậm */
   border-color: #6c757d;
   color: white;
 }
 
 .custom-btn-gray:hover {
-  background-color: #adb5bd; /* Màu xám sáng hơn */
+  background-color: #adb5bd;
+  /* Màu xám sáng hơn */
   border-color: #adb5bd;
 }
 
@@ -353,14 +246,17 @@ onMounted(() => {
 .mw-1000px {
   max-width: 1000px;
 }
-.space-y-4 > * + * {
+
+.space-y-4>*+* {
   margin-top: 1rem;
 }
 
 /* Hiệu ứng gradient phủ */
 .wrapper {
-  position: relative; /* Đảm bảo ::after định vị đúng */
+  position: relative;
+  /* Đảm bảo ::after định vị đúng */
 }
+
 .wrapper:after {
   position: absolute;
   top: 0;
@@ -375,7 +271,8 @@ onMounted(() => {
 .custom-container {
   max-width: 56rem;
   height: 473px;
-  display: flex; /* Thêm để hỗ trợ gap */
+  display: flex;
+  /* Thêm để hỗ trợ gap */
   gap: 40px;
 }
 
@@ -391,26 +288,33 @@ a {
 .h-250 {
   height: 250px;
 }
+
 .inset-0 {
   inset: 0;
 }
+
 .z-10 {
   z-index: 10;
 }
+
 .z-20 {
   z-index: 20;
 }
+
 .bg-primary\/60 {
   background-color: rgba(16, 20, 27, 0.6);
 }
+
 .object-cover {
   object-fit: cover;
 }
+
 img,
 video {
   max-width: 100%;
   height: auto;
 }
+
 audio,
 canvas,
 embed,
@@ -434,6 +338,7 @@ video {
 .btn-hover-scale {
   transition: transform 0.2s ease-in-out;
 }
+
 .btn-hover-scale:hover {
   transform: scale(1.05);
 }
@@ -481,6 +386,7 @@ h3 {
   margin-right: 10px;
   line-height: 1;
 }
+
 .ant-tabs-tab-active {
   background-color: #ff7875;
   color: white;
@@ -497,6 +403,7 @@ h3 {
   border-radius: 20px;
   transition: background-color 0.2s ease-in-out;
 }
+
 .btn:hover {
   background-color: #2a3f5f;
   color: white;
@@ -515,9 +422,11 @@ h3 {
 .d-flex {
   display: flex;
 }
+
 .gap-2 {
   gap: 10px;
 }
+
 .flex-wrap {
   flex-wrap: wrap;
 }
@@ -528,18 +437,19 @@ h3 {
   clear: both;
 }
 
-.tab-films > li.active {
+.tab-films>li.active {
   border-bottom: 4px solid transparent;
   border-image: linear-gradient(to right, #39adf0 0%, #075fa3 100%);
   border-image-slice: 1;
   border-width: 0px 0px 4px 0px;
 }
+
 .tab-films li {
   position: relative;
   display: block;
 }
 
-.tab-films > li.active > a {
+.tab-films>li.active>a {
   background-color: transparent !important;
   color: #03599d !important;
   text-decoration: none;
