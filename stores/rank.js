@@ -10,8 +10,6 @@ export const useRankStore = defineStore(
       try {
         const response = await getRankService();
 
-        console.log(response);
-
         rankByUser.value = response.rank;
         useAuthStore().user.point = response.user.point;
         useAuthStore().user.total_amount = response.user.total_amount;

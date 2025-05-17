@@ -96,39 +96,6 @@ export const useMovieStore = defineStore("movie", () => {
     }
   };
 
-  // const fetchMovies = async (branchId = "", cinemaId = "") => {
-  //   const cacheKey = generateCacheKey(branchId, cinemaId);
-  //   const cacheData = localStorage.getItem(cacheKey);
-
-  //   if (cacheData) {
-  //     const parsed = JSON.parse(cacheData);
-
-  //     if (isCacheValid(parsed.timestamp)) {
-  //       movies.value = parsed.data;
-  //       console.log("📦 Dữ liệu phim lấy từ cache:", parsed.data);
-  //       return;
-  //     } else {
-  //       console.log("⏰ Cache hết hạn, gọi lại API...");
-  //     }
-  //   }
-
-  //   try {
-  //     const data = await fetchMoviesService(branchId, cinemaId);
-  //     movies.value = data;
-
-  //     localStorage.setItem(
-  //       cacheKey,
-  //       JSON.stringify({ timestamp: Date.now(), data })
-  //     );
-
-  //     // movies.value = await fetchMoviesService(branchId, cinemaId);
-  //     console.log(movies.value);
-  //   } catch (error) {
-  //     console.error("❌ Lỗi khi gọi API fetchMoviesService:", error);
-  //     toast.error("call api lỗi");
-  //   }
-  // };
-
   const fetchMovie = async (slug, branchId = "", cinemaId = "") => {
     try {
       movie.value = await fetchMovieService(slug, branchId, cinemaId);
@@ -221,30 +188,12 @@ export const useMovieStore = defineStore("movie", () => {
       );
       matrixColume.value = showtime.value.data.showTime.room.matrix_colume;
 
-      console.log("ghế");
-      console.log(showtime.value);
-      console.log("matrixColume");
-      console.log(matrixColume.value);
-
-      // console.log(showtime.value);
-      // console.log("hehe");
-      // console.log(matrixColume.value);
-
-      // console.log("showtime");
-      // console.log(showtime.value);
-      // console.log("matrixColume");
-      // console.log(matrixColume.value);
-
-      // console.log(showtime.value);
-
       filterSeatsByUserId(showtime.value.data.seatMapRegular, currentUserId);
     } catch (error) {
       if (error?.error && error.error.code == 404) {
         navigateTo("/");
         console.log(error);
       }
-
-      // toast.error("call api lỗi");
     }
   };
 
@@ -260,11 +209,7 @@ export const useMovieStore = defineStore("movie", () => {
         holdExpiresAt
       );
 
-      // console.log(response);
-
       filterSeatsByUserId(response.data, currentUserId);
-
-      // console.log("đoàn chim to");
     } catch (error) {
       applyRealTimeSeatChange(seatId, "available", null);
       toast.error(error.error);
@@ -296,35 +241,6 @@ export const useMovieStore = defineStore("movie", () => {
    * @param {null | string} status
    * @param {number | string} userId
    */
-  // const applyRealTimeSeatChange = (seatId, status, userId) => {
-  //   if (!showtime.value.data.seatMap) {
-  //     console.warn("⚠️ seatMap chưa được load!");
-  //     return;
-  //   }
-
-  //   const rows = Object.keys(showtime.value.data.seatMap);
-
-  //   for (const row of rows) {
-  //     const cols = Object.keys(showtime.value.data.seatMap[row]);
-  //     for (const col of cols) {
-  //       const seat = showtime.value.data.seatMap[row][col];
-  //       if (seat.id === seatId) {
-  //         seat.status = status;
-  //         seat.user_id = userId;
-
-  //         console.log("realtime ghế");
-  //         console.log(seat);
-  //         console.log("data cũ");
-  //         console.log(seatSelected.value);
-
-  //         getSeatClass(seat);
-  //         isSeatSelected(seat);
-  //         isSeatHeldByOthers(seat);
-  //         return; // Thoát ngay khi tìm thấy
-  //       }
-  //     }
-  //   }
-  // };
 
   const applyRealTimeSeatChange = (seatId, status, userId) => {
     if (!showtime.value.data.seatMap) {

@@ -57,9 +57,6 @@ export const useAuthStore = defineStore(
           vat.value = response.data.vat;
         }
 
-        console.log(response);
-
-        // return;
         isLoading.value = true;
 
         toast.success("Đăng nhập thành công");
@@ -71,9 +68,7 @@ export const useAuthStore = defineStore(
         }
 
         errors.sigin = error;
-        console.log(errors);
         isLoading.value = false;
-        // toast.error("Đăng nhập thất bại");
         return;
       }
     };
@@ -93,8 +88,6 @@ export const useAuthStore = defineStore(
       } catch (error) {
         toast.error("Đăng ký thất bại, vui lòng thử lại");
         errors.resgister = error;
-        console.log(errors.resgister);
-        console.log(errors.resgister.errors.email[0]);
       }
     };
 
@@ -102,22 +95,11 @@ export const useAuthStore = defineStore(
       try {
         const response = await checkUserResgisterService(data);
 
-        // if (response.status) {
-        //   token.value = response.data.token;
-        //   user.value = response.data.user;
-        //   isLogin.value = true;
-        // }
         success.register = 1;
-        console.log(success.register);
-
-        // toast.success("Đăng ký thành công");
-        // router.push({ name: "index" });
       } catch (error) {
         toast.error("Đăng ký thất bại, vui lòng thử lại");
         success.register = 0;
         errors.resgister = error;
-        console.log(errors.resgister);
-        // console.log(errors.resgister.errors.email[0]);
       }
     };
 
@@ -145,8 +127,6 @@ export const useAuthStore = defineStore(
       try {
         const response = await sendOtpService(email);
 
-        console.log(response);
-
         resetPasswordCookie.value = {
           ...(resetPasswordCookie.value || {}),
           email: email,
@@ -160,9 +140,6 @@ export const useAuthStore = defineStore(
         if (error && error.errors) {
           errors.email = error.errors.email;
         }
-
-        console.log(error);
-        // toast.error("Có lỗi xảy ra");
       }
     };
 
@@ -178,8 +155,6 @@ export const useAuthStore = defineStore(
             otp: data.otp,
           };
         }
-
-        console.log(response);
 
         toast.success(`${response.message}`);
 
@@ -197,7 +172,6 @@ export const useAuthStore = defineStore(
       try {
         const response = await resetPasswordService(data);
         toast.success(`${response.message}`);
-        console.log(response);
 
         resetPasswordCookie.value = null;
         navigateTo("/login");
@@ -215,7 +189,6 @@ export const useAuthStore = defineStore(
       try {
         const response = await changePasswordService(data);
 
-        console.log(response);
         toast.success("Đổi mật khẩu thành công");
 
         return true;
@@ -230,7 +203,6 @@ export const useAuthStore = defineStore(
         if (error && error.errors) {
           errors.password_old = error.errors.password_old;
           errors.password = error.errors.password;
-          console.log(errors);
           return;
         }
       }
@@ -239,8 +211,6 @@ export const useAuthStore = defineStore(
     const verifyEmail = async (data) => {
       try {
         const response = await verifyEmailService(data);
-
-        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -249,7 +219,6 @@ export const useAuthStore = defineStore(
     const confirmEmail = async (data) => {
       try {
         const response = await confirmVerifyEmailService(data);
-        // console.log(response);
         if (response.status) {
           token.value = response.data.token;
           user.value = response.data.user;
