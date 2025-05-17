@@ -1,3 +1,8 @@
+/**
+ * Returns an array of vouchers if successful, or an empty array on failure.
+ *
+ * @returns {Promise<Array>}
+ */
 export async function fetchVoucher() {
   const { $axios } = useNuxtApp();
   try {
@@ -16,6 +21,11 @@ export async function fetchVoucher() {
     return [];
   }
 }
+/**
+ * Fetch data rank user
+ *
+ * @returns {Promise<any[]|any>}
+ */
 export async function fetchRank() {
   const { $axios } = useNuxtApp();
   try {
@@ -28,7 +38,6 @@ export async function fetchRank() {
     return response;
   } catch (error) {}
 }
-
 export async function fetchPointHistory() {
   const { $axios } = useNuxtApp();
   try {
