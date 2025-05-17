@@ -11,9 +11,7 @@
                     <div class="blinking-box mb-3">
                       <span class="blinking-text">
                         <div class="notenote-box text-center">
-                          <span class="notenote-title text-start"
-                            >💡 Mẹo nhỏ:</span
-                          ><br />
+                          <span class="notenote-title text-start">💡 Mẹo nhỏ:</span><br />
                           <span class="notenote-text text-start">
                             - Bạn
                             <span> không được bỏ trống ghế ngoài cùng </span>
@@ -31,98 +29,30 @@
                     </div>
 
                     <div class="mb-4 mt-4">
-                      <!-- <div class="row">
-                        <div
-                          class="col-12 col-lg-3 col-md-6 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
-                        >
-                          <div class="seat-cell seat-used seat-test"></div>
-                          <span class="note-seat-status-lable">
-                            Ghế trống
-                          </span>
-                        </div>
-                        <div class="col-12 col-lg-3 col-md-6 col-xl-3 col-sm-12">
-                          <div
-                            class="col bg-color d-flex justify-content-center align-items-center gap-2"
-                          >
-                            <div
-                              class="seat-cell seat-used seat-select seat-test"
-                            ></div>
-                            <span class="note-seat-status-lable">
-                              Ghế đang chọn
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-12 col-lg-3 col-md-6 col-xl-3 col-sm-12">
-                          <div
-                            class="col bg-color d-flex justify-content-center align-items-center gap-2"
-                          >
-                            <div
-                              class="seat-cell seat-used seat-hold seat-test"
-                            ></div>
-                            <span class="note-seat-status-lable">
-                              Ghế đang giữ
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-12 col-lg-3 col-md-6 col-xl-3 col-sm-12">
-                          <div
-                            class="col bg-color d-flex justify-content-center align-items-center gap-2"
-                          >
-                            <div
-                              class="seat-cell seat-used seat-sold seat-test"
-                            ></div>
-                            <span class="note-seat-status-lable">
-                              Ghế đã bán
-                            </span>
-                          </div>
-                        </div>
-                      </div> -->
 
                       <div class="row align-items-center g-3">
                         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                          <div
-                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
-                          >
+                          <div class="bg-color d-flex justify-content-center align-items-center gap-2 h-100">
                             <div class="seat-cell seat-used seat-test"></div>
-                            <span class="note-seat-status-lable"
-                              >Ghế trống</span
-                            >
+                            <span class="note-seat-status-lable">Ghế trống</span>
                           </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                          <div
-                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
-                          >
-                            <div
-                              class="seat-cell seat-used seat-select seat-test"
-                            ></div>
-                            <span class="note-seat-status-lable"
-                              >Ghế đang chọn</span
-                            >
+                          <div class="bg-color d-flex justify-content-center align-items-center gap-2 h-100">
+                            <div class="seat-cell seat-used seat-select seat-test"></div>
+                            <span class="note-seat-status-lable">Ghế đang chọn</span>
                           </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                          <div
-                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
-                          >
-                            <div
-                              class="seat-cell seat-used seat-hold seat-test"
-                            ></div>
-                            <span class="note-seat-status-lable"
-                              >Ghế đang giữ</span
-                            >
+                          <div class="bg-color d-flex justify-content-center align-items-center gap-2 h-100">
+                            <div class="seat-cell seat-used seat-hold seat-test"></div>
+                            <span class="note-seat-status-lable">Ghế đang giữ</span>
                           </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                          <div
-                            class="bg-color d-flex justify-content-center align-items-center gap-2 h-100"
-                          >
-                            <div
-                              class="seat-cell seat-used seat-sold seat-test"
-                            ></div>
-                            <span class="note-seat-status-lable"
-                              >Ghế đã bán</span
-                            >
+                          <div class="bg-color d-flex justify-content-center align-items-center gap-2 h-100">
+                            <div class="seat-cell seat-used seat-sold seat-test"></div>
+                            <span class="note-seat-status-lable">Ghế đã bán</span>
                           </div>
                         </div>
                       </div>
@@ -136,65 +66,45 @@
                       <div class="screen-area">
                         <div class="main-seat-layout">
                           <div>
-                            <div
-                              class="seat-row"
-                              v-for="(row, rowName) in movieStore.showtime.data
-                                .seatMap"
-                              :key="rowName"
-                            >
-                              <!-- <span class="row-label">{{ rowName }}</span> -->
-                              <div
-                                v-for="seat in row"
-                                :key="seat.id"
-                                @click="handleChooseSeat(seat)"
-                                :class="[
-                                  'seat',
-                                  { 'double-seat': seat.type_seat_id == 3 },
-                                ]"
-                              >
+                            <div class="seat-row" v-for="(row, rowName) in movieStore.showtime.data
+                              .seatMap" :key="rowName">
+                              <div v-for="seat in row" :key="seat.id" @click="handleChooseSeat(seat)" :class="[
+                                'seat',
+                                { 'double-seat': seat.type_seat_id == 3 },
+                              ]">
                                 <template v-if="seat.type_seat_id == 1">
-                                  <div
-                                    class="seat-cell seat-used seat-test"
-                                    :class="movieStore.mappingSeatNormal(seat)"
+                                  <div class="seat-cell seat-used seat-test" :class="movieStore.mappingSeatNormal(seat)"
                                     :style="{
                                       color:
                                         seat.status !== 'available'
                                           ? 'white !important'
                                           : '',
-                                    }"
-                                  >
+                                    }">
                                     {{ seat.coordinates_y
                                     }}{{ seat.coordinates_x }}
                                   </div>
                                 </template>
                                 <template v-if="seat.type_seat_id == 2">
-                                  <div
-                                    class="seat-cell seat-used seat-vip"
-                                    :class="[movieStore.mappingSeatTwo(seat)]"
+                                  <div class="seat-cell seat-used seat-vip" :class="[movieStore.mappingSeatTwo(seat)]"
                                     :style="{
                                       color:
                                         seat.status !== 'available'
                                           ? 'white !important'
                                           : '',
-                                    }"
-                                  >
+                                    }">
                                     {{ seat.coordinates_y
                                     }}{{ seat.coordinates_x }}
                                   </div>
                                 </template>
                                 <template v-if="seat.type_seat_id == 3">
-                                  <div
-                                    class="seat-cell seat-used seat-double"
-                                    :class="[
-                                      movieStore.mappingSeatDouble(seat),
-                                    ]"
-                                    :style="{
-                                      color:
-                                        seat.status !== 'available'
-                                          ? 'white !important'
-                                          : '',
-                                    }"
-                                  >
+                                  <div class="seat-cell seat-used seat-double" :class="[
+                                    movieStore.mappingSeatDouble(seat),
+                                  ]" :style="{
+                                    color:
+                                      seat.status !== 'available'
+                                        ? 'white !important'
+                                        : '',
+                                  }">
                                     {{ seat.coordinates_y
                                     }}{{ seat.coordinates_x }}
                                   </div>
@@ -210,30 +120,19 @@
               </div>
             </div>
 
-            <div
-              class="choose-seat-row payment-form mt-3"
-              v-if="!isChoosingScreen"
-            >
+            <div class="choose-seat-row payment-form mt-3" v-if="!isChoosingScreen">
               <div>
                 <div>
                   <div class="row">
-                    <div
-                      class="col-lg-12 payment-page-title"
-                      style="height: 35px; line-height: 35px"
-                    >
-                      <img
-                        style="height: 100%; float: left"
-                        src="https://betacinemas.vn/Assets/global/img/booking/ic-inforpayment.png"
-                      />
+                    <div class="col-lg-12 payment-page-title" style="height: 35px; line-height: 35px">
+                      <img style="height: 100%; float: left"
+                        src="https://betacinemas.vn/Assets/global/img/booking/ic-inforpayment.png" />
                       <div class="page-title" id="scroll-top">
                         THÔNG TIN THANH TOÁN
                       </div>
                     </div>
 
-                    <div
-                      class="col-lg-4 col-md-4 payment-user-info"
-                      style="margin-top: 25px; margin-bottom: 0px"
-                    >
+                    <div class="col-lg-4 col-md-4 payment-user-info" style="margin-top: 25px; margin-bottom: 0px">
                       <div class="col-md-5 user-info-item font-16">
                         <span class="bold user-info-item-label"> Họ Tên: </span>
                         <br />
@@ -243,10 +142,7 @@
                       </div>
                     </div>
 
-                    <div
-                      class="col-lg-4 col-md-4 payment-user-info"
-                      style="margin-top: 25px; margin-bottom: 0px"
-                    >
+                    <div class="col-lg-4 col-md-4 payment-user-info" style="margin-top: 25px; margin-bottom: 0px">
                       <div class="col-md-5 user-info-item font-16">
                         <span class="bold user-info-item-label">
                           Số điện thoại:
@@ -258,10 +154,7 @@
                       </div>
                     </div>
 
-                    <div
-                      class="col-lg-4 col-md-4 payment-user-info"
-                      style="margin-top: 25px; margin-bottom: 0px"
-                    >
+                    <div class="col-lg-4 col-md-4 payment-user-info" style="margin-top: 25px; margin-bottom: 0px">
                       <div class="col-md-5 user-info-item font-16">
                         <span class="bold user-info-item-label"> Email: </span>
                         <br />
@@ -273,10 +166,7 @@
                     <br />
                     <br />
                     <div class="col-lg-12 ticket-selected mt-5">
-                      <div
-                        v-for="(data, index) in filteredSeatGroups"
-                        :key="index"
-                      >
+                      <div v-for="(data, index) in filteredSeatGroups" :key="index">
                         <div>
                           <div class="row">
                             <div class="col-md-6 item-seat-type">
@@ -292,16 +182,11 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
-                        <!-- <hr
-                          v-if="index < filteredSeatGroups.length - 1"
-                          style="margin-top: 15px"
-                        /> -->
 
                         <hr style="margin-top: 15px" />
                       </div>
                     </div>
                     <div class="col-lg-12">
-                      <!-- <hr style="margin-top: 15px" /> -->
 
                       <a-tabs v-model="activeKey">
                         <a-tab-pane key="1" tab="Combo">
@@ -317,18 +202,10 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr
-                                  v-for="combo in foodStore.foodCombo"
-                                  :key="combo.id"
-                                >
+                                <tr v-for="combo in foodStore.foodCombo" :key="combo.id">
                                   <td scope="row">
-                                    <img
-                                      :src="formattedImage(combo.img_thumbnail)"
-                                      alt=""
-                                      class="combo-image"
-                                      width="100"
-                                      height="100"
-                                    />
+                                    <img :src="formattedImage(combo.img_thumbnail)" alt="" class="combo-image"
+                                      width="100" height="100" />
                                   </td>
                                   <td class="combo-name">
                                     {{ combo.name }}
@@ -351,23 +228,10 @@
                                       <span class="mx-2">
                                         {{ getQuantity(combo.id) }}
                                       </span>
-                                      <span
-                                        class="mx-1 al-cursor-pointer"
-                                        @click="increaseQuantity(combo)"
-                                      >
+                                      <span class="mx-1 al-cursor-pointer" @click="increaseQuantity(combo)">
                                         <img :src="btnAdd" alt="" />
-                                        <!-- <button @click="increaseQuantity(combo)">
-                                          +
-                                        </button> -->
                                       </span>
-                                      <span
-                                        class="al-cursor-pointer"
-                                        @click="decreaseQuantity(combo)"
-                                      >
-                                        <!-- <button @click="decreaseQuantity(combo)">
-                                          -
-                                        </button> -->
-
+                                      <span class="al-cursor-pointer" @click="decreaseQuantity(combo)">
                                         <img :src="btnRemove" alt="" />
                                       </span>
                                     </div>
@@ -390,18 +254,10 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr
-                                  v-for="combo in foodStore.foods"
-                                  :key="combo.id"
-                                >
+                                <tr v-for="combo in foodStore.foods" :key="combo.id">
                                   <td scope="row">
-                                    <img
-                                      :src="formattedImage(combo.img_thumbnail)"
-                                      alt=""
-                                      class="combo-image"
-                                      width="100"
-                                      height="100"
-                                    />
+                                    <img :src="formattedImage(combo.img_thumbnail)" alt="" class="combo-image"
+                                      width="100" height="100" />
                                   </td>
                                   <td class="combo-name">
                                     {{ combo.name }}
@@ -418,28 +274,10 @@
                                       <span class="mx-2">
                                         {{ getQuantityFood(combo.id) }}
                                       </span>
-                                      <span
-                                        class="mx-1 al-cursor-pointer"
-                                        @click="handleIncreaseFood(combo)"
-                                      >
+                                      <span class="mx-1 al-cursor-pointer" @click="handleIncreaseFood(combo)">
                                         <img :src="btnAdd" alt="" />
-
-                                        <!-- <button
-                                        @click="handleIncreaseFood(combo)"
-                                      >
-                                        <img :src="btnAdd" alt="" />
-                                      </button> -->
                                       </span>
-                                      <span
-                                        class="al-cursor-pointer"
-                                        @click="handleDecreaseFood(combo)"
-                                      >
-                                        <!-- <button
-                                        @click="handleDecreaseFood(combo)"
-                                      >
-                                        <img :src="btnRemove" alt="" />
-                                      </button> -->
-
+                                      <span class="al-cursor-pointer" @click="handleDecreaseFood(combo)">
                                         <img :src="btnRemove" alt="" />
                                       </span>
                                     </div>
@@ -453,23 +291,15 @@
 
                       <hr style="margin-top: 15px" />
                       <div class="voucher">
-                        <div
-                          class="col-lg-12 payment-page-title"
-                          style="height: 35px; line-height: 35px"
-                        >
-                          <img
-                            style="height: 100%; float: left"
-                            src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png"
-                          />
+                        <div class="col-lg-12 payment-page-title" style="height: 35px; line-height: 35px">
+                          <img style="height: 100%; float: left"
+                            src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png" />
                           <div class="page-title" id="scroll-top">GIẢM GIÁ</div>
                         </div>
                         <div class="discount-section">
-                          <div
-                            class="beta-voucher"
-                            @click.prevent="
-                              isAlphaVoucherOpen = !isAlphaVoucherOpen
-                            "
-                          >
+                          <div class="beta-voucher" @click.prevent="
+                            isAlphaVoucherOpen = !isAlphaVoucherOpen
+                            ">
                             <span>Alpha Voucher</span>
                             <a href="#">
                               (Nhấn vào đây để xem danh sách voucher của bạn)
@@ -482,11 +312,8 @@
                             <div class="voucher-form">
                               <div class="input-group">
                                 <label>Mã Voucher</label>
-                                <input
-                                  type="text"
-                                  placeholder="Nhập mã voucher vào đây"
-                                  v-model.trim="useVoucher.code"
-                                />
+                                <input type="text" placeholder="Nhập mã voucher vào đây"
+                                  v-model.trim="useVoucher.code" />
                               </div>
 
                               <div class="input-group">
@@ -494,10 +321,7 @@
                                 <input type="text" placeholder="" />
                               </div>
 
-                              <button
-                                class="apply-btn mt-4"
-                                @click.prevent="handleApplyVoucher"
-                              >
+                              <button class="apply-btn mt-4" @click.prevent="handleApplyVoucher">
                                 ĐĂNG KÝ
                               </button>
                             </div>
@@ -513,13 +337,8 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <template
-                                    v-if="voucherStore.vouchers.length > 0"
-                                  >
-                                    <tr
-                                      v-for="voucher in voucherStore.vouchers"
-                                      :key="voucher.voucher_id"
-                                    >
+                                  <template v-if="voucherStore.vouchers.length > 0">
+                                    <tr v-for="voucher in voucherStore.vouchers" :key="voucher.voucher_id">
                                       <template v-if="voucher.usage_count > 0">
                                         <td>
                                           {{ voucher.code }}
@@ -533,10 +352,7 @@
 
                                   <template v-else>
                                     <tr>
-                                      <td
-                                        class="text-center text-danger"
-                                        colspan="3"
-                                      >
+                                      <td class="text-center text-danger" colspan="3">
                                         Chưa có voucher nào
                                       </td>
                                     </tr>
@@ -548,16 +364,11 @@
                         </div>
 
                         <div class="point-exchange-section">
-                          <div
-                            class="point-title"
-                            @click.prevent="
-                              isAlphaPointOpen = !isAlphaPointOpen
-                            "
-                          >
+                          <div class="point-title" @click.prevent="
+                            isAlphaPointOpen = !isAlphaPointOpen
+                            ">
                             Điểm Alpha
-                            <a href="#"
-                              >(Nhấn vào đây để xem điểm tích lũy của bạn)</a
-                            >
+                            <a href="#">(Nhấn vào đây để xem điểm tích lũy của bạn)</a>
                           </div>
                           <div v-if="isAlphaPointOpen">
                             <hr class="point-divider" />
@@ -576,33 +387,22 @@
 
                               <div class="input-group">
                                 <label>Nhập điểm</label>
-                                <input
-                                  type="number"
-                                  placeholder=""
-                                  v-model.trim="useVoucher.point"
-                                  :max="authStore.user.point"
-                                  @input="validateMaxValuePoint"
-                                />
+                                <input type="number" placeholder="" v-model.trim="useVoucher.point"
+                                  :max="authStore.user.point" @input="validateMaxValuePoint" />
                               </div>
 
                               <div class="discount-info">
                                 <span class="label">Số tiền được giảm</span>
-                                <span class="discount-value bold"
-                                  >=
+                                <span class="discount-value bold">=
                                   {{
                                     Number(useVoucher.point).toLocaleString(
                                       "vi-VN"
                                     )
                                   }}
-                                  vnđ</span
-                                >
+                                  vnđ</span>
                               </div>
 
-                              <button
-                                type="button"
-                                class="exchange-btn mt-4"
-                                @click="handleApplyPoint"
-                              >
+                              <button type="button" class="exchange-btn mt-4" @click="handleApplyPoint">
                                 ĐỔI ĐIỂM
                               </button>
                             </div>
@@ -617,9 +417,7 @@
                         <div class="col-md-3 item-seat-quantity">
                           Tổng tiền:
                         </div>
-                        <div
-                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
-                        >
+                        <div class="col-md-3 item-seat-money item-seat-total-money total-money-name">
                           <!-- {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ -->
                           {{ totalWithTax.toLocaleString("vi-VN") }}đ
                         </div>
@@ -629,9 +427,7 @@
                         <div class="col-md-3 item-seat-quantity">
                           Tiền được giảm:
                         </div>
-                        <div
-                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
-                        >
+                        <div class="col-md-3 item-seat-money item-seat-total-money total-money-name">
                           {{ priceAll.discountAmount.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
@@ -640,24 +436,16 @@
                         <div class="col-md-3 item-seat-quantity">
                           Tiền cần thanh toán:
                         </div>
-                        <div
-                          class="col-md-3 item-seat-money item-seat-total-money total-money-name"
-                        >
-                          <!-- {{ priceAll.payableAmount.toLocaleString("vi-VN") }}đ -->
+                        <div class="col-md-3 item-seat-money item-seat-total-money total-money-name">
                           {{ payableWithTax.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
                     </div>
 
                     <div class="payment-method-section">
-                      <div
-                        class="col-lg-12 payment-page-title"
-                        style="height: 35px; line-height: 35px"
-                      >
-                        <img
-                          style="height: 100%; float: left"
-                          src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png"
-                        />
+                      <div class="col-lg-12 payment-page-title" style="height: 35px; line-height: 35px">
+                        <img style="height: 100%; float: left"
+                          src="https://betacinemas.vn/Assets/global/img/booking/ic-payment.png" />
 
                         <div class="page-title" id="scroll-top">
                           PHƯƠNG THỨC THANH TOÁN
@@ -668,12 +456,7 @@
 
                       <div class="payment-options">
                         <label class="payment-option">
-                          <input
-                            type="radio"
-                            name="payment"
-                            value="momo"
-                            v-model="selectedPayment"
-                          />
+                          <input type="radio" name="payment" value="momo" v-model="selectedPayment" />
 
                           <span class="custom-radio"></span>
                           <img src="/assets/icon-momo.png" alt="Ví MoMo" />
@@ -681,12 +464,7 @@
                         </label>
 
                         <label class="payment-option">
-                          <input
-                            type="radio"
-                            name="payment"
-                            value="vnpay"
-                            v-model="selectedPayment"
-                          />
+                          <input type="radio" name="payment" value="vnpay" v-model="selectedPayment" />
 
                           <span class="custom-radio"></span>
                           <img src="/assets/icon-vnpay.png" alt="Ví VNpay" />
@@ -705,34 +483,6 @@
                   <div class="row">
                     <template v-if="isChoosingScreen">
                       <div class="col-lg-8">
-                        <!-- <div class="row">
-                          <div
-                            class="col-lg-3 col-md-2 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
-                          >
-                            <div class="seat-cell seat-used seat-test"></div>
-                            <span class="note-seat-status-lable">
-                              Ghế thường
-                            </span>
-                          </div>
-
-                          <div
-                            class="col-lg-3 col-md-2 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
-                          >
-                            <div class="seat-cell seat-used seat-vip"></div>
-                            <span class="note-seat-status-lable">
-                              Ghế Vip
-                            </span>
-                          </div>
-
-                          <div
-                            class="col-lg-3 col-md-2 col-xl-3 col-sm-12 bg-color d-flex justify-content-center align-items-center gap-2"
-                          >
-                            <div class="seat-cell seat-used seat-double"></div>
-                            <span class="note-seat-status-lable">
-                              Ghế Đôi
-                            </span>
-                          </div>
-                        </div> -->
                       </div>
 
                       <div class="col-lg-2">
@@ -740,7 +490,6 @@
                           Tổng tiền
                         </div>
                         <div class="total-price-value text-center">
-                          <!-- {{ priceAll.totalAmount.toLocaleString("vi-VN") }}đ -->
                           {{ payableWithTax.toLocaleString("vi-VN") }}đ
                         </div>
                       </div>
@@ -764,11 +513,7 @@
                         Thời gian còn lại
                       </div>
                       <div class="time-to-value text-end">
-                        <a-statistic-countdown
-                          :value="deadline"
-                          @finish="onFinish"
-                          format="mm:ss"
-                        >
+                        <a-statistic-countdown :value="deadline" @finish="onFinish" format="mm:ss">
                         </a-statistic-countdown>
                       </div>
                     </div>
@@ -783,20 +528,13 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="pi-img-wrapper">
-                    <img
-                      class=""
-                      style="width: 100%"
-                      alt=""
-                      v-if="
-                        movieStore.showtime.data &&
-                        movieStore.showtime.data.showTime.movie.img_thumbnail
-                      "
-                      :src="
-                        formattedImage(
-                          movieStore.showtime.data.showTime.movie.img_thumbnail
-                        )
-                      "
-                    />
+                    <img class="" style="width: 100%" alt="" v-if="
+                      movieStore.showtime.data &&
+                      movieStore.showtime.data.showTime.movie.img_thumbnail
+                    " :src="formattedImage(
+                      movieStore.showtime.data.showTime.movie.img_thumbnail
+                    )
+                      " />
                   </div>
                 </div>
 
@@ -808,9 +546,7 @@
                 </div>
 
                 <div class="col-lg-12">
-                  <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san"
-                  >
+                  <ul class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san">
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6">
@@ -824,8 +560,8 @@
                             {{
                               showtime.movie.movie_genres
                                 ? showtime.movie.movie_genres
-                                    .map((item) => item)
-                                    .join(", ")
+                                  .map((item) => item)
+                                  .join(", ")
                                 : "Chưa đặt"
                             }}
                           </span>
@@ -849,14 +585,9 @@
                 </div>
 
                 <div class="col-lg-12">
-                  <hr
-                    class="border-dashed border-top-2"
-                    style="margin-top: 5px; margin-bottom: 5px"
-                  />
+                  <hr class="border-dashed border-top-2" style="margin-top: 5px; margin-bottom: 5px" />
 
-                  <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san"
-                  >
+                  <ul class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san">
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -925,15 +656,9 @@
                   </ul>
                 </div>
 
-                <div
-                  class="col-lg-12 sidebar-footer mb-3 text-center gap-2 d-flex justify-content-center"
-                >
+                <div class="col-lg-12 sidebar-footer mb-3 text-center gap-2 d-flex justify-content-center">
                   <template v-if="!isChoosingScreen">
-                    <button
-                      class="btn btn-primary"
-                      @click="isChoosingScreen = true"
-                      v-if="!isChoosingScreen"
-                    >
+                    <button class="btn btn-primary" @click="isChoosingScreen = true" v-if="!isChoosingScreen">
                       Quay Lại
                     </button>
 
@@ -942,11 +667,7 @@
                     </button>
                   </template>
 
-                  <button
-                    class="btn btn-primary"
-                    @click="handleNextOrderOne"
-                    v-if="isChoosingScreen"
-                  >
+                  <button class="btn btn-primary" @click="handleNextOrderOne" v-if="isChoosingScreen">
                     Tiếp theo
                   </button>
                 </div>
@@ -959,20 +680,13 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="pi-img-wrapper">
-                    <img
-                      class=""
-                      style="width: 100%"
-                      alt=""
-                      v-if="
-                        movieStore.showtime.data &&
-                        movieStore.showtime.data.showTime.movie.img_thumbnail
-                      "
-                      :src="
-                        formattedImage(
-                          movieStore.showtime.data.showTime.movie.img_thumbnail
-                        )
-                      "
-                    />
+                    <img class="" style="width: 100%" alt="" v-if="
+                      movieStore.showtime.data &&
+                      movieStore.showtime.data.showTime.movie.img_thumbnail
+                    " :src="formattedImage(
+                      movieStore.showtime.data.showTime.movie.img_thumbnail
+                    )
+                      " />
                   </div>
                 </div>
 
@@ -984,9 +698,7 @@
                 </div>
 
                 <div class="col-lg-12">
-                  <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san"
-                  >
+                  <ul class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san">
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6">
@@ -1017,14 +729,9 @@
                 </div>
 
                 <div class="col-lg-12">
-                  <hr
-                    class="border-dashed border-top-2"
-                    style="margin-top: 5px; margin-bottom: 5px"
-                  />
+                  <hr class="border-dashed border-top-2" style="margin-top: 5px; margin-bottom: 5px" />
 
-                  <ul
-                    class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san"
-                  >
+                  <ul class="list-unstyled padding-left-30 padding-right-30 padding-top-10 font-md font-family-san">
                     <li class="padding-bottom-10 padding-top-10">
                       <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -1093,15 +800,9 @@
                   </ul>
                 </div>
 
-                <div
-                  class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center"
-                >
+                <div class="col-lg-12 sidebar-footer mb-5 text-center gap-2 d-flex justify-content-center">
                   <template v-if="!isChoosingScreen">
-                    <button
-                      class="btn btn-primary"
-                      @click="isChoosingScreen = true"
-                      v-if="!isChoosingScreen"
-                    >
+                    <button class="btn btn-primary" @click="isChoosingScreen = true" v-if="!isChoosingScreen">
                       Quay Lại
                     </button>
 
@@ -1110,11 +811,7 @@
                     </button>
                   </template>
 
-                  <button
-                    class="btn btn-primary"
-                    @click="handleNextOrderOne"
-                    v-if="isChoosingScreen"
-                  >
+                  <button class="btn btn-primary" @click="handleNextOrderOne" v-if="isChoosingScreen">
                     Tiếp theo
                   </button>
                 </div>
@@ -1165,19 +862,12 @@ const ticketStore = useTicketStore();
 const voucherStore = useVoucherStore();
 const rankStore = useRankStore();
 const route = useRoute();
-// const slug = route.params.slug;
 const slug = computed(() => route.params.slug);
 const currentUserId = useAuthStore().user.id;
 const config = useRuntimeConfig();
 
-/**
- *
- */
 const authStore = useAuthStore();
 
-/**
- * Làm chức năng
- */
 const isChoosingScreen = ref(true);
 
 const formattedImage = (image) => {
@@ -1186,24 +876,9 @@ const formattedImage = (image) => {
 
 const showtime = computed(() => movieStore.showtime.data?.showTime || null);
 
-/**
- * data tav movie
- */
-
 const activeKey = ref("1");
 
-/**
- *
- */
-
-/**
- * Image Vue
- */
 const screen = "https://betacinemas.vn/Assets/global/img/booking/ic-screen.png";
-
-import SeatRegular from "~/assets/images/seat_regular.svg";
-import SeatVip from "~/assets/images/seat_vip.svg";
-import SeatDouble from "~/assets/images/seat_double.svg";
 
 const btnRemove = "https://betacinemas.vn/Assets/global/img/booking/minus.png";
 const btnAdd = "https://betacinemas.vn/Assets/global/img/booking/plus.png";
@@ -1356,20 +1031,6 @@ const handleChooseSeat = async (seat) => {
 
   processingSeats.add(seat.id);
 
-  /**
-   * Data test
-   */
-  // const result = {
-  //   id: movieStore.showtime.data.showTime.id,
-  //   seat_id: seat.id,
-  //   user_id: newUserId,
-  //   status: newStatus,
-  //   hold_expires_at: holdExpiresAt,
-  // };
-
-  // console.log(result);
-  // return;
-
   movieStore.chooseSeat(
     movieStore.showtime.data.showTime.id,
     seat.id,
@@ -1400,8 +1061,6 @@ const totalWithVAT = computed(() => {
 
 const handleNextOrder = async () => {
   try {
-    // toast.success("Thanh toán đê");
-    // console.log(movieStore.seatSelected);
 
     if (!selectedPayment.value) {
       toast.error("Vui lòng chọn phương thức thanh toán");
@@ -1419,10 +1078,6 @@ const handleNextOrder = async () => {
       type_seat_id: seat.type_seat_id || null,
       seat_name: `${seat.coordinates_y}${seat.coordinates_x}`,
     }));
-
-    // console.log(seatId);
-
-    // console.log(`user_id: ${movieStore.currentUserId}`);
 
     const dataTicket = {
       user_id: movieStore.currentUserId,
@@ -1453,79 +1108,6 @@ const handleNextOrder = async () => {
       },
     };
 
-    // console.log("giá tiền cũ 11/04/2025");
-    // console.log(+((priceAll.value.payableAmount * authStore.vat.rate) / 100));
-
-    console.log("giá tiền mới 11/04/2025");
-    console.log(payableWithTax.value);
-
-    console.log(">>>>>data ticket<<<<<");
-    console.log(dataTicket);
-    console.log(">>>>>data seat id<<<<<");
-    console.log(seatId);
-    console.log(">>>>>data seat<<<<<");
-    console.log(newDataSeats);
-
-    console.log("data voucher");
-    console.log(useVoucher.code);
-
-    // console.log("data new hehehe");
-
-    // console.log("giá tiền ghế khi chưa trừ");
-    // console.log(handleSeatTotalPrice.value);
-    // // 256000;
-    // console.log("giá tiền ghế khi đã trừ");
-
-    // const priceSaleTicket =
-    //   handleSeatTotalPrice.value -
-    //   (handleSeatTotalPrice.value * rankStore.rankByUser.ticket_percentage) /
-    //     100;
-
-    // const discountedPrice =
-    //   handleSeatTotalPrice.value *
-    //   (1 - rankStore.rankByUser.ticket_percentage / 100);
-
-    // console.log(discountedPrice);
-    // // 230400
-    // console.log("Phần trăm được giảm");
-    // console.log(rankStore.rankByUser.ticket_percentage);
-
-    console.log("giá tiền ghế");
-    console.log(handleSeatTotalPrice.value);
-
-    console.log("giá tiền tổng combo và food ban đầu");
-
-    console.log(+handleComboFoodTotalPrice.value + +handleFoodTotalPrice.value);
-
-    console.log("giá tiền tổng combo và food - 10% combo");
-    console.log(handleDiscountedFoodTotalPrice.value);
-
-    // return;
-    // console.log(dataTicket);
-    // console.log("voucher");
-    // console.log(useVoucher.code);
-
-    // if (useVoucher.point <= 0 || useVoucher.point == "") {
-    //   // console.log("change point after buy");
-
-    //   // useVoucher.point_after = authStore?.user.point;
-
-    //   useVoucher.point_after =
-    //     Number(authStore.user.point) - Number(useVoucher.point);
-
-    //   const feedbackPercentage =
-    //     Number(rankStore.rankByUser.feedback_percentage) || 0;
-    //   // const payableAmount = Number(priceAll.value.payableAmount);
-    //   const payableAmount = Number(payableWithTax.value);
-
-    //   // Đảm bảo các giá trị là số trước khi nhân chia
-    //   const pointsToAdd = Math.floor(
-    //     (feedbackPercentage / 100) * payableAmount
-    //   );
-
-    //   useVoucher.point_after += pointsToAdd;
-    // }
-
     useVoucher.point_after =
       Number(authStore.user.point) - Number(useVoucher.point);
 
@@ -1539,10 +1121,6 @@ const handleNextOrder = async () => {
 
     useVoucher.point_after += pointsToAdd;
 
-    // console.log("point ở nút mua");
-    // console.log(useVoucher.point_after);
-    // return;
-
     paymentStore.paymentMomo(
       selectedPayment.value,
       dataTicket,
@@ -1550,9 +1128,6 @@ const handleNextOrder = async () => {
       useVoucher.point_after,
       useVoucher.code
     );
-
-    // toast.success("Thanh toán thành công");
-    // navigateTo({ name: "booking-success" });
   } catch (error) {
     console.log(error);
     toast.error("Có lỗi xảy ra");
@@ -1581,8 +1156,8 @@ const formattedStartTime = (time) => {
 const seatNames = computed(() =>
   movieStore.seatSelected?.length
     ? movieStore.seatSelected.map(
-        (seat) => `${seat.coordinates_y}${seat.coordinates_x}`
-      )
+      (seat) => `${seat.coordinates_y}${seat.coordinates_x}`
+    )
     : []
 );
 
@@ -1608,18 +1183,9 @@ const filteredSeatGroups = computed(() => {
     }
   });
 
-  // Chỉ lấy những nhóm có ghế được chọn
   return Object.values(categories).filter((group) => group.seats.length > 0);
 });
-/**
- * Biến tiền
- *
- * totalAmount      = tổng tiền đơn hàng
- * discountAmount   = tổng tiền được giảm
- * payableAmount    = tổng tiền phải trả
- *
- *
- */
+
 const priceAll = ref({
   totalAmount: 0,
   discountAmount: 0,
@@ -1631,41 +1197,13 @@ const priceAll = ref({
   discountSeatAfter: 0,
 });
 
-// const handleTotalPrice = computed(() => {
-//   if (!movieStore.seatSelected || movieStore.seatSelected.length === 0) {
-//     return 0; // Trả về 0 nếu không có ghế nào được chọn
-//   }
-
-//   return movieStore.seatSelected.reduce((sum, seat) => sum + seat.price, 0);
-// });
-
 const handleSeatTotalPrice = computed(() => {
-  // return (
-  //   movieStore.seatSelected?.reduce((sum, seat) => sum + seat.price, 0) || 0
-  // );
-
   const total =
     movieStore.seatSelected?.reduce((sum, seat) => sum + seat.price, 0) || 0;
   const discount = rankStore.rankByUser.ticket_percentage || 0;
-  // return total * (1 - discount / 100);
 
   return Math.ceil(total * (1 - discount / 100));
 });
-
-// const handleComboFoodTotalPrice = computed(() => {
-//   return (
-//     newDataCombo?.reduce(
-//       (sum, combo) => sum + combo.quantity * combo.price,
-//       0
-//     ) || 0
-//   );
-// });
-
-// const handleFoodTotalPrice = computed(() => {
-//   return (
-//     newDataFood?.reduce((sum, food) => sum + food.quantity * food.price, 0) || 0
-//   );
-// });
 
 const handleComboFoodTotalPrice = computed(() => {
   return (
@@ -1673,7 +1211,7 @@ const handleComboFoodTotalPrice = computed(() => {
       (sum, combo) =>
         sum +
         combo.quantity *
-          (combo.price_sale > 0 ? combo.price_sale : combo.price),
+        (combo.price_sale > 0 ? combo.price_sale : combo.price),
       0
     ) || 0
   );
@@ -1693,32 +1231,15 @@ const handleDiscountedFoodTotalPrice = computed(() => {
     (+handleFoodTotalPrice.value || 0);
   const discount = rankStore.rankByUser.combo_percentage || 0;
 
-  // return total * (1 - discount / 100);
   return Math.ceil(total * (1 - discount / 100));
 });
 
 const handleTotalPrice = computed(() => {
   return (
     +handleSeatTotalPrice.value +
-    // +handleComboFoodTotalPrice.value +
-    // +handleFoodTotalPrice.value
     +handleDiscountedFoodTotalPrice.value
   );
 });
-
-// const
-
-// const handleTotalPrice = computed(() => {
-//   const seatTotal =
-//     movieStore.seatSelected?.reduce((sum, seat) => sum + seat.price, 0) || 0;
-//   const foodTotal = newDataCombo.reduce(
-//     (sum, combo) => sum + combo.quantity * combo.price,
-//     0
-//   );
-
-//   return seatTotal + foodTotal;
-// });
-
 /**
  * Xử lý combo fodd
  */
@@ -1791,23 +1312,6 @@ const getQuantityFood = (id) => {
   const food = newDataFood.find((item) => item.id === id);
   return food ? food.quantity : 0;
 };
-
-/**
- * Thay đổi giá kèm vat
- */
-// watch(movieStore.seatSelected, (newVal) => {
-//   if (newVal.length > 0) {
-//     console.log("lắng nghe seat update vat");
-
-//     priceAll.value.totalAmount += priceAll.value.totalAmount * 0.08;
-//     priceAll.value.payableAmount += priceAll.value.payableAmount * 0.08;
-//   }
-// });
-
-// watch(
-//   () => movieStore.seatSelected,
-//   () => {}
-// );
 
 /**
  * Lắng nghe thay đổi của ghế để cập nhật giá tiền
@@ -1904,10 +1408,6 @@ watch(
   }
 );
 
-/**
- * Logic voucher
- */
-
 const useVoucher = reactive({
   code: "",
   point: 0,
@@ -1926,25 +1426,15 @@ const handleApplyVoucher = () => {
     return;
   }
 
-  // console.log(applyVoucher);
-
   if (applyVoucher.usage_count <= 0) {
     toast.error("Không còn voucher 🤬");
     return;
   }
 
   if (applyVoucher.type_voucher == 1) {
-    // const totalPriceFoodAndCombo =
-    //   +handleComboFoodTotalPrice.value + +handleFoodTotalPrice.value;
     const totalPriceFoodAndCombo = +handleDiscountedFoodTotalPrice;
 
     priceAll.value.discountFromVoucherSeat = +handleSeatTotalPrice.value;
-
-    // console.log("giá đồ ăn");
-    // console.log(totalPriceFoodAndCombo);
-    // console.log("giá giảm dành riêng cho đồ ăn");
-    // console.log(applyVoucher.discount);
-    // return;
 
     if (totalPriceFoodAndCombo <= 0) {
       toast.error("Bạn chưa chọn đồ ăn nào, không thể sử dụng voucher này");
@@ -1958,37 +1448,12 @@ const handleApplyVoucher = () => {
 
     priceAll.value.discountFromVoucherFood =
       +totalPriceFoodAndCombo - applyVoucher.discount;
-
-    // console.log("giá combo");
-    // console.log(handleComboFoodTotalPrice.value);
-
-    // console.log("giá đồ lẻ");
-    // console.log(handleFoodTotalPrice.value);
-
-    console.log("tổng giá đồ ăn");
-    console.log(totalPriceFoodAndCombo);
-
-    console.log("giảm giá đồ ăn");
-    console.log(priceAll.value.discountFromVoucherFood);
-
-    console.log("giá ghế đã trừ");
-    console.log(priceAll.value.discountFromVoucherSeat);
   } else {
-    console.log("voucher ghế");
-    console.log(handleSeatTotalPrice.value);
-
     priceAll.value.discountFromVoucherSeat =
       +handleSeatTotalPrice.value - +applyVoucher.discount;
 
-    // priceAll.value.discountFromVoucherFood =
-    //   +handleComboFoodTotalPrice.value + +handleFoodTotalPrice.value;
     priceAll.value.discountFromVoucherFood =
       +handleDiscountedFoodTotalPrice.value;
-
-    // console.log("giá ghế đã trừ");
-    // console.log(priceAll.value.discountFromVoucherSeat);
-    // console.log("giảm giá đồ ăn");
-    // console.log(priceAll.value.discountFromVoucherFood);
 
     if (priceAll.value.discountSeatAfter <= 0) {
       priceAll.value.discountSeatAfter = handleSeatTotalPrice.value;
@@ -2007,16 +1472,11 @@ const handleApplyVoucher = () => {
   // return;
 
   priceAll.value.discountFromVoucher = +applyVoucher.discount;
-  // applyVoucher.usage_count -= 1;
   console.log(priceAll.value.discountFromVoucher);
 
-  // return;
   priceAll.value.discountAmount =
     priceAll.value.discountFromVoucher + priceAll.value.discountFromPoints;
 
-  /**
-   *
-   */
   priceAll.value.discountSeatAfter -= +applyVoucher.discount;
 
   console.log(priceAll.value.discountAmount);
@@ -2041,26 +1501,10 @@ const handleApplyPoint = () => {
     return;
   }
 
-  console.log("giá vé");
-  console.log(handleSeatTotalPrice.value);
-
-  // priceAll.value.discountFromVoucherSeat
-
-  // if (applyPoints > Number(priceAll.value.totalAmount)) {
-  //   toast.error("Bạn chỉ có thể sử dụng tối đa 50% số tiền tổng đơn hàng.");
-  //   useVoucher.point = Math.min(maxPoints, maxUsablePoints);
-  //   return;
-  // }
-
   // nếu chưa dùng voucher đặt giá tiền ghế vào giá giảm
   if (priceAll.value.discountSeatAfter <= 0) {
     priceAll.value.discountSeatAfter = handleSeatTotalPrice.value;
   }
-
-  // console.log("giá tiền 03");
-  // console.log(handleSeatTotalPrice.value * 0.3);
-  // console.log("giá tiền giảm");
-  // console.log(priceAll.value.discountFromVoucherSeat - applyPoints);
 
   if (
     priceAll.value.discountSeatAfter - applyPoints <
@@ -2076,50 +1520,7 @@ const handleApplyPoint = () => {
   priceAll.value.discountAmount =
     priceAll.value.discountFromVoucher + priceAll.value.discountFromPoints;
 
-  /**
-   * discountSeatAfter là giá tiền cuối sẽ check là 70% giá ghế
-   */
-
   priceAll.value.discountSeatAfter -= applyPoints;
-  console.log("giá ghế mới");
-  console.log(priceAll.value.discountSeatAfter);
-
-  // console.log(applyPoints);
-
-  // useVoucher.point_after = priceAll.value.payableAmount * 0.05;
-
-  // useVoucher.point_after = authStore.user.point - useVoucher.point;
-
-  // const feedbackPercentage = rankStore.rankByUser.feedback_percentage || 0;
-
-  // useVoucher.point_after += Math.floor(
-  //   (feedbackPercentage / 100) * priceAll.value.payableAmount
-  // );
-
-  // useVoucher.point_after =
-  //   Number(authStore.user.point) - Number(useVoucher.point);
-
-  // const feedbackPercentage =
-  //   Number(rankStore.rankByUser.feedback_percentage) || 0;
-  // const payableAmount = Number(payableWithTax.value);
-
-  // const pointsToAdd = Math.floor((feedbackPercentage / 100) * payableAmount);
-
-  // useVoucher.point_after += pointsToAdd;
-
-  // console.log("point ở đăng ký");
-  // console.log(useVoucher.point_after);
-
-  // console.log(feedbackPercentage);
-
-  // console.log("rank user");
-  // console.log(rankStore.rankByUser);
-  // console.log("poin apply");
-  // console.log(useVoucher.point);
-  // console.log("giá tiền ghế đã giảm");
-  // console.log(priceAll.value.discountSeatAfter);
-
-  // priceAll.value.discountAmount = discountAmount.value
 };
 
 /**
@@ -2138,35 +1539,7 @@ const validateMaxValuePoint = () => {
     useVoucher.point = 0;
     return;
   }
-
-  // if(useVoucher.point > )
 };
-
-/**
- * 11/04/2025
- */
-
-// const totalWithTax = computed(() => {
-//   const amount = priceAll.value.totalAmount;
-//   return amount > 0 ? amount + amount * 0.08 : 0;
-// });
-
-// const payableWithTax = computed(() => {
-//   const amount = priceAll.value.payableAmount;
-//   return amount > 0 ? amount + amount * 0.08 : 0;
-// });
-
-// const totalWithTax = computed(() => {
-//   const amount = Number(priceAll.value.totalAmount);
-//   const rate = Number(authStore.vat.rate / 100);
-//   return Math.ceil(amount > 0 ? amount + amount * rate : 0);
-// });
-
-// const payableWithTax = computed(() => {
-//   const amount = Number(priceAll.value.payableAmount);
-//   const rate = Number(authStore.vat.rate / 100);
-//   return Math.ceil(amount > 0 ? amount + amount * rate : 0);
-// });
 
 const totalWithTax = computed(() => {
   const amount = Number(priceAll.value.totalAmount);
@@ -2186,21 +1559,6 @@ const payableWithTax = computed(() => {
   return Math.ceil(amount + amount * rate);
 });
 
-/**
- * 11/04/2025
- */
-
-//**
-// Code new
-//  */
-
-//**
-// Code new
-//  */
-
-/**
- * Khi chọn chi nhánh mới trên header nếu đang trong màn hình chọn ghế chuyển qua chi nhánh không có xuất chiếu sẽ call lại api
- */
 watch(
   selectCinemaBranch,
   async (newData, oldData) => {
@@ -2342,7 +1700,7 @@ onUnmounted(() => {
   color: black;
 }
 
-.table > :not(caption) > * > * {
+.table> :not(caption)>*>* {
   background-color: #f8f8f8;
 }
 
@@ -2439,64 +1797,84 @@ onUnmounted(() => {
   width: 84px !important;
   height: 40px !important;
 }
+
 .sidebar {
   position: sticky;
-  top: 65px; /* Điều chỉnh khoảng cách từ đỉnh, lớn hơn chiều cao của menu (giả sử menu cao 80px) */
-  height: fit-content; /* Đảm bảo sidebar không vượt quá nội dung của nó */
-  z-index: 100; /* Đảm bảo sidebar không bị menu đè (menu thường có z-index cao) */
-  transition: all 0.3s ease-in-out; /* Hiệu ứng mượt mà khi cuộn hoặc hover */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Thêm bóng để trông nổi bật */
+  top: 65px;
+  /* Điều chỉnh khoảng cách từ đỉnh, lớn hơn chiều cao của menu (giả sử menu cao 80px) */
+  height: fit-content;
+  /* Đảm bảo sidebar không vượt quá nội dung của nó */
+  z-index: 100;
+  /* Đảm bảo sidebar không bị menu đè (menu thường có z-index cao) */
+  transition: all 0.3s ease-in-out;
+  /* Hiệu ứng mượt mà khi cuộn hoặc hover */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  /* Thêm bóng để trông nổi bật */
   /* border-radius: 10px;  */
   background: #fff;
 }
 
 /* Hiệu ứng khi hover vào sidebar */
 .sidebar:hover {
-  transform: translateY(-5px); /* Nhấc nhẹ sidebar lên khi hover */
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Tăng bóng khi hover */
+  transform: translateY(-5px);
+  /* Nhấc nhẹ sidebar lên khi hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  /* Tăng bóng khi hover */
 }
 
 /* Làm mượt mà hơn cho các nút trong sidebar-footer */
 .sidebar-footer .btn {
-  transition: all 0.3s ease; /* Hiệu ứng mượt mà cho nút */
+  transition: all 0.3s ease;
+  /* Hiệu ứng mượt mà cho nút */
 }
 
 /* Hiệu ứng hover cho nút */
 .sidebar-footer .btn:hover {
-  transform: scale(1.05); /* Phóng to nhẹ khi hover */
-  background-color: #0056b3; /* Màu đậm hơn khi hover */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Thêm bóng cho nút */
+  transform: scale(1.05);
+  /* Phóng to nhẹ khi hover */
+  background-color: #0056b3;
+  /* Màu đậm hơn khi hover */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  /* Thêm bóng cho nút */
 }
 
 /* Đảm bảo các phần tử bên trong sidebar trông hài hòa */
 .sidebar .bg-white {
-  border-radius: 10px; /* Bo góc phần nội dung */
-  overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
+  border-radius: 10px;
+  /* Bo góc phần nội dung */
+  overflow: hidden;
+  /* Đảm bảo nội dung không tràn ra ngoài */
 }
 
 /* Tinh chỉnh các phần tử con để đồng bộ */
 .sidebar ul li {
-  transition: background 0.2s ease; /* Hiệu ứng mượt cho các mục trong danh sách */
+  transition: background 0.2s ease;
+  /* Hiệu ứng mượt cho các mục trong danh sách */
 }
 
 .sidebar ul li:hover {
-  background-color: #f8f9fa; /* Màu nền nhẹ khi hover vào các mục */
-  border-radius: 5px; /* Bo góc nhẹ */
+  background-color: #f8f9fa;
+  /* Màu nền nhẹ khi hover vào các mục */
+  border-radius: 5px;
+  /* Bo góc nhẹ */
 }
 
 /* Làm đẹp hơn cho hình ảnh trong sidebar */
 .pi-img-wrapper img {
-  transition: transform 0.3s ease; /* Hiệu ứng mượt cho hình ảnh */
+  transition: transform 0.3s ease;
+  /* Hiệu ứng mượt cho hình ảnh */
 }
 
 .pi-img-wrapper img:hover {
-  transform: scale(1.02); /* Phóng to nhẹ hình ảnh khi hover */
+  transform: scale(1.02);
+  /* Phóng to nhẹ hình ảnh khi hover */
 }
 
 /* Đảm bảo menu không đè lên sidebar */
 .menu {
   /* Thay .menu bằng class thực tế của menu */
-  z-index: 50; /* Đặt z-index thấp hơn sidebar */
+  z-index: 50;
+  /* Đặt z-index thấp hơn sidebar */
 }
 
 .h-1000 {
@@ -3047,7 +2425,7 @@ h3,
   position: relative;
 }
 
-.payment-option input:checked + .custom-radio::after {
+.payment-option input:checked+.custom-radio::after {
   content: "";
   width: 10px;
   height: 10px;

@@ -5,34 +5,17 @@
         <ClientOnly>
           <a-tabs v-model="tabActive" :default-active-key="'2'">
             <a-tab-pane key="1" tab="Phim Sắp Chiếu">
-              <MovieList
-                :movies="movieStore.moviesComingSoon?.data || []"
-                :btnBuy="false"
-              />
+              <MovieList :movies="movieStore.moviesComingSoon?.data || []" :btnBuy="false" />
             </a-tab-pane>
             <a-tab-pane key="2" tab="Phim Đang Chiếu">
-              <MovieList
-                :movies="movieStore.moviesNowShowing?.data || []"
-                :btnBuy="true"
-              />
+              <MovieList :movies="movieStore.moviesNowShowing?.data || []" :btnBuy="true" />
             </a-tab-pane>
             <a-tab-pane key="3" tab="Suất Chiếu Đặc Biệt">
-              <MovieTabSpecial
-                :movies="movieStore.moviesSpecial?.data || []"
-                :btnBuy="true"
-              />
+              <MovieTabSpecial :movies="movieStore.moviesSpecial?.data || []" :btnBuy="true" />
             </a-tab-pane>
           </a-tabs>
         </ClientOnly>
       </div>
-
-      <!-- <div class="container" v-else>
-        <div
-          class="h-screen d-flex justify-content-center align-content-center align-items-center"
-        >
-          <a-spin />
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -50,7 +33,6 @@ watch(
   async (newData, oldData) => {
     if (newData) {
       console.log("new data");
-      // await movieStore.fetchMovies(newData.branch_id, newData.cinema_id);
       fetchAllMovies(newData.branch_id, newData.cinema_id);
     }
   },
@@ -72,61 +54,6 @@ const nowVN = new Date(
   }).format(new Date())
 );
 /**
- * phim sắp chiếu
- */
-const movieIsUpcoming = computed(() => {
-  return (
-    movieStore.movies?.data?.filter((movie) => {
-      const releaseDate = new Date(movie.release_date);
-      const createdAt = new Date(movie.created_at);
-      // return releaseDate > nowVN && createdAt < nowVN;
-      return releaseDate > nowVN && createdAt <= nowVN && movie.is_special != 1;
-    }) || []
-  );
-});
-
-/**
- * Phim đang chiếu
- */
-const movieIsShowing = computed(() => {
-  return (
-    movieStore.movies?.data?.filter((movie) => {
-      const releaseDate = new Date(movie.release_date);
-      const endDate = new Date(movie.end_date);
-
-      return releaseDate <= nowVN && nowVN <= endDate;
-      // return nowVN <= endDate;
-    }) || []
-  );
-});
-
-/**
- * Xuất chiếu đặc biệt
- */
-const movieIsSpecial = computed(() => {
-  return (
-    movieStore.movies?.data?.filter((movie) => {
-      const createdAt = new Date(movie.created_at);
-      const releaseDate = new Date(movie.release_date);
-
-      // Nếu check xuất chiếu theo cách ban đầu
-      // return createdAt <= nowVN && nowVN <= releaseDate;
-
-      // Nếu check xuất chiếu đặc biệt bằng is_special
-      // return movie.is_special == 1;
-
-      // trường hợp thứ 3
-      return (
-        nowVN < releaseDate &&
-        createdAt <= nowVN &&
-        createdAt < releaseDate &&
-        movie.is_special == 1
-      );
-    }) || []
-  );
-});
-
-/**
  * Lấy danh sách phim theo branch_id và cinema_id
  *
  * @param branchId - id của chi nhánh
@@ -145,11 +72,6 @@ onMounted(async () => {
     selectCinemaBranch.value?.branch_id,
     selectCinemaBranch.value?.cinema_id
   );
-
-  // movieStore.fetchMovies(
-  //   selectCinemaBranch.value?.branch_id,
-  //   selectCinemaBranch.value?.cinema_id
-  // );
 });
 </script>
 
