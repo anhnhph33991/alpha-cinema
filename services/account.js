@@ -2,10 +2,7 @@ export async function fetchVoucher() {
   const { $axios } = useNuxtApp();
   try {
     const response = await $axios.get(`/v1/voucher`);
-    // console.log("🔍 Toàn bộ response từ API:", response);
-    // console.log("response.vouchers;", response.vouchers);
 
-    // Kiểm tra nếu response không chứa data
     if (!response || !response.vouchers) {
       console.error("⚠ Dữ liệu từ API không hợp lệ:", response);
       return [];
@@ -68,26 +65,6 @@ export async function fetchPointHistory() {
     return [];
   }
 }
-
-// export async function updateProfileService(id, data) {
-//   const { $axios } = useNuxtApp();
-//   try {
-//     const response = await $axios.put(`/v1/${id}/update-profile`, data, {
-//       headers: {
-//         'Content-Type': 'multipart/form-data'
-//       }
-//     });
-//     if (!response) {
-//       console.error("Dữ liệu từ API không hợp lệ:", response);
-//       return [];
-//     }
-//     console.log("response", response);
-//     return response;
-//   } catch (error) {
-//     console.error("Lỗi khi gọi API updateProfile:", error);
-//     throw error;
-//   }
-// }
 
 export async function updateProfileService(id, data) {
   const { $axios } = useNuxtApp();
