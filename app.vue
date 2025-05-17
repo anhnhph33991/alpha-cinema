@@ -2,23 +2,25 @@
   <NuxtLayout>
     <NuxtLoadingIndicator :throttle="0" />
     <NuxtPage />
-    <!-- top-right -->
     <Toaster :duration="2000" position="top-center" close-button richColors />
   </NuxtLayout>
 </template>
 
 <script setup>
 import { useRankStore } from "~/stores/rank";
+import { useAuthStore } from "~/stores/auth";
 import { useVoucherStore } from "~/stores/voucher";
 
 const auth = useCookie("auth");
-const voucherStore = useVoucherStore();
+
 const rankStore = useRankStore();
+const authStore = useAuthStore();
+const voucherStore = useVoucherStore();
 
 onMounted(() => {
-  if (auth.value && auth.value.isLogin && auth.value.user) {
+  if (auth.value?.isLogin && auth.value.user) {
     rankStore.getRank();
-    voucherStore.listenToVoucherBroadcast(useAuthStore().user.id);
+    voucherStore.listenToVoucherBroadcast(authStore.user.id);
   }
 });
 </script>
@@ -28,6 +30,7 @@ onMounted(() => {
 .page-leave-active {
   transition: all 0.4s;
 }
+
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
